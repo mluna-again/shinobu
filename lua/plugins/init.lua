@@ -6,6 +6,11 @@ end
 
 return require('packer').startup(function(use)
   use(require('plugins.config.dashboard'))
+  use('sbdchd/neoformat')
+  use('nvim-telescope/telescope.nvim')
+  use('nvim-lua/popup.nvim')
+  use('nvim-lua/plenary.nvim')
+  use('morhetz/gruvbox')
 
   if packer_bootstrap then
     require('packer').sync()

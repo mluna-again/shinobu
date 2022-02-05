@@ -32,5 +32,17 @@ return {
       '⠀⠀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ',
 
     }
+
+    g.dashboard_custom_section = {
+      a = { description = { "  Find File                 SPC f f" }, command = "Telescope find_files" },
+      b = { description = { "  Recents                   SPC f h" }, command = "Telescope oldfiles" },
+      c = { description = { "  Find Word                 SPC f a" }, command = "Telescope live_grep" },
+      d = { description = { "洛 New File                  SPC c n" }, command = "DashboardNewFile" },
+      f = { description = { "  Load Last Session         SPC s l" }, command = "SessionLoad" },
+    }
+
+    g.dashboard_custom_footer = {
+      "Such empty...",
+    }
   end
 }
