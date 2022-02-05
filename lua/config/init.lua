@@ -14,3 +14,8 @@ vim.o.mouse = "a"
 vim.g.mapleader = " "
 vim.opt.syntax = "on"
 vim.cmd("colorscheme gruvbox")
+vim.wo.t_Co = "256"
+vim.cmd[[highlight Normal ctermbg=NONE guibg=NONE]]
+vim.api.nvim_command([[
+au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions -=0
+]])
