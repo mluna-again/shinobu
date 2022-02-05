@@ -26,13 +26,13 @@ nmap("<C-f>", ":call CocAction('jumpDefinition', 'drop')<CR>")
 nmap("<C-x>", ":bufdo bd | :Dashboard<CR>")
 nmap("<Space>", "<Nop>")
 
-nmap("<Leader>ss", ":<C-u>SessionSave<CR>")
+-- nmap("<Leader>ss", ":<C-u>SessionSave<CR>")
 nmap("<Leader>sl", ":<C-u>SessionLoad<CR>")
 nmap("<Leader>fh", ":DashboardFindHistory<CR>")
 nmap("<Leader>ff", ":DashboardFindFile<CR>")
-nmap("<Leader>tc", ":DashboardChangeColorscheme<CR>")
+-- nmap("<Leader>tc", ":DashboardChangeColorscheme<CR>")
 nmap("<Leader>fa", ":DashboardFindWord<CR>")
-nmap("<Leader>fb", ":DashboardJumpMark<CR>")
+-- nmap("<Leader>fb", ":DashboardJumpMark<CR>")
 nmap("<Leader>cn", ":DashboardNewFile<CR>")
 
 -- What do these do?

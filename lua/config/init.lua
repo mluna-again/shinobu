@@ -13,3 +13,4 @@ vim.o.background = "dark"
 vim.o.mouse = "a"
 vim.g.mapleader = " "
 vim.opt.syntax = "on"
+vim.cmd("colorscheme gruvbox")
