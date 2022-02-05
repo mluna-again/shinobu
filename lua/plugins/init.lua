@@ -11,6 +11,7 @@ return require('packer').startup(function(use)
   use('nvim-lua/popup.nvim')
   use('nvim-lua/plenary.nvim')
   use('morhetz/gruvbox')
+  use(require('plugins.config.lualine'))
 
   if packer_bootstrap then
     require('packer').sync()
