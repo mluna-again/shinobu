@@ -11,4 +11,5 @@ vim.o.smartcase = true
 vim.o.hidden = true
 vim.o.background = "dark"
 vim.o.mouse = "a"
+vim.g.mapleader = " "
 vim.opt.syntax = "on"
