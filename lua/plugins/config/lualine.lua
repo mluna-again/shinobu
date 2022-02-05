@@ -7,7 +7,7 @@ return {
       options = {
         icons_enabled = true,
         theme = gruvbox,
-        disabled_filetypes = {'Dashboard'},
+        disabled_filetypes = {},
         section_separators = { left = '', right = ''},
         section_separators = { left = '', right = '' },
       },
