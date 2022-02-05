@@ -29,6 +29,7 @@ return require('packer').startup(function(use)
   use('jiangmiao/auto-pairs')
   use('SirVer/ultisnips')
   use('alvan/vim-closetag')
+  use('karb94/neoscroll.nvim')
                            
   if packer_bootstrap then
     require('packer').sync()
