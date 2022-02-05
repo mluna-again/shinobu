@@ -31,6 +31,7 @@ return require('packer').startup(function(use)
   use('alvan/vim-closetag')
   use('karb94/neoscroll.nvim')
   use(require('plugins.config.tags'))
+  use('neovim/nvim-lspconfig')
                            
   if packer_bootstrap then
     require('packer').sync()
