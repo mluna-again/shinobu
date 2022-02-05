@@ -8,19 +8,24 @@ return {
         icons_enabled = true,
         theme = gruvbox,
         disabled_filetypes = {},
-        section_separators = { left = '', right = ''},
         section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_a = {
-          { 'mode', separator = { left = '' }, right_padding = 2 }
+          { 'mode', separator = { left = '', right = '' }, right_padding = 2 }
         },
-        lualine_b = {'branch', 'diff'},
+	lualine_b = {
+	  {'branch', 'diff', separator = { right = ''}},
+	},
         lualine_c = {{ 'filename', full_path = true }},
-        lualine_x = {'encoding', 'location', 'filetype'},
-        lualine_y = {'progress'},
+	lualine_x = {
+	  {'encoding', 'location', 'filetype', separator = { left = '' }},
+	},
+	lualine_y = {
+	  {'progress', separator = { left = '' }},
+	},
         lualine_z = {
-          { 'location', separator = { right = '' }, left_padding = 2 },
+          { 'location', separator = { right = '', left = '' }, left_padding = 2 },
         },
       },
       inactive_sections = {
