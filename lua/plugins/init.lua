@@ -32,6 +32,7 @@ return require('packer').startup(function(use)
   use('karb94/neoscroll.nvim')
   use(require('plugins.config.tags'))
   use('neovim/nvim-lspconfig')
+  use(require('plugins.config.emmet'))
                            
   if packer_bootstrap then
     require('packer').sync()
