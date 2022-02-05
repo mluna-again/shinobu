@@ -33,6 +33,7 @@ return require('packer').startup(function(use)
   use(require('plugins.config.tags'))
   use('neovim/nvim-lspconfig')
   use(require('plugins.config.emmet'))
+	use('moll/vim-bbye')
                            
   if packer_bootstrap then
     require('packer').sync()
