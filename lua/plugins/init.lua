@@ -30,6 +30,7 @@ return require('packer').startup(function(use)
   use('SirVer/ultisnips')
   use('alvan/vim-closetag')
   use('karb94/neoscroll.nvim')
+  use(require('plugins.config.tags'))
                            
   if packer_bootstrap then
     require('packer').sync()
