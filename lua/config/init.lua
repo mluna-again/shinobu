@@ -37,6 +37,9 @@ command Env :e .env
 command T :call ToggleFormatter()
 command C normal ggVG"+y
 command IEx :FloatermNew --name=iex --autoclose=1 iex -S mix
+command Iex :FloatermNew --name=iex --autoclose=1 iex -S mix
+command Irb :FloatermNew irb
+command IRb :FloatermNew irb
 command IRB :FloatermNew irb
 
 autocmd! BufEnter *.rb nmap <silent> <C-p> :Ruby<CR>
