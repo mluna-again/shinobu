@@ -1,7 +1,7 @@
 require('core.maps')
 
 nmap("<C-Left>", ":vertical resize -2<CR>")
-nmap("<C-Right>", ":vertial resize +2<CR>")
+nmap("<C-Right>", ":vertical resize +2<CR>")
 nmap("<C-Up>", ":resize +2<CR>")
 nmap("<C-Down>", ":resize -2<CR>")
 nmap("Y", "v$hy")
