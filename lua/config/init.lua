@@ -11,6 +11,12 @@ vim.o.smartcase = true
 vim.o.hidden = true
 vim.o.background = "dark"
 vim.o.mouse = "a"
+vim.api.nvim_command([[
+set nofoldenable
+set foldmethod=syntax   
+set foldnestmax=10
+set foldlevel=2
+]])
 vim.g.mapleader = " "
 vim.opt.syntax = "on"
 vim.cmd("colorscheme gruvbox")

@@ -30,6 +30,10 @@ nmap("<Space>", "<Nop>")
 nmap("<Leader>fn", ":NvimTreeFindFile<CR>")
 nmap("FF", ":NvimTreeToggle<CR>")
 nmap("ff", ":DashboardFindFile<CR>")
+nmap("ñ", ":Commentary<CR>")
+vim.cmd([[
+vnoremap ñ :Commentary<CR>
+]])
 
 -- nmap("<Leader>ss", ":<C-u>SessionSave<CR>")
 nmap("<Leader>sl", ":<C-u>SessionLoad<CR>")
