@@ -26,7 +26,7 @@ vim.g.nvim_tree_icons = {
 return {
   'kyazdani42/nvim-tree.lua',
   config = function()
-    require('nvim-tree').setup {
+    require('nvim-tree').setup{
       filters = {
         dotfiles = false,
         custom = {
@@ -71,6 +71,12 @@ return {
         number = false,
         relativenumber = false,
         signcolumn = "yes",
+				mappings = {
+					list = {
+						key = "X",
+						action = "preview"
+					}
+				}
       },
       git = {
         enable = true,

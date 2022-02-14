@@ -1,3 +1,5 @@
+require('core.maps')
+
 return {
   'glepnir/dashboard-nvim',
   config = function()
@@ -44,5 +46,8 @@ return {
     g.dashboard_custom_footer = {
       "Such empty...",
     }
+
+
+		nmap("<Leader>sl", ":source Session.vim<CR>")
   end
 }
