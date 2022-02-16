@@ -1,0 +1,5 @@
+{
+	"tabnine": {
+		"disable_file_regex": ".*.[(ex)|(exs)]$"
+	}
+}
