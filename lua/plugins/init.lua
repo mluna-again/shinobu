@@ -34,6 +34,7 @@ return require('packer').startup(function(use)
   use(require('plugins.config.emmet'))
 	use('moll/vim-bbye')
 	use(require('plugins.config.coc'))
+	use({'elixir-lsp/coc-elixir', run = 'yarn install && yarn prepack'})
                            
   if packer_bootstrap then
     require('packer').sync()
