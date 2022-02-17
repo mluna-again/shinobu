@@ -1,3 +1,3 @@
 require('plugins')
-require('core.mappings')
 require('config')
+require('core.mappings')

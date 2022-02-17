@@ -49,5 +49,11 @@ return {
 
 
 		nmap("<Leader>sl", ":source Session.vim<CR>")
+		nmap("<Leader>ss", ":Obsession<CR>")
+		nmap("<Leader>fh", ":DashboardFindHistory<CR>")
+		nmap("<Leader>ff", ":DashboardFindFile<CR>")
+		nmap("<Leader>fa", ":DashboardFindWord<CR>")
+		nmap("<Leader>cn", ":DashboardNewFile<CR>")
+
   end
 }
