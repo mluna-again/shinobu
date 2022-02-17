@@ -19,11 +19,7 @@ set foldlevel=2
 ]])
 vim.g.mapleader = " "
 vim.opt.syntax = "on"
-vim.cmd("colorscheme gruvbox")
 vim.wo.t_Co = "256"
-vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
-vim.api.nvim_command[[highlight VertSplit cterm=NONE guibg=NONE]]
-vim.api.nvim_command[[set fillchars+=vert:\ ]]
 vim.api.nvim_command([[
 au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions -=0
 ]])
@@ -32,6 +28,7 @@ vim.opt.colorcolumn = "99999"
 
 -- COMMANDS
 vim.cmd([[
+colorscheme gruvbox
 command Ruby !ruby %
 command Lisp !sbcl --script %
 command Clojure !clj -M %
@@ -55,3 +52,6 @@ autocmd! BufEnter *.js nmap <silent> <C-p> :Node<CR>
 autocmd! BufEnter *.nim nmap <silent> <C-p> :Nim<CR>
 autocmd! BufEnter *.ex,*.exs nmap <silent> <C-p> :Elixir<CR>
 ]])
+vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
+vim.api.nvim_command[[highlight VertSplit cterm=NONE guibg=NONE]]
+vim.api.nvim_command[[set fillchars+=vert:\ ]]
