@@ -35,21 +35,4 @@ vim.cmd([[
 vnoremap ñ :Commentary<CR>
 ]])
 
--- nmap("<Leader>ss", ":<C-u>SessionSave<CR>")
-nmap("<Leader>sl", ":<C-u>SessionLoad<CR>")
-nmap("<Leader>fh", ":DashboardFindHistory<CR>")
-nmap("<Leader>ff", ":DashboardFindFile<CR>")
--- nmap("<Leader>tc", ":DashboardChangeColorscheme<CR>")
-nmap("<Leader>fa", ":DashboardFindWord<CR>")
--- nmap("<Leader>fb", ":DashboardJumpMark<CR>")
-nmap("<Leader>cn", ":DashboardNewFile<CR>")
-
--- What do these do?
--- let g:mapleader="\<Space>"
--- nmap("tt", ":Bclose<CR>")
--- nmap <silent> <leader>r :TestNearest<CR>
--- nmap <silent> <leader>R :TestFile<CR>
--- nmap <silent> <leader>T :TestSuite<CR>
--- tnoremap <Esc> <C-\><C-n>
-
 imap("jj", "<ESC>")
