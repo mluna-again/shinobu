@@ -31,7 +31,6 @@ return {
         dotfiles = false,
         custom = {
           ".git",
-          "node_modules",
           ".cache",
         },
       },
