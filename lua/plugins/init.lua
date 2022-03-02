@@ -38,6 +38,7 @@ return require('packer').startup(function(use)
   use('leafgarland/typescript-vim')
   use('peitalin/vim-jsx-typescript')
 	use(require('plugins.config.neoclip'))
+	use(require('plugins.config.emoji'))
                            
   if packer_bootstrap then
     require('packer').sync()
