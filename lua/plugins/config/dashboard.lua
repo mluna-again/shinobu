@@ -44,7 +44,7 @@ return {
     }
 
     g.dashboard_custom_footer = {
-      "Such empty...",
+      "いい元気だね、何かいいことでもあったのかい？",
     }
 
 
