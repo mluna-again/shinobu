@@ -30,6 +30,7 @@ vim.opt.colorcolumn = "99999"
 vim.cmd([[
 colorscheme gruvbox
 command Ruby !ruby %
+command Go !go run .
 command Lisp !sbcl --script %
 command Clojure !clj -M %
 command Node !node %
