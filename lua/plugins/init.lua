@@ -41,6 +41,7 @@ return require('packer').startup(function(use)
 	use(require('plugins.config.emoji'))
 	use(require('plugins.config.notes'))
 	use('xolox/vim-misc')
+	use(require('plugins.config.tables'))
                            
   if packer_bootstrap then
     require('packer').sync()
