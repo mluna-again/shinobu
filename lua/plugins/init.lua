@@ -39,6 +39,8 @@ return require('packer').startup(function(use)
   use('peitalin/vim-jsx-typescript')
 	use(require('plugins.config.neoclip'))
 	use(require('plugins.config.emoji'))
+	use(require('plugins.config.notes'))
+	use('xolox/vim-misc')
                            
   if packer_bootstrap then
     require('packer').sync()
