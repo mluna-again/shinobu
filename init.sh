@@ -17,7 +17,7 @@ cp ~/.config/nvim/starship.toml ~/.config
 
 # Config tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-cp ~/.config/nvim/.tmux.config ~
+cp ~/.config/nvim/.tmux.conf ~
 
 cat <<EOF
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
