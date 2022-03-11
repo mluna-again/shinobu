@@ -1,5 +1,5 @@
 # "Basic" packages
-sudo pacman -Syu --noconfirm neovim git nodejs fzf ripgrep zsh starship
+sudo pacman -Syu --noconfirm neovim git nodejs fzf ripgrep zsh starship exa
 
 # Config neovim
 mkdir ~/.config
