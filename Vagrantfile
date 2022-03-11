@@ -63,11 +63,5 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", privileged: false, keep_color: true, inline: <<-SHELL
-    sudo pacman -Syu --noconfirm neovim git nodejs
-    mkdir ~/.config
-    git clone https://github.com/mluna711/olivia.git ~/.config/nvim
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-  SHELL
+  config.vm.provision "shell", privileged: false, keep_color: true, path: "./init.sh"
 end
