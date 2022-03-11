@@ -1,5 +1,5 @@
 # "Basic" packages
-sudo pacman -Syu --noconfirm neovim git nodejs fzf ripgrep zsh starship exa which python3 python-pip bat tmux
+sudo pacman -Syu --noconfirm neovim git fzf ripgrep zsh starship exa which python3 python-pip bat tmux
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 # Config neovim
