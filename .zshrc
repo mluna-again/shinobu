@@ -155,6 +155,10 @@ ssh() {
 pac() {
   sudo pacman "$@" || (echo "Trying with yay..." && yay "$@" || echo "Nope. Good luck.")
 }
+
+mkvm() {
+  cp -r ~/.config/nvim $1
+}
 # </Function>
 
 # help :(
