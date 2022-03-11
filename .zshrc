@@ -158,6 +158,8 @@ pac() {
 
 mkvm() {
   cp -r ~/.config/nvim $1
+  cd $1
+  rm -rf .git
 }
 # </Function>
 
