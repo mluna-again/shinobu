@@ -2,14 +2,8 @@ return {
 	'hoob3rt/lualine.nvim',
 	config = function()
 		local colors = {
+			white= "#7d4140",
 			black= "#191716",
-			red= "#7d7c7c",
-			green= "#7d4140",
-			yellow= "#b65c5a",
-			blue= "#a67b78",
-			magenta= "#d49d99",
-			cyan= "#ececec",
-			white= "#e6cdc1",
 		}
 
 		require('lualine').setup{
