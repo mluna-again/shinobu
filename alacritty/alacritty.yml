@@ -36,6 +36,9 @@ cursor:
     shape: Block
     blinking: Always
 
+mouse:
+  hide_when_typing: true
+
 key_bindings:
   - { key: F11, action: ToggleFullscreen }
 
