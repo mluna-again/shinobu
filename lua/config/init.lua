@@ -28,7 +28,7 @@ vim.opt.colorcolumn = "99999"
 
 -- COMMANDS
 vim.cmd([[
-silent! colorscheme gruvbox
+silent! colorscheme dark_cherry_mystery
 command Ruby !ruby %
 command Go !go run .
 command Lisp !sbcl --script %
@@ -53,6 +53,6 @@ autocmd! BufEnter *.js nmap <silent> <C-p> :Node<CR>
 autocmd! BufEnter *.nim nmap <silent> <C-p> :Nim<CR>
 autocmd! BufEnter *.ex,*.exs nmap <silent> <C-p> :Elixir<CR>
 ]])
-vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
+-- vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
 vim.api.nvim_command[[highlight VertSplit cterm=NONE guibg=NONE]]
 vim.api.nvim_command[[set fillchars+=vert:\ ]]
