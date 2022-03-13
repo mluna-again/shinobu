@@ -1,0 +1,43 @@
+# Terminal Emulator Settings
+window:
+  decorations: None
+  padding:
+    x: 20
+    y: 10
+  scrolling:
+    history: 15
+
+# Setting zsh as the default shell
+shell:
+    program: /bin/zsh
+
+# Font
+font:
+  normal:
+    family: FiraCode Nerd Font Mono
+    style: Retina
+
+  bold:
+    family: FiraCode Nerd Font Mono
+    style: retina
+
+  italic:
+    family: FiraCode Nerd Font Mono
+    style: retina
+
+  bold_italic:
+    family: FiraCode Nerd Font Mono
+    style: retina
+
+  size: 12
+
+cursor:
+  style:
+    shape: Block
+    blinking: Always
+
+key_bindings:
+  - { key: F11, action: ToggleFullscreen }
+
+import:
+  - ~/.config/alacritty/dark_cherry_mystery.yml
