@@ -227,3 +227,6 @@ export GOPATH="$HOME/.local/go"
 export PATH="$PATH:$GOPATH/bin"
 
 export PATH="$PATH:$HOME/.local/bin"
+
+# fix tmux bg bug
+export TERM="xterm-256color"
