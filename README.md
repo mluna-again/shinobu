@@ -4,3 +4,9 @@
 </p>
 
 <img width="2531" target="_blank" alt="olivia showcase" src="https://raw.githubusercontent.com/mluna711/olivia/master/olivia.png">
+
+# Want to try it?
+If you have vagrant installed, just run:
+```sh
+$ vagrant up && vagrant ssh
+```
