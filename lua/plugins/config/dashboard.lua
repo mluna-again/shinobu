@@ -55,5 +55,8 @@ return {
 		nmap("<Leader>fa", ":DashboardFindWord<CR>")
 		nmap("<Leader>cn", ":DashboardNewFile<CR>")
 
+		vim.api.nvim_command([[
+			au! FileType dashboard set noruler
+		]])
   end
 }
