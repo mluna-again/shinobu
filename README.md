@@ -4,6 +4,9 @@
 </p>
 
 <img width="2531" target="_blank" alt="olivia showcase" src="https://raw.githubusercontent.com/mluna711/olivia/master/olivia.png">
+<img width="2531" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/mluna711/olivia/master/previews/telescope.png">
+<img width="2531" target="_blank" alt="code" src="https://raw.githubusercontent.com/mluna711/olivia/master/previews/code.png">
+<img width="2531" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna711/olivia/master/previews/neofetch.png">
 
 # Want to try it?
 If you have vagrant installed, just run:
