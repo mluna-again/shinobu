@@ -4,7 +4,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 # Config neovim
 mkdir ~/.config
-git clone https://github.com/mluna711/olivia.git ~/.config/nvim
+git clone https://github.com/mluna711/shinobu.git ~/.config/nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 pip3 install neovim
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
