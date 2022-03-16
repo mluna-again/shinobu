@@ -1,5 +1,3 @@
-USER=$(whoami)
-
 # "Basic" packages
 sudo pacman -Syu --noconfirm neovim git fzf ripgrep zsh starship exa which python3 python-pip bat tmux
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -12,7 +10,7 @@ pip3 install neovim
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 # Config zsh
-sudo -c "chsh -s $(which zsh) $USER"
+chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended &> /dev/null
 cp ~/.config/nvim/.zshrc ~
 cp ~/.config/nvim/starship.toml ~/.config
