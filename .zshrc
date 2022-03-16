@@ -137,14 +137,8 @@ docs() {
 
 ssh() {
   case "$1" in
-    test)
-      /usr/bin/ssh -i  ~/.ssh/mac hopper@pruebas.miveloz.com
-      ;;
-    prod)
-      /usr/bin/ssh hopper@api.miveloz.com
-      ;;
-    lain)
-      /usr/bin/ssh lain@lost-navi.xyz
+    navi)
+      /usr/bin/ssh mluna@lost-navi.xyz
       ;;
     *)
       /usr/bin/ssh $@
