@@ -226,3 +226,5 @@ export PATH="$PATH:$HOME/.local/bin"
 export TERM="xterm-256color"
 
 alias neofetch="neofetch --ascii ~/.config/nvim/hitagi"
+
+eval "$(direnv hook zsh)"
