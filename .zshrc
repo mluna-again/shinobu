@@ -91,6 +91,10 @@ alias dotsp="dots push"
 alias dotsb="dots branch"
 alias dotsd="dots diff"
 
+alias vaup="vagrant up && vagrant ssh"
+alias vs="vagrant ssh"
+alias vh="vagrant halt"
+
 # git
 alias gd="git diff"
 alias gl="git log"
