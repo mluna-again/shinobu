@@ -1,5 +1,6 @@
 # Terminal Emulator Settings
 window:
+  opacity: 0.9
   decorations: None
   padding:
     x: 20
