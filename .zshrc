@@ -115,6 +115,10 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 # </Aliases>
 
 # <Function>
+how() {
+  curl cht.sh/$1/$2
+}
+
 f() {
   eval $@ | fzf
 }
