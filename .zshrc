@@ -22,6 +22,7 @@ MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # <Aliases>
 # alias neofetch="neofetch --ascii ~/.local/ascii/mewo"
 # utils
+alias cd="z"
 alias .="source ~/.zshrc"
 alias :q="exit"
 alias ls="exa --color always --icons"
@@ -236,3 +237,4 @@ export TERM="xterm-256color"
 alias neofetch="neofetch --ascii ~/.config/nvim/hitagi"
 
 eval "$(direnv hook zsh)"
+eval "$(zoxide init zsh)"
