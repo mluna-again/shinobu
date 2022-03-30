@@ -1,5 +1,4 @@
 {
-  "elixir.pathToElixirLS": "~/.vim/elixir-lsp/language_server.sh",
 	"suggest": {
 		"noselect": false
 	}
