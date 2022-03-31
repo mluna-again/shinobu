@@ -1,8 +1,11 @@
 vim.cmd([[
 function Transparent()
 	hi Normal guibg=NONE
-	hi NonText guibg=NONE
+	hi NonText guibg=NONE guifg=BLACK
 	hi BufferlineFill guibg=NONE
+	augroup DarkCherryVim
+		autocmd!
+	augroup END
 endfunction
 
 function Solid()
