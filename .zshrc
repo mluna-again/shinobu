@@ -234,7 +234,7 @@ export PATH="$PATH:$HOME/.local/bin"
 # fix tmux bg bug
 export TERM="xterm-256color"
 
-alias neofetch="neofetch --ascii ~/.config/nvim/hitagi"
+alias neofetch="neofetch --ascii ~/.config/nvim/ascii/hitagi"
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
