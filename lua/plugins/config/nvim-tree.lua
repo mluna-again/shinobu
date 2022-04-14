@@ -1,6 +1,5 @@
 vim.o.termguicolors = true
 vim.g.nvim_tree_side = "right"
-vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_icons = {
   default = "",
   symlink = "",
