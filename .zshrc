@@ -7,14 +7,18 @@ bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
 export VI_MODE_SET_CURSOR=true
 export MODE_INDICATOR="%F{yellow}[NORMAL]%f"
-export VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
+bindkey "^A" vi-beginning-of-line
+bindkey "^E" vi-end-of-line
+bindkey '^R' history-incremental-search-backward
+bindkey '^U' backward-kill-line
+bindkey '^Y' yank
 zstyle ':completion:*' completer _complete
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
 autoload -Uz compinit
 compinit
-ZSH_THEME="rei"
+# ZSH_THEME="rei"
 plugins=(vi-mode)
 MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
@@ -118,10 +122,6 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 # <Function>
 how() {
   curl cht.sh/$1/$2
-}
-
-f() {
-  eval $@ | fzf
 }
 
 db_postgres() {
