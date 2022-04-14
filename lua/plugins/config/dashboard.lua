@@ -1,7 +1,7 @@
 require('core.maps')
 
 function read_banner()
-	local BANNER = "darkness"
+	local BANNER = "darkness2"
 	local file = io.lines(string.format("%s/.config/nvim/ascii/%s", os.getenv("HOME"), BANNER))
 	local lines = {}
 	for line in file do
@@ -19,6 +19,8 @@ return {
 		g.dashboard_disable_statusline = 1
 		g.dashboard_default_executive = "telescope"
 		g.dashboard_custom_header = read_banner()
+		-- g.dashboard_preview_command = "chafa -c 256 --fg-only --symbols braille"
+		-- g.dashboard_preview_file = "/home/mluna/.config/nvim/banners/darkness.png"
 
 		g.dashboard_custom_section = {
 			a = { description = { "  Find File                 SPC f f" }, command = "Telescope find_files" },
