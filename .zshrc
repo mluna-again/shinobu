@@ -32,6 +32,7 @@ alias :q="exit"
 alias ls="exa --color always --icons"
 alias rice='curl -L rum.sh/ricebowl'
 alias rice='curl -L git.io/rice'
+alias darkness="cat -p ~/.config/nvim/banners/darkness"
 alias figlet="figlet -f ~/.local/share/fonts/figlet-fonts/smmono12.tlf"
 alias cat="bat"
 alias p="psql -U postgres"
