@@ -240,3 +240,6 @@ alias neofetch="neofetch --ascii ~/.config/nvim/ascii/hitagi"
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
+
+[ -e ~/.personal ]
+source ~/.personal
