@@ -41,6 +41,9 @@ return require('packer').startup({function(use)
 	use('xolox/vim-misc')
 	use(require('plugins.config.tables'))
 	use('mluna711/dark_cherry_mystery_vim')
+	use('leafgarland/typescript-vim')
+	use('peitalin/vim-jsx-typescript')
+	use('vim-crystal/vim-crystal')
 
 	if packer_bootstrap then
 		require('packer').sync()
