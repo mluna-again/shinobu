@@ -15,22 +15,22 @@ shell:
 # Font
 font:
   normal:
-    family: FiraCode Nerd Font Mono
+    family: Codelia
     style: Retina
 
   bold:
-    family: FiraCode Nerd Font Mono
+    family: Codelia
     style: retina
 
   italic:
-    family: FiraCode Nerd Font Mono
+    family: Codelia
     style: retina
 
   bold_italic:
-    family: FiraCode Nerd Font Mono
+    family: Codelia
     style: retina
 
-  size: 10
+  size: 12
 
 cursor:
   style:
