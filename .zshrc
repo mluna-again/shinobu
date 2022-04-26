@@ -212,6 +212,7 @@ elidocs() {
 ph() {
   command="$1"
 
+  [ -z $command ] && iex -S mix phx.server && return
   [ $command = "s" ] && mix phx.server && return
 
   shift
