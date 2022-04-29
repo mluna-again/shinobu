@@ -15,19 +15,19 @@ shell:
 # Font
 font:
   normal:
-    family: Codelia
+    family: Codelia Nerd Font
     style: Retina
 
   bold:
-    family: Codelia
+    family: Codelia Nerd Font
     style: retina
 
   italic:
-    family: Codelia
+    family: Codelia Nerd Font
     style: retina
 
   bold_italic:
-    family: Codelia
+    family: Codelia Nerd Font
     style: retina
 
   size: 12
