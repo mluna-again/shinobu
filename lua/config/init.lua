@@ -4,7 +4,6 @@ vim.wo.relativenumber = true
 vim.bo.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
-vim.o.showtabline = 2
 vim.o.laststatus = 2
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -16,6 +15,8 @@ set nofoldenable
 set foldmethod=syntax   
 set foldnestmax=10
 set foldlevel=2
+set statusline=
+set showtabline=0
 ]])
 vim.g.mapleader = " "
 vim.opt.syntax = "on"
