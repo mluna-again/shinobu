@@ -44,4 +44,4 @@ key_bindings:
   - { key: F11, action: ToggleFullscreen }
 
 import:
-  - ~/.config/alacritty/dark_cherry_mystery.yml
+  - ~/.config/alacritty/kanawaga.yml

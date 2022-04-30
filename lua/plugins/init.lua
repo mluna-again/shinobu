@@ -44,6 +44,7 @@ return require('packer').startup({function(use)
 	use('peitalin/vim-jsx-typescript')
 	use('vim-crystal/vim-crystal')
 	use('udalov/kotlin-vim')
+	use('rebelot/kanagawa.nvim')
 
 	if packer_bootstrap then
 		require('packer').sync()
