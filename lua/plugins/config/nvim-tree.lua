@@ -40,11 +40,8 @@ return {
         "startify",
         "alpha",
       },
-      auto_close = false,
       open_on_tab = false,
-      quit_on_open = false,
       hijack_cursor = true,
-      hide_root_folder = true,
       update_cwd = true,
       update_focused_file = {
         enable = false,
@@ -64,7 +61,6 @@ return {
         width = 25,
         height = 30,
         side = "left",
-        allow_resize = true,
         hide_root_folder = false,
         number = false,
         relativenumber = false,
@@ -80,13 +76,6 @@ return {
         enable = true,
         ignore = false,
         timeout = 500,
-      },
-      show_icons = {
-        git = 1,
-        folders = 1,
-        files = 1,
-        folder_arrows = 0,
-        tree_width = 30,
       },
     }
   end
