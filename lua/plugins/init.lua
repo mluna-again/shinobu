@@ -43,6 +43,7 @@ return require('packer').startup({function(use)
 	use('vim-crystal/vim-crystal')
 	use('udalov/kotlin-vim')
 	use('rebelot/kanagawa.nvim')
+	use('tpope/vim-fugitive')
 
 	if packer_bootstrap then
 		require('packer').sync()
