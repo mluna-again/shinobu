@@ -1,4 +1,6 @@
 # <Config>
+[ -e ~/.personal ] && source ~/.personal
+
 autoload run-help
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
@@ -241,5 +243,3 @@ alias neofetch="neofetch --ascii ~/.config/nvim/ascii/hitagi"
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
-
-[ -e ~/.personal ] && source ~/.personal
