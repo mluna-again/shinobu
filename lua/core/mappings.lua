@@ -32,6 +32,7 @@ nmap("FF", ":NvimTreeToggle<CR>")
 nmap("ff", ":DashboardFindFile<CR>")
 nmap("ñ", ":Commentary<CR>")
 nmap("/", ":Telescope current_buffer_fuzzy_find<CR>")
+nmap("<C-j>", ":Neoformat<CR>")
 vim.cmd([[
 vnoremap ñ :Commentary<CR>
 ]])
