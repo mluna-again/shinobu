@@ -41,6 +41,7 @@ return {
 		nmap("<Leader>ff", ":DashboardFindFile<CR>")
 		nmap("<Leader>fa", ":DashboardFindWord<CR>")
 		nmap("<Leader>cn", ":DashboardNewFile<CR>")
+		nmap("<Leader>fn", ":NvimTreeFindFileToggle<CR>")
 
 		vim.api.nvim_command([[
 		au! FileType dashboard set noruler
