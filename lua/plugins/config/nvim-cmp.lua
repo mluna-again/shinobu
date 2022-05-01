@@ -1,3 +1,31 @@
+local kind_icons = {
+  Text = "",
+  Method = "",
+  Function = "",
+  Constructor = "",
+  Field = "",
+  Variable = "",
+  Class = "ﴯ",
+  Interface = "",
+  Module = "",
+  Property = "ﰠ",
+  Unit = "",
+  Value = "",
+  Enum = "",
+  Keyword = "",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "",
+  Event = "",
+  Operator = "",
+  TypeParameter = ""
+}
+
 local cmp = require('cmp')
 
 local has_words_before = function()
@@ -11,6 +39,9 @@ cmp.setup{
 		expand = function(args)
 			vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
 		end,
+	},
+	view = {
+		entries = { name = 'custom' }
 	},
 	window = {
 		completion = cmp.config.window.bordered(),
@@ -47,7 +78,22 @@ cmp.setup{
 		{ name = 'ultisnips' }, -- For ultisnips users.
 	}, {
 		{ name = 'buffer' },
-	})
+	}),
+	formatting = {
+		format = function(entry, vim_item)
+      -- Kind icons
+      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+      -- Source
+      vim_item.menu = ({
+        buffer = "[Buffer]",
+        nvim_lsp = "[LSP]",
+        luasnip = "[LuaSnip]",
+        nvim_lua = "[Lua]",
+        latex_symbols = "[LaTeX]",
+      })[entry.source.name]
+      return vim_item
+    end
+	}
 }
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 require('lspconfig').elixirls.setup{
