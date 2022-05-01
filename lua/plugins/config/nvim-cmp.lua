@@ -103,5 +103,8 @@ return {
 			capabilities = capabilities,
 			cmd = { string.format("%s/.local/bin/elixir-ls/language_server.sh", os.getenv("HOME")) }
 		}
+		require('lspconfig').tsserver.setup{
+			capabilities = capabilities
+		}
 	end
 }
