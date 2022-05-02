@@ -37,4 +37,6 @@ vnoremap ñ :Commentary<CR>
 
 imap("jj", "<ESC>")
 
+-- LSP
 nmap("<Leader>lf", "<cmd>lua vim.lsp.buf.definition()<CR>")
+nmap("<Leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>")
