@@ -50,6 +50,7 @@ return require('packer').startup({function(use)
 	use('hrsh7th/cmp-cmdline')
 	use(require('plugins.config.nvim-cmp'))
 	use(require('plugins.config.bufferline'))
+	use(require('plugins.config.lsp-installer'))
 
 	if packer_bootstrap then
 		require('packer').sync()
