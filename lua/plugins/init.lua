@@ -51,6 +51,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.nvim-cmp'))
 	use(require('plugins.config.bufferline'))
 	use(require('plugins.config.lsp-installer'))
+	use(require('plugins.config.trouble'))
 
 	if packer_bootstrap then
 		require('packer').sync()
