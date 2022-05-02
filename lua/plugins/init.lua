@@ -56,6 +56,7 @@ return require('packer').startup({function(use)
 	use('hrsh7th/cmp-path')
 	use('hrsh7th/cmp-cmdline')
 	use('rhysd/git-messenger.vim')
+	use("ellisonleao/glow.nvim", {branch = 'main'})
 
 	if packer_bootstrap then
 		require('packer').sync()
