@@ -52,6 +52,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.bufferline'))
 	use(require('plugins.config.lsp-installer'))
 	use(require('plugins.config.trouble'))
+	use(require('plugins.config.which_key'))
 
 	if packer_bootstrap then
 		require('packer').sync()
