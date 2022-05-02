@@ -24,7 +24,6 @@ nmap("-", "<C-e>")
 nmap("¿", "<C-y>")
 -- nmap("{", "<C-u>")
 -- nmap("}", "<C-d>")
-nmap("<C-f>", ":call CocAction('jumpDefinition', 'drop')<CR>")
 nmap("<C-x>", ":bufdo bd | :Dashboard<CR>")
 nmap("<Space>", "<Nop>")
 nmap("FF", ":NvimTreeToggle<CR>")
@@ -37,3 +36,5 @@ vnoremap ñ :Commentary<CR>
 ]])
 
 imap("jj", "<ESC>")
+
+nmap("<Leader>lf", "<cmd>lua vim.lsp.buf.definition()<CR>")

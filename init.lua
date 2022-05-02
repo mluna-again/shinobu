@@ -1,4 +1,4 @@
-require('core.mappings')
 require('plugins')
 require('utils')
 require('config')
+require('core.mappings')
