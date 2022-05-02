@@ -1,6 +1,6 @@
 <h1 align="center">Shinobu.vim 🍙</h1>
 <p align="center">
-<img alt="Neovim Minimum Version" src="https://img.shields.io/badge/Neovim-0.6.1+-blueviolet.svg?style=flat-square&logo=Neovim&logoColor=white)](https://github.com/neovim/neovim">
+<img alt="Neovim Minimum Version" src="https://img.shields.io/badge/Neovim-0.7.0+-blueviolet.svg?style=flat-square&logo=Neovim&logoColor=white)](https://github.com/neovim/neovim">
 </p>
 
 <img width="2531" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/mluna711/shinobu/master/shinobu.png">
