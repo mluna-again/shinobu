@@ -49,6 +49,7 @@ return require('packer').startup({function(use)
 	use('hrsh7th/cmp-path')
 	use('hrsh7th/cmp-cmdline')
 	use(require('plugins.config.nvim-cmp'))
+	use(require('plugins.config.bufferline'))
 
 	if packer_bootstrap then
 		require('packer').sync()
