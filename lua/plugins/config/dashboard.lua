@@ -44,8 +44,9 @@ return {
 		nmap("<Leader>fn", ":NvimTreeFindFileToggle<CR>")
 		nmap("<Leader>FF", ":Telescope buffers<CR>")
 
-		vim.api.nvim_command([[
+		vim.cmd([[
 		au! FileType dashboard set noruler
+		au! VimEnter * hi DashboardHeader guifg=white
 		]])
 	end
 }
