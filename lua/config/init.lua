@@ -55,5 +55,5 @@ autocmd! BufEnter *.nim nmap <silent> <C-p> :Nim<CR>
 autocmd! BufEnter *.ex,*.exs nmap <silent> <C-p> :Elixir<CR>
 ]])
 -- vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
-vim.api.nvim_command[[highlight VertSplit cterm=NONE guibg=NONE]]
-vim.api.nvim_command[[set fillchars+=vert:\ ]]
+vim.cmd[[highlight VertSplit cterm=NONE guibg=NONE]]
+vim.cmd[[highlight EndOfBuffer guifg=bg]]
