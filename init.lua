@@ -1,3 +1,4 @@
+pcall(require('impatient'))
 require('plugins')
 require('utils')
 require('config')
