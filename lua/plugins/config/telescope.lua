@@ -29,7 +29,7 @@ return {
 						mirror = false,
 					},
 					width = 0.87,
-					height = 0.80,
+					height = 0.90,
 					preview_cutoff = 120,
 				},
 				file_sorter = require("telescope.sorters").get_fuzzy_file,
