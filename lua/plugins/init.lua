@@ -6,7 +6,7 @@ end
 
 return require('packer').startup({function(use)
 	use('wbthomason/packer.nvim')
-	use('mangeshrex/everblush.vim')
+	use("rebelot/kanagawa.nvim")
 	use('nvim-lua/popup.nvim')
 	use('nvim-lua/plenary.nvim')
 	use('elixir-editors/vim-elixir')
