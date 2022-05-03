@@ -60,6 +60,7 @@ return require('packer').startup({function(use)
 	use('rhysd/git-messenger.vim')
 	use('ellisonleao/glow.nvim', {branch = 'main'})
 	use('tpope/vim-repeat')
+	use('quangnguyen30192/cmp-nvim-ultisnips')
 
 	if packer_bootstrap then
 		require('packer').sync()
