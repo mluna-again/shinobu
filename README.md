@@ -2,6 +2,7 @@
 <p align="center">
 <img alt="Neovim Minimum Version" src="https://img.shields.io/badge/neovim-0.7.0+-blueviolet.svg?logoColor=white)](https://github.com/neovim/neovim">
 <img alt="Startup time" src="https://img.shields.io/badge/startup%20time%20(on%20my%20machine)-~90%20ms-yellow">
+<img alt="Startup time" src="https://img.shields.io/badge/bloat%20(plugins)-~90%59-yellow">
 </p>
 
 <img width="2531" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/mluna711/shinobu/master/shinobu.png">
