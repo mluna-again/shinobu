@@ -63,6 +63,7 @@ return require('packer').startup({function(use)
 	use('ellisonleao/glow.nvim', {branch = 'main'})
 	use('tpope/vim-repeat')
 	use('quangnguyen30192/cmp-nvim-ultisnips')
+	use('lewis6991/impatient.nvim')
 
 	if packer_bootstrap then
 		require('packer').sync()
