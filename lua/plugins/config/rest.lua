@@ -25,5 +25,7 @@ return {
 			custom_dynamic_variables = {},
 			yank_dry_run = true,
 		})
+
+		nmap("<Leader>hr", "<Plug>RestNvim", { noremap = false })
 	end
 }
