@@ -38,6 +38,8 @@ return {
 		set foldnestmax=3
 		set foldminlines=1
 		autocmd! BufReadPost,FileReadPost * normal zR
+		command Fold :e | normal zMzr
+		command Unfold normal zR
 		]])
 	end
 }
