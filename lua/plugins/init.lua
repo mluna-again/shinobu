@@ -6,6 +6,7 @@ end
 
 return require('packer').startup({function(use)
 	use('wbthomason/packer.nvim')
+	use('mangeshrex/everblush.vim')
 	use('nvim-lua/popup.nvim')
 	use('nvim-lua/plenary.nvim')
 	use('elixir-editors/vim-elixir')
@@ -33,7 +34,6 @@ return require('packer').startup({function(use)
 	use('quangnguyen30192/cmp-nvim-ultisnips')
 	use('lewis6991/impatient.nvim')
 	use(require('plugins.config.dashboard'))
-	use(require('plugins.config.neoformat'))
 	use(require('plugins.config.nvim-cmp'))
 	use(require('plugins.config.bufferline'))
 	use(require('plugins.config.lsp-installer'))
@@ -56,6 +56,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.telescope'))
 	use(require('plugins.config.rest'))
 	use(require('plugins.config.treesitter'))
+	use(require('plugins.config.neoformat'))
 
 	if packer_bootstrap then
 		require('packer').sync()
