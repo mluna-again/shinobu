@@ -24,7 +24,6 @@ vim.wo.t_Co = "256"
 vim.api.nvim_command([[
 au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions -=0
 ]])
-vim.g.indentLine_fileTypeExclude = {'dashboard', 'dockerfile', 'json', 'WhichKey', 'packer', 'glowpreview'}
 vim.opt.colorcolumn = "99999"
 
 -- COMMANDS
