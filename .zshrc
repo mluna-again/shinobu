@@ -239,7 +239,7 @@ export PATH="$PATH:/$HOME/.emacs.d/bin"
 # fix tmux bg bug
 export TERM="xterm-256color"
 
-alias neofetch="neofetch --backend chafa --source ~/.config/nvim/banners/rice.png"
+alias neofetch="neofetch --backend chafa --source ~/.config/nvim/banners/rice.png --size 400"
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
