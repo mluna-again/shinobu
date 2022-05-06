@@ -19,8 +19,8 @@ return {
 		g.dashboard_disable_statusline = 1
 		g.dashboard_default_executive = "telescope"
 		g.dashboard_custom_header = read_banner()
-		g.dashboard_preview_command = "chafa --center on"
-		g.dashboard_preview_file = "/home/mluna/.config/nvim/banners/rice.png"
+		-- g.dashboard_preview_command = "chafa --center on"
+		-- g.dashboard_preview_file = "/home/mluna/.config/nvim/banners/rice.png"
 		g.dashboard_preview_file_height = 15
 		g.dashboard_preview_file_width = 40
 
