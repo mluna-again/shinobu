@@ -1,6 +1,18 @@
 return {
 	'hrsh7th/nvim-cmp',
 	config = function()
+		require("nvim-lsp-installer").setup({
+			ensure_installed = { "elixirls", "tsserver", "sumneko_lua" }, -- ensure these servers are always installed
+			automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+			ui = {
+				icons = {
+					server_installed = "✓",
+					server_pending = "➜",
+					server_uninstalled = "✗"
+				}
+			},
+			install_root_dir = string.format("%s/.local/bin", os.getenv("HOME"))
+		})
 		local kind_icons = {
 			Text = "",
 			Method = "",
@@ -99,7 +111,7 @@ return {
 		local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 		require('lspconfig').elixirls.setup{
 			capabilities = capabilities,
-			cmd = { string.format("%s/.local/bin/elixir-ls/language_server.sh", os.getenv("HOME")) }
+			-- cmd = { string.format("%s/.local/bin/elixirls/elixir-ls/language_server.sh", os.getenv("HOME")) }
 		}
 		require('lspconfig').tsserver.setup{
 			capabilities = capabilities
