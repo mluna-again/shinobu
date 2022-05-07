@@ -110,8 +110,7 @@ return {
 		}
 		local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 		require('lspconfig').elixirls.setup{
-			capabilities = capabilities,
-			cmd = { string.format("%s/.local/bin/elixirls/elixir-ls/language_server.sh", os.getenv("HOME")) }
+			capabilities = capabilities
 		}
 		require('lspconfig').tsserver.setup{
 			capabilities = capabilities
