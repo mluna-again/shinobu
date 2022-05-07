@@ -1,4 +1,4 @@
-pcall(require('impatient'))
+pcall(function() require('impatient') end)
 require('plugins')
 require('utils')
 require('config')
