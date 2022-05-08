@@ -57,6 +57,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.treesitter'))
 	use(require('plugins.config.neoformat'))
 	use(require('plugins.config.blankline'))
+	use(require('plugins.config.lualine'))
 
 	if packer_bootstrap then
 		require('packer').sync()
