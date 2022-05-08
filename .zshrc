@@ -221,6 +221,10 @@ ph() {
   eval "mix phx.$command $@"
 }
 
+ph_test() {
+  nodemon $1 --exec "mix test $1"
+}
+
 export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled"
 export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 # </Elixir/Erlang>

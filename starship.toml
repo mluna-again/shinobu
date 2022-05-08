@@ -4,9 +4,9 @@ format = """$username$hostname$directory$git_branch$git_commit$git_state$git_met
 $character"""
 
 [character]
-success_symbol = "[Δ](bold purple)"
-error_symbol = "[✖](bold red)"
-vicmd_symbol = "[Δ](bold green)"
+success_symbol = "[=>](bold purple)"
+error_symbol = "[=>](bold red)"
+vicmd_symbol = "[=>](bold green)"
 
 [[battery.display]]
 threshold = 100
