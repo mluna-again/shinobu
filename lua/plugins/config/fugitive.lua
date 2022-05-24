@@ -4,7 +4,7 @@ return {
 	'tpope/vim-fugitive',
 	config = function ()
 		nmap("<leader>gd", ":Gvdiffsplit!<CR>")
-		nmap("gdr", ":diffget //2<CR>")
-		nmap("gdt", ":diffget //2<CR>")
+		nmap("gdh", ":diffget //2<CR>")
+		nmap("gdl", ":diffget //3<CR>")
 	end
 }
