@@ -1,6 +1,7 @@
 snippet log "colored log" b
+require Logger;
 Logger.debug("--------------------------------", ansi_color: :yellow)
-Logger.debug($1, ansi_color: :yellow)
+Logger.debug(inspect($1), ansi_color: :yellow)
 Logger.debug("--------------------------------\n", ansi_color: :yellow)
 endsnippet
 
