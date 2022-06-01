@@ -1,26 +1,5 @@
 vim.o.termguicolors = true
 vim.g.nvim_tree_side = "right"
-vim.g.nvim_tree_icons = {
-  default = "",
-  symlink = "",
-  git = {
-    deleted = "",
-    ignored = "◌",
-    renamed = "➜",
-    staged = "✓",
-    unmerged = "",
-    unstaged = "✗",
-    untracked = "★",
-  },
-  folder = {
-    default = "",
-    empty = "",
-    empty_open = "",
-    open = "",
-    symlink = "",
-    symlink_open = "",
-  },
-}
 
 return {
   'kyazdani42/nvim-tree.lua',
@@ -77,6 +56,27 @@ return {
         ignore = false,
         timeout = 500,
       },
+			icons = {
+				default = "",
+				symlink = "",
+				git = {
+					deleted = "",
+					ignored = "◌",
+					renamed = "➜",
+					staged = "✓",
+					unmerged = "",
+					unstaged = "✗",
+					untracked = "★",
+				},
+				folder = {
+					default = "",
+					empty = "",
+					empty_open = "",
+					open = "",
+					symlink = "",
+					symlink_open = "",
+				},
+			}
     }
   end
 }
