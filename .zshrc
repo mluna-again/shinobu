@@ -230,7 +230,7 @@ export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled"
 export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 # </Elixir/Erlang>
 
-# source ~/.rvm/scripts/rvm
+source ~/.rvm/scripts/rvm
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
