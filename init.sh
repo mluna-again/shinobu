@@ -1,5 +1,13 @@
 # "Basic" packages
 sudo pacman -Syu --noconfirm neovim git fzf ripgrep zsh starship exa which python3 python-pip bat tmux direnv zoxide jq gcc chafa unzip
+
+curr_dir=$(pwd)
+git clone https://aur.archlinux.org/yay.git ~/yay
+cd ~/yay
+makepkg -si
+cd $curr_dir
+yay -S rvm --noconfirm
+
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
