@@ -2,7 +2,7 @@ return {
 	'hrsh7th/nvim-cmp',
 	config = function()
 		require("nvim-lsp-installer").setup({
-			ensure_installed = { "elixirls", "tsserver", "sumneko_lua", "cssls", "clojure_lsp", "solargraph", "csharp_ls" },
+			ensure_installed = { "elixirls", "tsserver", "sumneko_lua", "cssls", "clojure_lsp", "solargraph", "csharp_ls", "gopls" },
 			automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
 			ui = {
 				icons = {
@@ -128,6 +128,9 @@ return {
 			capabilities = capabilities
 		}
 		require('lspconfig').csharp_ls.setup{
+			capabilities = capabilities
+		}
+		require('lspconfig').gopls.setup{
 			capabilities = capabilities
 		}
 	end
