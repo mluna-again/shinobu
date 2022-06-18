@@ -248,3 +248,7 @@ alias neofetch="neofetch --backend chafa --source ~/.config/nvim/banners/rice.pn
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 eval "$(rbenv init - zsh)"
+
+ok() {
+git commit -m "$* 😑👍"
+}
