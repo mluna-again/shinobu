@@ -40,7 +40,6 @@ alias cat="bat"
 alias p="psql -U postgres"
 alias xr="xmonad --recompile && xmonad --restart"
 alias ports="sudo lsof -i -P -n | grep -i listen"
-alias t="tmuxinator start || clear && tmux"
 alias mux="tmuxinator"
 alias n="nordvpn"
 alias ns="nordvpn status"
@@ -124,6 +123,10 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 # </Aliases>
 
 # <Function>
+t() {
+  tmuxinator start && return || clear && tmux
+}
+
 how() {
   curl cht.sh/$1/$2
 }
