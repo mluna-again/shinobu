@@ -5,10 +5,10 @@
 <img alt="Startup time" src="https://img.shields.io/badge/plugins-53-red">
 </p>
 
-<img width="2531" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/mluna711/shinobu/master/shinobu.png">
-<img width="2531" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/mluna711/shinobu/master/previews/telescope.png">
-<img width="2531" target="_blank" alt="code" src="https://raw.githubusercontent.com/mluna711/shinobu/master/previews/code.png">
-<img width="2531" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna711/shinobu/master/previews/neofetch.png">
+<img width="2531" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/shinobu.png">
+<img width="2531" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/telescope.png">
+<img width="2531" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/code.png">
+<img width="2531" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/neofetch.png">
 
 # Want to try it?
 If you have vagrant installed, just run:
