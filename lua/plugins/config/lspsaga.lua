@@ -76,9 +76,5 @@ return {
 		nmap("<Leader>lf", "<cmd>lua require('lspsaga.finder').lsp_finder()<CR>")
 		nmap("<Leader>ld", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 		nmap("<Leader>lr", "<cmd>lua require('lspsaga.rename').lsp_rename()<CR>")
-		-- " scroll down hover doc or scroll in definition preview
-		-- nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-		-- " scroll up hover doc
-		-- nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 	end
 }
