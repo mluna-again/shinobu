@@ -44,13 +44,6 @@ command Iex :FloatermNew --name=iex --autoclose=1 iex -S mix
 command Irb :FloatermNew irb
 command IRb :FloatermNew irb
 command IRB :FloatermNew irb
-
-autocmd! BufEnter *.rb nmap <silent> <C-p> :Ruby<CR>
-autocmd! BufEnter *.lisp,*.cl nmap <silent> <C-p> :Lisp<CR>
-autocmd! BufEnter *.cls nmap <silent> <C-p> :Clojure<CR>
-autocmd! BufEnter *.js nmap <silent> <C-p> :Node<CR>
-autocmd! BufEnter *.nim nmap <silent> <C-p> :Nim<CR>
-autocmd! BufEnter *.ex,*.exs nmap <silent> <C-p> :Elixir<CR>
 ]])
 -- vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
 vim.cmd[[highlight VertSplit cterm=NONE guibg=NONE]]
