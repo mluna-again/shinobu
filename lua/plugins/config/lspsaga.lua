@@ -52,7 +52,7 @@ return {
 				scroll_up = "<C-p>", -- quit can be a table
 			},
 			code_action_keys = {
-				quit = "q",
+				quit = "<Esc>",
 				exec = "<CR>",
 				scroll_down = "<C-n>",
 				scroll_up = "<C-p>",
