@@ -57,7 +57,7 @@ return {
 				scroll_down = "<C-n>",
 				scroll_up = "<C-p>",
 			},
-			rename_action_quit = "<C-c>",
+			rename_action_quit = "<Esc>",
 			definition_preview_icon = "  ",
 			-- if you don't use nvim-lspconfig you must pass your server name and
 			-- the related filetypes into this table
