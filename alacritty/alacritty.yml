@@ -15,19 +15,19 @@ shell:
 # Font
 font:
   normal:
-    family: Codelia Nerd Font
+    family: FiraCode Nerd Font
     style: Retina
 
   bold:
-    family: Codelia Nerd Font
+    family: FiraCode Nerd Font
     style: retina
 
   italic:
-    family: Codelia Nerd Font
+    family: FiraCode Nerd Font
     style: retina
 
   bold_italic:
-    family: Codelia Nerd Font
+    family: FiraCode Nerd Font
     style: retina
 
   size: 12
