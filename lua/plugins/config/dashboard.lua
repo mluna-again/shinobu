@@ -4,31 +4,26 @@ function read_banner()
 	local BANNER = "darkness2"
 	local file = io.lines(string.format("%s/.config/nvim/ascii/%s", os.getenv("HOME"), BANNER))
 	local lines = {}
+	table.insert(lines, "")
 	for line in file do
 		table.insert(lines, line)
 	end
+	table.insert(lines, "")
 	return lines
 end
 
 return {
 	'glepnir/dashboard-nvim',
 	config = function()
-		-- g.dashboard_disable_at_vimenter = 0
-		-- g.dashboard_disable_statusline = 1
-		-- g.dashboard_preview_command = "chafa --center on"
-		-- g.dashboard_preview_file = "/home/mluna/.config/nvim/banners/rice.png"
-		-- g.dashboard_preview_file_height = 15
-		-- g.dashboard_preview_file_width = 40
-
 		local db = require('dashboard')
 		db.custom_header = read_banner()
 		db.custom_center = {
 		}
 		db.custom_footer = { "いい元気だね、何かいいことでもあったのかい？" }
-		-- db.preview_file_Path
-		-- db.preview_file_height
-		-- db.preview_file_width
-		-- db.preview_command
+		-- db.preview_file_path = string.format("%s/.config/nvim/banners/rice.png", os.getenv("HOME"))
+		-- db.preview_file_height = 15
+		-- db.preview_file_width = 40
+		-- db.preview_command = "chafa --center on"
 		db.hide_statusline = 1
 		db.hide_tabline = 1
 		-- db.session_directory
