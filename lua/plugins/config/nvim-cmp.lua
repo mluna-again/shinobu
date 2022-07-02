@@ -137,5 +137,8 @@ return {
 		require('lspconfig').kotlin_language_server.setup{
 			capabilities = capabilities
 		}
+		require('lspconfig').metals.setup{
+			capabilities = capabilities
+		}
 	end
 }
