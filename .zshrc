@@ -255,3 +255,6 @@ eval "$(rbenv init - zsh)"
 ok() {
 git commit -m "$* 😑👍"
 }
+
+# load profile
+source $HOME/.zprofile
