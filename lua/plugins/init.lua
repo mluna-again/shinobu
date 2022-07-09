@@ -66,8 +66,9 @@ return require('packer').startup({function(use)
 end,
 config = {
 	display = {
+		prompt_border = 'none',
 		open_fn = function()
-			return require('packer.util').float({ border = 'single' })
+			return require('packer.util').float({ border = 'none' })
 		end
 	}
 }})
