@@ -9,7 +9,7 @@
 <img width="2531" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/telescope.png">
 <img width="2531" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/code.png">
 <img width="2531" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/neofetch.png">
-<video width="2531" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/shinobu.mp4">
+[![Demo](https://raw.githubusercontent.com/iteration-A/shinobu/master/shinobu.mp4)](https://raw.githubusercontent.com/iteration-A/shinobu/master/shinobu.mp4)
 
 # Want to try it?
 If you have vagrant installed, just run:
