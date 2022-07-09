@@ -11,4 +11,7 @@ playerctl -p spotify metadata &>/dev/null  || exit
 song_name=$(playerctl -p spotify metadata | grep -i title | cut -f 3- -d " " | tr -s "[:blank:]")
 artist=$(playerctl -p spotify metadata artist)
 
-echo "$artist -$song_name"
+title="$artist -$song_name"
+short_title=$(echo $title | cut -c -30)
+
+[ "$title" != "$short_title" ] && echo "$short_title..." || echo "$title"
