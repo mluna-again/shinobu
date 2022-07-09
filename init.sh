@@ -1,5 +1,5 @@
 # "Basic" packages
-sudo pacman -Syu --noconfirm neovim git fzf ripgrep zsh starship exa which python3 python-pip bat tmux direnv zoxide jq gcc chafa unzip playerctl tr cut grep command
+sudo pacman -Syu --noconfirm neovim git fzf ripgrep zsh starship exa which python3 python-pip bat tmux direnv zoxide jq gcc chafa unzip playerctl tr cut grep command upower
 
 curr_dir=$(pwd)
 git clone https://aur.archlinux.org/yay.git ~/yay
