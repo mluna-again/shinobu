@@ -13,5 +13,11 @@ artist=$(playerctl -p spotify metadata artist)
 
 title="$artist -$song_name"
 short_title=$(echo $title | cut -c -30)
+playing=$([ $(playerctl -p spotify status) == "Playing" ] && echo "yes" || echo "no")
 
-[ "$title" != "$short_title" ] && echo "$short_title..." || echo "$title"
+
+if [ "$playing" == "yes" ]; then
+	[ "$title" != "$short_title" ] && echo "#[fg=green]阮$short_title..." || echo "#[fg=green]阮$title"
+else
+	[ "$title" != "$short_title" ] && echo "#[fg=gray]阮$short_title..." || echo "#[fg=gray]阮$title"
+fi
