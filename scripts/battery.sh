@@ -7,7 +7,7 @@ battery=$(upower -e | grep -i bat0)
 percentage=$(upower -i $battery | grep -i percentage | awk '{print $2}')
 percentage_num=$(echo $percentage | cut -c -2)
 
-low_battery=$([ $percentage_num -le 25 ] && echo "yes" || echo "no")
+low_battery=$([ $percentage_num -le 20 ] && echo "yes" || echo "no")
 
 plugged=$(upower -i $battery | grep -i ".*state:.*\bcharging\b.*" &>/dev/null && echo "yes" || echo "no")
 
@@ -23,8 +23,10 @@ elif [ "$low_battery" == "no" ]; then
 		echo "#[fg=yellow] $percentage"
 	elif [ "$percentage_num" -ge "30" ]; then
 		echo "#[fg=yellow] $percentage"
+	elif [ "$percentage_num" -ge "20" ]; then
+		echo "#[fg=orange] $percentage"
 	fi
 
 else
-	echo "#[fg=red] $percentage"
+	echo "#[fg=red] $percentage"
 fi
