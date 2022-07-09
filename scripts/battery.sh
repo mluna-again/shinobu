@@ -26,5 +26,5 @@ elif [ "$low_battery" == "no" ]; then
 	fi
 
 else
-	echo "#[fg=red] $percentage"
+	echo "#[fg=red] $percentage"
 fi
