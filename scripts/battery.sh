@@ -20,9 +20,9 @@ elif [ "$low_battery" == "no" ]; then
 	elif [ "$percentage_num" -ge "70" ]; then
 		echo "#[fg=green] $percentage"
 	elif [ "$percentage_num" -ge "50" ]; then
-		echo "#[fg=green] $percentage"
+		echo "#[fg=yellow] $percentage"
 	elif [ "$percentage_num" -ge "30" ]; then
-		echo "#[fg=green] $percentage"
+		echo "#[fg=yellow] $percentage"
 	fi
 
 else
