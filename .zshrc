@@ -187,6 +187,7 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
 export JAVA_HOME=/usr/lib/jvm/default
 export PATH=$PATH:$HOME/.yarn/bin
 export SPICETIFY_INSTALL="$HOME/spicetify-cli"
@@ -258,3 +259,10 @@ git commit -m "$* 😑👍"
 
 # load profile
 source $HOME/.zprofile
+
+# bun completions
+[ -s "/home/mluna/.bun/_bun" ] && source "/home/mluna/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/home/mluna/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
