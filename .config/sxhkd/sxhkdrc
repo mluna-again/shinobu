@@ -119,3 +119,16 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# volume/brightness
+XF86AudioLowerVolume
+	amixer set Master 5%-
+XF86AudioRaiseVolume
+	amixer set Master 5%+
+XF86AudioMute
+  amixer set Master toggle
+# for some reasone xf keys wont work
+super + plus
+  light -A 10
+super + minus
+  light -U 10
