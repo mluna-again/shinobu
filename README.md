@@ -5,7 +5,7 @@
 <img alt="Startup time" src="https://img.shields.io/badge/plugins-53-red">
 </p>
 
-<img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/shinobu.png">
+<img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/shinobu.png">
 <img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/telescope.png">
 <img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/code.png">
 
