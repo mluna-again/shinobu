@@ -2,7 +2,7 @@ require('core.maps')
 
 function read_banner()
 	local BANNER = "darkness2"
-	local file = io.lines(string.format("%s/.config/nvim/ascii/%s", os.getenv("HOME"), BANNER))
+	local file = io.lines(string.format("%s/.local/ascii/%s", os.getenv("HOME"), BANNER))
 	local lines = {}
 	table.insert(lines, "")
 	for line in file do
