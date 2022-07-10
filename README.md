@@ -11,7 +11,7 @@
 
 https://user-images.githubusercontent.com/53100040/178126482-f6aaf8a9-8ed2-42d4-a4cb-10b0c7046502.mp4
 
-> This repo was once only for my nvim dotfiles, but overtime I kept adding more and more and now it houses my whole setup.
+> This repo was once only for my nvim dotfiles, but over time I kept adding more and more and now it houses my whole setup.
 
 # Want to try it?
 
