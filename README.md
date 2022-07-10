@@ -18,6 +18,7 @@ https://user-images.githubusercontent.com/53100040/178126482-f6aaf8a9-8ed2-42d4-
 I use [Yadm](https://yadm.io/) to manage my dotfiles, if you want my config you can run:
 
 > ⚠️ This will overwrite your current configurations. If you are unsure, just clone the repo normally (with git) and pick what you want :). Or try it in a VM.
+
 > 🙃 The init script will only work on Arch (or Arch-based distros). Sorry.
 
 ```
