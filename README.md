@@ -21,4 +21,5 @@ I use [Yadm](https://yadm.io/) to manage my dotfiles, if you want my config you 
 
 ```
 $ yadm clone https://github.com/iteration-A/shinobu
+$ ~/.local/scripts/init.sh
 ```
