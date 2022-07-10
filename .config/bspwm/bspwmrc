@@ -1,8 +1,17 @@
 #! /bin/sh
 
-pgrep -x sxhkd > /dev/null || sxhkd &
+pkill sxhkd; sxhkd &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+# Reconfigures monitor
+if xrandr | grep -i "HDMI-1 disconnected"; then
+	xrandr --output eDP-1 && xrandr --output HDMI-1 --off
+  bspc monitor --remove HDMI-1
+  bspc monitor eDP-1 -d I II III IV V VI VII VIII IX X
+else
+	xrandr --output HDMI-1 --mode 1920x1080 && xrandr --output eDP-1 --off
+  bspc monitor --remove eDP-1
+  bspc monitor HDMI-1 -d I II III IV V VI VII VIII IX X
+fi
 
 bspc config border_width         2
 bspc config window_gap          12
