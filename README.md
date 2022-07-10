@@ -9,9 +9,7 @@
 <img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/telescope.png">
 <img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/code.png">
 <img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/previews/neofetch.png">
-<video width="1920" height="1080" controls>
-  <source src="https://github.com/iteration-A/shinobu/master/shinobu.mp4" type="video/mp4">
-</video>
+https://github.com/iteration-A/shinobu/master/shinobu.mp4
 
 # Want to try it?
 If you have vagrant installed, just run:
