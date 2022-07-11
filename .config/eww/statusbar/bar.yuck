@@ -1,0 +1,31 @@
+(include "./statusbar/ram.yuck")
+(include "./statusbar/battery.yuck")
+(include "./statusbar/cpu.yuck")
+
+(defvar open false)
+
+(defwidget bar []
+  (box :orientation "horizontal"
+       :class "statusbar"
+    (box
+      :halign "start"
+      :class "left"
+      (button :class "btn" :onclick "notify-send 'hi'" "⏻")
+      (button :class "btn" :onclick "bspc desktop -f ^1" "一")
+      (button :class "btn" :onclick "bspc desktop -f ^2" "二")
+      (button :class "btn" :onclick "bspc desktop -f ^3" "三")
+      (button :class "btn" :onclick "bspc desktop -f ^4" "四")
+      (button :class "btn" :onclick "bspc desktop -f ^5" "五")
+      (button :class "btn" :onclick "bspc desktop -f ^6" "六")
+      (button :class "btn" :onclick "bspc desktop -f ^7" "七")
+      (button :class "btn" :onclick "bspc desktop -f ^8" "八")
+      (button :class "btn" :onclick "bspc desktop -f ^9" "九")
+      (button :class "btn" :onclick "bspc desktop -f ^10" "十"))
+    (box
+      :halign "end"
+      :valign "center"
+      :class "right"
+      :spacing 15
+      (ram)
+      (battery)
+      (cpu))))

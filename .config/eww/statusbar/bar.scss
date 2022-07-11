@@ -1,0 +1,34 @@
+.statusbar {
+  .btn {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+  }
+
+  .ram {
+    progressbar {
+      trough {
+        min-width: 80px;
+        progress {
+          background-color: crimson;
+        }
+      }
+    }
+
+		.label {
+			font-size: 23px;
+		}
+		.num {
+			font-size: 14px;
+		}
+  }
+
+  .left {
+    background-color: #282c34;
+    padding: 0 10px;
+    border-radius: 5px;
+  }
+
+  .right {
+    background-color: #282c34;
+  }
+}
