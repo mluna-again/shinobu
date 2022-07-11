@@ -1,5 +1,5 @@
 vim.o.encoding = "UTF-8"
-vim.o.clipboard = "unnamedplus"
+-- vim.o.clipboard = "unnamedplus"
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.bo.expandtab = true
