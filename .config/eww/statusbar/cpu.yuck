@@ -8,7 +8,7 @@
       (box :class "label"
            :valign "center" " ")
       (box :class "num"
-           :valign "center" "${round(EWW_CPU.avg, 2)}% "))
+           :valign "center" "${round(EWW_CPU.avg, 0)}% "))
     (progress
       :class "progress"
       :width "100px"
