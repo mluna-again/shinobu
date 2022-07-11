@@ -2,16 +2,17 @@
 
 pkill sxhkd; sxhkd &
 killall picom
+killall polybar
 
-Reconfigures monitor
+# Reconfigures monitor
 if xrandr | grep -i "HDMI-1 disconnected"; then
 	xrandr --output eDP-1 --mode 1366x768 --auto && xrandr --output HDMI-1 --off
   bspc monitor --remove HDMI-1
-  bspc monitor eDP-1 -d I II III IV V VI VII VIII IX X -g 1366x768
+  bspc monitor eDP-1 -g 1366x768+0+0
 else
 	xrandr --output HDMI-1 --mode 1920x1080 && xrandr --output eDP-1 --off
   bspc monitor --remove eDP-1
-  bspc monitor HDMI-1 -d I II III IV V VI VII VIII IX X -g 1920x1080
+  bspc monitor HDMI-1 -g 1920x1080+0+0
 fi
 
 # set wallpaper
