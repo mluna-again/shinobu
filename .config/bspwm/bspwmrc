@@ -20,8 +20,8 @@ fi
 # compositor
 picom --config ~/.config/picom/picom.conf &
 
-# polybar
-~/.config/polybar/launch.sh &
+eww daemon &
+eww reload &
 
 bspc config border_width         0
 bspc config window_gap           2
