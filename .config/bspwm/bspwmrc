@@ -20,8 +20,9 @@ fi
 # compositor
 picom --config ~/.config/picom/picom.conf &
 
-eww daemon &
-eww reload &
+~/.config/polybar/launch.sh &
+# eww daemon &
+# eww reload &
 
 bspc config border_width         0
 bspc config window_gap           0
@@ -31,6 +32,8 @@ bspc config split_ratio           0.52
 bspc config borderless_monocle    true
 bspc config gapless_monocle       true
 bspc config focus_follows_pointer true
+
+xsetroot -cursor_name left_ptr
 
 # bspc rule -a Gimp desktop='^8' state=floating follow=on
 # bspc rule -a Chromium desktop='^2'
