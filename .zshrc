@@ -91,13 +91,16 @@ alias v="nvim"
 # dotfiles
 alias dots='yadm'
 alias dotss="dots status"
-alias dotsa="dots add"
-alias dotsc="dots commit -m"
+alias dotsa="dots add -u"
+alias dotsl="dots log"
 alias dotsC="dots checkout"
 alias dotsR="dots reset --hard"
 alias dotsp="dots push"
 alias dotsb="dots branch"
 alias dotsd="dots diff"
+dotsc() {
+  dots commit -m "$*"
+}
 
 alias vaup="vagrant up && vagrant ssh"
 alias vs="vagrant ssh"
