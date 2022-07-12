@@ -11,7 +11,7 @@ playerctl -p spotify metadata &>/dev/null  || exit
 song_name=$(playerctl -p spotify metadata | grep -i title | cut -f 3- -d " " | tr -s "[:blank:]")
 artist=$(playerctl -p spotify metadata artist)
 
-title="$artist -$song_name"
+title="$song_name - $artist"
 short_title=$(echo $title | cut -c -30)
 playing=$([ $(playerctl -p spotify status) == "Playing" ] && echo "yes" || echo "no")
 
