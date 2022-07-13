@@ -12,6 +12,7 @@ else
   bspc monitor -g 1920x1080+0+0
 fi
 
+bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 # set wallpaper
 ~/.local/scripts/wallpaper.sh &
 
