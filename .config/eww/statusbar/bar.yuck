@@ -4,7 +4,7 @@
 
 (defvar open false)
 
-(defpoll active-desks 
+(defpoll active-desks
   :interval "1s"
   `bspc query -D -d .occupied --names`)
 
