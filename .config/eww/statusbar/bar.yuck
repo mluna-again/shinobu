@@ -8,6 +8,10 @@
   :interval "1s"
   `bspc query -D -d .occupied --names`)
 
+(defpoll date
+  :interval "1s"
+  `date +'%A, %d %b %I:%M %p'`)
+
 (defwidget bar []
   (box :orientation "horizontal"
        :class "statusbar"
@@ -25,6 +29,8 @@
       (button :class "btn ${matches(active-desks, "8") ? "active" : ""}" :onclick "bspc desktop -f ^8" "八")
       (button :class "btn ${matches(active-desks, "9") ? "active" : ""}" :onclick "bspc desktop -f ^9" "九")
       (button :class "btn ${matches(active-desks, "0") ? "active" : ""}" :onclick "bspc desktop -f ^10" "十"))
+    (box :class "date"
+      "${date}")
     (box
       :halign "end"
       :valign "center"
