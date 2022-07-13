@@ -1,6 +1,6 @@
 (include "./statusbar/bar.yuck")
 
-(defwindow example
+(defwindow root
 	:monitor 0
   :geometry (geometry :x "0%"
                       :y "0%"
