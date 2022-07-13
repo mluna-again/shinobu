@@ -2,7 +2,6 @@
 
 pgrep sxhkd || sxhkd &
 pgrep picom && killall picom
-pgrep polybar && killall polybar
 
 # Reconfigures monitor
 if xrandr | grep -i "HDMI-1 disconnected"; then
@@ -19,11 +18,13 @@ fi
 # compositor
 picom --config ~/.config/picom/picom.conf &
 
-~/.config/polybar/launch.sh &
+pgrep eww || eww daemon &
+eww reload
+eww open root
 
 bspc config border_width         0
 bspc config window_gap           0
-bspc config top_padding          30
+bspc config top_padding          36
 
 bspc config split_ratio           0.52
 bspc config borderless_monocle    true
