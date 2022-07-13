@@ -1,3 +1,7 @@
+(defpoll battery
+  :interval "1s"
+  `~/.local/scripts/battery_no_icon.sh`)
+
 (defwidget battery []
   (box
     :class "ram"
@@ -8,10 +12,10 @@
       (box :class "label" 
            :valign "center" " ")
       (box :class "num" 
-           :valign "center" "${EWW_BATTERY.BAT0.capacity}% "))
+           :valign "center" "${battery}% "))
     (progress
       :class "progress"
       :width "100px"
       :valign "center"
       :halign "start"
-      :value "${round(EWW_BATTERY.BAT0.capacity, 2)}")))
+      :value "${battery}")))
