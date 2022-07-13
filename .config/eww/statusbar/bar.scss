@@ -1,8 +1,15 @@
 .statusbar {
+	background-color: crimson;
+	border-radius: 5px;
+
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border: none;
   }
+
+	.btn.active {
+		color: #d1263f;
+	}
 
   .ram {
     progressbar {
@@ -30,5 +37,7 @@
 
   .right {
     background-color: #282c34;
+    padding: 0 10px;
+    border-radius: 5px;
   }
 }
