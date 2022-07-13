@@ -5,6 +5,6 @@
 battery=$(upower -e | grep -i bat0)
 
 percentage=$(upower -i $battery | grep -i percentage | awk '{print $2}')
-percentage_num=$(echo $percentage | cut -c -3)
+percentage_num=$(echo $percentage | cut -c -3 | sed 's/%//g')
 
 echo $percentage_num
