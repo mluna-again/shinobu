@@ -1,6 +1,6 @@
 (defpoll volume_perc
   :interval "0.2s"
-  `awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master) | sed 's/%//g'`)
+  `~/.local/scripts/get_volume.sh`)
 
 (defpoll volume_status
   :interval "0.2s"
