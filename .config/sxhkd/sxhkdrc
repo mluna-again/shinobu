@@ -50,7 +50,7 @@ super + {t,shift + t,s}
 	bspc node -t {tiled,pseudo_tiled,floating} && eww open root
 
 super + f
-  bspc node -t fullscreen && eww close root
+  bspc node -t \~fullscreen && { eww state &>/dev/null && eww close root || eww open root }
 
 # set the node flags
 # super + ctrl + {m,x,y,z}
