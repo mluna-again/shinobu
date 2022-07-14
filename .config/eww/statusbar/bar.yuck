@@ -19,7 +19,7 @@
     (box
       :halign "start"
       :class "left"
-      (button :class "btn" :onclick "notify-send 'hi'" "⏻")
+      (button :class "btn" :onclick "systemctl suspend" "⏻")
       (button :class "btn ${matches(active-desks, "1") ? "active" : ""}" :onclick "bspc desktop -f ^1" "一")
       (button :class "btn ${matches(active-desks, "2") ? "active" : ""}" :onclick "bspc desktop -f ^2" "二")
       (button :class "btn ${matches(active-desks, "3") ? "active" : ""}" :onclick "bspc desktop -f ^3" "三")
