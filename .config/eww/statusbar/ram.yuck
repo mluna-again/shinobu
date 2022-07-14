@@ -11,7 +11,7 @@
            :valign "center" "${round(EWW_RAM.used_mem_perc, 0)}% "))
     (progress
       :class "progress"
-      :width "100px"
+      :width "80px"
       :valign "center"
       :halign "start"
       :value "${round(EWW_RAM.used_mem_perc, 2)}")))
