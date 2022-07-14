@@ -1,5 +1,9 @@
 .statusbar {
-  background-color: #f90404;
+	.date {
+		font-size: 16px;
+	}
+
+  background-color: crimson;
   border-radius: 5px;
   color: white;
 
@@ -9,7 +13,7 @@
   }
 
   .btn.active {
-    color: #d1263f;
+    color: crimson;
   }
 
   .ram,
@@ -18,7 +22,7 @@
       trough {
         min-width: 80px;
         progress {
-          background-color: #f90404;
+          background-color: crimson;
         }
       }
     }
