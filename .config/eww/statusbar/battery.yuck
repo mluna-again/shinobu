@@ -15,7 +15,7 @@
            :valign "center" "${battery}% "))
     (progress
       :class "progress"
-      :width "100px"
+      :width "80px"
       :valign "center"
       :halign "start"
       :value "${battery}")))

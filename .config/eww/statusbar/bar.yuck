@@ -1,6 +1,7 @@
 (include "./statusbar/ram.yuck")
 (include "./statusbar/battery.yuck")
 (include "./statusbar/cpu.yuck")
+(include "./statusbar/volume.yuck")
 
 (defvar open false)
 
@@ -36,6 +37,7 @@
       :valign "center"
       :class "right"
       :spacing 15
+      (volume)
       (ram)
       (battery)
       (cpu))))
