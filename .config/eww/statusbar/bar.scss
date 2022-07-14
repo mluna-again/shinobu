@@ -1,5 +1,5 @@
 .statusbar {
-  background-color: crimson;
+  background-color: #f90404;
   border-radius: 5px;
   color: white;
 
@@ -18,7 +18,7 @@
       trough {
         min-width: 80px;
         progress {
-          background-color: crimson;
+          background-color: #f90404;
         }
       }
     }
@@ -35,6 +35,8 @@
 		.muted {
 			color: gray;
 		}
+		padding: 0;
+		background-color: transparent;
   }
 
   .left {
