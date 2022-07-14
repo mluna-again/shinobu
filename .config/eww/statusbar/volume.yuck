@@ -21,7 +21,6 @@
              :valign "center" "${volume_perc}%"))
       (progress
         :class "progress"
-        :width "80px"
         :valign "center"
         :halign "start"
         :value volume_perc))))

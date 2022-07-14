@@ -18,12 +18,14 @@
 
   .ram,
   .volume {
+		margin: 0 3px;
     progressbar {
+			progress {
+				background-color: crimson;
+				min-width: 0px;
+			}
       trough {
         min-width: 80px;
-        progress {
-          background-color: crimson;
-        }
       }
     }
 
@@ -48,7 +50,6 @@
 	.right {
     background-color: #282c34;
     border-radius: 5px;
-    padding: 0 15px;
 		box-shadow: 5px 5px 30px black;
   }
 }
