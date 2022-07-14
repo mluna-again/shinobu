@@ -1,18 +1,19 @@
 .statusbar {
-	background-color: crimson;
-	border-radius: 5px;
-	color: white;
+  background-color: crimson;
+  border-radius: 5px;
+  color: white;
 
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border: none;
   }
 
-	.btn.active {
-		color: #d1263f;
-	}
+  .btn.active {
+    color: #d1263f;
+  }
 
-  .ram {
+  .ram,
+  .volume {
     progressbar {
       trough {
         min-width: 80px;
@@ -22,11 +23,17 @@
       }
     }
 
-		.label {
-			font-size: 23px;
-		}
-		.num {
-			font-size: 14px;
+    .label {
+      font-size: 23px;
+    }
+    .num {
+      font-size: 14px;
+    }
+  }
+
+  .volume {
+		.muted {
+			color: gray;
 		}
   }
 
@@ -38,5 +45,6 @@
   .right {
     background-color: #282c34;
     border-radius: 5px;
+    padding: 0 15px;
   }
 }
