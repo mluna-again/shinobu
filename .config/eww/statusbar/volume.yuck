@@ -1,0 +1,25 @@
+(defpoll volume_perc
+  :interval "0.2s"
+  `awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master) | sed 's/%//g'`)
+
+(defpoll volume_status
+  :interval "0.2s"
+  `amixer get Master | grep -i off &>/dev/null && echo muted || echo active`)
+
+(defwidget volume []
+  (box
+    :class "volume"
+    :space-evenly false
+    :orientation "v"
+    (box
+      :halign "center"
+      (box :class "label ${volume_perc == 0 ? "muted" : volume_status}"
+           :valign "center" "墳")
+      (box :class "num ${volume_perc == 0 ? "muted" : volume_status}"
+           :valign "center" "${volume_perc}%"))
+    (progress
+      :class "progress"
+      :width "80px"
+      :valign "center"
+      :halign "start"
+      :value volume_perc)))
