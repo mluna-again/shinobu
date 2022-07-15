@@ -7,20 +7,23 @@
   `amixer get Master | grep -i off &>/dev/null && echo muted || echo active`)
 
 (defwidget volume []
-  (button
-    :class "volume"
-    :onclick `amixer -D pulse set Master 1+ toggle`
-    (box
-      :space-evenly false
-      :orientation "v"
+  (eventbox
+    :timeout "1s"
+    :onscroll "[ {} == up ] && amixer set Master 1%+ || amixer set Master 1%-"
+    (button
+      :class "volume"
+      :onclick `amixer -D pulse set Master 1+ toggle`
       (box
-        :halign "center"
-        (box :class "label ${volume_perc == 0 ? "muted" : volume_status}"
-             :valign "center" "墳")
-        (box :class "num ${volume_perc == 0 ? "muted" : volume_status}"
-             :valign "center" "${volume_perc}%"))
-      (progress
-        :class "progress"
-        :valign "center"
-        :halign "start"
-        :value volume_perc))))
+        :space-evenly false
+        :orientation "v"
+        (box
+          :halign "center"
+          (box :class "label ${volume_perc == 0 ? "muted" : volume_status}"
+               :valign "center" "墳")
+          (box :class "num ${volume_perc == 0 ? "muted" : volume_status}"
+               :valign "center" "${volume_perc}%"))
+        (progress
+          :class "progress"
+          :valign "center"
+          :halign "start"
+          :value volume_perc)))))
