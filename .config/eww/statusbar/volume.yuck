@@ -1,15 +1,14 @@
 (defpoll volume_perc
-  :interval "0.2s"
+  :interval "0.1s"
   `~/.local/scripts/get_volume.sh`)
 
 (defpoll volume_status
-  :interval "0.2s"
+  :interval "0.1s"
   `amixer get Master | grep -i off &>/dev/null && echo muted || echo active`)
 
 (defwidget volume []
   (eventbox
-    :timeout "1s"
-    :onscroll "[ {} == up ] && amixer set Master 1%+ || amixer set Master 1%-"
+    :onscroll "[ {} == up ] && amixer set Master 5%+ || amixer set Master 5%-"
     (button
       :class "volume"
       :onclick `amixer -D pulse set Master 1+ toggle`
