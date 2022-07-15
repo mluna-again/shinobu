@@ -47,7 +47,7 @@ super + m
 
 # set the window state
 super + {t,shift + t,s}
-	bspc node -t {tiled,pseudo_tiled,floating} && eww open root
+	bspc node -t {tiled,pseudo_tiled,floating}
 
 # super + f
 #   bspc node -t \~fullscreen && { eww state &>/dev/null && eww close root || eww open root }

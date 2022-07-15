@@ -8,7 +8,7 @@ if xrandr | grep -i "HDMI-1 disconnected"; then
 	xrandr --output eDP-1 --mode 1366x768 --auto && xrandr --output HDMI-1 --off
   bspc monitor -g 1366x768+0+0
 else
-	xrandr --output HDMI-1 --mode 1920x1080 && xrandr --output eDP-1 --off
+	xrandr --output HDMI-1 --mode 1920x1080 --rate 120.00 && xrandr --output eDP-1 --off
   bspc monitor -g 1920x1080+0+0
 fi
 
