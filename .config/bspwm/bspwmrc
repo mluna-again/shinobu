@@ -1,27 +1,29 @@
 #! /bin/sh
 
-killall sxhkd && sxhkd &
+killall sxhkd; sxhkd &
 killall picom
 
 # Reconfigures monitor
 if xrandr | grep -i "HDMI-1 disconnected"; then
 	xrandr --output eDP-1 --mode 1366x768 --auto && xrandr --output HDMI-1 --off
   bspc monitor -g 1366x768+0+0
+  bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9 0
 else
 	xrandr --output HDMI-1 --mode 1920x1080 --rate 120.00 && xrandr --output eDP-1 --off
   bspc monitor -g 1920x1080+0+0
+  bspc monitor HDMI-1 -d 1 2 3 4 5 6 7 8 9 0
 fi
 
-bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 # set wallpaper
 ~/.local/scripts/wallpaper.sh &
 
 # compositor
 picom --config ~/.config/picom/picom.conf &
 
-pgrep eww || eww daemon &
-eww reload
-eww open root
+# pgrep eww || eww daemon &
+# eww reload
+# eww open root
+~/.config/polybar/launch.sh
 
 bspc config border_width         0
 bspc config window_gap           0
