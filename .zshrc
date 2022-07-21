@@ -254,7 +254,6 @@ alias neofetch="neofetch --backend chafa --source ~/.local/banners/rice.png --si
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
-eval "$(rbenv init - zsh)"
 
 ok() {
 git commit -m "$* 😑👍"
@@ -269,3 +268,5 @@ source $HOME/.zprofile
 # Bun
 export BUN_INSTALL="/home/mluna/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.asdf/shims:$PATH"
