@@ -25,8 +25,6 @@ plugins=(vi-mode)
 MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
 
-# <Aliases>
-# alias neofetch="neofetch --ascii ~/.local/ascii/mewo"
 # utils
 alias cd="z"
 alias .="source ~/.zshrc"
