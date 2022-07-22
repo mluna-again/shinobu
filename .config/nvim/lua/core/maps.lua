@@ -13,3 +13,7 @@ end
 function nmap(lhs, rhs, opts)
     map("n", lhs, rhs, opts)
 end
+
+function vmap(lhs, rhs, opts)
+    map("v", lhs, rhs, opts)
+end

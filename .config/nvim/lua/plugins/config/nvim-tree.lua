@@ -120,8 +120,7 @@ return {
 				exclude = {},
 			},
 			filesystem_watchers = {
-				enable = false,
-				interval = 100,
+				enable = false
 			},
 			git = {
 				enable = true,
