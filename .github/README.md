@@ -9,8 +9,6 @@
 <img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/telescope.png">
 <img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/code.png">
 
-https://user-images.githubusercontent.com/53100040/178126482-f6aaf8a9-8ed2-42d4-a4cb-10b0c7046502.mp4
-
 > This repo was once only for my nvim dotfiles, but over time I kept adding more and more and now it houses my whole setup.
 
 # Want to try it?
