@@ -2,6 +2,8 @@
 
 
 [general]
+method = portaudio
+source = "Background Music"
 
 # Smoothing mode. Can be 'normal', 'scientific' or 'waves'. DEPRECATED as of 0.6.0
 ; mode = normal

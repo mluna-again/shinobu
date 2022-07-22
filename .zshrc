@@ -196,13 +196,7 @@ export PATH="$SPICETIFY_INSTALL:$PATH"
 export NPM_PACKAGES=$HOME/.npm-packages
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="$NPM_PACKAGES/bin:$PATH"
-export PATH=$PATH:/usr/local/go/bin:$HOME/.intelliJ/bin
 export PYTHONPATH=/usr/share/python3
-export PATH="$PATH:$HOME/.symfony/bin"
-export PATH=$PATH:/$HOME/.emacs.d/bin:/opt/flutter/bin
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 # </Env>
 
 # <Load>
@@ -234,10 +228,6 @@ ph_test() {
 export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled"
 export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 # </Elixir/Erlang>
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 export GOPATH="$HOME/.local/go"
 export PATH="$PATH:$GOPATH/bin"

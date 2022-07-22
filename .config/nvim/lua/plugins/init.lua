@@ -64,6 +64,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.neoformat'))
 	use(require('plugins.config.blankline'))
 	use(require('plugins.config.lualine'))
+	use(require('plugins.config.comment-box'))
 
 	if packer_bootstrap then
 		require('packer').sync()
