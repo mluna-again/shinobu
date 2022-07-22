@@ -29,11 +29,11 @@ return {
 		-- db.session_directory
 
 		db.custom_center = {
-			{ desc = "Find File                 SPC f f", action = "Telescope find_files" },
-			{ desc = "Recents                   SPC f h", action = "Telescope oldfiles" },
-			{ desc = "Find Word                 SPC f a", action = "Telescope live_grep" },
-			{ desc = "New File                  SPC c n", action = "DashboardNewFile" },
-			{ desc = "Load Last Session         SPC s l", action = "SessionLoad" },
+			{ icon = " ", desc = "New File                  SPC c n", action = "DashboardNewFile" },
+			{ icon = " ", desc = "Find File                 SPC f f", action = "Telescope find_files" },
+			{ icon = "ﲊ ", desc = "Recents                   SPC f h", action = "Telescope oldfiles" },
+			{ icon = " ", desc = "Find Word                 SPC f a", action = "Telescope live_grep" },
+			{ icon = "勒", desc = "Load Last Session         SPC s l", action = "SessionLoad" },
 		}
 
 		nmap("<Leader>sl", ":source Session.vim<CR>")
