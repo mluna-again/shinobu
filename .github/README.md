@@ -8,6 +8,7 @@
 <img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/shinobu.png">
 <img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/telescope.png">
 <img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/code.png">
+<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/neofetch.png">
 
 > This repo was once only for my nvim dotfiles, but over time I kept adding more and more and now it houses my whole setup.
 
