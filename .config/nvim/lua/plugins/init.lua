@@ -1,4 +1,4 @@
-require("core.maps")
+require('core.maps')
 
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -6,7 +6,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
-nmap("<C-i>", ":PackerSync<CR>")
+nmap('<C-i>', ':PackerSync<CR>')
 
 return require('packer').startup({function(use)
 	use(require('plugins.config.dashboard'))
@@ -38,6 +38,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.blankline'))
 	use(require('plugins.config.lualine'))
 	use(require('plugins.config.comment-box'))
+	use('tversteeg/registers.nvim')
 	use('wbthomason/packer.nvim')
 	use('nvim-lua/popup.nvim')
 	use('nvim-lua/plenary.nvim')
