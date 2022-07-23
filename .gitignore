@@ -3,4 +3,8 @@
 
 .DS_Store
 
+# packer (nvim)
 packer_compiled.lua
+
+# rest.nvim files
+*.http
