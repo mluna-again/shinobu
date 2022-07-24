@@ -1,7 +1,7 @@
 #! /bin/sh
 
 if uname | grep -i darwin &>/dev/null; then
-  ~/.local/scripts/spotify_osx.sh
+  ~/.local/scripts/osx/spotify.sh
 else
-  ~/.local/scripts/spotify_linux.sh
+  ~/.local/scripts/linux/spotify.sh
 fi
