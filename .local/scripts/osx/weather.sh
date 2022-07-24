@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cache_file="$HOME/.cache/weather"
-request_cmd="curl -s 'wttr.in/London?format=%c%t\n' | tee -a $cache_file"
+request_cmd="curl -s 'wttr.in/London?format=%c%t' | tee -a $cache_file"
 
 [ -f "$cache_file" ] || (date +"%H %M" >> "$cache_file" && eval "$request_cmd" &>/dev/null)
 
