@@ -238,7 +238,12 @@ export PATH="$PATH:/$HOME/.emacs.d/bin"
 # fix tmux bg bug
 export TERM="xterm-256color"
 
-alias neofetch="neofetch --backend chafa --source ~/.local/banners/rice.png --size 30%"
+neofetch() {
+  # for some reason the ascii has some weird gaps. even weirder (or whatever the word is) is the fact that
+  # it only happens *outside* vim's terminal :)
+  gap=$([ -n "$VIMRUNTIME" ] || echo "--gap -73")
+  eval "/opt/homebrew/bin/neofetch --ascii ~/.local/ascii/darkness2 --size 30% $gap"
+}
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
