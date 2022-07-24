@@ -5,6 +5,10 @@ return {
 			options = {
 				component_separators = '|',
 				section_separators = { left = '', right = '' },
+				disabled_filetypes = {
+					statusline = {},
+					winbar = {},
+				},
 			},
 			sections = {
 				lualine_a = {
