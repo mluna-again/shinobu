@@ -2,8 +2,6 @@
 [ -e ~/.personal ] && source ~/.personal
 
 autoload run-help
-export ZSH="$HOME/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
