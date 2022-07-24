@@ -7,7 +7,7 @@ pgrep Spotify &>/dev/null || exit
 output=$(spotify status)
 song_name=$(grep -i track <<< "$output" | sed 's/Track: //')
 artist=$(grep -i artist <<< "$output" | sed 's/Artist: //')
-title="$song_name - $artist"
+title="$song_name- $artist"
 short_title=$(echo $title | cut -c -30)
 playing=$(grep -i paused <<< "$output" && echo no || echo yes)
 
