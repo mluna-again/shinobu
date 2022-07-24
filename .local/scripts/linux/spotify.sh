@@ -17,7 +17,7 @@ playing=$([ $(playerctl -p spotify status) == "Playing" ] && echo "yes" || echo 
 
 
 if [ "$playing" == "yes" ]; then
-	[ "$title" != "$short_title" ] && echo "#[fg=green]阮$short_title..." || echo "#[fg=green]阮$title"
+	[ "$title" != "$short_title" ] && echo "#[fg=green]阮$short_title...#[fg=defaut]" || echo "#[fg=green]阮$title#[fg=defaut]"
 else
-	[ "$title" != "$short_title" ] && echo "#[fg=gray]阮$short_title..." || echo "#[fg=gray]阮$title"
+	[ "$title" != "$short_title" ] && echo "#[fg=gray]阮$short_title...#[fg=defaut]" || echo "#[fg=gray]阮$title#[fg=defaut]"
 fi

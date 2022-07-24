@@ -12,7 +12,7 @@ short_title=$(echo $title | cut -c -30)
 playing=$(grep -i paused <<< "$output" && echo no || echo yes)
 
 if [ "$playing" == "yes" ]; then
-	[ "$title" != "$short_title" ] && echo "#[fg=green]阮$short_title..." || echo "#[fg=green]阮$title"
+	[ "$title" != "$short_title" ] && echo "#[fg=green]阮$short_title...#[fg=default]" || echo "#[fg=green]阮$title#[fg=default]"
 else
-	[ "$title" != "$short_title" ] && echo "#[fg=gray]阮$short_title..." || echo "#[fg=gray]阮$title"
+	[ "$title" != "$short_title" ] && echo "#[fg=gray]阮$short_title...#[fg=default]" || echo "#[fg=gray]阮$title#[fg=default]"
 fi
