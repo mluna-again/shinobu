@@ -18,10 +18,12 @@ return {
 		  autocmd ColorScheme * hi TelescopeResultsTitle guibg=#6A9589 guifg=#16161D
 
 			autocmd ColorScheme * hi Floaterm guibg=#16161D
+			autocmd ColorScheme * hi FloatermBorder guibg=#16161D guifg=#16161D
 			
 			autocmd ColorScheme * hi VertSplit guibg=#16161D
 			autocmd ColorScheme * hi NvimTreeNormal guibg=#16161D
 			autocmd ColorScheme * hi NvimTreeNormalNC guibg=#16161D
+			autocmd ColorScheme * hi NvimTreeEndOfBuffer guibg=#16161D guifg=#16161D
 		augroup end
 		]])
 		vim.cmd("colorscheme kanagawa")
