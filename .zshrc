@@ -1,6 +1,8 @@
 # <Config>
 [ -e ~/.personal ] && source ~/.personal
 
+# git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload run-help
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 bindkey -v
