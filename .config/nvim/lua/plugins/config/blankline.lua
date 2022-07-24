@@ -6,7 +6,7 @@ return {
 
 		require("indent_blankline").setup {
 			show_end_of_line = true,
-			filetype_exclude = {'dashboard', 'dockerfile', 'json', 'WhichKey', 'packer', 'glowpreview', ''},
+			filetype_exclude = {'dashboard', 'dockerfile', 'json', 'WhichKey', 'packer', 'glowpreview', '', 'TelescopePrompt', 'TelescopeResults'},
 			show_trailing_blankline_indent = false
 		}
 	end
