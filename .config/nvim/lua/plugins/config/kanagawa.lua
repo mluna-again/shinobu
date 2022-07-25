@@ -24,6 +24,8 @@ return {
 			autocmd ColorScheme * hi NvimTreeNormal guibg=#16161D
 			autocmd ColorScheme * hi NvimTreeNormalNC guibg=#16161D
 			autocmd ColorScheme * hi NvimTreeEndOfBuffer guibg=#16161D guifg=#16161D
+
+			autocmd ColorScheme * hi WinSeparator guibg=NONE guifg=#16161D
 		augroup end
 		]])
 		vim.cmd("colorscheme kanagawa")

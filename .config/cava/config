@@ -2,9 +2,6 @@
 
 
 [general]
-method = portaudio
-source = "Background Music"
-
 # Smoothing mode. Can be 'normal', 'scientific' or 'waves'. DEPRECATED as of 0.6.0
 ; mode = normal
 
@@ -59,8 +56,8 @@ bar_spacing = 0
 # For alsa 'source' will be the capture device.
 # For fifo 'source' will be the path to fifo-file.
 # For shmem 'source' will be /squeezelite-AA:BB:CC:DD:EE:FF where 'AA:BB:CC:DD:EE:FF' will be squeezelite's MAC address
-; method = pulse
-; source = auto
+method = portaudio
+source = "Background Music"
 
 ; method = alsa
 ; source = hw:Loopback,1
