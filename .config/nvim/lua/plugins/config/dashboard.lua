@@ -41,7 +41,12 @@ return {
 		nmap("<Leader>fn", ":NvimTreeFindFileToggle<CR>")
 		nmap("<Leader>FF", ":Telescope buffers<CR>")
 		
-		vim.cmd("autocmd! FileType dashboard set noruler")
-		vim.cmd("autocmd! FileType dashboard nmap <buffer> q :quit<CR>")
+		vim.cmd([[
+			augroup DashboardTweaks
+				autocmd!
+				autocmd FileType dashboard set noruler
+				autocmd FileType dashboard nmap <buffer> q :quit<CR>
+			augroup END
+		]])
 	end
 }
