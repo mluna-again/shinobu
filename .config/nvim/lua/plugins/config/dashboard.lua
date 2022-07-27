@@ -20,13 +20,8 @@ return {
 		db.custom_center = {
 		}
 		db.custom_footer = { "いい元気だね、何かいいことでもあったのかい？" }
-		-- db.preview_file_path = string.format("%s/.config/nvim/banners/rice.png", os.getenv("HOME"))
-		-- db.preview_file_height = 15
-		-- db.preview_file_width = 40
-		-- db.preview_command = "chafa --center on"
 		db.hide_statusline = 1
 		db.hide_tabline = 1
-		-- db.session_directory
 
 		db.custom_center = {
 			{ icon = " ", desc = "New File                  SPC c n", action = "DashboardNewFile" },
