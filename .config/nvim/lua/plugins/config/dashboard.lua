@@ -34,6 +34,7 @@ return {
 			{ icon = "ﲊ ", desc = "Recents                   SPC f h", action = "Telescope oldfiles" },
 			{ icon = " ", desc = "Find Word                 SPC f a", action = "Telescope live_grep" },
 			{ icon = "勒", desc = "Load Last Session         SPC s l", action = "SessionLoad" },
+			{ icon = "ﴘ ", desc = "Quit Neovim                     q", action = "quit" },
 		}
 
 		nmap("<Leader>sl", ":source Session.vim<CR>")
@@ -46,5 +47,6 @@ return {
 		nmap("<Leader>FF", ":Telescope buffers<CR>")
 		
 		vim.cmd("autocmd! FileType dashboard set noruler")
+		vim.cmd("autocmd! FileType dashboard nmap <buffer> q :quit<CR>")
 	end
 }
