@@ -1,6 +1,6 @@
 add_newline = false
 
-format = """$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$docker_context$ruby$python$vagrant$deno$dotnet$golang$memory_usage$jobs$battery$time$status$shell$cmd_duration
+format = """$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$memory_usage$jobs$battery$time$status$shell$cmd_duration
 $character"""
 
 [character]
