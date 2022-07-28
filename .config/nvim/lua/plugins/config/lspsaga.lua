@@ -75,5 +75,6 @@ return {
 		nmap("<Leader>lf", "<cmd>lua require('lspsaga.finder').lsp_finder()<CR>")
 		nmap("<Leader>ld", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 		nmap("<Leader>lr", "<cmd>lua require('lspsaga.rename').lsp_rename()<CR>")
+		nmap("<Leader>la", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>")
 	end
 }
