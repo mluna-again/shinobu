@@ -38,6 +38,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.blankline'))
 	use(require('plugins.config.lualine'))
 	use(require('plugins.config.comment-box'))
+	use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 	use('tversteeg/registers.nvim')
 	use('wbthomason/packer.nvim')
 	use('nvim-lua/popup.nvim')
