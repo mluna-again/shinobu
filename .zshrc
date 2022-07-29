@@ -26,6 +26,7 @@ MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
 
 # utils
+alias q="exit"
 alias cd="z"
 alias .="source ~/.zshrc"
 alias :q="exit"
