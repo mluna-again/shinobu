@@ -18,6 +18,7 @@ set foldnestmax=10
 set foldlevel=2
 set statusline=
 set showtabline=0
+set splitright
 set shm+=I " this removes welcome screen
 ]])
 vim.g.mapleader = " "

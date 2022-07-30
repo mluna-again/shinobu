@@ -1,0 +1,9 @@
+snippet doc "http request collection" b
+TOKEN=${1:token}
+
+http --ignore-stdin ${2:GET} ${3:localhost:3000} ${4:Authorization:\$TOKEN} $0
+endsnippet
+
+snippet http "http request" b
+http --ignore-stdin ${1:GET} ${2:localhost:3000} ${3:Authorization:\$TOKEN} $0
+endsnippet
