@@ -1,0 +1,8 @@
+{
+  "default_options": [
+    "-v",
+    "--ignore-stdin",
+    "--pretty=format",
+    "--format-options=json.indent:4"
+  ]
+}

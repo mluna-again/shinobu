@@ -35,7 +35,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.rest'))
 	use(require('plugins.config.treesitter'))
 	use(require('plugins.config.neoformat'))
-	use(require('plugins.config.blankline'))
+	-- use(require('plugins.config.blankline'))
 	use(require('plugins.config.lualine'))
 	use(require('plugins.config.comment-box'))
 	use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
