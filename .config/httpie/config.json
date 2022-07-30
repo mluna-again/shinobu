@@ -3,6 +3,6 @@
     "-v",
     "--ignore-stdin",
     "--pretty=format",
-    "--format-options=json.indent:4"
+    "--format-options=json.indent:2"
   ]
 }
