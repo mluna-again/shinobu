@@ -3,7 +3,7 @@ return {
 	config = function()
 		require("bufferline").setup{
 			options = {
-				offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+				offsets = { { filetype = "NvimTree", text = "File explorer", padding = 1 } },
 				show_close_icon = false,
 				buffer_close_icon = "",
 				modified_icon = "",
@@ -21,5 +21,6 @@ return {
 				diagnostics = false,
 			},
 		}
+		vim.cmd("hi BufferLineHintSelected guifg=fg guibg=fg")
 	end
 }
