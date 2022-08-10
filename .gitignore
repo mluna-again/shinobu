@@ -8,3 +8,5 @@ packer_compiled.lua
 
 # rest.nvim files
 *.http
+
+Session.vim
