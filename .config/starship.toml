@@ -18,6 +18,7 @@ format = "[${ram}]($style) "
 
 [time]
 disabled = false
+use_12hr = true
 
 [username]
 show_always = false
