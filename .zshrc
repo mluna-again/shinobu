@@ -277,7 +277,7 @@ export PATH="$HOME/.asdf/shims:$PATH"
 # dirty fix
 # [ -e $HOME/.asdf/asdf.sh ] && source $HOME/.asdf/asdf.sh
 asdf() {
-  command -v asdf || source $HOME/.asdf/asdf.sh
+  command -v asdf &>/dev/null || source $HOME/.asdf/asdf.sh
 
   $HOME/.asdf/bin/asdf $*
 }
