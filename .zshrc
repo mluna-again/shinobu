@@ -245,7 +245,8 @@ neofetch() {
   # for some reason the ascii has some weird gaps. even weirder (or whatever the word is) is the fact that
   # it only happens *outside* vim's terminal :)
   gap=$([ -n "$VIMRUNTIME" ] || echo "--gap -73")
-  eval "/opt/homebrew/bin/neofetch --ascii ~/.local/ascii/darkness2 --size 30% $gap | sed 's/\.local//'"
+  neofetch_path=$( [ -x /opt/homebrew/bin/neofetch ] && echo /opt/homebrew/bin/neofetch || echo /usr/bin/neofetch ) # bruh
+  eval "$neofetch_path --ascii ~/.local/ascii/darkness2 --size 30% $gap | sed 's/\.local//'"
 }
 
 eval "$(direnv hook zsh)"
@@ -281,3 +282,7 @@ asdf() {
 
   $HOME/.asdf/bin/asdf $*
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
