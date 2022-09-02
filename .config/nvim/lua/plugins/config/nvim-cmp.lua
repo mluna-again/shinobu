@@ -116,28 +116,10 @@ return {
 		require('lspconfig').tsserver.setup{
 			capabilities = capabilities
 		}
-		require('lspconfig').sumneko_lua.setup{
-			capabilities = capabilities
-		}
 		require('lspconfig').cssls.setup{
 			capabilities = capabilities
 		}
-		require('lspconfig').clojure_lsp.setup{
-			capabilities = capabilities
-		}
 		require('lspconfig').solargraph.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').csharp_ls.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').gopls.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').kotlin_language_server.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').metals.setup{
 			capabilities = capabilities
 		}
 	end
