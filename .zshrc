@@ -2,7 +2,7 @@
 [ -e ~/.personal ] && source ~/.personal
 
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload run-help
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 bindkey -v
@@ -253,7 +253,7 @@ git commit -m "$* 😑👍"
 }
 
 # load profile
-source $HOME/.zprofile
+[ -e $HOME/.zprofile ] && source $HOME/.zprofile
 
 # bun completions
 [ -s "/home/mluna/.bun/_bun" ] && source "/home/mluna/.bun/_bun"
@@ -263,3 +263,7 @@ export BUN_INSTALL="/home/mluna/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.asdf/shims:$PATH"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
