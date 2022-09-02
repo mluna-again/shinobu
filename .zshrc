@@ -34,10 +34,6 @@ alias ls="command -v exa && exa --color always --icons || ls --color"
 alias rice='curl -L rum.sh/ricebowl'
 alias rice='curl -L git.io/rice'
 alias darkness="cat -p ~/.config/nvim/banners/darkness"
-cat() {
-  # ._.
-  command -v bat &>/dev/null && bat $* || batcat $*
-}
 alias p="psql -U postgres"
 alias xr="xmonad --recompile && xmonad --restart"
 alias ports="sudo lsof -i -P -n | grep -i listen"
