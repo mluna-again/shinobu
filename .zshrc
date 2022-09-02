@@ -18,10 +18,10 @@ bindkey '^U' backward-kill-line
 bindkey '^Y' yank
 zstyle ':completion:*' completer _complete
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+plugins=(vi-mode)
 autoload -Uz compinit
 compinit
 # ZSH_THEME="rei"
-plugins=(vi-mode)
 MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
 
@@ -267,3 +267,14 @@ export PATH="$HOME/.asdf/shims:$PATH"
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
+# some bug with direnv or something
+# makes this script hang forever -_-
+# but it looks like it *only* happens if i source
+# the file at startup????
+# dirty fix
+# [ -e $HOME/.asdf/asdf.sh ] && source $HOME/.asdf/asdf.sh
+asdf() {
+  command -v asdf || source $HOME/.asdf/asdf.sh
+
+  $HOME/.asdf/bin/asdf $*
+}
