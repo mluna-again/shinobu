@@ -2,7 +2,7 @@
 [ -e ~/.personal ] && source ~/.personal
 
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload run-help
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 bindkey -v
@@ -18,10 +18,10 @@ bindkey '^U' backward-kill-line
 bindkey '^Y' yank
 zstyle ':completion:*' completer _complete
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+plugins=(vi-mode)
 autoload -Uz compinit
 compinit
 # ZSH_THEME="rei"
-plugins=(vi-mode)
 MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
 
@@ -30,11 +30,10 @@ alias q="exit"
 alias cd="z"
 alias .="source ~/.zshrc"
 alias :q="exit"
-alias ls="exa --color always --icons"
+alias ls="command -v exa && exa --color always --icons || ls --color"
 alias rice='curl -L rum.sh/ricebowl'
 alias rice='curl -L git.io/rice'
 alias darkness="cat -p ~/.config/nvim/banners/darkness"
-alias cat="bat"
 alias p="psql -U postgres"
 alias xr="xmonad --recompile && xmonad --restart"
 alias ports="sudo lsof -i -P -n | grep -i listen"
@@ -251,7 +250,8 @@ neofetch() {
   # for some reason the ascii has some weird gaps. even weirder (or whatever the word is) is the fact that
   # it only happens *outside* vim's terminal :)
   gap=$([ -n "$VIMRUNTIME" ] || echo "--gap -73")
-  eval "/opt/homebrew/bin/neofetch --ascii ~/.local/ascii/darkness2 --size 30% $gap | sed 's/\.local//'"
+  neofetch_path=$( [ -x /opt/homebrew/bin/neofetch ] && echo /opt/homebrew/bin/neofetch || echo /usr/bin/neofetch ) # bruh
+  eval "$neofetch_path --ascii ~/.local/ascii/darkness2 --size 30% $gap | sed 's/\.local//'"
 }
 
 eval "$(direnv hook zsh)"
@@ -262,7 +262,7 @@ git commit -m "$* 😑👍"
 }
 
 # load profile
-source $HOME/.zprofile
+[ -e $HOME/.zprofile ] && source $HOME/.zprofile
 
 # bun completions
 [ -s "/home/mluna/.bun/_bun" ] && source "/home/mluna/.bun/_bun"
@@ -272,3 +272,24 @@ export BUN_INSTALL="/home/mluna/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.asdf/shims:$PATH"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# some bug with direnv or something
+# makes this script hang forever -_-
+# but it looks like it *only* happens if i source
+# the file at startup????
+# dirty fix
+# [ -e $HOME/.asdf/asdf.sh ] && source $HOME/.asdf/asdf.sh
+asdf() {
+  command -v asdf &>/dev/null || source $HOME/.asdf/asdf.sh
+
+  $HOME/.asdf/bin/asdf $*
+}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(rbenv init -)"
