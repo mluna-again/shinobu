@@ -107,7 +107,16 @@ alias vh="vagrant halt"
 # git
 alias gd="git diff"
 alias gl="git log"
-alias gR="git reset --hard"
+gR() {
+  echo -n "are you sure? [yN] "
+  read r
+  res=$(echo $r | tr  "[:upper:]" "[:lower:]")
+  if [ "$res" = "y" ]; then
+    echo "ok..."
+  else
+    echo "aborting..."
+  fi
+}
 alias gCC="git clean -fd"
 alias gC="git checkout"
 alias gP="git pull"
