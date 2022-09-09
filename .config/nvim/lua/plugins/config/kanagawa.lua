@@ -4,6 +4,8 @@ return {
 		vim.cmd([[
 		augroup Kanawaga
 			autocmd!
+			autocmd ColorScheme * hi Normal guibg=NONE
+
 		  autocmd ColorScheme * hi TelescopePromptBorder guibg=#16161D guifg=#16161D
 		  autocmd ColorScheme * hi TelescopePromptCounter guibg=#16161D guifg=#C8C093
 		  autocmd ColorScheme * hi TelescopePromptNormal guibg=#16161D guifg=#C8C093
