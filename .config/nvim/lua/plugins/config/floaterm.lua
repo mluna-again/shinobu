@@ -1,4 +1,4 @@
-vim.g.floaterm_keymap_toggle = "<C-m>"
+vim.g.floaterm_keymap_toggle = "<A-m>"
 vim.g.floaterm_title = ""
 vim.g.floaterm_position = "top"
 vim.g.floaterm_autoclose = 2
