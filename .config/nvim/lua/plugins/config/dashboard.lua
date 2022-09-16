@@ -19,7 +19,7 @@ return {
 		db.custom_header = read_banner()
 		db.custom_center = {
 		}
-		db.custom_footer = { "いい元気だね、何かいいことでもあったのかい？" }
+		db.custom_footer = { "some cool phrase" }
 		db.hide_statusline = 1
 		db.hide_tabline = 1
 
