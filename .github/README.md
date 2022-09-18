@@ -12,7 +12,7 @@
 <img alt="Startup time" src="https://img.shields.io/badge/plugins-54-red">
 </p>
 
-<img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/shinobu.png">
-<img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/telescope.png">
-<img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/code.png">
-<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu/master/.github/previews/neofetch.png">
+<img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/iteration-A/shinobu_again/master/.github/previews/shinobu.png">
+<img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/iteration-A/shinobu_again/master/.github/previews/telescope.png">
+<img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/iteration-A/shinobu_again/master/.github/previews/code.png">
+<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/iteration-A/shinobu_again/master/.github/previews/terminal.png">
