@@ -3,7 +3,7 @@
 local M = {}
 
 M.ui = {
-  theme = "kanagawa",
+  theme = "kanagawa"
 }
 
 M.mappings =  require("custom.mappings")
