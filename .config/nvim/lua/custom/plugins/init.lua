@@ -22,5 +22,6 @@ return {
   ["sbdchd/neoformat"] = {},
   ["tpope/vim-obsession"] = {},
   ["hrsh7th/nvim-cmp"] = require("custom.plugins.cmp"),
-  ["karb94/neoscroll.nvim"] = require("custom.plugins.neoscroll")
+  ["karb94/neoscroll.nvim"] = require("custom.plugins.neoscroll"),
+  ["nvim-telescope/telescope.nvim"] = require("custom.plugins.telescope")
 }
