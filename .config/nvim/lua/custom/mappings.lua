@@ -38,6 +38,9 @@ M.general = {
   },
   v = {
     ["ñ"] = { ":Commentary<CR>", "comments text" },
+  },
+  t = {
+    ["<C-w><C-w>"] = { "<C-\\><C-n><C-w><C-w>" }
   }
 }
 
