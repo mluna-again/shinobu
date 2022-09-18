@@ -20,5 +20,6 @@ return {
     }
   },
   ["sbdchd/neoformat"] = {},
-  ["tpope/vim-obsession"] = {}
+  ["tpope/vim-obsession"] = {},
+  ["hrsh7th/nvim-cmp"] = require("custom.plugins.cmp")
 }
