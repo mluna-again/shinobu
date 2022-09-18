@@ -40,7 +40,8 @@ M.general = {
     ["ñ"] = { ":Commentary<CR>", "comments text" },
   },
   t = {
-    ["<C-w><C-w>"] = { "<C-\\><C-n><C-w><C-w>" }
+    ["<C-w><C-w>"] = { "<C-\\><C-n><C-w><C-w>" },
+    ["<A-m>"] = { "<C-\\><C-n>:lua require('nvterm.terminal').toggle('horizontal')<CR>" }
   }
 }
 
