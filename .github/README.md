@@ -1,4 +1,4 @@
-<h1 align="center">Shinobu_again.nvim 🍙</h1>
+<h1 align="center">Shinobu_Again.nvim 🍙</h1>
 
 > I have been using (neo)vim for almost 5 years now. Over the years I have made
 > several versions of my dotfiles with the growing knowledge that I was
