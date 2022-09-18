@@ -66,7 +66,7 @@ return {
       button("SPC f w", "  Find Word  ", ":Telescope live_grep<CR>"),
       button("SPC s l", "勒 Reload Last Session  ", ":source Session.vim<CR>"),
       button("SPC t h", "  Themes  ", ":Telescope themes<CR>"),
-      button("q", "ﴘ Quit Neovim", ":exit<CR>"),
+      button("q", "ﴘ  Quit Neovim", ":exit<CR>"),
     }
   }
 }
