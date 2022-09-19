@@ -24,5 +24,6 @@ return {
   ["hrsh7th/nvim-cmp"] = require("custom.plugins.cmp"),
   ["karb94/neoscroll.nvim"] = require("custom.plugins.neoscroll"),
   ["nvim-telescope/telescope.nvim"] = require("custom.plugins.telescope"),
-  ["ggandor/lightspeed.nvim"] = {}
+  ["ggandor/lightspeed.nvim"] = {},
+  ["mattn/emmet-vim"] = require("custom.plugins.emmet")
 }
