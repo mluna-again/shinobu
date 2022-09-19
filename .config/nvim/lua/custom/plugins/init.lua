@@ -16,7 +16,7 @@ return {
   },
   ["williamboman/mason.nvim"] = {
     override_options = {
-      ensure_installed = { "elixir-ls", "typescript-language-server" }
+      ensure_installed = { "elixir-ls", "typescript-language-server", "solargraph" }
     }
   },
   ["sbdchd/neoformat"] = {},
