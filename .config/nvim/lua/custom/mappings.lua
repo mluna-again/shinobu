@@ -35,6 +35,9 @@ M.general = {
     ["<A-m>"] = { ":lua require('nvterm.terminal').toggle('horizontal')<CR>", "toggle terminal", opts = { silent = true } },
     ["/"] = { ":Telescope current_buffer_fuzzy_find<CR>", "fuzzy find in buffer" },
     ["ñ"] = { ":Commentary<CR>", "comments text" },
+    ["sx"] = { "<Plug>Lightspeed_s", "activate lightspeed" },
+    ["Sx"] = { "<Plug>Lightspeed_S", "activate lightspeed backwards" },
+    ["SX"] = { "<Plug>Lightspeed_S", "activate lightspeed backwards" }
   },
   v = {
     ["ñ"] = { ":Commentary<CR>", "comments text" },
