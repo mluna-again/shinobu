@@ -1,6 +1,3 @@
-# <Config>
-[ -e ~/.personal ] && source ~/.personal
-
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 [ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload run-help
@@ -294,3 +291,5 @@ asdf() {
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
+
+[ -e ~/.personal ] && source ~/.personal
