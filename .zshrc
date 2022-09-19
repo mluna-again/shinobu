@@ -292,4 +292,4 @@ asdf() {
 
 command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 
-[ -e ~/.personal ] && source ~/.personal
+[ -e ~/.personal ] && source ~/.personal || true
