@@ -25,5 +25,7 @@ return {
   ["karb94/neoscroll.nvim"] = require("custom.plugins.neoscroll"),
   ["nvim-telescope/telescope.nvim"] = require("custom.plugins.telescope"),
   ["ggandor/lightspeed.nvim"] = {},
-  ["mattn/emmet-vim"] = require("custom.plugins.emmet")
+  ["mattn/emmet-vim"] = require("custom.plugins.emmet"),
+  ["vim-test/vim-test"] = require("custom.plugins.vim-test"),
+  ["tpope/vim-dispatch"] = {}
 }

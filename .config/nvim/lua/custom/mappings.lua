@@ -37,7 +37,10 @@ M.general = {
     ["ñ"] = { ":Commentary<CR>", "comments text" },
     ["sx"] = { "<Plug>Lightspeed_s", "activate lightspeed" },
     ["Sx"] = { "<Plug>Lightspeed_S", "activate lightspeed backwards" },
-    ["SX"] = { "<Plug>Lightspeed_S", "activate lightspeed backwards" }
+    ["SX"] = { "<Plug>Lightspeed_S", "activate lightspeed backwards" },
+    ["<Leader>r"] = { ":TestNearest<CR>", "runs the nearest test" },
+    ["<Leader>R"] = { ":TestFile<CR>", "runs current test file" },
+    ["<Leader>T"] = { ":TestSuite<CR>", "runs whole test suite" }
   },
   v = {
     ["ñ"] = { ":Commentary<CR>", "comments text" },
