@@ -7,8 +7,8 @@ M.general = {
   n = {
     ["<C-Left>"] = { ":vertical resize -2<CR>", "resize window" },
     ["<C-Right>"] = { ":vertical resize +2<CR>", "resize window" },
-    ["<C-Up>"] = { ":resize +2<CR>", "resize window" },
-    ["<C-Down>"] = { ":resize -2<CR>", "resize window" },
+    ["<C-Up>"] = { ":resize -2<CR>", "resize window" },
+    ["<C-Down>"] = { ":resize +2<CR>", "resize window" },
     ["SS"] = { ":w<CR>", "save with autocmds" },
     ["ss"] = { ":noautocmd w<CR>", "save without autocmds" },
     ["gt"] = { ":lua require('nvchad_ui.tabufline').tabuflineNext()<CR>", "cycle through buffers", opts = { silent = true } },
