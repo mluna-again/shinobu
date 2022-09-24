@@ -52,8 +52,8 @@ M.general = {
       require("nvchad_ui.renamer").open()
     end, "lsp rename" },
     ["<Leader>lf"] = { function ()
-        vim.lsp.buf.references()
-    end, "lsp references" },
+        vim.lsp.buf.definition()
+    end, "lsp go to definition" },
     ["<leader>ld"] = {
       function()
         vim.diagnostic.open_float()
