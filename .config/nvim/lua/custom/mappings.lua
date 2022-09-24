@@ -40,7 +40,26 @@ M.general = {
     ["SX"] = { "<Plug>Lightspeed_S", "activate lightspeed backwards" },
     ["<Leader>r"] = { ":TestNearest<CR>", "runs the nearest test" },
     ["<Leader>R"] = { ":TestFile<CR>", "runs current test file" },
-    ["<Leader>T"] = { ":TestSuite<CR>", "runs whole test suite" }
+    ["<Leader>T"] = { ":TestSuite<CR>", "runs whole test suite" },
+    --- LSP MAPPINGS ---
+    ["<Leader>ls"] = { function ()
+      vim.lsp.buf.signature_help()
+    end, "lsp signature" },
+    ["<Leader>lh"] = { function ()
+      vim.lsp.buf.hover()
+    end, "lsp documentation" },
+    ["<Leader>lr"] = { function ()
+      require("nvchad_ui.renamer").open()
+    end, "lsp rename" },
+    ["<Leader>lf"] = { function ()
+        vim.lsp.buf.references()
+    end, "lsp references" },
+    ["<leader>ld"] = {
+      function()
+        vim.diagnostic.open_float()
+      end,
+      "floating diagnostic",
+    },
   },
   v = {
     ["ñ"] = { ":Commentary<CR>", "comments text" },
