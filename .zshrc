@@ -25,7 +25,6 @@ MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # utils
 alias q="exit"
 alias cd="z"
-alias .="source ~/.zshrc"
 alias :q="exit"
 alias ls="exa --icons"
 alias rice='curl -L rum.sh/ricebowl'
@@ -266,17 +265,7 @@ export PATH="$HOME/.asdf/shims:$PATH"
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-# some bug with direnv or something
-# makes this script hang forever -_-
-# but it looks like it *only* happens if i source
-# the file at startup????
-# dirty fix
-# [ -e $HOME/.asdf/asdf.sh ] && source $HOME/.asdf/asdf.sh
-asdf() {
-  command -v asdf &>/dev/null || source $HOME/.asdf/asdf.sh
-
-  $HOME/.asdf/bin/asdf $*
-}
+. $HOME/.asdf/asdf.sh
 
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
