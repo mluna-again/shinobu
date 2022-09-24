@@ -18,7 +18,6 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower
 plugins=(vi-mode)
 autoload -Uz compinit
 compinit
-# ZSH_THEME="rei"
 MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
 
@@ -50,9 +49,6 @@ alias explorer="xdg-open ."
 alias please="sudo"
 alias die="exit"
 alias cd..="cd .."
-
-# scripts
-alias mari_says="ruby ~/Repos/mari/mari.rb"
 
 # ruby
 alias r="bin/rails"
@@ -132,55 +128,7 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 t() {
   tmuxinator start && return || clear && tmux
 }
-
-how() {
-  curl cht.sh/$1/$2
-}
-
-db_postgres() {
-  docker container run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=password -d -e POSTGRES_DB=$1 postgres
-}
-
-3000() {
-  [[ -n "$1" && ! "$1" =~ / ]] && http "$1" http://localhost:3000/$2 ${@:3} && return
-  http http://localhost:3000$1 ${@:2}
-}
-
-kill_containers() {
-  docker container rm -f $(docker container ls -qa)
-}
-b() {
-  sudo systemctl restart bluetooth
-}
-
-docs() {
-  apidoc -i $1 -o docs
-}
-
-ssh() {
-  case "$1" in
-    navi)
-      /usr/bin/ssh mluna@lost-navi.xyz
-      ;;
-    *)
-      /usr/bin/ssh $@
-      ;;
-  esac
-}
-
-pac() {
-  sudo pacman "$@" || (echo "Trying with yay..." && yay "$@" || echo "Nope. Good luck.")
-}
-
-mkvm() {
-  cp -r ~/.config/nvim $1
-  cd $1
-  rm -rf .git
-  cd ..
-}
 # </Function>
-
-# help :(
 
 # <Env>
 export VISUAL=nvim
@@ -252,15 +200,6 @@ git commit -m "$* 😑👍"
 
 # load profile
 [ -e $HOME/.zprofile ] && source $HOME/.zprofile
-
-# bun completions
-[ -s "/home/mluna/.bun/_bun" ] && source "/home/mluna/.bun/_bun"
-
-# Bun
-export BUN_INSTALL="/home/mluna/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-export PATH="$HOME/.asdf/shims:$PATH"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
