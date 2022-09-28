@@ -85,10 +85,12 @@ alias v="nvim"
 alias dots='yadm'
 alias dotss="dots status"
 alias dotsa="dots add -u"
+alias dotsA="dots add -u"
 alias dotsl="dots log"
 alias dotsC="dots checkout"
 alias dotsR="dots reset --hard"
 alias dotsp="dots push"
+alias dotsP="dots pull"
 alias dotsb="dots branch"
 alias dotsd="dots diff"
 dotsc() {
