@@ -6,8 +6,6 @@ return {
     disable = false,
     override_options = require("custom.plugins.alpha")
   },
-  ["numToStr/Comment.nvim"] = false,
-  ["tpope/vim-commentary"] = {},
   ["neovim/nvim-lspconfig"] = {
     config = function ()
       require("plugins.configs.lspconfig")
