@@ -30,6 +30,7 @@ alias q="exit"
 alias cd="z"
 alias :q="exit"
 alias ls="exa --icons"
+alias ll="exa --icons -lh"
 alias rice='curl -L rum.sh/ricebowl'
 alias rice='curl -L git.io/rice'
 alias darkness="cat -p ~/.config/nvim/banners/darkness"
