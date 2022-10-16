@@ -220,6 +220,9 @@ command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 
 [ -e ~/.personal ] && source ~/.personal || true
 
+# opam configuration
+[[ ! -r /Users/mluna/.opam/opam-init/init.zsh ]] || source /Users/mluna/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
