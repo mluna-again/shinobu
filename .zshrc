@@ -190,6 +190,7 @@ export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_byte
 
 export GOPATH="$HOME/.local/go"
 export PATH="$PATH:$GOPATH/bin"
+export PATH=$PATH:/usr/local/go/bin
 
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/$HOME/.emacs.d/bin"
