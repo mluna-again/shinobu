@@ -2,6 +2,13 @@ vim.cmd("set relativenumber")
 vim.cmd("command Close :bufdo bd | Alpha")
 vim.cmd("command CLose :bufdo bd | Alpha")
 vim.cmd("command CLOse :bufdo bd | Alpha")
+vim.cmd([[
+  augroup fmt
+    autocmd!
+    autocmd BufWritePre * undojoin | Neoformat
+  augroup END
+]])
+vim.g.loaded_matchit = nil
 -- vim.cmd([[
 --   set foldmethod=expr
 --   set foldexpr=nvim_treesitter#foldexpr()
@@ -13,5 +20,3 @@ vim.cmd("command CLOse :bufdo bd | Alpha")
 --   command! Fold :e | normal zMzr
 --   command! Unfold normal zR
 -- ]])
-
-vim.g.loaded_matchit = nil
