@@ -25,5 +25,6 @@ return {
   ["ggandor/lightspeed.nvim"] = {},
   ["mattn/emmet-vim"] = require("custom.plugins.emmet"),
   ["vim-test/vim-test"] = require("custom.plugins.vim-test"),
-  ["rhysd/git-messenger.vim"] = {}
+  ["rhysd/git-messenger.vim"] = {},
+  ["sindrets/winshift.nvim"] = {}
 }
