@@ -26,5 +26,16 @@ return {
   ["mattn/emmet-vim"] = require("custom.plugins.emmet"),
   ["vim-test/vim-test"] = require("custom.plugins.vim-test"),
   ["rhysd/git-messenger.vim"] = {},
-  ["sindrets/winshift.nvim"] = {}
+  ["sindrets/winshift.nvim"] = {},
+  ["kyazdani42/nvim-web-devicons"] = {
+    override_options = {
+      override = {
+        rb = {
+          icon = "",
+          color = "#a91401",
+          name = "ruby"
+        }
+      }
+    }
+  }
 }
