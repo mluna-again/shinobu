@@ -27,15 +27,8 @@ return {
   ["vim-test/vim-test"] = require("custom.plugins.vim-test"),
   ["rhysd/git-messenger.vim"] = {},
   ["sindrets/winshift.nvim"] = {},
-  ["kyazdani42/nvim-web-devicons"] = {
-    override_options = {
-      override = {
-        rb = {
-          icon = "",
-          color = "#a91401",
-          name = "ruby"
-        }
-      }
-    }
-  }
+  ["kyazdani42/nvim-web-devicons"] = require("custom.plugins.devicons"),
+  ["folke/trouble.nvim"] = require("custom.plugins.trouble"),
+  ["simrat39/symbols-outline.nvim"] = require("custom.plugins.symbols"),
+  ["NTBBloodbath/rest.nvim"] = require("custom.plugins.rest")
 }
