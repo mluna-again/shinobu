@@ -26,6 +26,7 @@ M.general = {
     ["¿"] = { "<C-y>", "scrolls one line up" },
     ["<Space>"] = { "<Nop>", "idk what this does but i think i need it" },
     ["FF"] = { ":NvimTreeToggle<CR>", "toggles nvimtree" },
+    ["H"] = { ":lua require('rest-nvim').run()<CR>", "runs request under cursor" },
     ["<Leader>sl"] = { ":source Session.vim<CR>", "sources session file" },
     ["<Leader>ss"] = { ":Obsession<CR>", "saves session" },
     ["<Leader>ff"] = { ":Telescope oldfiles<CR>", "telescope old files" },
