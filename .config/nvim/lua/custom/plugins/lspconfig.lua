@@ -2,7 +2,7 @@ local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { "tsserver", "solargraph", "cssls", "gopls", "kotlin_language_server", "ocamlls" }
+local servers = { "tsserver", "solargraph", "cssls", "clojure_lsp" }
 
 local home = os.getenv("HOME")
 
