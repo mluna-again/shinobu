@@ -7,3 +7,5 @@
 packer_compiled.lua
 
 Session.vim*
+
+*.http
