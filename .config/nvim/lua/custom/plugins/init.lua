@@ -31,5 +31,6 @@ return {
   ["folke/trouble.nvim"] = require("custom.plugins.trouble"),
   ["simrat39/symbols-outline.nvim"] = require("custom.plugins.symbols"),
   ["NTBBloodbath/rest.nvim"] = require("custom.plugins.rest"),
-  ["nvim-zh/colorful-winsep.nvim"] = require("custom.plugins.winsep")
+  ["nvim-zh/colorful-winsep.nvim"] = require("custom.plugins.winsep"),
+  ["Pocco81/true-zen.nvim"] = require("custom.plugins.true-zen")
 }

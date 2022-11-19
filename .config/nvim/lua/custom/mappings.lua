@@ -41,6 +41,7 @@ M.general = {
     ["<Leader>r"] = { ":TestNearest<CR>", "runs the nearest test" },
     ["<Leader>R"] = { ":TestFile<CR>", "runs current test file" },
     ["<Leader>T"] = { ":TestSuite<CR>", "runs whole test suite" },
+    ["<Leader>tf"] = { ":TZFocus<CR>", "toggles focus mode" },
     --- LSP MAPPINGS ---
     ["<Leader>ls"] = { function ()
       vim.lsp.buf.signature_help()
