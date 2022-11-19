@@ -3,12 +3,7 @@
 local M = {}
 
 M.ui = {
-  theme = "kanagawa",
-  hl_override = {
-    CursorLine = {
-      bg = "grey"
-    }
-  }
+  theme = "kanagawa"
 }
 
 M.mappings =  require("custom.mappings")
