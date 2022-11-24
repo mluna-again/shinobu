@@ -33,5 +33,7 @@ return {
   ["NTBBloodbath/rest.nvim"] = require("custom.plugins.rest"),
   ["nvim-zh/colorful-winsep.nvim"] = require("custom.plugins.winsep"),
   ["Pocco81/true-zen.nvim"] = require("custom.plugins.true-zen"),
-  ["Olical/conjure"] = require("custom.plugins.conjure")
+  ["Olical/conjure"] = require("custom.plugins.conjure"),
+  ["windwp/nvim-autopairs"] = false,
+  ["jiangmiao/auto-pairs"] = {}
 }
