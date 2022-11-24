@@ -12,6 +12,4 @@ nmap <silent> '' ``
 nmap <silent> ! :ls<CR>
 nmap <silent> - <C-e>
 nmap <silent> ¿ <C-y>
-nmap <silent> m <C-d>
-nmap <silent> M <C-b>
 map  <silent> ñ gc

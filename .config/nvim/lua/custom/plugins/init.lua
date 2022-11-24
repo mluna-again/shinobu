@@ -32,5 +32,6 @@ return {
   ["simrat39/symbols-outline.nvim"] = require("custom.plugins.symbols"),
   ["NTBBloodbath/rest.nvim"] = require("custom.plugins.rest"),
   ["nvim-zh/colorful-winsep.nvim"] = require("custom.plugins.winsep"),
-  ["Pocco81/true-zen.nvim"] = require("custom.plugins.true-zen")
+  ["Pocco81/true-zen.nvim"] = require("custom.plugins.true-zen"),
+  ["Olical/conjure"] = require("custom.plugins.conjure")
 }
