@@ -1,11 +1,17 @@
-(setq inhibit-startup-message t)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(setq inhibit-startup-message nil)
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
-(setq mac-option-key-is-meta nil)
-(setq mac-command-key-is-meta t)
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier nil)
-
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none)
+(setq frame-title-format "Emacs")
+(global-display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+ 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
@@ -34,5 +40,9 @@
 (require 'evil)
 (evil-mode 1)
 
-(load-theme 'gruvbox-dark-medium)
+;; Mappings
 (load "~/.emacs.d/mappings.el")
+
+;; Theme
+(load-theme 'gruvbox-dark-medium)
+(set-frame-font "Inconsolata Nerd Font 16" nil t)
