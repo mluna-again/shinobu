@@ -17,3 +17,7 @@ end
 function vmap(lhs, rhs, opts)
     map("v", lhs, rhs, opts)
 end
+
+function tmap(lhs, rhs, opts)
+    map("t", lhs, rhs, opts)
+end
