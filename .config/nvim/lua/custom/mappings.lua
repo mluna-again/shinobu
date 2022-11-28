@@ -42,8 +42,8 @@ M.general = {
     ["<Leader>R"] = { ":TestFile<CR>", "runs current test file" },
     ["<Leader>T"] = { ":TestSuite<CR>", "runs whole test suite" },
     ["<Leader>tf"] = { ":TZFocus<CR>", "toggles focus mode" },
-    ["<Leader>cf"] = { ":ConjureEvalCurrentForm<CR>", "evaluates clojure form under cursor" },
-    ["<Leader>cb"] = { ":ConjureEvalBuf<CR>", "evaluates clojure buffer" },
+    ["<Leader>cl"] = { ":ConjureEvalCurrentForm<CR>", "evaluates clojure form under cursor" },
+    ["<Leader>cp"] = { ":ConjureEvalBuf<CR>", "evaluates clojure buffer" },
     --- LSP MAPPINGS ---
     ["<Leader>ls"] = { function ()
       vim.lsp.buf.signature_help()
