@@ -31,6 +31,7 @@ return require('packer').startup({function(use)
 	use(require('plugins.config.neoformat'))
 	use(require('plugins.config.lualine'))
 	use(require('plugins.config.devicons'))
+	use(require('plugins.config.gitsigns'))
 	use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 	use('editorconfig/editorconfig-vim')
 	use('wbthomason/packer.nvim')
