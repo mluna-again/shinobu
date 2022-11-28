@@ -1,4 +1,11 @@
 return {
+  ["NvChad/ui"] = {
+    override_options = {
+      statusline = {
+        separator_style = "block"
+      },
+    },
+  },
   ["folke/which-key.nvim"] = {
     disable = false
   },
