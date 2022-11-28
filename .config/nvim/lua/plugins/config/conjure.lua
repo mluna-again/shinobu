@@ -5,6 +5,6 @@ return {
 	config = function ()
 		nmap("<leader>cl", ":ConjureEvalRootForm<CR>")
 		nmap("<leader>ce", ":ConjureEvalCurrentForm<CR>")
-		nmap("<leader>cb", ":ConjureEvalBuf<CR>")
+		nmap("<leader>cp", ":ConjureEvalBuf<CR>")
 	end
 }
