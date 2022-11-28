@@ -128,9 +128,9 @@ return {
 			capabilities = capabilities
 		}
 
-		nmap('<Leader>lh', ':lua vim.lsp.buf.hover()')
-		nmap('<Leader>lr', ':lua vim.lsp.buf.rename()')
-		nmap('<Leader>lf', ':lua vim.lsp.buf.definition()')
-		nmap('<Leader>ld', ':lua vim.diagnostic.open_float()')
+		nmap('<Leader>lh', ':lua vim.lsp.buf.hover()<CR>')
+		nmap('<Leader>lr', ':lua vim.lsp.buf.rename()<CR>')
+		nmap('<Leader>lf', ':lua vim.lsp.buf.definition()<CR>')
+		nmap('<Leader>ld', ':lua vim.diagnostic.open_float()<CR>')
 	end
 }
