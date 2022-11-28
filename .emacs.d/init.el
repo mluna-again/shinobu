@@ -46,3 +46,5 @@
 ;; Theme
 (load-theme 'gruvbox-dark-medium)
 (set-frame-font "Inconsolata Nerd Font 16" nil t)
+(set-frame-parameter (selected-frame) 'alpha '(85 . 50))
+(add-to-list 'default-frame-alist '(alpha . (85 . 50)))
