@@ -23,14 +23,7 @@ nmap("<A-h>", ":wincmd h<CR>")
 nmap("<A-l>", ":wincmd l<CR>")
 nmap("-", "<C-e>")
 nmap("¿", "<C-y>")
-vim.cmd("command Close :bufdo bd | Dashboard")
-nmap("<Space>", "<Nop>")
-nmap("FF", ":NvimTreeToggle<CR>")
-nmap("/", ":Telescope current_buffer_fuzzy_find<CR>")
-nmap("ñ", ":Commentary<CR>")
-nmap("<C-j>", ":Neoformat<CR>")
-vim.cmd([[
-vnoremap ñ :Commentary<CR>
-]])
-
 imap("jj", "<ESC>")
+nmap("<Space>", "<Nop>")
+nmap("/", ":Telescope current_buffer_fuzzy_find<CR>")
+vim.cmd("command Close :bufdo bd | Dashboard")
