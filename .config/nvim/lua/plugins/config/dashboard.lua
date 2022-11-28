@@ -34,12 +34,11 @@ return {
 
 		nmap("<Leader>sl", ":source Session.vim<CR>")
 		nmap("<Leader>ss", ":Obsession<CR>")
-		nmap("<Leader>fh", ":Telescope oldfiles<CR>")
-		nmap("<Leader>fa", ":Telescope live_grep<CR>")
+		nmap("<Leader>fo", ":Telescope oldfiles<CR>")
+		nmap("<Leader>fw", ":Telescope live_grep<CR>")
 		nmap("<Leader>ff", ":Telescope find_files<CR>")
 		nmap("<Leader>cn", ":DashboardNewFile<CR>")
 		nmap("<Leader>fn", ":NvimTreeFindFileToggle<CR>")
-		nmap("<Leader>FF", ":Telescope buffers<CR>")
 		
 		vim.cmd([[
 			augroup DashboardTweaks
