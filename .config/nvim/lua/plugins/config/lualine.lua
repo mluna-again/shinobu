@@ -2,7 +2,7 @@ return {
 	'hoob3rt/lualine.nvim',
 	config = function()
 		local function shouldShowFilename()
-			local badFiletypes = { 'toggleterm', 'dashboard' }
+			local badFiletypes = { 'toggleterm', 'dashboard', 'NvimTree' }
 			local ft = vim.bo.filetype
 			for _, filetype in pairs(badFiletypes) do
 				if string.find(ft, filetype) then
