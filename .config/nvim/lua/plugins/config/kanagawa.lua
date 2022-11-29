@@ -29,6 +29,7 @@ return {
 			autocmd ColorScheme * hi DashboardFooter guibg=NONE guifg=#54546D
 		augroup end
 		]])
-		vim.cmd("colorscheme kanagawa")
+
+		vim.cmd("colorschema kanagawa")
 	end
 }
