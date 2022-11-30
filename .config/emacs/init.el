@@ -40,8 +40,9 @@
 (require 'helm-config)
 (helm-mode 1)
 
-;; Mappings
-(load (config-file-path "mappings"))
-
 ;; Theme and dashboard styles
 (load (config-file-path "styles"))
+
+;; Mappings
+;; this has to be after styles
+(load (config-file-path "mappings"))
