@@ -47,7 +47,7 @@
   (insert (centered "  New file               SPC c n\n"))
   (insert (centered "  Find file              SPC c n\n"))
   (insert (centered "  Recent files           SPC c n\n"))
-  (insert (centered "  Find word              SPC c n\n"))
+  (insert (centered "  Find word              SPC c n\n"))
   (insert (centered "  Load last session      SPC c n\n"))
   (insert (centered "  Quit Emacs             SPC c n\n")))
 
