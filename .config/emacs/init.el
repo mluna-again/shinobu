@@ -2,21 +2,15 @@
   (filename)
   (concat "~/.config/emacs/config/" filename ".el"))
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-startup-message nil)
-(setq visible-bell t)
-(setq ring-bell-function 'ignore)
-(setq mac-option-key-is-meta nil
-      mac-command-key-is-meta t
-      mac-command-modifier 'meta
-      mac-option-modifier 'none)
-(setq frame-title-format "Emacs")
-(global-display-line-numbers-mode)
-(setq display-line-numbers-type 'relative)
-(add-hook 'window-setup-hook 'toggle-frame-maximized t)
- 
 (load (config-file-path "custom"))
+
+(setq backup-directory-alist '(("." . "~/.local/share/emacs/backups"))
+  backup-by-copying t    ; Don't delink hardlinks
+  version-control t      ; Use version numbers on backups
+  delete-old-versions t  ; Automatically delete excess backups
+  kept-new-versions 20   ; how many of the newest versions to keep
+  kept-old-versions 5    ; and how many of the old
+  )
 
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -38,17 +32,10 @@
 (install 'which-key)
 (install 'cider)
 (install 'clojure-mode)
-
-;; Evil mode
-(require 'evil)
-(evil-mode 1)
+(install 'dashboard)
 
 ;; Mappings
 (load (config-file-path "mappings"))
 
-;; Theme
-(load-theme 'gruvbox-dark-medium)
-(set-frame-font "Inconsolata Nerd Font 16" nil t)
-(set-frame-parameter (selected-frame) 'alpha '(85 . 50))
-(add-to-list 'default-frame-alist '(alpha . (85 . 50)))
-(setq fancy-splash-image "~/Downloads/smol.png")
+;; Theme and dashboard styles
+(load (config-file-path "styles"))
