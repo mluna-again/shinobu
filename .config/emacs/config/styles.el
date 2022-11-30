@@ -19,7 +19,35 @@
 ; (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
 
 ;; Dashboard
+(require 'dashboard)
 (setq dashboard-startup-banner "~/.config/emacs/config/logo.png")
 (setq dashboard-image-banner-max-width 200)
-(require 'dashboard)
+(setq dashboard-set-footer nil)
+(setq dashboard-show-shortcuts nil)
+(setq dashboard-items '())
+(setq dashboard-banner-logo-title nil)
+(setq dashboard-set-init-info nil)
+
+(defun padding (text)
+  (make-string (/ (- (frame-width) (length text)) 2) ?\s))
+
+(defun centered (text)
+  (concat (padding text) text (padding text) "\n"))
+
+(defun recenter-dashboard ()
+  (if (string= "*dashboard*" (buffer-name))
+      (dashboard-refresh-buffer)))
+
+(defun dashboard-insert-custom (list-size)
+  (insert (centered "  New file               SPC c n\n"))
+  (insert (centered "  Find file              SPC c n\n"))
+  (insert (centered "  Recent files           SPC c n\n"))
+  (insert (centered "  Find word              SPC c n\n"))
+  (insert (centered "  Load last session      SPC c n\n"))
+  (insert (centered "  Quit Emacs             SPC c n\n")))
+
+(add-to-list 'dashboard-item-generators  '(commands . dashboard-insert-custom))
+(add-to-list 'dashboard-items '(commands) t)
+
+(add-hook 'window-configuration-change-hook 'recenter-dashboard)
 (dashboard-setup-startup-hook)
