@@ -12,7 +12,7 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
  
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file "~/.config/emacs/custom.el")
 (load custom-file)
 
 (require 'package)
@@ -41,10 +41,11 @@
 (evil-mode 1)
 
 ;; Mappings
-(load "~/.emacs.d/mappings.el")
+(load "~/.config/emacs/mappings.el")
 
 ;; Theme
 (load-theme 'gruvbox-dark-medium)
 (set-frame-font "Inconsolata Nerd Font 16" nil t)
 (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
 (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+(setq fancy-splash-image "~/Downloads/smol.png")
