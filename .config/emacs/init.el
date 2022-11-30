@@ -2,7 +2,8 @@
   (filename)
   (concat "~/.config/emacs/config/" filename ".el"))
 
-(load (config-file-path "custom"))
+(setq custom-file (config-file-path "custom"))
+(load custom-file)
 
 (setq backup-directory-alist '(("." . "~/.local/share/emacs/backups"))
   backup-by-copying t    ; Don't delink hardlinks
@@ -33,6 +34,11 @@
 (install 'cider)
 (install 'clojure-mode)
 (install 'dashboard)
+(install 'helm)
+
+;; Helm
+(require 'helm-config)
+(helm-mode 1)
 
 ;; Mappings
 (load (config-file-path "mappings"))
