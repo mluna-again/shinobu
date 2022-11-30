@@ -1,3 +1,7 @@
+(defun config-file-path
+  (filename)
+  (concat "~/.config/emacs/config/" filename ".el"))
+
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (setq inhibit-startup-message nil)
@@ -12,8 +16,7 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
  
-(setq custom-file "~/.config/emacs/custom.el")
-(load custom-file)
+(load (config-file-path "custom"))
 
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -41,7 +44,7 @@
 (evil-mode 1)
 
 ;; Mappings
-(load "~/.config/emacs/mappings.el")
+(load (config-file-path "mappings"))
 
 ;; Theme
 (load-theme 'gruvbox-dark-medium)
