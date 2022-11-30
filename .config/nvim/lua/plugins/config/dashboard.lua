@@ -43,8 +43,8 @@ return {
 		db.custom_center = {
 			{ icon = "  ", desc = "New File                  SPC c n", action = "DashboardNewFile" },
 			{ icon = "  ", desc = "Find File                 SPC f f", action = "Telescope find_files" },
-			{ icon = "  ", desc = "Recents                   SPC f h", action = "Telescope oldfiles" },
-			{ icon = "  ", desc = "Find Word                 SPC f a", action = "Telescope live_grep" },
+			{ icon = "  ", desc = "Recents                   SPC f o", action = "Telescope oldfiles" },
+			{ icon = "  ", desc = "Find Word                 SPC f w", action = "Telescope live_grep" },
 			{ icon = "  ", desc = "Load Last Session         SPC s l", action = "SessionLoad" },
 			{ icon = "  ", desc = "Quit Neovim                     q", action = "quit" },
 		}
