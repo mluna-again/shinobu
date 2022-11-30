@@ -1,6 +1,7 @@
 ;; Styles
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(fringe-mode -1)
 (setq inhibit-startup-message nil)
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
@@ -38,6 +39,10 @@
   (if (string= "*dashboard*" (buffer-name))
       (dashboard-refresh-buffer)))
 
+(defun clear-messages-buffer ()
+  (setq mode-line-format nil)
+  (message ""))
+
 (defun dashboard-insert-custom (list-size)
   (insert (centered "  New file               SPC c n\n"))
   (insert (centered "  Find file              SPC c n\n"))
@@ -50,4 +55,5 @@
 (add-to-list 'dashboard-items '(commands) t)
 
 (add-hook 'window-configuration-change-hook 'recenter-dashboard)
+(add-hook 'dashboard-mode-hook 'clear-messages-buffer)
 (dashboard-setup-startup-hook)
