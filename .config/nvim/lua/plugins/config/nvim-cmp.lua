@@ -5,7 +5,7 @@ return {
 	config = function()
 		require("nvim-lsp-installer").setup({
 			-- ensure_installed = { "elixirls", "tsserver", "sumneko_lua", "cssls", "clojure_lsp", "solargraph", "csharp_ls", "gopls", "kotlin_language_server" },
-			ensure_installed = { "elixirls", "tsserver", "sumneko_lua", "cssls", "gopls" },
+			ensure_installed = { "elixirls", "tsserver", "sumneko_lua", "cssls", "jdtls" },
 			automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
 			ui = {
 				icons = {
@@ -125,6 +125,9 @@ return {
 			capabilities = capabilities
 		}
 		require('lspconfig').gopls.setup{
+			capabilities = capabilities
+		}
+		require('lspconfig').jdtls.setup{
 			capabilities = capabilities
 		}
 
