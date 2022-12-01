@@ -17,9 +17,24 @@
 (define-key helm-map (kbd "C-z") #'helm-select-action)
 
 ;; Dashboard
-(define-key dashboard-mode-map (kbd "SPC cn") 'helm-find)
-(define-key dashboard-mode-map (kbd "SPC ff") 'helm-find)
-(define-key dashboard-mode-map (kbd "SPC fo") 'helm-find)
-(define-key dashboard-mode-map (kbd "SPC fw") 'helm-find)
-(define-key dashboard-mode-map (kbd "SPC sl") 'helm-find)
-(define-key dashboard-mode-map (kbd "q") 'helm-find)
+(defun toggle-dashboard-mappings ()
+	(if (not (eq major-mode 'dashboard-mode))
+		(progn
+			(message "removing")
+			(define-key evil-normal-state-map (kbd "SPC cn") nil)
+			(define-key evil-normal-state-map (kbd "SPC ff") nil)
+			(define-key evil-normal-state-map (kbd "SPC fo") nil)
+			(define-key evil-normal-state-map (kbd "SPC fw") nil)
+			(define-key evil-normal-state-map (kbd "SPC sl") nil)
+			(define-key evil-normal-state-map (kbd "q") nil))
+
+		(progn 
+			(message "adding")
+			(define-key evil-normal-state-map (kbd "SPC cn") 'helm-find)
+			(define-key evil-normal-state-map (kbd "SPC ff") 'helm-find)
+			(define-key evil-normal-state-map (kbd "SPC fo") 'helm-find)
+			(define-key evil-normal-state-map (kbd "SPC fw") 'helm-find)
+			(define-key evil-normal-state-map (kbd "SPC sl") 'helm-find)
+			(define-key evil-normal-state-map (kbd "q") 'kill-emacs))))
+
+(add-hook 'change-major-mode-hook 'toggle-dashboard-mappings)
