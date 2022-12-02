@@ -192,29 +192,6 @@ export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_byte
 export GOPATH="$HOME/.local/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH=$PATH:/usr/local/go/bin
-mkgo() {
-  mkdir $1 || return
-  cd $1
-  cat - > Makefile <<EOF
-.DEFAULT_GOAL = run
-
-run:
-	go run .
-EOF
-
-  cat - > main.go <<EOF
-package main
-
-import "fmt"
-
-func main() {
-  fmt.Println("Hello")
-}
-EOF
-
-  go mod init $1
-  make
-}
 
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/$HOME/.emacs.d/bin"
