@@ -54,6 +54,7 @@ alias explorer="xdg-open ."
 alias please="sudo"
 alias die="exit"
 alias cd..="cd .."
+alias figlet="figlet -f larry3d"
 
 # ruby
 alias r="bin/rails"
