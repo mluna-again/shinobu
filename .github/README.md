@@ -6,4 +6,4 @@
 <img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/terminal.png">
 
 # emacs
-https://user-images.githubusercontent.com/53100040/205425683-8789f1b4-4bd9-4839-8432-76eddfd9adfb.mp4
+https://user-images.githubusercontent.com/53100040/205425911-e24e7d5f-c72b-419c-98b4-e189dc1fb66a.mp4
