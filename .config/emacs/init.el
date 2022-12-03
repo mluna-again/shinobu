@@ -26,6 +26,7 @@
 (install 'which-key)
 (install 'dashboard)
 (install 'helm)
+(install 'doom-modeline)
 (install 'cider)
 (install 'clojure-mode)
 (install 'lsp-mode)
@@ -35,6 +36,11 @@
 (add-hook 'clojure-mode-hook 'lsp)
 (add-hook 'clojurescript-mode-hook 'lsp)
 (add-hook 'clojurec-mode-hook 'lsp)
+
+;; Doomline
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+
 ;; Helm
 (require 'helm-config)
 (helm-mode 1)
