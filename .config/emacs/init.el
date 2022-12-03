@@ -51,3 +51,6 @@
 ;; Mappings
 ;; this has to be after styles
 (load (config-file-path "mappings"))
+
+;; Other config
+(electric-pair-mode 1)
