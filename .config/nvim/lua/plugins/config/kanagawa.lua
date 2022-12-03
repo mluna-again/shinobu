@@ -30,6 +30,6 @@ return {
 		augroup end
 		]])
 
-		vim.cmd("colorschema kanagawa")
+		vim.cmd("colorscheme kanagawa")
 	end
 }
