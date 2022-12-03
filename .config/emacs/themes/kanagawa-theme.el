@@ -67,7 +67,7 @@
 
   ;; Customize faces
   (
-  (default                                       (:background sumiInk-1b :foreground fujiWhite))
+  (default                                       (:background sumiInk-0 :foreground fujiWhite))
   (border                                        (:background sumiInk-1b :foreground sumiInk-0))
   (button                                        (:foreground waveAqua2))
   (child-frame                                   (:background sumiInk-0 :foreground sumiInk-0))
