@@ -21,7 +21,7 @@
 
 ;; Dashboard
 (require 'dashboard)
-(setq dashboard-startup-banner "~/.config/emacs/config/logo.png")
+(setq dashboard-startup-banner "~/.config/emacs/config/logo.gif")
 (setq dashboard-image-banner-max-width 200)
 (setq dashboard-set-footer nil)
 (setq dashboard-show-shortcuts nil)
