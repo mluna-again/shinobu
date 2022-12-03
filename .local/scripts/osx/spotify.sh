@@ -14,7 +14,7 @@ playing=$(grep -i paused <<< "$output" && echo no || echo yes)
 should_truncate=$([ ${#title} -gt 45 ] && echo yes || echo no)
 
 if [ "$playing" == "yes" ]; then
-	[ "$should_truncate" == yes ] && echo "#[fg=green]阮$short_title...#[fg=default]" || echo "#[fg=green]阮$title#[fg=default]"
+	[ "$should_truncate" == yes ] && echo "#[fg=green]阮 $short_title...#[fg=default]" || echo "#[fg=green]阮 $title#[fg=default]"
 else
-	[ "$should_truncate" == yes ] && echo "#[fg=gray]阮$short_title...#[fg=default]" || echo "#[fg=gray]阮$title#[fg=default]"
+	[ "$should_truncate" == yes ] && echo "#[fg=gray]阮 $short_title...#[fg=default]" || echo "#[fg=gray]阮 $title#[fg=default]"
 fi
