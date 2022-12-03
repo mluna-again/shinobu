@@ -22,7 +22,6 @@
 
 (install 'key-chord)
 (install 'autothemer)
-(install 'gruvbox-theme)
 (install 'evil)
 (install 'which-key)
 (install 'dashboard)

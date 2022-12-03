@@ -1,4 +1,5 @@
 ;; Styles
+(add-to-list 'custom-theme-load-path "~/.config/emacs/themes")
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode -1)
@@ -14,7 +15,7 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
  
-(load-theme 'gruvbox-dark-medium)
+(load-theme 'kanagawa)
 (set-frame-font "Inconsolata Nerd Font 16" nil t)
 ; (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
 ; (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
