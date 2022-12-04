@@ -33,9 +33,18 @@
 (install 'lsp-treemacs)
 (install 'flycheck)
 (install 'company)
+
+;; Clojure
 (add-hook 'clojure-mode-hook 'lsp)
 (add-hook 'clojurescript-mode-hook 'lsp)
 (add-hook 'clojurec-mode-hook 'lsp)
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-minimum-prefix-length 1
+      lsp-clojure-custom-server-command '("bash" "-c" "~/.local/bin/clojure_lsp/clojure-lsp")
+      lsp-enable-indentation t
+      lsp-enable-completion-at-point t)
 
 ;; Doomline
 (require 'doom-modeline)
@@ -54,3 +63,5 @@
 
 ;; Other config
 (electric-pair-mode 1)
+
+(setq debug-on-error nil)
