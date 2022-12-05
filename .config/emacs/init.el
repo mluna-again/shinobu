@@ -27,6 +27,8 @@
 (install 'dashboard)
 (install 'helm)
 (install 'doom-modeline)
+(install 'treemacs)
+(install 'treemacs-evil)
 (install 'cider)
 (install 'clojure-mode)
 (install 'lsp-mode)

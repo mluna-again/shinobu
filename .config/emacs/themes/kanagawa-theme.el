@@ -103,6 +103,10 @@
   (window-divider                                (:foreground sumiInk-2))
   (hi-yellow                                     (:background carpYellow :foreground sumiInk-1b))
 
+  ;; Helm
+  (helm-ff-file                                  (:foreground fujiWhite))
+  (helm-match                                    (:background sumiInk-0 :foreground fujiWhite))
+
   ;; Font lock
   (font-lock-type-face                           (:foreground waveAqua2))
   (font-lock-regexp-grouping-backslash           (:foreground boatYellow2))

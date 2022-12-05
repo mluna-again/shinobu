@@ -15,7 +15,7 @@
 
 ;; Helm
 (global-set-key (kbd "C-x C-f") 'helm-find)
-(define-key evil-normal-state-map (kbd "SPC ff") 'helm-find-files)
+(define-key evil-normal-state-map (kbd "SPC ff") 'helm-find)
 (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
 (define-key helm-map (kbd "C-j") #'helm-execute-persistent-action)
 (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
@@ -28,3 +28,10 @@
 (evil-define-key 'normal dashboard-mode-map (kbd "SPC fw") 'helm-find)
 (evil-define-key 'normal dashboard-mode-map (kbd "SPC sl") 'helm-find)
 (evil-define-key 'normal dashboard-mode-map (kbd "q") 'kill-emacs)
+
+;; Treemacs
+(evil-global-set-key 'normal (kbd "SPC fn") 'treemacs)
+(evil-define-key 'normal treemacs-mode-map (kbd "o") 'treemacs-toggle-node)
+(evil-define-key 'normal treemacs-mode-map (kbd "a") 'treemacs-create-file)
+(evil-define-key 'normal treemacs-mode-map (kbd "d") 'treemacs-delete-file)
+(evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-rename-file)
