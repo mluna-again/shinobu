@@ -22,6 +22,7 @@
   (fujiWhite		"#DCD7BA" "#ffffff")
   (old-white		"#C8C093" "#ffffff")
 
+  (background		"#16161D" "#000000")
   (sumiInk-0		"#16161D" "#000000")
   (sumiInk-1b		"#181820" "#000000")
   (sumiInk-1		"#1F1F28" "#080808")
@@ -281,6 +282,10 @@
   (flycheck-inline-error                         (:foreground samuraiRed :background winterRed :italic t :bold t :height 138))
   (flycheck-inline-info                          (:foreground lightBlue :background winterBlue :italic t  :bold t :height 138))
   (flycheck-inline-warning                       (:foreground winterYellow :background carpYellow :italic t :bold t :height 138))
+  (flycheck-error                                (:foreground samuraiRed :background background))
+  (flycheck-warning                              (:foreground roninYellow :background background))
+  (flycheck-duplicate                            (:foreground roninYellow :background background))
+  (flycheck-incorrect                            (:foreground samuraiRed :background background))
 
   ;; indent dots
   (highlight-indent-guides-character-face        (:foreground sumiInk-3))
@@ -340,6 +345,12 @@
   (lsp-ui-sideline-code-action                   (:foreground carpYellow))
   (lsp-ui-sideline-current-symbol                (:foreground springBlue))
   (lsp-ui-sideline-symbol                        (:foreground dragonBlue))
+  (lsp-flycheck-warning-unnecessary-face         (:foreground samuraiRed :background background))
+  (lsp-headerline-breadcrumb-path-error-face     (:foreground fujiWhite :background background))
+  (lsp-flycheck-info-unnecessary-face            (:foreground fujiWhite :background peachRed))
+  (lsp-flycheck-warning-unnecessary-face         (:foreground fujiWhite :background peachRed))
+
+
 
   ;; dashboard
   (dashboard-heading                             (:foreground springViolet2 :bold t))
