@@ -35,6 +35,7 @@
 (install 'lsp-treemacs)
 (install 'flycheck)
 (install 'company)
+(install 'org-modern)
 
 ;; Clojure
 (add-hook 'clojure-mode-hook 'lsp)
@@ -65,5 +66,7 @@
 
 ;; Other config
 (electric-pair-mode 1)
+(setq org-adapt-indentation t)
+(setq org-startup-indented t)
 
 (setq debug-on-error nil)
