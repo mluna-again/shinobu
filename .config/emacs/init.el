@@ -36,6 +36,7 @@
 (install 'flycheck)
 (install 'company)
 (install 'org-modern)
+(install 'format-all)
 
 ;; Clojure
 (add-hook 'clojure-mode-hook 'lsp)
