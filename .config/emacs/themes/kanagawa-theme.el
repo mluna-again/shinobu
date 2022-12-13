@@ -79,7 +79,7 @@
   (fringe                                        (:foreground sumiInk-3 :background sumiInk-3))
   (glyph-face                                    (:background sumiInk-4))
   (glyphless-char                                (:foreground sumiInk-4))
-  (header-line                                   (:background sumiInk-0))
+  (header-line                                   (:background background :foreground foreground :box nil))
   (highlight                                     (:background comet :foreground springViolet1))
   (hl-line                                       (:background sumiInk-2))
   (homoglyph                                     (:foreground lightBlue))

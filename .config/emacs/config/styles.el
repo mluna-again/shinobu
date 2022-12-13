@@ -86,3 +86,6 @@
    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
  org-agenda-current-time-string
  "⭠ now ─────────────────────────────────────────────────")
+
+;; Lsp Mode
+(setq lsp-headerline-breadcrumb-enable-diagnostics nil)
