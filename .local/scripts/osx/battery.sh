@@ -6,7 +6,7 @@ low_battery=$([ $percentage -le 20 ] && echo yes || echo no)
 plugged=$(system_profiler SPPowerDataType | grep -i "connected: no" && echo no || echo yes)
 
 if [ "$plugged" == "yes" ]; then
-	echo "#[fg=green] $percentage%"
+	echo "#[fg=green]  $percentage%"
 elif [ "$low_battery" == "no" ]; then
 
 	if [ "$percentage" -ge "90" ]; then
