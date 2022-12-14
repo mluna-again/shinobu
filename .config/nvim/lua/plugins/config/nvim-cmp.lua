@@ -5,7 +5,7 @@ return {
 	config = function()
 		require("nvim-lsp-installer").setup({
 			ensure_installed = {},
-			automatic_installation = true,
+			automatic_installation = false,
 			ui = {
 				icons = {
 					server_installed = "✓",
