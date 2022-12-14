@@ -26,6 +26,11 @@ MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 # </Config>
 
 # utils
+run() {
+  what=$1
+  shift
+  nodemon $1 --exec "clear; $what $*"
+}
 alias q="exit"
 alias cd="z"
 alias :q="exit"
