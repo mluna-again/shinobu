@@ -129,6 +129,9 @@ return {
 		require('lspconfig').clojure_lsp.setup{
 			capabilities = capabilities
 		}
+		require('lspconfig').jdtls.setup{
+			capabilities = capabilities
+		}
 
 		nmap('<Leader>lh', ':lua vim.lsp.buf.hover()<CR>')
 		nmap('<Leader>lr', ':lua vim.lsp.buf.rename()<CR>')
