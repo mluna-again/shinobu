@@ -11,6 +11,7 @@ vim.o.smartcase = true
 vim.o.hidden = true
 vim.o.background = "dark"
 vim.o.mouse = "a"
+vim.o.cursorline = true
 vim.cmd([[
 set statusline=
 set showtabline=0
