@@ -111,24 +111,22 @@ return {
 			}
 		}
 		local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-		require('lspconfig').elixirls.setup{
-			capabilities = capabilities
+
+		local servers = {
+			'elixirls',
+			'tsserver',
+			'cssls',
+			'solargraph',
+			'rust_analyzer',
+			'clojure_lsp',
+			'kotlin_language_server'
 		}
-		require('lspconfig').tsserver.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').cssls.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').solargraph.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').rust_analyzer.setup{
-			capabilities = capabilities
-		}
-		require('lspconfig').clojure_lsp.setup{
-			capabilities = capabilities
-		}
+
+		for _, server in pairs(servers) do
+			require('lspconfig')[server].setup{
+				capabilities = capabilities
+			}
+		end
 
 		nmap('<Leader>lh', ':lua vim.lsp.buf.hover()<CR>')
 		nmap('<Leader>lr', ':lua vim.lsp.buf.rename()<CR>')
