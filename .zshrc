@@ -141,6 +141,10 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 t() {
   tmuxinator start && return || clear && tmux
 }
+
+paragraph() {
+  awk -v RS= "NR==${2:-1}" $1
+}
 # </Function>
 
 # <Env>
