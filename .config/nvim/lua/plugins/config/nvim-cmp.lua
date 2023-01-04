@@ -119,7 +119,8 @@ return {
 			'solargraph',
 			'rust_analyzer',
 			'clojure_lsp',
-			'kotlin_language_server'
+			'kotlin_language_server',
+			'gopls'
 		}
 
 		for _, server in pairs(servers) do
