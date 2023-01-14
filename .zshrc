@@ -27,6 +27,8 @@ MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 
 # utils
 run() {
+  [[ -z "$2" ]] && { nodemon $1 --exec "clear; $1"; return; }
+
   what=$1
   shift
   nodemon $1 --exec "clear; $what $*"
@@ -237,3 +239,5 @@ command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
+
+[ -f "/Users/mluna/.ghcup/env" ] && source "/Users/mluna/.ghcup/env" # ghcup-env
