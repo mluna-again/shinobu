@@ -3,18 +3,6 @@ require('core.maps')
 return {
 	'hrsh7th/nvim-cmp',
 	config = function()
-		require("nvim-lsp-installer").setup({
-			ensure_installed = {},
-			automatic_installation = false,
-			ui = {
-				icons = {
-					server_installed = "✓",
-					server_pending = "➜",
-					server_uninstalled = "✗"
-				}
-			},
-			install_root_dir = string.format("%s/.local/bin", os.getenv("HOME"))
-		})
 		local kind_icons = {
 			Text = "",
 			Method = "",
@@ -110,28 +98,5 @@ return {
 				end
 			}
 		}
-		local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-		local servers = {
-			'elixirls',
-			'tsserver',
-			'cssls',
-			'solargraph',
-			'rust_analyzer',
-			'clojure_lsp',
-			'kotlin_language_server',
-			'gopls'
-		}
-
-		for _, server in pairs(servers) do
-			require('lspconfig')[server].setup{
-				capabilities = capabilities
-			}
-		end
-
-		nmap('<Leader>lh', ':lua vim.lsp.buf.hover()<CR>')
-		nmap('<Leader>lr', ':lua vim.lsp.buf.rename()<CR>')
-		nmap('<Leader>lf', ':lua vim.lsp.buf.definition()<CR>')
-		nmap('<Leader>ld', ':lua vim.diagnostic.open_float()<CR>')
 	end
 }
