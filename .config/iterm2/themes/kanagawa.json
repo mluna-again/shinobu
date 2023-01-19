@@ -17,7 +17,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.76470589637756348
   },
-  "Use Italic Font" : true,
+  "Use Italic Font" : false,
   "Foreground Color" : {
     "Red Component" : 0.86274510622024536,
     "Color Space" : "sRGB",
@@ -317,14 +317,6 @@
   "Name" : "kanagawa",
   "Blinking Cursor" : true,
   "Guid" : "95B2A902-1140-4BF1-84A9-5D8B1BD33872",
-  "Idle Code" : 0,
-  "Ansi 10 Color" : {
-    "Red Component" : 0.59607845544815063,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.42352941632270813,
-    "Alpha Component" : 1,
-    "Green Component" : 0.73333334922790527
-  },
   "Ansi 8 Color" : {
     "Red Component" : 0.44705882668495178,
     "Color Space" : "sRGB",
@@ -332,6 +324,14 @@
     "Alpha Component" : 1,
     "Green Component" : 0.44313725829124451
   },
+  "Ansi 10 Color" : {
+    "Red Component" : 0.59607845544815063,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.42352941632270813,
+    "Alpha Component" : 1,
+    "Green Component" : 0.73333334922790527
+  },
+  "Idle Code" : 0,
   "Badge Color" : {
     "Red Component" : 1,
     "Color Space" : "sRGB",
@@ -411,8 +411,8 @@
   "Columns" : 80,
   "Unicode Normalization" : 0,
   "Visual Bell" : false,
-  "ASCII Ligatures" : true,
   "Custom Directory" : "No",
+  "ASCII Ligatures" : true,
   "Ansi 5 Color" : {
     "Red Component" : 0.58431375026702881,
     "Color Space" : "sRGB",
