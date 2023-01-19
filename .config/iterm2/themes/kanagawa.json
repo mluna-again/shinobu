@@ -1,13 +1,7 @@
 {
-  "Ansi 5 Color" : {
-    "Red Component" : 0.58431375026702881,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.72156864404678345,
-    "Alpha Component" : 1,
-    "Green Component" : 0.49803921580314636
-  },
+  "Thin Strokes" : 4,
   "Working Directory" : "\/Users\/mluna",
-  "Prompt Before Closing 2" : false,
+  "Prompt Before Closing 2" : 2,
   "Selected Text Color" : {
     "Red Component" : 0.78431373834609985,
     "Color Space" : "sRGB",
@@ -348,14 +342,14 @@
   "Ambiguous Double Width" : false,
   "Blur Radius" : 24.990126329787238,
   "Ansi 0 Color" : {
-    "Red Component" : 0.035294119268655777,
+    "Red Component" : 0.086274509803921567,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.094117648899555206,
+    "Blue Component" : 0.11372549019607843,
     "Alpha Component" : 1,
-    "Green Component" : 0.023529412224888802
+    "Green Component" : 0.086274509803921567
   },
   "Blur" : true,
-  "Normal Font" : "InconsolataNerdFontComplete-Regular 16",
+  "Normal Font" : "FiraCodeNerdFontComplete-Retina 14",
   "Vertical Spacing" : 1,
   "Ansi 7 Color" : {
     "Red Component" : 0.78431373834609985,
@@ -394,11 +388,11 @@
   },
   "Transparency" : 0,
   "Background Color" : {
-    "Red Component" : 0.086274509803921567,
+    "Red Component" : 0.12156862745098039,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.11372549019607843,
+    "Blue Component" : 0.15686274509803921,
     "Alpha Component" : 1,
-    "Green Component" : 0.086274509803921567
+    "Green Component" : 0.12156862745098039
   },
   "Screen" : -1,
   "Custom Tab Title" : "iTerm2",
@@ -417,7 +411,13 @@
   "Columns" : 80,
   "Unicode Normalization" : 0,
   "Visual Bell" : false,
+  "ASCII Ligatures" : true,
   "Custom Directory" : "No",
-  "Thin Strokes" : 4,
-  "ASCII Ligatures" : true
+  "Ansi 5 Color" : {
+    "Red Component" : 0.58431375026702881,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.72156864404678345,
+    "Alpha Component" : 1,
+    "Green Component" : 0.49803921580314636
+  }
 }
