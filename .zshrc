@@ -241,3 +241,5 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
 
 [ -f "/Users/mluna/.ghcup/env" ] && source "/Users/mluna/.ghcup/env" # ghcup-env
+
+export PATH="$PATH:/Users/$(whoami)/Library/Application Support/Coursier/bin"
