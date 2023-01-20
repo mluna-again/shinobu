@@ -140,6 +140,11 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 # </Aliases>
 
 # <Function>
+yt() {
+  link="$1"
+  yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$link"
+}
+
 t() {
   tmuxinator start && return || clear && tmux
 }
