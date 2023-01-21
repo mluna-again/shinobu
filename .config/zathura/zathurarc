@@ -12,6 +12,7 @@ set scroll-page-aware "true"
 set smooth-scroll "true"
 set scroll-full-overlap 0.01
 set scroll-step 5
+set scroll-hstep 1
 
 #zoom settings
 set zoom-min 10
@@ -55,7 +56,6 @@ set recolor-keephue "true"
 
 
 set render-loading "false"
-set scroll-step 50
 unmap f
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
