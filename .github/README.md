@@ -9,4 +9,6 @@
 https://user-images.githubusercontent.com/53100040/205425911-e24e7d5f-c72b-419c-98b4-e189dc1fb66a.mp4
 
 ## Problems I've encountered that I don't want to forget
-* You enter a file and no status line and/or highlight on -> Install the corresponding lsp for that language
+
+* You open a file and no status line and/or highlight on:
+    Install the corresponding lsp for that language (:MasonInstall <lsp-name>)
