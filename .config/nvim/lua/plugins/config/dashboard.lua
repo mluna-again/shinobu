@@ -3,6 +3,7 @@ require('core.maps')
 
 return {
 	'glepnir/dashboard-nvim',
+	commit = 'f7d623457d6621b25a1292b24e366fae40cb79ab',
 	config = function()
 		local db = require('dashboard')
 		db.custom_header = {
