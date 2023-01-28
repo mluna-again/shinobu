@@ -1,7 +1,11 @@
 #! /bin/sh
 
+truncate() {
+  printf "%.45s" "$1"
+}
+
 if uname | grep -i darwin &>/dev/null; then
-  ~/.local/scripts/osx/spotify.sh
+  truncate "$(~/.local/scripts/osx/spotify.sh)"
 else
-  ~/.local/scripts/linux/spotify.sh
+  truncate "$(~/.local/scripts/linux/spotify.sh)"
 fi
