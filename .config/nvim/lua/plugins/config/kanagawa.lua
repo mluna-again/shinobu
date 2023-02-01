@@ -27,6 +27,8 @@ return {
 			autocmd ColorScheme * hi DashboardShortCut guibg=NONE guifg=#DCD7BA
 			autocmd ColorScheme * hi DashboardFooter guibg=NONE guifg=#DCD7BA
 
+			autocmd ColorScheme * hi Folded guibg=NONE ctermbg=NONE
+
 			set fillchars+=vert:\ 
 		augroup end
 		]])
