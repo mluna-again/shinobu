@@ -1,79 +1,65 @@
-require('core.maps')
-
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
+vim.g.mapleader = " "
 
-return require('packer').startup({function(use)
-	use(require('plugins.config.kanagawa'))
-  use('neovim/nvim-lspconfig')
-	use('hrsh7th/cmp-nvim-lsp')
-	use('hrsh7th/cmp-buffer')
-	use('hrsh7th/cmp-path')
-	use('hrsh7th/cmp-cmdline')
-	use('quangnguyen30192/cmp-nvim-ultisnips')
-	use(require('plugins.config.nvim-cmp'))
-	use(require('plugins.config.mason'))
-	use(require('plugins.config.lsp'))
-	use(require('plugins.config.dashboard'))
-	use(require('plugins.config.conjure'))
-	use(require('plugins.config.telescope'))
-	use(require('plugins.config.trouble'))
-	use(require('plugins.config.which_key'))
-	use(require('plugins.config.toggleterm'))
-	use(require('plugins.config.nvim-tree'))
-	use(require('plugins.config.ultisnips'))
-	use(require('plugins.config.neoscroll'))
-	use(require('plugins.config.tags'))
-	use(require('plugins.config.emmet'))
-	use(require('plugins.config.vim-test'))
-	use(require('plugins.config.todo'))
-	use(require('plugins.config.lightspeed'))
-	use(require('plugins.config.treesitter'))
-	use(require('plugins.config.neoformat'))
-	use(require('plugins.config.lualine'))
-	use(require('plugins.config.devicons'))
-	use(require('plugins.config.bufferline'))
-	use(require('plugins.config.gitsigns'))
-	use(require('plugins.config.ufo'))
-	use('editorconfig/editorconfig-vim')
-	use('wbthomason/packer.nvim')
-	use('nvim-lua/popup.nvim')
-	use('nvim-lua/plenary.nvim')
-	use('elixir-editors/vim-elixir')
-	use('tpope/vim-endwise')
-	use('junegunn/goyo.vim')
-	use('tpope/vim-obsession')
-	use('junegunn/fzf.vim')
-	use('junegunn/fzf')
-	use('tpope/vim-commentary')
-	use('jiangmiao/auto-pairs')
-	use('alvan/vim-closetag')
-	use('moll/vim-bbye')
-	use('xolox/vim-misc')
-	use('rhysd/git-messenger.vim')
-	use('tpope/vim-repeat')
-	use('lewis6991/impatient.nvim')
-
-	if packer_bootstrap then
-		require('packer').sync()
-	end
-end,
-config = {
-	autoremove = true,
-	display = {
-		prompt_border = 'none',
-		open_fn = function()
-			return require('packer.util').float({ border = 'none' })
-		end
-	}
-}})
+require("lazy").setup({
+	require('plugins.config.kanagawa'),
+  'neovim/nvim-lspconfig',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-buffer',
+	'hrsh7th/cmp-path',
+	'hrsh7th/cmp-cmdline',
+	'quangnguyen30192/cmp-nvim-ultisnips',
+	require('plugins.config.nvim-cmp'),
+	require('plugins.config.mason'),
+	require('plugins.config.lsp'),
+	require('plugins.config.dashboard'),
+	require('plugins.config.conjure'),
+	require('plugins.config.telescope'),
+	require('plugins.config.trouble'),
+	require('plugins.config.which_key'),
+	require('plugins.config.toggleterm'),
+	require('plugins.config.nvim-tree'),
+	require('plugins.config.ultisnips'),
+	require('plugins.config.neoscroll'),
+	require('plugins.config.tags'),
+	require('plugins.config.emmet'),
+	require('plugins.config.vim-test'),
+	require('plugins.config.todo'),
+	require('plugins.config.lightspeed'),
+	require('plugins.config.treesitter'),
+	require('plugins.config.neoformat'),
+	require('plugins.config.lualine'),
+	require('plugins.config.devicons'),
+	require('plugins.config.bufferline'),
+	require('plugins.config.gitsigns'),
+	require('plugins.config.ufo'),
+	'editorconfig/editorconfig-vim',
+	'wbthomason/packer.nvim',
+	'nvim-lua/popup.nvim',
+	'nvim-lua/plenary.nvim',
+	'elixir-editors/vim-elixir',
+	'tpope/vim-endwise',
+	'junegunn/goyo.vim',
+	'tpope/vim-obsession',
+	'junegunn/fzf.vim',
+	'junegunn/fzf',
+	'tpope/vim-commentary',
+	'jiangmiao/auto-pairs',
+	'alvan/vim-closetag',
+	'moll/vim-bbye',
+	'xolox/vim-misc',
+	'rhysd/git-messenger.vim',
+	'tpope/vim-repeat'
+})
