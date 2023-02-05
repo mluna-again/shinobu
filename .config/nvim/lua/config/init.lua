@@ -5,7 +5,6 @@ vim.wo.relativenumber = true
 vim.bo.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
-vim.o.laststatus = 3
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true
@@ -30,3 +29,4 @@ vim.opt.colorcolumn = "99999"
 vim.cmd[[highlight VertSplit cterm=NONE guibg=NONE]]
 vim.cmd[[highlight EndOfBuffer guifg=bg]]
 vim.cmd("colorscheme kanagawa")
+vim.cmd("set laststatus=3")
