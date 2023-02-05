@@ -1,4 +1,3 @@
-pcall(function() require('impatient') end)
+require('core.mappings')
 require('plugins')
 require('config')
-require('core.mappings')
