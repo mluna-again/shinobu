@@ -1,6 +1,6 @@
 return {
 	'akinsho/bufferline.nvim',
-	after = 'kanagawa.nvim',
+	dependencies = 'kanagawa.nvim',
 	config = function()
 		require("bufferline").setup{
 			options = {
