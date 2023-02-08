@@ -27,11 +27,11 @@ MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
 
 # utils
 run() {
-  [[ -z "$2" ]] && { nodemon $1 --exec "clear; $1"; return; }
+  [[ -z "$2" ]] && { nodemon $1 --exec "clear; PYTHONWARNINGS=ignore $1"; return; }
 
   what=$1
   shift
-  nodemon $1 --exec "clear; $what $*"
+  nodemon $1 --exec "clear; PYTHONWARNINGS=ignore $what $*"
 }
 alias q="exit"
 alias cd="z"
