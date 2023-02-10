@@ -21,7 +21,7 @@ return {
 			auto_scroll = true -- automatically scroll to the bottom on terminal output
 		})
 
-		tmap("<C-w><C-w>", "<C-\\><C-n><C-w><C-w>")
+		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
 		nmap("<Leader>tv", ":ToggleTerm direction=vertical<CR>")
 		nmap("<Leader>ts", ":ToggleTerm direction=horizontal<CR>")
 	end
