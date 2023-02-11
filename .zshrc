@@ -152,6 +152,22 @@ t() {
 paragraph() {
   awk -v RS= "NR==${2:-1}" $1
 }
+
+replace_all() {
+  local file_regex
+  local before
+  local after
+
+  file_regex="$1"
+  before="$2"
+  after="$3"
+
+  [ -n "$file_regex" ] || { echo regex missing; return 1; }
+  [ -n "$before" ] || { echo content missing; return 1; }
+  [ -n "$after" ] || { echo new content missing; return 1; }
+
+  find -E . -iregex "$file_regex" -exec sed -i '' "s/$before/$after/g" {} \;
+}
 # </Function>
 
 # <Env>
