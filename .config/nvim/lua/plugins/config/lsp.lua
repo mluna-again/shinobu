@@ -14,7 +14,8 @@ return {
 			'clojure_lsp',
 			'kotlin_language_server',
 			'gopls',
-			'metals'
+			'metals',
+			'omnisharp'
 		}
 
 		for _, server in pairs(servers) do

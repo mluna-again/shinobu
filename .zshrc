@@ -18,7 +18,7 @@ bindkey '^R' history-incremental-search-backward
 bindkey '^U' backward-kill-line
 bindkey '^Y' yank
 zstyle ':completion:*' completer _complete
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 plugins=(vi-mode)
 autoload -Uz compinit
 compinit
@@ -261,6 +261,4 @@ command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
 
-[ -f "/Users/mluna/.ghcup/env" ] && source "/Users/mluna/.ghcup/env" # ghcup-env
-
-export PATH="$PATH:/Users/$(whoami)/Library/Application Support/Coursier/bin"
+export PATH="$PATH:/Users/mluna/.dotnet/tools"
