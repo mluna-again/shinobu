@@ -4,7 +4,7 @@ return {
 	config = function()
 		require("bufferline").setup{
 			options = {
-				offsets = { { filetype = "NvimTree", text = "File explorer" } },
+				offsets = { { filetype = "NvimTree", text = "File Explorer" } },
 				show_close_icon = false,
 				modified_icon = "",
 				left_trunc_marker = "",

@@ -26,7 +26,7 @@ return {
 					min = "25%",
 					padding = 0
 				},
-				hide_root_folder = false,
+				hide_root_folder = true,
 				side = "right",
 				preserve_window_proportions = false,
 				number = false,
