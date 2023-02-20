@@ -29,6 +29,8 @@ return {
 
 			autocmd ColorScheme * hi Folded guibg=NONE ctermbg=NONE
 
+			autocmd ColorScheme * hi LineNr guibg=#16161D
+
 			set fillchars+=vert:\ 
 		augroup end
 		]])

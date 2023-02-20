@@ -2,9 +2,9 @@ vim.o.termguicolors = true
 vim.g.nvim_tree_side = "right"
 
 return {
-	'kyazdani42/nvim-tree.lua',
+	"kyazdani42/nvim-tree.lua",
 	config = function()
-		require('nvim-tree').setup{
+		require("nvim-tree").setup({
 			auto_reload_on_write = true,
 			create_in_closed_folder = false,
 			disable_netrw = false,
@@ -22,9 +22,12 @@ return {
 			view = {
 				adaptive_size = false,
 				centralize_selection = false,
-				width = 30,
+				width = {
+					min = "25%",
+					padding = 0
+				},
 				hide_root_folder = false,
-				side = "left",
+				side = "right",
 				preserve_window_proportions = false,
 				number = false,
 				relativenumber = false,
@@ -119,7 +122,7 @@ return {
 				exclude = {},
 			},
 			filesystem_watchers = {
-				enable = false
+				enable = false,
 			},
 			git = {
 				enable = true,
@@ -173,6 +176,6 @@ return {
 					watcher = false,
 				},
 			},
-		}
-	end
+		})
+	end,
 }
