@@ -6,21 +6,21 @@ low_battery=$([ $percentage -le 20 ] && echo yes || echo no)
 plugged=$(system_profiler SPPowerDataType | grep -i "connected: no" && echo no || echo yes)
 
 if [ "$plugged" == "yes" ]; then
-	echo "#[fg=#252535,bg=#76946A]   $percentage%"
+	echo "#[fg=green]  $percentage%"
 elif [ "$low_battery" == "no" ]; then
 
 	if [ "$percentage" -ge "90" ]; then
-		echo "#[fg=#252535,bg=#76946A]  $percentage%"
+		echo "#[fg=green] $percentage%"
 	elif [ "$percentage" -ge "70" ]; then
-		echo "#[fg=#252535,bg=#76946A]  $percentage%"
+		echo "#[fg=green] $percentage%"
 	elif [ "$percentage" -ge "50" ]; then
-		echo "#[fg=#252535,bg=#E6C384]  $percentage%"
+		echo "#[fg=yellow] $percentage%"
 	elif [ "$percentage" -ge "30" ]; then
-		echo "#[fg=#252535,bg=#E6C384]  $percentage%"
+		echo "#[fg=yellow] $percentage%"
 	elif [ "$percentage" -ge "20" ]; then
-		echo "#[fg=#252535,bg=#E46876]  $percentage%"
+		echo "#[fg=orange] $percentage%"
 	fi
 
 else
-	echo "#[fg=#252535,bg=#E46876]  $percentage%"
+	echo "#[fg=red] $percentage%"
 fi
