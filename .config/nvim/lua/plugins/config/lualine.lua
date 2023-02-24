@@ -20,6 +20,53 @@ local function prettyMode(mode)
   return icons[mode] or mode
 end
 
+local function prettyProgress(progress)
+  if progress == "Top" then
+    return "󰽤"
+  end
+
+  if progress == "Bot" then
+    return ""
+  end
+
+  local progress_num = string.gsub(progress, "%%", "")
+  local num = tonumber(progress_num)
+
+  if num < 20 then
+    return ""
+  end
+
+  if num < 30 then
+    return ""
+  end
+
+  if num < 40 then
+    return ""
+  end
+
+  if num < 50 then
+    return ""
+  end
+
+  if num < 60 then
+    return ""
+  end
+
+  if num < 70 then
+    return ""
+  end
+
+  if num < 80 then
+    return ""
+  end
+
+  if num < 90 then
+    return ""
+  end
+
+  return ""
+end
+
 return {
 	"hoob3rt/lualine.nvim",
 	config = function()
@@ -43,7 +90,7 @@ return {
 				lualine_c = { { "branch", icon = "", color = { bg = background } } },
 				lualine_x = { { "diagnostics", color = { bg = background } } },
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = " " } },
-				lualine_z = { { "progress", icon = "" } },
+				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
 		})
 
