@@ -1,54 +1,120 @@
-require('core.maps')
-
+require("core.maps")
 
 return {
-	'glepnir/dashboard-nvim',
-	commit = 'f7d623457d6621b25a1292b24e366fae40cb79ab',
+	"glepnir/dashboard-nvim",
 	config = function()
-		local db = require('dashboard')
-		db.custom_header = {
-			"█████████████████████████████████████████████████████",
-			"██████████████▀▀▀▀▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▀▀▀▜███████████████",
-			"█████████▛▀▔                           ▔▀▜███████████",
-			"███████▀▔                                  ▀█████████",
-			"█████▛                                       ▜███████",
-			"████▛                                         ███████",
-			"████▍               ▂                         ▝██████",
-			"██▛▘             ╼▆███▄▁        ▐▇━╴           ▔▜████",
-			"█▛            ▕▙▃   ▔███▇▅▄▃▃▃▃▄▎   ▄▖           ▜███",
-			"█▏             ▜█▍ ▐█████████████▉ ▕█▉           ▐███",
-			"█▏             ▐█▇▇██████▜██▛▜████▇██▉           ▐███",
-			"█▙             ▝████████▙▃▂▂▃▟███████▊          ▄████",
-			"███▄▄▇▄▁        ▔▔▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘▔▁▔     ▂▄██▅▇█████",
-			"████████▇▍ ▃▖ ▗▃██▇▇▆▆▆▅▖  ▄▅▆▆▆▇▇██▍ ▄ ▝████████████",
-			"████████▀ ▟█▎ █████████▀    ▜███████▊ ▜▙▖▝███████████",
-			"███████▘▗▟█▉ ▐████████▙      ▟███████ ▐██▖ ▜█████████",
-			"██████▘ ▜██▌ ▟█████████▇▖  ▗█████████▎▕██▛╸ █████████",
-			"██████▋ ▂▃    ▔▔▔▔▔▀▀▀▀▀▀▘▝▀▀▀▀▀▔▔▔▔    ▃▄ ▝█████████",
-			"██████▙▃▁▁▂                            ▗▂▂▃▟█████████",
-			"██████████▍                            ▐█████████████",
-			"██████████▄▂                          ▂▟█████████████",
-			"█████████████▇▊ ╶╴  ▁▂▂▂▂▂▂▂▂▂▁  ╶  ▇████████████████",
-			"██████████████▉     ▐█████████▊     ▟████████████████",
-			"██████████████▛▘    ▕█████████▌     ▀████████████████",
-			"█████████████▙▃▂▂▂▂▃▃█████████▙▃▂▂▂▂▃▃███████████████",
-			"█████████████████████████████████████████████████████",
-			""
-		}
-
-		db.custom_center = {}
-		db.custom_footer = {}
-		db.hide_statusline = 1
-		db.hide_tabline = 1
-
-		db.custom_center = {
-			{ icon = "  ", desc = "New file                       SPC c n", action = "DashboardNewFile" },
-			{ icon = "  ", desc = "Find file                      SPC f f", action = "Telescope find_files" },
-			{ icon = "  ", desc = "Recent files                   SPC f o", action = "Telescope oldfiles" },
-			{ icon = "  ", desc = "Find word                      SPC f w", action = "Telescope live_grep" },
-			{ icon = "  ", desc = "Load last session              SPC s l", action = "SessionLoad" },
-			{ icon = "  ", desc = "Quit Neovim                          q", action = "quit" },
-		}
+		require("dashboard").setup({
+			theme = "doom", --  theme is doom and hyper default is hyper
+			disable_move = false, --  defualt is false disable move keymap for hyper
+			shortcut_type = "letter", --  shorcut type 'letter' or 'number'
+			hide = {
+				statusline = true, -- hide statusline default is true
+				tabline = true, -- hide the tabline
+				winbar = true, -- hide winbar
+			},
+			-- preview = {
+			--   command       -- preview command
+			--   file_path     -- preview file path
+			--   file_height   -- preview file height
+			--   file_width    -- preview file width
+			-- },
+			config = {
+				header = {
+					"",
+					"",
+					"█████████████████████████████████████████████████████",
+					"██████████████▀▀▀▀▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▀▀▀▜███████████████",
+					"█████████▛▀▔                           ▔▀▜███████████",
+					"███████▀▔                                  ▀█████████",
+					"█████▛                                       ▜███████",
+					"████▛                                         ███████",
+					"████▍               ▂                         ▝██████",
+					"██▛▘             ╼▆███▄▁        ▐▇━╴           ▔▜████",
+					"█▛            ▕▙▃   ▔███▇▅▄▃▃▃▃▄▎   ▄▖           ▜███",
+					"█▏             ▜█▍ ▐█████████████▉ ▕█▉           ▐███",
+					"█▏             ▐█▇▇██████▜██▛▜████▇██▉           ▐███",
+					"█▙             ▝████████▙▃▂▂▃▟███████▊          ▄████",
+					"███▄▄▇▄▁        ▔▔▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘▔▁▔     ▂▄██▅▇█████",
+					"████████▇▍ ▃▖ ▗▃██▇▇▆▆▆▅▖  ▄▅▆▆▆▇▇██▍ ▄ ▝████████████",
+					"████████▀ ▟█▎ █████████▀    ▜███████▊ ▜▙▖▝███████████",
+					"███████▘▗▟█▉ ▐████████▙      ▟███████ ▐██▖ ▜█████████",
+					"██████▘ ▜██▌ ▟█████████▇▖  ▗█████████▎▕██▛╸ █████████",
+					"██████▋ ▂▃    ▔▔▔▔▔▀▀▀▀▀▀▘▝▀▀▀▀▀▔▔▔▔    ▃▄ ▝█████████",
+					"██████▙▃▁▁▂                            ▗▂▂▃▟█████████",
+					"██████████▍                            ▐█████████████",
+					"██████████▄▂                          ▂▟█████████████",
+					"█████████████▇▊ ╶╴  ▁▂▂▂▂▂▂▂▂▂▁  ╶  ▇████████████████",
+					"██████████████▉     ▐█████████▊     ▟████████████████",
+					"██████████████▛▘    ▕█████████▌     ▀████████████████",
+					"█████████████▙▃▂▂▂▂▃▃█████████▙▃▂▂▂▂▃▃███████████████",
+					"█████████████████████████████████████████████████████",
+					"",
+				}, --your header
+				center = {
+					{
+						icon = "  ",
+						icon_hl = "group",
+						desc = "New File",
+						desc_hl = "group",
+						key = "SPC c n",
+						key_hl = "group",
+						action = "DashboardNewFile",
+						surroundings = ""
+					},
+					{
+						icon = "  ",
+						icon_hl = "group",
+						desc = "Find File",
+						desc_hl = "group",
+						key = "SPC f f",
+						key_hl = "group",
+						action = "Telescope find_files",
+						surroundings = ""
+					},
+					{
+						icon = "  ",
+						icon_hl = "group",
+						desc = "Recent Files",
+						desc_hl = "group",
+						key = "SPC f o",
+						key_hl = "group",
+						action = "Telescope oldfiles",
+						surroundings = ""
+					},
+					{
+						icon = "  ",
+						icon_hl = "group",
+						desc = "Find Word",
+						desc_hl = "group",
+						key = "SPC f w",
+						key_hl = "group",
+						action = "Telescope live_grep",
+						surroundings = ""
+					},
+					{
+						icon = "  ",
+						icon_hl = "group",
+						desc = "Load Last Session",
+						desc_hl = "group",
+						key = "SPC s l",
+						key_hl = "group",
+						action = "SessionLoad",
+						surroundings = ""
+					},
+					{
+						icon = "  ",
+						icon_hl = "group",
+						desc = "Quit Neovim",
+						desc_hl = "group",
+						key = "q",
+						key_hl = "group",
+						action = "quit",
+						surroundings = ""
+					}
+				},
+				footer = {},
+			},
+		})
 
 		nmap("<Leader>sl", ":source Session.vim<CR>")
 		nmap("<Leader>ss", ":Obsession<CR>")

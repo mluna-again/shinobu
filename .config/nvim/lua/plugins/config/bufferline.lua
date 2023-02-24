@@ -37,6 +37,18 @@ return {
 					bg = "#16161D",
 					fg = "#FFA066"
 				},
+				pick = {
+					bg = "#16161D",
+					fg = "#16161D"
+				},
+				pick_visible = {
+					bg = "#16161D",
+					fg = "#16161D"
+				},
+				pick_selected = {
+					bg = "#16161D",
+					fg = "#16161D"
+				},
 				separator = {
 					bg = "#16161D",
 					fg = "#16161D"
@@ -53,6 +65,10 @@ return {
 					bg = "#16161D"
 				},
 				background = {
+					bg = "#16161D"
+				},
+				buffer = {
+					fg = "#DCD7BA",
 					bg = "#16161D"
 				},
 				buffer_selected = {

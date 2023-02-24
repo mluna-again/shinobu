@@ -12,6 +12,7 @@ vim.o.background = "dark"
 vim.o.mouse = "a"
 vim.o.cursorline = false
 vim.cmd([[
+set expandtab
 set statusline=
 set showtabline=0
 set splitright
