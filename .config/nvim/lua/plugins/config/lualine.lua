@@ -11,60 +11,60 @@ local function shouldShowFilename()
 end
 
 local function prettyMode(mode)
-  local icons = {}
-  icons["NORMAL"] = "󱌢 NORMAL"
-  icons["INSERT"] = "󰙏 INSERT"
-  icons["COMMAND"] = " COMMAND"
-  icons["V-LINE"] = "󰆾 V-LINE"
-  icons["V-BLOCK"] = "󰆾 V-BLOCK"
-  return icons[mode] or mode
+	local icons = {}
+	icons["NORMAL"] = "󱌢 NORMAL"
+	icons["INSERT"] = "󰙏 INSERT"
+	icons["COMMAND"] = " COMMAND"
+	icons["V-LINE"] = "󰆾 V-LINE"
+	icons["V-BLOCK"] = "󰆾 V-BLOCK"
+	return icons[mode] or mode
 end
 
 local function prettyProgress(progress)
-  if progress == "Top" then
-    return ""
-  end
+	if progress == "Top" then
+		return ""
+	end
 
-  if progress == "Bot" then
-    return ""
-  end
+	if progress == "Bot" then
+		return ""
+	end
 
-  local progress_num = string.gsub(progress, "%%", "")
-  local num = tonumber(progress_num)
+	local progress_num = string.gsub(progress, "%%", "")
+	local num = tonumber(progress_num)
 
-  if num < 20 then
-    return ""
-  end
+	if num < 20 then
+		return ""
+	end
 
-  if num < 30 then
-    return ""
-  end
+	if num < 30 then
+		return ""
+	end
 
-  if num < 40 then
-    return ""
-  end
+	if num < 40 then
+		return ""
+	end
 
-  if num < 50 then
-    return ""
-  end
+	if num < 50 then
+		return ""
+	end
 
-  if num < 60 then
-    return ""
-  end
+	if num < 60 then
+		return ""
+	end
 
-  if num < 70 then
-    return ""
-  end
+	if num < 70 then
+		return ""
+	end
 
-  if num < 80 then
-    return ""
-  end
+	if num < 80 then
+		return ""
+	end
 
-  if num < 90 then
-    return ""
-  end
+	if num < 90 then
+		return ""
+	end
 
-  return ""
+	return ""
 end
 
 return {
@@ -81,11 +81,19 @@ return {
 			},
 			sections = {
 				lualine_a = {
-					{ "mode", separator = { left = "" }, right_padding = 2, fmt = prettyMode, color = { gui = "bold" } },
+					{
+						"mode",
+						separator = { left = "" },
+						right_padding = 2,
+						fmt = prettyMode,
+						color = { gui = "bold" },
+					},
 				},
 				lualine_b = {
 					{ "filetype", icon_only = true, cond = shouldShowFilename },
-					{ "filename", cond = shouldShowFilename },
+					{ "filename", cond = shouldShowFilename, symbols = {
+						modified = "",
+					} },
 				},
 				lualine_c = { { "branch", icon = "", color = { bg = background } } },
 				lualine_x = { { "diagnostics", color = { bg = background } } },
