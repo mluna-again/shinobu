@@ -1,8 +1,10 @@
+local background = "#16161D"
+
 return {
-	'hoob3rt/lualine.nvim',
+	"hoob3rt/lualine.nvim",
 	config = function()
 		local function shouldShowFilename()
-			local badFiletypes = { 'toggleterm', 'dashboard', 'NvimTree' }
+			local badFiletypes = { "toggleterm", "dashboard", "NvimTree" }
 			local ft = vim.bo.filetype
 			for _, filetype in pairs(badFiletypes) do
 				if string.find(ft, filetype) then
@@ -12,26 +14,30 @@ return {
 			return true
 		end
 
-		require('lualine').setup {
+		require("lualine").setup({
 			options = {
-				component_separators = '',
-				section_separators = { left = '', right = '' },
+				component_separators = "",
+				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = {},
-					winbar = {}
+					winbar = {},
 				},
 			},
 			sections = {
 				lualine_a = {
-					{ 'mode', separator = { left = '' }, right_padding = 2, icon = '', color = { gui = 'bold' } },
+					{ "mode", separator = { left = "" }, right_padding = 2, icon = "", color = { gui = "bold" } },
 				},
-				lualine_b = { { 'filetype', icon_only = true, cond = shouldShowFilename }, { 'filename', cond = shouldShowFilename }
+				lualine_b = {
+					{ "filetype", icon_only = true, cond = shouldShowFilename },
+					{ "filename", cond = shouldShowFilename },
+				},
+				lualine_c = { { "branch", icon = "", color = { bg = background } } },
+				lualine_x = { { "diagnostics", color = { bg = background } } },
+				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = " " } },
+				lualine_z = { { "progress", icon = "" } },
 			},
-			lualine_c = { { 'branch',  icon = '' } },
-			lualine_x = { 'diagnostics' },
-			lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = ' ' } },
-			lualine_z = { { 'progress', icon = '' } },
-		}
-	}
-end
+		})
+
+    vim.cmd("autocmd! BufEnter * hi lualine_c_normal guibg=" .. background)
+	end,
 }
