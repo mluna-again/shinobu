@@ -22,7 +22,7 @@ end
 
 local function prettyProgress(progress)
   if progress == "Top" then
-    return "󰽤"
+    return ""
   end
 
   if progress == "Bot" then
