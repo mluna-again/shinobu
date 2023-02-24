@@ -1,19 +1,28 @@
 local background = "#16161D"
+local function shouldShowFilename()
+	local badFiletypes = { "toggleterm", "dashboard", "NvimTree" }
+	local ft = vim.bo.filetype
+	for _, filetype in pairs(badFiletypes) do
+		if string.find(ft, filetype) then
+			return false
+		end
+	end
+	return true
+end
+
+local function prettyMode(mode)
+  local icons = {}
+  icons["NORMAL"] = "󱌢 NORMAL"
+  icons["INSERT"] = "󰙏 INSERT"
+  icons["COMMAND"] = " COMMAND"
+  icons["V-LINE"] = "󰆾 V-LINE"
+  icons["V-BLOCK"] = "󰆾 V-BLOCK"
+  return icons[mode] or mode
+end
 
 return {
 	"hoob3rt/lualine.nvim",
 	config = function()
-		local function shouldShowFilename()
-			local badFiletypes = { "toggleterm", "dashboard", "NvimTree" }
-			local ft = vim.bo.filetype
-			for _, filetype in pairs(badFiletypes) do
-				if string.find(ft, filetype) then
-					return false
-				end
-			end
-			return true
-		end
-
 		require("lualine").setup({
 			options = {
 				component_separators = "",
@@ -25,7 +34,7 @@ return {
 			},
 			sections = {
 				lualine_a = {
-					{ "mode", separator = { left = "" }, right_padding = 2, icon = "", color = { gui = "bold" } },
+					{ "mode", separator = { left = "" }, right_padding = 2, fmt = prettyMode, color = { gui = "bold" } },
 				},
 				lualine_b = {
 					{ "filetype", icon_only = true, cond = shouldShowFilename },
@@ -38,6 +47,7 @@ return {
 			},
 		})
 
-    vim.cmd("autocmd! BufEnter * hi lualine_c_normal guibg=" .. background)
+		-- lualine won't create this highlight group if not inside a git repo so i just do it manually
+		vim.cmd("autocmd! BufEnter * hi lualine_c_normal guibg=" .. background)
 	end,
 }
