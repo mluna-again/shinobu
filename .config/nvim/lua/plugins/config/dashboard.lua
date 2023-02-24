@@ -58,7 +58,7 @@ return {
 						desc_hl = "group",
 						key = "SPC c n",
 						key_hl = "group",
-						action = "e",
+						action = "enew",
 						surroundings = ""
 					},
 					{
@@ -121,7 +121,7 @@ return {
 		nmap("<Leader>fo", ":Telescope oldfiles<CR>")
 		nmap("<Leader>fw", ":Telescope live_grep<CR>")
 		nmap("<Leader>ff", ":Telescope find_files<CR>")
-		nmap("<Leader>cn", ":DashboardNewFile<CR>")
+		nmap("<Leader>cn", ":enew<CR>")
 		nmap("<Leader>fn", ":NvimTreeFindFileToggle<CR>")
 
 		vim.cmd([[
