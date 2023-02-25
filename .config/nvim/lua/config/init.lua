@@ -2,9 +2,6 @@ vim.o.encoding = "UTF-8"
 -- vim.o.clipboard = "unnamedplus"
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.bo.expandtab = true
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true
@@ -12,7 +9,10 @@ vim.o.background = "dark"
 vim.o.mouse = "a"
 vim.o.cursorline = false
 vim.cmd([[
-set expandtab
+set autoindent
+set noexpandtab
+set tabstop=4
+set shiftwidth=4
 set statusline=
 set showtabline=0
 set splitright
