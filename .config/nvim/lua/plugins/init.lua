@@ -15,7 +15,8 @@ vim.g.mapleader = " "
 
 require("lazy").setup({
 	require('plugins.config.kanagawa'),
-  'neovim/nvim-lspconfig',
+	require('plugins.config.copilot'),
+	'neovim/nvim-lspconfig',
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
