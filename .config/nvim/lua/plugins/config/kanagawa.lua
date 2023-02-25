@@ -21,6 +21,7 @@ return {
 			autocmd ColorScheme * hi NvimTreeNormal guibg=#16161D
 			autocmd ColorScheme * hi NvimTreeNormalNC guibg=#16161D
 			autocmd ColorScheme * hi NvimTreeEndOfBuffer guibg=#16161D guifg=#16161D
+      autocmd ColorScheme * hi NvimTreeFolderIcon guifg=#E6C384
 
 			autocmd ColorScheme * hi DashboardHeader guibg=NONE guifg=#DCD7BA
 			autocmd ColorScheme * hi DashboardCenter guibg=NONE guifg=#DCD7BA
