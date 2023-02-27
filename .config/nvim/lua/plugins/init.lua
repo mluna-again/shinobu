@@ -46,7 +46,7 @@ require("lazy").setup({
 	require('plugins.config.bufferline'),
 	require('plugins.config.gitsigns'),
 	require('plugins.config.ufo'),
-	require('plugins.config.neorg'),
+	require('plugins.config.table-mode'),
 	'editorconfig/editorconfig-vim',
 	'wbthomason/packer.nvim',
 	'nvim-lua/popup.nvim',
