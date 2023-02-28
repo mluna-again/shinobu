@@ -71,3 +71,5 @@
 (setq org-startup-indented t)
 
 (setq debug-on-error nil)
+(setq org-image-actual-width nil)
+(setq org-startup-with-inline-images t)
