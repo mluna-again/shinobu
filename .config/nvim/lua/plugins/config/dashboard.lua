@@ -15,7 +15,7 @@ return {
 			preview = {
 			  command = "chafa --center on",
 			  file_path = "~/.local/banners/rice.png",
-			  file_height = 20,
+			  file_height = 15,
 			  file_width = 80
 			},
 			config = {
