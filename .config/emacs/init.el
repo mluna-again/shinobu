@@ -37,6 +37,7 @@
 (install 'company)
 (install 'org-modern)
 (install 'format-all)
+(install 'calfw)
 
 ;; Clojure
 (add-hook 'clojure-mode-hook 'lsp)
@@ -57,6 +58,9 @@
 ;; Helm
 (require 'helm-config)
 (helm-mode 1)
+
+;; Calfw
+(require 'calfw)
 
 ;; Theme and dashboard styles
 (load (config-file-path "styles"))
