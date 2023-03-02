@@ -1,6 +1,9 @@
 ;; Styles
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes")
 (tool-bar-mode -1)
+(setq frame-resize-pixelwise t)
+(dotimes (n 3)
+  (toggle-frame-maximized))
 (scroll-bar-mode -1)
 (fringe-mode -1)
 (setq inhibit-startup-message nil)
