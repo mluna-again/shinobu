@@ -38,6 +38,7 @@
 (install 'org-modern)
 (install 'format-all)
 (install 'calfw)
+(install 'all-the-icons)
 
 ;; Clojure
 (add-hook 'clojure-mode-hook 'lsp)
