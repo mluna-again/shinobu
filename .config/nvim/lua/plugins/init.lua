@@ -48,7 +48,6 @@ require("lazy").setup({
 	require('plugins.config.ufo'),
 	require('plugins.config.table-mode'),
 	'editorconfig/editorconfig-vim',
-	'wbthomason/packer.nvim',
 	'nvim-lua/popup.nvim',
 	'nvim-lua/plenary.nvim',
 	'elixir-editors/vim-elixir',

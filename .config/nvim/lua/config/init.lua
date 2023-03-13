@@ -11,8 +11,8 @@ vim.o.cursorline = false
 vim.cmd([[
 set autoindent
 set noexpandtab
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set statusline=
 set showtabline=0
 set splitright
