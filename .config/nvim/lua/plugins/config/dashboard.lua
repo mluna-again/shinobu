@@ -1,7 +1,7 @@
 require("core.maps")
 
 return {
-	"mluna-again/dashboard-nvim",
+	"glepnir/dashboard-nvim",
 	config = function()
 		require("dashboard").setup({
 			theme = "doom", --  theme is doom and hyper default is hyper

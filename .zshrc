@@ -168,6 +168,30 @@ replace_all() {
 
   find -E . -iregex "$file_regex" -exec sed -i '' "s/$before/$after/g" {} \;
 }
+
+__check_migrate() {
+	[ -x "$(command -v migrate)" ] || { echo "migrate is not installed"; return 1; }
+}
+
+go_migrate_create() {
+	__check_migrate || return 1
+
+	local _path
+	_path=$([ -z "$2" ] && echo "migrations" || echo "$2")
+	migrate create -ext sql -dir "$_path" -seq "$1"
+}
+
+go_migrate_up() {
+	__check_migrate || return 1
+
+	[ -z "$DB_URL" ] && { echo "DB_URL is not set"; return 1; }
+
+	local _path
+	_path=$([ -z "$1" ] && echo "migrations" || echo "$1")
+	echo $_path
+	migrate -database "$DB_URL" -path "$_path" up
+}
+
 # </Function>
 
 # <Env>
