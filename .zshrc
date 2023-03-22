@@ -287,5 +287,5 @@ export PATH="$PATH:/Users/mluna/.dotnet/tools"
 # ruby
 _rails=$(which rails)
 rails() {
-	[ -e ./bin/rails ] && ./bin/rails "$*" || $_rails "$*"
+	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
