@@ -130,7 +130,7 @@ alias ga="git add ."
 alias gA="git add"
 # alias gc="git commit -m"
 gc() {
-  git commit -m "$*"
+  git commit -m "$@"
 }
 alias gm="git merge"
 alias gmc="git --no-pager diff --name-only --diff-filter=U"
