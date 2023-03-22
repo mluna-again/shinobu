@@ -63,9 +63,6 @@ alias die="exit"
 alias cd..="cd .."
 alias figlet="figlet -f larry3d"
 
-# ruby
-alias r="bin/rails"
-
 # phoenix
 alias phs="mix phx.server"
 
@@ -286,3 +283,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
 
 export PATH="$PATH:/Users/mluna/.dotnet/tools"
+
+# ruby
+_rails=$(which rails)
+rails() {
+	[ -e ./bin/rails ] && ./bin/rails "$*" || $_rails "$*"
+}
