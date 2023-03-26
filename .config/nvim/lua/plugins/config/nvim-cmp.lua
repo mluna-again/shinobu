@@ -49,8 +49,8 @@ return {
 				entries = { name = 'custom' }
 			},
 			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				completion = nil,
+				documentation = nil
 			},
 			mapping = cmp.mapping.preset.insert({
 				['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -79,9 +79,18 @@ return {
 				end,
 			}),
 			sources = cmp.config.sources({
-				{ name = 'nvim_lsp' },
-				{ name = 'ultisnips' }, -- For ultisnips users.
-				{ name = 'path' }
+				{
+					name = 'nvim_lsp',
+					max_item_count = 5
+				},
+				{
+					name = 'ultisnips',
+					max_item_count = 5
+				},
+				{
+					name = 'path',
+					max_item_count = 5
+				}
 			}),
 			formatting = {
 				format = function(entry, vim_item)
