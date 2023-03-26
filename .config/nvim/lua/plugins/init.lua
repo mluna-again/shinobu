@@ -48,6 +48,7 @@ require("lazy").setup({
 	require('plugins.config.ufo'),
 	require('plugins.config.autopairs'),
 	require('plugins.config.table-mode'),
+	require('plugins.config.wordmotion'),
 	'RRethy/nvim-treesitter-endwise',
 	'editorconfig/editorconfig-vim',
 	'nvim-lua/popup.nvim',
