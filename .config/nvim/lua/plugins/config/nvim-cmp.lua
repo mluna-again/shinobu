@@ -81,15 +81,15 @@ return {
 			sources = cmp.config.sources({
 				{
 					name = 'nvim_lsp',
-					max_item_count = 5
+					max_item_count = 10
 				},
 				{
 					name = 'ultisnips',
-					max_item_count = 5
+					max_item_count = 10
 				},
 				{
 					name = 'path',
-					max_item_count = 5
+					max_item_count = 10
 				}
 			}),
 			formatting = {
