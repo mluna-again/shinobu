@@ -17,6 +17,7 @@ local function prettyMode(mode)
 	icons["COMMAND"] = " COMMAND"
 	icons["V-LINE"] = "󰆾 V-LINE"
 	icons["V-BLOCK"] = "󰆾 V-BLOCK"
+	icons["TERMINAL"] = " TERMINAL"
 	return icons[mode] or mode
 end
 
