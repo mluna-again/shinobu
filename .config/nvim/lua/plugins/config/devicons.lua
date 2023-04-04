@@ -12,6 +12,11 @@ return {
 					icon = "",
 					color = "#a91401",
 					name = "ruby"
+				},
+				go = {
+					icon = "",
+					color = "#86D4DE",
+					name = "go"
 				}
 			}
 		})
