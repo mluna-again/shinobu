@@ -66,20 +66,6 @@ alias figlet="figlet -f larry3d"
 # phoenix
 alias phs="mix phx.server"
 
-# node
-alias ado="node ace"
-alias npmd="npm run dev"
-alias npms="npm start"
-alias npmt="npm run test"
-alias npmb="npm run build"
-alias npmi="npm install"
-alias yarns="yarn dev || yarn start"
-alias yarnd="yarn start"
-alias yarnb="yarn build"
-alias yarni="yarn install"
-alias yarna="yarn add"
-alias drun="deno run --unstable --watch"
-
 # vim
 alias vv="v ~/.vimrc"
 alias vz="v ~/.zshrc"
@@ -271,6 +257,23 @@ git commit -m "$* 😑👍"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# node
+alias ado="node ace"
+_npm="$(which npm)"
+npm() {
+	local res
+	echo "You are running npm (not pnpm). Are you sure?"
+	read res
+	if [[ $res = "y" ]]; then
+		$_npm "$@"
+	fi
+}
+alias npmd="pnpm run dev"
+alias npms="pnpm start"
+alias npmt="pnpm run test"
+alias npmb="pnpm run build"
+alias npmi="pnpm install"
+
 command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 
 [ -e ~/.personal ] && source ~/.personal || true
@@ -289,3 +292,11 @@ _rails=$(which rails)
 rails() {
 	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
+
+# pnpm
+export PNPM_HOME="/Users/mluna/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
