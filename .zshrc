@@ -255,6 +255,13 @@ git commit -m "$* 😑👍"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # node
+# pnpm
+export PNPM_HOME="/Users/mluna/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
 alias ado="node ace"
 _npm="$(which npm)"
 npm() {
@@ -265,11 +272,11 @@ npm() {
 		$_npm "$@"
 	fi
 }
-alias npmd="pnpm run dev"
-alias npms="pnpm start"
-alias npmt="pnpm run test"
-alias npmb="pnpm run build"
-alias npmi="pnpm install"
+alias npmd="$PNPM_HOME/pnpm run dev"
+alias npms="$PNPM_HOME/pnpm start"
+alias npmt="$PNPM_HOME/pnpm run test"
+alias npmb="$PNPM_HOME/pnpm run build"
+alias npmi="$PNPM_HOME/pnpm install"
 
 command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 
@@ -289,11 +296,3 @@ _rails=$(which rails)
 rails() {
 	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
-
-# pnpm
-export PNPM_HOME="/Users/mluna/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
