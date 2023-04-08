@@ -248,9 +248,6 @@ git commit -m "$* 😑👍"
 # load profile
 [ -e $HOME/.zprofile ] && source $HOME/.zprofile
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
 [ -e $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
 
 # export NVM_DIR="$HOME/.nvm"
