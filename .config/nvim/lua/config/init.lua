@@ -10,7 +10,7 @@ vim.o.mouse = "a"
 vim.o.cursorline = false
 vim.cmd([[
 set autoindent
-set noexpandtab
+set expandtab
 set tabstop=2
 set shiftwidth=2
 set statusline=
