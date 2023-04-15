@@ -167,12 +167,12 @@ go_migrate_create() {
 go_migrate_up() {
 	__check_migrate || return 1
 
-	[ -z "$DB_URL" ] && { echo "DB_URL is not set"; return 1; }
+	[ -z "$DATABASE_URL" ] && { echo "DB_URL is not set"; return 1; }
 
 	local _path
 	_path=$([ -z "$1" ] && echo "migrations" || echo "$1")
 	echo $_path
-	migrate -database "$DB_URL" -path "$_path" up
+	migrate -database "$DATABASE_URL" -path "$_path" up
 }
 
 # </Function>
