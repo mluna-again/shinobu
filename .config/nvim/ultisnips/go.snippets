@@ -19,3 +19,9 @@ func main() {
 	$1
 }
 endsnippet
+
+snippet handler "http handler" b
+func $1Handler(w http.ResponseWriter, r *http.Request) {
+	$2
+}
+endsnippet
