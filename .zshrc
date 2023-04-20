@@ -175,6 +175,20 @@ go_migrate_up() {
 	migrate -database "$DATABASE_URL" -path "$_path" up
 }
 
+alias gofmt="go fmt ./..."
+goinit() {
+  go mod init $(basename $(pwd))
+  cat <<EOF >> main.go
+  package main
+
+  import "fmt"
+
+  func main() {
+    fmt.Println("Hello new world")
+  }
+EOF
+}
+
 # </Function>
 
 # <Env>
@@ -296,3 +310,4 @@ _rails=$(which rails)
 rails() {
 	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
+export PATH="$PATH:$HOME/.local/bin/protoc/bin:$(go env GOPATH)/bin"
