@@ -62,6 +62,7 @@ alias please="sudo"
 alias die="exit"
 alias cd..="cd .."
 alias figlet="figlet -f larry3d"
+alias lisp_repl="ros run --eval '(ql:quickload :swank)'  --eval '(swank:create-server :dont-close t)'"
 
 # phoenix
 alias phs="mix phx.server"

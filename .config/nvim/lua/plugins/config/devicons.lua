@@ -3,6 +3,11 @@ return {
 	config = function()
 		require'nvim-web-devicons'.setup({
 			override = {
+        lisp = {
+          icon = "󰚀",
+          color = "#bef5b2",
+          name = "lisp"
+        },
 				cshtml = {
 					icon = "",
 					color = "#953dab",
