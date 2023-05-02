@@ -11,9 +11,6 @@ return {
 			hijack_cursor = false,
 			hijack_netrw = true,
 			hijack_unnamed_buffer_when_opening = false,
-			ignore_buffer_on_setup = false,
-			open_on_setup = false,
-			open_on_setup_file = false,
 			open_on_tab = false,
 			sort_by = "name",
 			update_cwd = false,
@@ -26,7 +23,6 @@ return {
 					min = "25%",
 					padding = 0
 				},
-				hide_root_folder = true,
 				side = "right",
 				preserve_window_proportions = false,
 				number = false,
@@ -40,6 +36,7 @@ return {
 				},
 			},
 			renderer = {
+				root_folder_label = true,
 				add_trailing = false,
 				group_empty = false,
 				highlight_git = false,
@@ -101,7 +98,6 @@ return {
 				update_cwd = false,
 				ignore_list = {},
 			},
-			ignore_ft_on_setup = {},
 			system_open = {
 				cmd = "",
 				args = {},
