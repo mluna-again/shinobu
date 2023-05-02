@@ -49,6 +49,7 @@ require("lazy").setup({
 	require('plugins.config.autopairs'),
 	require('plugins.config.table-mode'),
 	require('plugins.config.wordmotion'),
+	require('plugins.config.glow'),
 	'RRethy/nvim-treesitter-endwise',
 	'editorconfig/editorconfig-vim',
 	'nvim-lua/popup.nvim',
