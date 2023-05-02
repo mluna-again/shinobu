@@ -271,7 +271,7 @@ git commit -m "$* 😑👍"
 
 # node
 # pnpm
-export PNPM_HOME="/Users/mluna/Library/pnpm"
+export PNPM_HOME="/Users/$USER/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
