@@ -190,6 +190,18 @@ goinit() {
 EOF
 }
 
+git_list_modified() {
+  local help_msg
+  help_msg="git_list_modified <main_branch> <current_branch>"
+
+  [[ "$1" = "help" ]] && { echo $help_msg && return 1 }
+
+  output=$(git diff --name-only "$2" $(git merge-base "$1" "$2"))
+
+  echo $output
+  echo "Total count: $(echo $output | wc -l)"
+}
+
 # </Function>
 
 # <Env>
