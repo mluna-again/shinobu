@@ -29,5 +29,6 @@ return {
 		nmap('<Leader>lr', ':lua vim.lsp.buf.rename()<CR>')
 		nmap('<Leader>lf', ':lua vim.lsp.buf.definition()<CR>')
 		nmap('<Leader>ld', ':lua vim.diagnostic.open_float()<CR>')
+		nmap('<Leader>ll', ':LspRestart<CR>')
 	end
 }
