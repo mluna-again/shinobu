@@ -25,3 +25,28 @@ func $1Handler(w http.ResponseWriter, r *http.Request) {
 	$2
 }
 endsnippet
+
+snippet teaview "bubble tea view" b
+package main
+
+import tea "github.com/charmbracelet/bubbletea"
+
+type $1Model struct {
+}
+
+func newModel() $1Model {
+	return $1Model{}
+}
+
+func (m $1Model) Init() tea.Cmd {
+	return nil
+}
+
+func (m $1Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	return m, nil
+}
+
+func (m $1Model) View() string {
+	return ""
+}
+endsnippet
