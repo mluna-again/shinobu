@@ -1,13 +1,14 @@
 set relativenumber
 set commentary
 
+nmap <silent> jj <esc>
 nmap <silent> Y v$hy
 nmap <silent> ss <Action>(ReformatCode)|<Action>(SaveDocument)
 nmap <silent> SS <Action>(SaveDocument)
 nmap <silent> gt <Action>(NextTab)
 nmap <silent> gr <Action>(PreviousTab)
 nmap <silent> tt <Action>(CloseContent)
-nmap <silent> <space>ff <Action>(SearchEverywhere)
+nmap <silent> <space>ff <Action>(GotoFile)
 nmap <silent> dh  :noh<CR>
 nmap <silent> '' ``
 nmap <silent> - <C-e>
@@ -21,3 +22,6 @@ nmap <silent> <space>wl :wincmd k<CR>
 nmap <silent> <space>ws <C-w>s
 nmap <silent> <space>wv <C-w>v
 nmap <silent> <space>wd <Action>(CloseEditor)
+nmap <silent> <space>lh <Action>(QuickJavaDoc)
+nmap <silent> <space>lr <Action>(RenameElement)
+nmap <silent> <space>lf <Action>(GotoDeclaration)
