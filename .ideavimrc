@@ -1,15 +1,23 @@
 set relativenumber
 set commentary
 
-imap <silent> jj <ESC>
+nmap <silent> Y v$hy
 nmap <silent> ss <Action>(ReformatCode)|<Action>(SaveDocument)
+nmap <silent> SS <Action>(SaveDocument)
 nmap <silent> gt <Action>(NextTab)
 nmap <silent> gr <Action>(PreviousTab)
 nmap <silent> tt <Action>(CloseContent)
-nmap <silent> ff <Action>(SearchEverywhere)
+nmap <silent> <space>ff <Action>(SearchEverywhere)
 nmap <silent> dh  :noh<CR>
 nmap <silent> '' ``
-nmap <silent> ! :ls<CR>
 nmap <silent> - <C-e>
 nmap <silent> ¿ <C-y>
-map  <silent> ñ gc
+map  <silent> gcc gc
+nmap <silent> <space>ww <C-w><C-w>
+nmap <silent> <space>wk :wincmd k<CR>
+nmap <silent> <space>wj :wincmd k<CR>
+nmap <silent> <space>wh :wincmd k<CR>
+nmap <silent> <space>wl :wincmd k<CR>
+nmap <silent> <space>ws <C-w>s
+nmap <silent> <space>wv <C-w>v
+nmap <silent> <space>wd <Action>(CloseEditor)
