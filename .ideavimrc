@@ -1,7 +1,7 @@
 set relativenumber
 set commentary
 
-nmap <silent> jj <esc>
+imap <silent> jj <esc>
 nmap <silent> Y v$hy
 nmap <silent> ss <Action>(ReformatCode)|<Action>(SaveDocument)
 nmap <silent> SS <Action>(SaveDocument)
