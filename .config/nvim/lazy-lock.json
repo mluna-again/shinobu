@@ -8,6 +8,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "conjure": { "branch": "master", "commit": "d2e69a13b32e8574decfe81ea275292234eba6ea" },
   "copilot.vim": { "branch": "release", "commit": "1358e8e45ecedc53daf971924a0541ddf6224faf" },
+  "diffview.nvim": { "branch": "main", "commit": "7987d7f5c9ca3838ef950053b6d00c4251efadb0" },
   "editorconfig-vim": { "branch": "master", "commit": "7f4e4dfc58c480d154116614e616d90aac77204d" },
   "emmet-vim": { "branch": "master", "commit": "def5d57a1ae5afb1b96ebe83c4652d1c03640f4d" },
   "fzf": { "branch": "master", "commit": "e619b7c4f4e0da09b87a239b8f52ad909bb5f1e0" },
