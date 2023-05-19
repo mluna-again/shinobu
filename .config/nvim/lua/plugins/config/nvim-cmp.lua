@@ -80,6 +80,10 @@ return {
 			}),
 			sources = cmp.config.sources({
 				{
+					name = 'emoji',
+					max_item_count = 10
+				},
+				{
 					name = 'buffer',
 					max_item_count = 10
 				},
