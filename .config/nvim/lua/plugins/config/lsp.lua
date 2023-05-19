@@ -17,6 +17,7 @@ return {
 			"metals",
 			"omnisharp",
 			"golangci_lint_ls",
+			"volar",
 		}
 
 		for _, server in pairs(servers) do
