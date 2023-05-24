@@ -1,6 +1,6 @@
 local background = "#16161D"
 local function shouldShowFilename()
-	local badFiletypes = { "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup" }
+	local badFiletypes = { "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
 	local ft = vim.bo.filetype
 	for _, filetype in pairs(badFiletypes) do
 		if ft == filetype then
