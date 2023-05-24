@@ -68,7 +68,7 @@ return {
 		nmap("<Leader>fw", ":Telescope live_grep<CR>")
 		nmap("<Leader>ff", ":Telescope find_files<CR>")
 		nmap("<Leader>cn", ":enew<CR>")
-		nmap("<Leader>fn", ":NvimTreeFindFileToggle<CR>")
+		nmap("<Leader>fn", ":NeoTreeReveal<CR>")
 
 		vim.cmd([[
 		augroup DashboardTweaks

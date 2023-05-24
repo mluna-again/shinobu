@@ -1,13 +1,13 @@
 local background = "#16161D"
 local function shouldShowFilename()
-	local badFiletypes = { "toggleterm", "dashboard", "NvimTree" }
+	local badFiletypes = { "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup" }
 	local ft = vim.bo.filetype
 	for _, filetype in pairs(badFiletypes) do
-		if string.find(ft, filetype) then
+		if ft == filetype then
 			return false
 		end
 	end
-	return true
+  return true
 end
 
 local function prettyMode(mode)
