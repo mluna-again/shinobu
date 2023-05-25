@@ -12,12 +12,12 @@ end
 
 local function prettyMode(mode)
 	local icons = {}
-	icons["NORMAL"] = "󱌢 NORMAL"
-	icons["INSERT"] = "󰙏 INSERT"
-	icons["COMMAND"] = " COMMAND"
-	icons["V-LINE"] = "󰆾 V-LINE"
-	icons["V-BLOCK"] = "󰆾 V-BLOCK"
-	icons["TERMINAL"] = " TERMINAL"
+	icons["NORMAL"] = "󱌢 Normal"
+	icons["INSERT"] = "󰙏 Insert"
+	icons["COMMAND"] = " Command"
+	icons["V-LINE"] = "󰆾 V-Line"
+	icons["V-BLOCK"] = "󰆾 V-Block"
+	icons["TERMINAL"] = " Terminal"
 	return icons[mode] or mode
 end
 
