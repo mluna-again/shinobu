@@ -58,7 +58,7 @@ require("lazy").setup({
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
 	"nvim-lua/plenary.nvim",
-	"elixir-editors/vim-elixir",
+	-- "elixir-editors/vim-elixir",
 	"junegunn/goyo.vim",
 	"tpope/vim-obsession",
 	"junegunn/fzf.vim",

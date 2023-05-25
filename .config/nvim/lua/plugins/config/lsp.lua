@@ -18,10 +18,10 @@ return {
 			"omnisharp",
 			"golangci_lint_ls",
 			"volar",
+			"lua_ls"
 		}
 
 		for _, server in pairs(servers) do
-			local s = require("lspconfig")[server]
 			require("lspconfig")[server].setup({
 				capabilities = capabilities,
 			})
