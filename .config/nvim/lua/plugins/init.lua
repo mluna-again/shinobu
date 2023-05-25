@@ -53,6 +53,7 @@ require("lazy").setup({
 	require("plugins.config.glow"),
 	require("plugins.config.diff"),
 	require("plugins.config.neotree"),
+	require("plugins.config.sleuth"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
