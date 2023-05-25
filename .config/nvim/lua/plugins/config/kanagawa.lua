@@ -49,6 +49,7 @@ return {
 			autocmd ColorScheme * hi Folded guibg=NONE ctermbg=NONE
 
 			set fillchars+=vert:\ 
+			set fillchars+=eob:\ 
 		augroup end
 		]])
 
