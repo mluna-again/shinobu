@@ -53,6 +53,7 @@ require("lazy").setup({
 	require("plugins.config.diff"),
 	require("plugins.config.neotree"),
 	require("plugins.config.comment"),
+	require("plugins.config.sleuth"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
@@ -66,4 +67,5 @@ require("lazy").setup({
 	"xolox/vim-misc",
 	"rhysd/git-messenger.vim",
 	"tpope/vim-repeat",
+	"elixir-editors/vim-elixir"
 })
