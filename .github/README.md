@@ -6,9 +6,6 @@
 <img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/code.png">
 <img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/terminal.png">
 
-# emacs
-https://user-images.githubusercontent.com/53100040/205425911-e24e7d5f-c72b-419c-98b4-e189dc1fb66a.mp4
-
 ## Problems I've encountered that I don't want to forget
 
 * You open a file and no status line and/or highlight on:
