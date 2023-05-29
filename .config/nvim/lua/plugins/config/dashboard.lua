@@ -1,81 +1,50 @@
 require("core.maps")
 
 return {
-	'goolord/alpha-nvim',
-	config = function()
-		local alpha = require'alpha'
-		require'alpha.term'
+  'goolord/alpha-nvim',
+  config = function()
+    local alpha = require'alpha'
+    require'alpha.term'
 
-		dashboard = require'alpha.themes.dashboard'
+    dashboard = require'alpha.themes.dashboard'
 
-		dashboard.section.buttons.val = {
-			dashboard.button("SPC c n", "  New file", ":enew<CR>"),
-			dashboard.button("SPC f f", "󰱼  Find file", ":Telescope find_files<CR>"),
-			dashboard.button("SPC f o", "  Recent files", ":Telescope oldfiles<CR>"),
-			dashboard.button("SPC f w", "  Find word", ":Telescope live_grep<CR>"),
-			dashboard.button("SPC s l", "  Load last session", ":source Session.vim<CR>"),
-			dashboard.button("q", "󰜎  Quit Neovim", ":q<CR>"),
-		}
-
-		-- dashboard.section.terminal.command = "chafa --center on ~/.local/banners/rice.png -s 40x10"
-		-- dashboard.section.terminal.width = 60
-		-- dashboard.section.terminal.height = 10
-
-    local banner = {
-      type = "text",
-      val = {
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠟⠁⣿⡄⠀⠀⠀⠀⠀⠀⠀⣠⡶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠁⠀⠀⢹⣿⣤⣄⣀⣀⡀⢀⣾⡿⠀⢹⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣿⣿⣇⣀⣀⣠⣤⣿⣿⣿⣿⣿⣿⣿⣿⡃⠀⠀⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⣹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣟⠛⢋⣉⣉⣽⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⢀⣤⣶⣾⣿⣶⣦⣀⠀⠀⠀⢘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⡿⠋⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠛⠿⠿⠛⠉⠀⠀⠀⠈⠉⠉⠁⠀⠀⠀⠀⠀⠈⠉⠙⠛⠛⠛⠿⠿⠿⠿⠿⠛⠛⠛⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀▄▄▄▄▄▄▄▄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀▌ MEWO ▐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀▀▀▀▀▀▀▀▀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ",
-        "⠀▌                                                     ▐  ",
-        "⠀▌ Meow? (Waiting for something to happen?)            ▐  ",
-        "⠀▌                                                     ▐  ",
-        "⠀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ",
-      },
-      opts = {
-        position = "center"
-      }
+    dashboard.section.buttons.val = {
+      dashboard.button("SPC c n", "  New file", ":enew<CR>"),
+      dashboard.button("SPC f f", "󰱼  Find file", ":Telescope find_files<CR>"),
+      dashboard.button("SPC f o", "  Recent files", ":Telescope oldfiles<CR>"),
+      dashboard.button("SPC f w", "  Find word", ":Telescope live_grep<CR>"),
+      dashboard.button("SPC s l", "  Load last session", ":source Session.vim<CR>"),
+      dashboard.button("q", "󰜎  Quit Neovim", ":q<CR>"),
     }
 
-		dashboard.config.layout = {
-      banner,
-			{ type = "padding", val = 3 },
-			dashboard.section.buttons,
-			dashboard.section.footer,
-		}
+    dashboard.section.terminal.command = "chafa ~/.local/banners/lucky.png -s 80x19 --center on --fg-only"
+    dashboard.section.terminal.width = 60
+    dashboard.section.terminal.height = 20
 
-		alpha.setup(dashboard.config)
 
-		nmap("<Leader>sl", ":source Session.vim<CR>")
-		nmap("<Leader>ss", ":Obsession<CR>")
-		nmap("<Leader>fo", ":Telescope oldfiles<CR>")
-		nmap("<Leader>fw", ":Telescope live_grep<CR>")
-		nmap("<Leader>ff", ":Telescope find_files<CR>")
-		nmap("<Leader>cn", ":enew<CR>")
-		nmap("<Leader>fn", ":NeoTreeReveal<CR>")
+    dashboard.config.layout = {
+      dashboard.section.terminal,
+      { type = "padding", val = 5 },
+      dashboard.section.buttons,
+      dashboard.section.footer,
+    }
 
-		vim.cmd([[
-		augroup DashboardTweaks
-		autocmd!
-		autocmd FileType dashboard set noruler
-		autocmd FileType dashboard nmap <buffer> q :quit<CR>
-		augroup END
-		]])
-	end
+    alpha.setup(dashboard.config)
+
+    nmap("<Leader>sl", ":source Session.vim<CR>")
+    nmap("<Leader>ss", ":Obsession<CR>")
+    nmap("<Leader>fo", ":Telescope oldfiles<CR>")
+    nmap("<Leader>fw", ":Telescope live_grep<CR>")
+    nmap("<Leader>ff", ":Telescope find_files<CR>")
+    nmap("<Leader>cn", ":enew<CR>")
+    nmap("<Leader>fn", ":NeoTreeReveal<CR>")
+
+    vim.cmd([[
+    augroup DashboardTweaks
+    autocmd!
+    autocmd FileType dashboard set noruler
+    autocmd FileType dashboard nmap <buffer> q :quit<CR>
+    augroup END
+    ]])
+  end
 }
