@@ -89,6 +89,9 @@ return {
 					TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
 					TelescopePreviewNormal = { bg = theme.ui.bg_dim },
 					TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+					TelescopePromptTitle = { bg = colors.palette.autumnRed, fg = theme.ui.bg_dim },
+					TelescopePreviewTitle = { bg = colors.palette.roninYellow, fg = theme.ui.bg_dim },
+					TelescopeResultsTitle = { bg = colors.palette.oniViolet, fg = theme.ui.bg_dim },
 					Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
 					PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
 					PmenuSbar = { bg = theme.ui.bg_m1 },
