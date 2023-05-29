@@ -55,6 +55,7 @@ require("lazy").setup({
 	require("plugins.config.comment"),
 	require("plugins.config.sleuth"),
 	require("plugins.config.blame"),
+	require("plugins.config.colors"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
