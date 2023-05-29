@@ -92,7 +92,7 @@ return {
 			darkgray     = kanagawa.dragonBlack2,
 			lightgray    = kanagawa.dragonBlack5,
 			inactivegray = kanagawa.dragonBlack6,
-			background   = kanagawa.dragonBlack2,
+			background   = kanagawa.dragonBlack3
 		}
 		local theme = {
 			normal = {
@@ -121,21 +121,20 @@ return {
 				c = {bg = colors.black, fg = colors.black}
 			},
 			inactive = {
-				a = {bg = colors.background, fg = colors.gray, gui = 'bold'},
-				b = {bg = colors.background, fg = colors.gray},
-				c = {bg = colors.background, fg = colors.gray}
+				a = {bg = colors.background, fg = colors.white},
+				b = {bg = colors.background, fg = colors.white},
+				c = {bg = colors.background, fg = colors.white}
 			}
 		}
 
 		require("lualine").setup({
-
 			options = {
 				theme = theme,
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = { "alpha" },
-					winbar = {},
+					winbar = { "alpha" },
 				},
 			},
 			sections = {
@@ -159,6 +158,14 @@ return {
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = " " } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = {},
+				lualine_z = {},
+			}
 		})
 	end,
 }
