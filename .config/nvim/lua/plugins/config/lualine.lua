@@ -101,6 +101,5 @@ return {
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
 		})
-		vim.cmd("autocmd! VimEnter * hi lualine_c_normal guibg=NONE")
 	end,
 }
