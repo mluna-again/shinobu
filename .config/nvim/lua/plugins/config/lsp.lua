@@ -15,7 +15,7 @@ return {
 			"kotlin_language_server",
 			"gopls",
 			"metals",
-			"omnisharp",
+			"csharp_ls",
 			"golangci_lint_ls",
 			"volar",
 			"lua_ls"
