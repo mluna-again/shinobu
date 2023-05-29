@@ -40,8 +40,6 @@ return {
 			overrides = function(colors)
 				local theme = colors.theme
 				return {
-					FloatBorder = { bg = "none" },
-					FloatTitle = { bg = "none" },
 					-- Save an hlgroup with dark background and dimmed foreground
 					-- so that you can use it where your still want darker windows.
 					-- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
@@ -65,7 +63,9 @@ return {
 					TelescopePromptTitle = { bg = colors.palette.autumnRed, fg = theme.ui.bg_dim },
 					TelescopePreviewTitle = { bg = colors.palette.roninYellow, fg = theme.ui.bg_dim },
 					TelescopeResultsTitle = { bg = colors.palette.oniViolet, fg = theme.ui.bg_dim },
-					NormalFloat = { bg = colors.palette.dragonBlack4 }
+					NormalFloat = { bg = colors.palette.dragonBlack4 },
+					FloatBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					FloatTitle = { bg = colors.palette.dragonBlack4 },
 				}
 			end
 		})

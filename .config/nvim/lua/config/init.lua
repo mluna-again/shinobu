@@ -32,7 +32,7 @@ vim.cmd("colorscheme kanagawa-dragon")
 vim.cmd("set laststatus=3")
 
 -- LSP TWEAKS
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = nil, title = " Docs " })
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single", title = " Docs " })
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
