@@ -11,6 +11,8 @@ title="$song_name- $artist"
 short_title=$(echo $title | cut -c -30)
 playing=$(grep -i paused <<< "$output" && echo no || echo yes)
 
+[ "$playing" == "yes" ] || exit
+
 should_truncate=$([ ${#title} -gt 30 ] && echo yes || echo no)
 
 if [ "$playing" == "yes" ]; then
