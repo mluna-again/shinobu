@@ -66,6 +66,7 @@ return {
 					NormalFloat = { bg = colors.palette.dragonBlack4 },
 					FloatBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 					FloatTitle = { bg = colors.palette.dragonBlack4 },
+					MsgArea = { bg = colors.palette.dragonBlack3 },
 					NeoTreeNormal = { bg = colors.palette.dragonBlack2 },
 					NeoTreeNormalNC = { bg = colors.palette.dragonBlack2 },
 					NeoTreeFloatBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },

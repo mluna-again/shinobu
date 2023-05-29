@@ -18,7 +18,7 @@ return {
     }
 
     dashboard.section.terminal.command = "chafa ~/.local/banners/lucky.png -s 80x19 --center on --fg-only"
-    dashboard.section.terminal.width = 60
+    dashboard.section.terminal.width = 90
     dashboard.section.terminal.height = 20
 
 
