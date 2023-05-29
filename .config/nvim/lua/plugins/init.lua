@@ -55,7 +55,7 @@ require("lazy").setup({
 	require("plugins.config.blame"),
 	require("plugins.config.colors"),
 	require("plugins.config.kanagawa"),
-	require("plugins.config.heirline"),
+	require("plugins.config.lualine"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
