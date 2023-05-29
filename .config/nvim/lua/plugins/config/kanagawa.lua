@@ -40,7 +40,6 @@ return {
 			overrides = function(colors)
 				local theme = colors.theme
 				return {
-					NormalFloat = { bg = "none" },
 					FloatBorder = { bg = "none" },
 					FloatTitle = { bg = "none" },
 					-- Save an hlgroup with dark background and dimmed foreground
@@ -66,6 +65,7 @@ return {
 					TelescopePromptTitle = { bg = colors.palette.autumnRed, fg = theme.ui.bg_dim },
 					TelescopePreviewTitle = { bg = colors.palette.roninYellow, fg = theme.ui.bg_dim },
 					TelescopeResultsTitle = { bg = colors.palette.oniViolet, fg = theme.ui.bg_dim },
+					NormalFloat = { bg = colors.palette.dragonBlack4 }
 				}
 			end
 		})
