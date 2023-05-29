@@ -6,17 +6,24 @@ local function shouldShowFilename()
 			return false
 		end
 	end
-  return true
+	return true
 end
 
 local function prettyMode(mode)
 	local icons = {}
-	icons["NORMAL"] = "󱌢 Normal"
-	icons["INSERT"] = "󰙏 Insert"
-	icons["COMMAND"] = " Command"
-	icons["V-LINE"] = "󰆾 V-Line"
-	icons["V-BLOCK"] = "󰆾 V-Block"
-	icons["TERMINAL"] = " Terminal"
+	-- icons["NORMAL"] = "󱌢 Normal"
+	-- icons["INSERT"] = "󰙏 Insert"
+	-- icons["COMMAND"] = " Command"
+	-- icons["V-LINE"] = "󰆾 V-Line"
+	-- icons["V-BLOCK"] = "󰆾 V-Block"
+	-- icons["TERMINAL"] = " Terminal"
+
+	icons["NORMAL"] = "N"
+	icons["INSERT"] = "I"
+	icons["COMMAND"] = "C"
+	icons["V-LINE"] = "V-L"
+	icons["V-BLOCK"] = "V-B"
+	icons["TERMINAL"] = "T"
 	return icons[mode] or mode
 end
 
@@ -69,9 +76,61 @@ end
 
 return {
 	"hoob3rt/lualine.nvim",
+	dependencies = {
+		"rebelot/kanagawa.nvim",
+	},
 	config = function()
+		local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" }).palette
+		local colors = {
+			black        = kanagawa.dragonBlack4,
+			white        = kanagawa.dragonWhite,
+			red          = kanagawa.dragonRed,
+			green        = kanagawa.dragonGreen,
+			blue         = kanagawa.dragonBlue,
+			yellow       = kanagawa.dragonYellow,
+			gray         = kanagawa.dragonGray,
+			darkgray     = kanagawa.dragonBlack2,
+			lightgray    = kanagawa.dragonBlack5,
+			inactivegray = kanagawa.dragonBlack6,
+			background   = kanagawa.dragonBlack2,
+		}
+		local theme = {
+			normal = {
+				a = {bg = colors.red, fg = colors.black, gui = 'bold'},
+				b = {bg = colors.lightgray, fg = colors.white},
+				c = {bg = colors.black, fg = colors.gray}
+			},
+			insert = {
+				a = {bg = colors.green, fg = colors.black, gui = 'bold'},
+				b = {bg = colors.lightgray, fg = colors.white},
+				c = {bg = colors.black, fg = colors.white}
+			},
+			visual = {
+				a = {bg = colors.yellow, fg = colors.black, gui = 'bold'},
+				b = {bg = colors.lightgray, fg = colors.white},
+				c = {bg = colors.black, fg = colors.black}
+			},
+			replace = {
+				a = {bg = colors.blue, fg = colors.black, gui = 'bold'},
+				b = {bg = colors.lightgray, fg = colors.white},
+				c = {bg = colors.black, fg = colors.white}
+			},
+			command = {
+				a = {bg = colors.white, fg = colors.black, gui = 'bold'},
+				b = {bg = colors.lightgray, fg = colors.white},
+				c = {bg = colors.black, fg = colors.black}
+			},
+			inactive = {
+				a = {bg = colors.background, fg = colors.gray, gui = 'bold'},
+				b = {bg = colors.background, fg = colors.gray},
+				c = {bg = colors.background, fg = colors.gray}
+			}
+		}
+
 		require("lualine").setup({
+
 			options = {
+				theme = theme,
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
