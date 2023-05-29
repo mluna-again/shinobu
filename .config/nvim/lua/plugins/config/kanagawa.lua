@@ -66,6 +66,13 @@ return {
 					NormalFloat = { bg = colors.palette.dragonBlack4 },
 					FloatBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 					FloatTitle = { bg = colors.palette.dragonBlack4 },
+					NeoTreeNormal = { bg = colors.palette.dragonBlack2 },
+					NeoTreeNormalNC = { bg = colors.palette.dragonBlack2 },
+					NeoTreeFloatBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					NeoTreeTabActive = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonRed },
+					NeoTreeTabInactive = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonGray },
+					NeoTreeTabSeparatorActive = { fg = colors.palette.dragonBlack4 },
+					NeoTreeTabSeparatorInactive = { fg = colors.palette.dragonBlack4 },
 				}
 			end
 		})
