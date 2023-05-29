@@ -73,6 +73,17 @@ return {
 					NeoTreeTabInactive = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonGray },
 					NeoTreeTabSeparatorActive = { fg = colors.palette.dragonBlack4 },
 					NeoTreeTabSeparatorInactive = { fg = colors.palette.dragonBlack4 },
+					BufferLineBufferModified = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonRed },
+					BufferLineBufferSelected = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonRed },
+					BufferLineBufferVisible = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonRed },
+					BufferLineFill = { bg = colors.palette.dragonBlack1 },
+					BufferLineBackground = { bg = colors.palette.dragonBlack4 },
+					BufferLineSeparator = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					BufferLineSeparatorVisible = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					BufferLineSeparatorSelected = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					BufferLineIndicator = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					BufferLineIndicatorSelected = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					BufferLineIndicatorVisible = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 				}
 			end
 		})
