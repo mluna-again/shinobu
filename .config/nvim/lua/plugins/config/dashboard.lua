@@ -17,8 +17,9 @@ return {
       dashboard.button("q", "󰜎  Quit Neovim", ":q<CR>"),
     }
 
-    dashboard.section.terminal.command = "cat ~/.local/banners/lucky"
-    dashboard.section.terminal.width = 60
+    local width = vim.fn.winwidth(0)
+    dashboard.section.terminal.command = "~/.local/banners/center.sh lucky 40"
+    dashboard.section.terminal.width = width
     dashboard.section.terminal.height = 20
     dashboard.section.terminal.opts.position = "center"
 
