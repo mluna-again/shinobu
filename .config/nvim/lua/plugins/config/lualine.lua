@@ -1,4 +1,3 @@
-local background = "#16161D"
 local function shouldShowFilename()
 	local badFiletypes = { "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
 	local ft = vim.bo.filetype
@@ -96,14 +95,12 @@ return {
 						modified = "",
 					} },
 				},
-				lualine_c = { { "branch", icon = "", color = { bg = background } } },
-				lualine_x = { { "diagnostics", color = { bg = background } } },
+				lualine_c = { { "branch", icon = "" } },
+				lualine_x = { { "diagnostics" } },
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = " " } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
 		})
-
-		-- lualine won't create this highlight group if not inside a git repo so i just do it manually
-		vim.cmd("autocmd! BufEnter * hi lualine_c_normal guibg=" .. background)
+		vim.cmd("autocmd! VimEnter * hi lualine_c_normal guibg=NONE")
 	end,
 }

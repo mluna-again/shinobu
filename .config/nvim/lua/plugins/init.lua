@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 
 require("lazy").setup({
-	require("plugins.config.kanagawa"),
 	require("plugins.config.copilot"),
 	"neovim/nvim-lspconfig",
 	"hrsh7th/cmp-nvim-lsp",
@@ -56,6 +55,7 @@ require("lazy").setup({
 	require("plugins.config.sleuth"),
 	require("plugins.config.blame"),
 	require("plugins.config.colors"),
+	require("plugins.config.kanagawa"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
