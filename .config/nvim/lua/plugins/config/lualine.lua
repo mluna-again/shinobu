@@ -1,5 +1,6 @@
 local function shouldShowFilename()
-	local badFiletypes = { "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
+	local badFiletypes =
+		{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
 	local ft = vim.bo.filetype
 	for _, filetype in pairs(badFiletypes) do
 		if ft == filetype then
@@ -82,49 +83,49 @@ return {
 	config = function()
 		local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" }).palette
 		local colors = {
-			black        = kanagawa.dragonBlack4,
-			white        = kanagawa.dragonWhite,
-			red          = kanagawa.dragonRed,
-			green        = kanagawa.dragonGreen,
-			blue         = kanagawa.dragonBlue,
-			yellow       = kanagawa.dragonYellow,
-			gray         = kanagawa.dragonGray,
-			darkgray     = kanagawa.dragonBlack2,
-			lightgray    = kanagawa.dragonBlack5,
+			black = kanagawa.dragonBlack4,
+			white = kanagawa.dragonWhite,
+			red = kanagawa.dragonRed,
+			green = kanagawa.dragonGreen,
+			blue = kanagawa.dragonBlue,
+			yellow = kanagawa.dragonYellow,
+			gray = kanagawa.dragonGray,
+			darkgray = kanagawa.dragonBlack2,
+			lightgray = kanagawa.dragonBlack5,
 			inactivegray = kanagawa.dragonBlack6,
-			background   = kanagawa.dragonBlack3
+			background = kanagawa.dragonBlack3,
 		}
 		local theme = {
 			normal = {
-				a = {bg = colors.red, fg = colors.black, gui = 'bold'},
-				b = {bg = colors.lightgray, fg = colors.white},
-				c = {bg = colors.black, fg = colors.gray}
+				a = { bg = colors.red, fg = colors.black, gui = "bold" },
+				b = { bg = colors.lightgray, fg = colors.white },
+				c = { bg = colors.black, fg = colors.gray },
 			},
 			insert = {
-				a = {bg = colors.green, fg = colors.black, gui = 'bold'},
-				b = {bg = colors.lightgray, fg = colors.white},
-				c = {bg = colors.black, fg = colors.white}
+				a = { bg = colors.green, fg = colors.black, gui = "bold" },
+				b = { bg = colors.lightgray, fg = colors.white },
+				c = { bg = colors.black, fg = colors.white },
 			},
 			visual = {
-				a = {bg = colors.yellow, fg = colors.black, gui = 'bold'},
-				b = {bg = colors.lightgray, fg = colors.white},
-				c = {bg = colors.black, fg = colors.black}
+				a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+				b = { bg = colors.lightgray, fg = colors.white },
+				c = { bg = colors.black, fg = colors.black },
 			},
 			replace = {
-				a = {bg = colors.blue, fg = colors.black, gui = 'bold'},
-				b = {bg = colors.lightgray, fg = colors.white},
-				c = {bg = colors.black, fg = colors.white}
+				a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+				b = { bg = colors.lightgray, fg = colors.white },
+				c = { bg = colors.black, fg = colors.white },
 			},
 			command = {
-				a = {bg = colors.white, fg = colors.black, gui = 'bold'},
-				b = {bg = colors.lightgray, fg = colors.white},
-				c = {bg = colors.black, fg = colors.black}
+				a = { bg = colors.white, fg = colors.black, gui = "bold" },
+				b = { bg = colors.lightgray, fg = colors.white },
+				c = { bg = colors.black, fg = colors.black },
 			},
 			inactive = {
-				a = {bg = colors.background, fg = colors.white},
-				b = {bg = colors.background, fg = colors.white},
-				c = {bg = colors.background, fg = colors.white}
-			}
+				a = { bg = colors.background, fg = colors.white },
+				b = { bg = colors.background, fg = colors.white },
+				c = { bg = colors.background, fg = colors.white },
+			},
 		}
 
 		require("lualine").setup({
@@ -149,9 +150,14 @@ return {
 				},
 				lualine_b = {
 					{ "filetype", icon_only = true, cond = shouldShowFilename },
-					{ "filename", cond = shouldShowFilename, symbols = {
-						modified = "",
-					} },
+					{
+						"filename",
+						cond = shouldShowFilename,
+						symbols = {
+							modified = "",
+						},
+						color = { gui = "bold" },
+					},
 				},
 				lualine_c = { { "branch", icon = "" } },
 				lualine_x = { { "diagnostics" } },
@@ -165,7 +171,7 @@ return {
 				lualine_x = {},
 				lualine_y = {},
 				lualine_z = {},
-			}
+			},
 		})
 	end,
 }
