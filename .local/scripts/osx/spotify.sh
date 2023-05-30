@@ -1,12 +1,11 @@
 #! /bin/sh
 
-command -v spotify &>/dev/null || { echo "No spotify!"; exit; }
+[[ -S ~/.cache/ncspot/ncspot.sock ]] || exit
+pgrep ncspot || exit
 
-pgrep Spotify &>/dev/null || exit
-
-output=$(spotify status)
-song_name=$(grep -i track: <<< "$output" | sed 's/Track: //')
-artist=$(grep -i artist: <<< "$output" | sed 's/Artist: //')
+output=$(nc -w 1 -U ~/.cache/ncspot/ncspot.sock)
+song_name=$(echo $output | jq '.playable.title')
+artist=$(echo $output | jq '.playable.title')
 title="$song_name- $artist"
 short_title=$(echo $title | cut -c -30)
 playing=$(grep -i paused <<< "$output" && echo no || echo yes)
