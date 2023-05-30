@@ -4,9 +4,9 @@
 pgrep ncspot || exit
 
 output=$(nc -w 1 -U ~/.cache/ncspot/ncspot.sock)
-song_name=$(echo $output | jq '.playable.title')
-artist=$(echo $output | jq '.playable.title')
-title="$song_name- $artist"
+song_name=$(echo $output | jq '.playable.title' | sed 's/"//g')
+artist=$(echo $output | jq '.playable.artists[0]' | sed 's/"//g')
+title="$song_name - $artist"
 short_title=$(echo $title | cut -c -30)
 playing=$(grep -i paused <<< "$output" && echo no || echo yes)
 
