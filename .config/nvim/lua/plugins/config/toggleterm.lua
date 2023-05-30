@@ -21,8 +21,19 @@ return {
 			auto_scroll = true -- automatically scroll to the bottom on terminal output
 		})
 
+		local term = require("toggleterm.terminal").Terminal
+		local lazygit = term:new({
+			cmd = "lazygit",
+			hidden = true,
+			direction = "float",
+		})
+		function _toggle_lazy()
+			lazygit:toggle()
+		end
+
 		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
 		nmap("<Leader>tv", ":ToggleTerm direction=vertical<CR>")
 		nmap("<Leader>ts", ":ToggleTerm direction=horizontal<CR>")
+		nmap("<Leader>tl", "<cmd>lua _toggle_lazy()<CR>")
 	end
 }
