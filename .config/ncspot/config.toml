@@ -1,0 +1,7 @@
+use_nerdfont = true
+flip_status_indicators = true
+volnorm = true
+library_tabs = ["tracks", "albums", "artists", "playlists"]
+
+[keybindings]
+"f" = "focus search"
