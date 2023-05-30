@@ -4,4 +4,12 @@ volnorm = true
 library_tabs = ["tracks", "albums", "artists", "playlists"]
 
 [keybindings]
-"f" = "focus search"
+"Ctrl+f" = "focus search"
+"Ctrl+l" = "focus library"
+"Ctrl+q" = "focus queue"
+"[" = "move up 10"
+"]" = "move down 10"
+"g" = "move up 5000"
+"G" = "move down 5000"
+"q" = "noop"
+"Shift+q" = "quit"
