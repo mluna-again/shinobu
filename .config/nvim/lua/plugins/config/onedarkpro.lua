@@ -1,6 +1,6 @@
 return {
-	'olimorris/onedarkpro.nvim',
+	"olimorris/onedarkpro.nvim",
 	config = function()
 		vim.cmd("colorscheme onedarkpro")
-	end
+	end,
 }

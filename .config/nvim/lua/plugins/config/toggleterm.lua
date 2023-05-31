@@ -1,7 +1,7 @@
 require("core.maps")
 
 return {
-	'akinsho/toggleterm.nvim',
+	"akinsho/toggleterm.nvim",
 	config = function()
 		require("toggleterm").setup({
 			-- size can be a number or function which is passed the current terminal
@@ -16,9 +16,9 @@ return {
 			shade_terminals = false,
 			hide_numbers = true, -- hide the number column in toggleterm buffers
 			start_in_insert = true,
-			direction = 'horizontal',
+			direction = "horizontal",
 			close_on_exit = true, -- close the terminal window when the process exits
-			auto_scroll = true -- automatically scroll to the bottom on terminal output
+			auto_scroll = true, -- automatically scroll to the bottom on terminal output
 		})
 
 		local term = require("toggleterm.terminal").Terminal
@@ -30,17 +30,17 @@ return {
 				vim.cmd("startinsert!")
 			end,
 			float_opts = {
-				border = 'solid'
+				border = "solid",
 			},
 			highlights = {
 				Normal = {
-					link = "TelescopePromptNormal"
+					link = "TelescopePromptNormal",
 				},
 				NormalFloat = {
-					link = "TelescopePromptNormal"
+					link = "TelescopePromptNormal",
 				},
 				FloatBorder = {
-					link = "TelescopePromptNormal"
+					link = "TelescopePromptNormal",
 				},
 			},
 		})
@@ -56,17 +56,17 @@ return {
 				vim.cmd("startinsert!")
 			end,
 			float_opts = {
-				border = 'solid'
+				border = "solid",
 			},
 			highlights = {
 				Normal = {
-					link = "TelescopePromptNormal"
+					link = "TelescopePromptNormal",
 				},
 				NormalFloat = {
-					link = "TelescopePromptNormal"
+					link = "TelescopePromptNormal",
 				},
 				FloatBorder = {
-					link = "TelescopePromptNormal"
+					link = "TelescopePromptNormal",
 				},
 			},
 		})
@@ -80,7 +80,7 @@ return {
 		nmap("<Leader>ts", ":ToggleTerm direction=horizontal<CR>")
 		nmap("<Leader>tl", "<cmd>lua _toggle_lazy()<CR>")
 
-		vim.api.nvim_create_user_command('LG', ':lua _toggle_lazy()<CR>', {})
-		vim.api.nvim_create_user_command('Spotify', ':lua _toggle_spotify()<CR>', {})
-	end
+		vim.api.nvim_create_user_command("LG", ":lua _toggle_lazy()<CR>", {})
+		vim.api.nvim_create_user_command("Spotify", ":lua _toggle_spotify()<CR>", {})
+	end,
 }

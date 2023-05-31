@@ -19,7 +19,7 @@ return {
 			"csharp_ls",
 			"golangci_lint_ls",
 			"volar",
-			"lua_ls"
+			"lua_ls",
 		}
 
 		for _, server in pairs(servers) do

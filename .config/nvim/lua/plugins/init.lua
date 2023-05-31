@@ -66,5 +66,5 @@ require("lazy").setup({
 	"moll/vim-bbye",
 	"xolox/vim-misc",
 	"tpope/vim-repeat",
-	"elixir-editors/vim-elixir"
+	"elixir-editors/vim-elixir",
 })

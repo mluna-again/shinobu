@@ -1,7 +1,7 @@
 return {
-  "folke/trouble.nvim",
+	"folke/trouble.nvim",
 	event = "User AlphaClosed",
-  config = function()
-    require("trouble").setup {}
-  end
+	config = function()
+		require("trouble").setup({})
+	end,
 }

@@ -1,4 +1,4 @@
-require('core.maps')
+require("core.maps")
 
 nmap("<C-Left>", ":vertical resize -2<CR>")
 nmap("<C-Right>", ":vertical resize +2<CR>")

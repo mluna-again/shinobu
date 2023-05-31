@@ -5,9 +5,9 @@ map SX <Plug>Lightspeed_S
 ]])
 
 return {
-	'ggandor/lightspeed.nvim',
+	"ggandor/lightspeed.nvim",
 	event = "User AlphaClosed",
 	config = function()
-		require'lightspeed'.setup {}
-	end
+		require("lightspeed").setup({})
+	end,
 }

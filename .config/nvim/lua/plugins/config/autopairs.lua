@@ -3,7 +3,7 @@ return {
 	event = "User AlphaClosed",
 	config = function()
 		require("nvim-autopairs").setup({
-      disable_filetype = { "clojure" }
-    })
-	end
+			disable_filetype = { "clojure" },
+		})
+	end,
 }

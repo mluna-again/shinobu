@@ -1,7 +1,7 @@
 return {
-  "numToStr/Comment.nvim",
+	"numToStr/Comment.nvim",
 	event = "User AlphaClosed",
-  config = function ()
-    require("Comment").setup()
-  end
+	config = function()
+		require("Comment").setup()
+	end,
 }

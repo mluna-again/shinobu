@@ -1,9 +1,9 @@
 return {
-	'akinsho/bufferline.nvim',
+	"akinsho/bufferline.nvim",
 	event = "User AlphaClosed",
-	dependencies = 'kanagawa.nvim',
+	dependencies = "kanagawa.nvim",
 	config = function()
-		require("bufferline").setup{
+		require("bufferline").setup({
 			options = {
 				-- offsets = { { filetype = "neo-tree", text = "" } },
 				offsets = {},
@@ -21,9 +21,9 @@ return {
 				show_buffer_close_icons = false,
 				separator_style = "thin",
 				always_show_bufferline = false,
-				diagnostics = false
+				diagnostics = false,
 			},
-			highlights = {}
-		}
-	end
+			highlights = {},
+		})
+	end,
 }

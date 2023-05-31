@@ -1,6 +1,6 @@
 return {
-	'nvim-orgmode/orgmode',
+	"nvim-orgmode/orgmode",
 	config = function()
-		require('orgmode').setup{}
-	end
+		require("orgmode").setup({})
+	end,
 }

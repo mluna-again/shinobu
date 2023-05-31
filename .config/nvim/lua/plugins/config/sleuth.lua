@@ -1,5 +1,4 @@
 return {
-  "tpope/vim-sleuth",
-  config = function()
-  end
+	"tpope/vim-sleuth",
+	config = function() end,
 }

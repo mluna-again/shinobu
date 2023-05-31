@@ -21,7 +21,7 @@ return {
 				centralize_selection = false,
 				width = {
 					min = "25%",
-					padding = 0
+					padding = 0,
 				},
 				side = "right",
 				preserve_window_proportions = false,

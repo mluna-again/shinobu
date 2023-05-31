@@ -1,5 +1,5 @@
 return {
-	'NTBBloodbath/rest.nvim',
+	"NTBBloodbath/rest.nvim",
 	config = function()
 		require("rest-nvim").setup({
 			-- Open request results in a horizontal split
@@ -21,11 +21,11 @@ return {
 			},
 			-- Jump to request line on run
 			jump_to_request = false,
-			env_file = '.env',
+			env_file = ".env",
 			custom_dynamic_variables = {},
 			yank_dry_run = true,
 		})
 
 		nmap("<Leader>hr", "<Plug>RestNvim", { noremap = false })
-	end
+	end,
 }

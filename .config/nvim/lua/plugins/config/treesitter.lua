@@ -1,11 +1,11 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
+	"nvim-treesitter/nvim-treesitter",
 	event = "User AlphaClosed",
-	cmd = 'TSUpdate',
-	config = function ()
-		require'nvim-treesitter.configs'.setup {
+	cmd = "TSUpdate",
+	config = function()
+		require("nvim-treesitter.configs").setup({
 			endwise = {
-				enable = true
+				enable = true,
 			},
 			-- A list of parser names, or "all"
 			ensure_installed = {},
@@ -32,6 +32,6 @@ return {
 				-- Instead of true it can also be a list of languages
 				additional_vim_regex_highlighting = false,
 			},
-		}
-	end
+		})
+	end,
 }

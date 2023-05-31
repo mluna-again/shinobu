@@ -1,6 +1,5 @@
 return {
-  "sindrets/diffview.nvim",
+	"sindrets/diffview.nvim",
 	event = "User AlphaClosed",
-  config = function()
-  end
+	config = function() end,
 }

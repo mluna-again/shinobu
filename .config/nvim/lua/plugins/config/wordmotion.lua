@@ -1,4 +1,4 @@
 return {
-	'chaoren/vim-wordmotion',
+	"chaoren/vim-wordmotion",
 	event = "User AlphaClosed",
 }

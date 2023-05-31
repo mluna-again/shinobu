@@ -1,7 +1,7 @@
 return {
-	'nvim-telescope/telescope.nvim',
+	"nvim-telescope/telescope.nvim",
 	config = function()
-		require('telescope').setup{
+		require("telescope").setup({
 			defaults = {
 				vimgrep_arguments = {
 					"rg",
@@ -45,7 +45,7 @@ return {
 				grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 				qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 				buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
-			}
-		}
-	end
+			},
+		})
+	end,
 }
