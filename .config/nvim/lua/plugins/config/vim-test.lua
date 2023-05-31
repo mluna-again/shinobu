@@ -7,6 +7,7 @@ let test#neovim#term_position = "vert"
 
 return {
 	'vim-test/vim-test',
+	event = "User AlphaClosed",
 	config = function()
 		nmap("<Leader>r", ":TestNearest<CR>")
 		nmap("<Leader>R", ":TestFile<CR>")

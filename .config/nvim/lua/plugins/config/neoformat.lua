@@ -6,5 +6,6 @@ augroup END
 ]])
 
 return {
-	'sbdchd/neoformat'
+	'sbdchd/neoformat',
+	event = "User AlphaClosed",
 }

@@ -1,5 +1,6 @@
 return {
 	'simrat39/symbols-outline.nvim',
+	event = "User AlphaClosed",
 	config = function()
 		require("symbols-outline").setup({
 			highlight_hovered_item = true,

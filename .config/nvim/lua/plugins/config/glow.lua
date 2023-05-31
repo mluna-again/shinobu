@@ -1,5 +1,6 @@
 return {
   "ellisonleao/glow.nvim",
+	event = "User AlphaClosed",
   config = function()
     require("glow").setup({
       width_ratio = 1.0,

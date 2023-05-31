@@ -1,5 +1,6 @@
 return {
 	'kevinhwang91/nvim-ufo',
+	event = "User AlphaClosed",
 	dependencies = {'kevinhwang91/promise-async'},
 	config = function()
 		vim.o.foldcolumn = '0'

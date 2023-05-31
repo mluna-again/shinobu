@@ -1,5 +1,6 @@
 return {
 	"folke/todo-comments.nvim",
+	event = "User AlphaClosed",
 	config = function()
 		require("todo-comments").setup {
 			signs = true, -- show icons in the signs column

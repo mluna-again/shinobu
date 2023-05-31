@@ -1,5 +1,6 @@
 return {
 	'akinsho/bufferline.nvim',
+	event = "User AlphaClosed",
 	dependencies = 'kanagawa.nvim',
 	config = function()
 		require("bufferline").setup{

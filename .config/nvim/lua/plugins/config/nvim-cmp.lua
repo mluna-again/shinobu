@@ -2,6 +2,7 @@ require('core.maps')
 
 return {
   'hrsh7th/nvim-cmp',
+	event = "User AlphaClosed",
   config = function()
     local kind_icons = {
       Text = "",
