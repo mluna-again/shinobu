@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 
 require("lazy").setup({
-	require("plugins.config.copilot"),
 	"neovim/nvim-lspconfig",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-emoji",
@@ -45,7 +44,6 @@ require("lazy").setup({
 	require("plugins.config.gitsigns"),
 	require("plugins.config.ufo"),
 	require("plugins.config.autopairs"),
-	require("plugins.config.table-mode"),
 	require("plugins.config.wordmotion"),
 	require("plugins.config.glow"),
 	require("plugins.config.diff"),

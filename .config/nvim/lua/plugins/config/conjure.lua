@@ -3,6 +3,8 @@ require("core.maps")
 return {
 	'Olical/conjure',
 	commit = 'd2e69a13b32e8574decfe81ea275292234eba6ea',
+	lazy = true,
+	ft = "clojure",
 	config = function ()
 		nmap("<leader>cl", ":ConjureEvalRootForm<CR>")
 		nmap("<leader>ce", ":ConjureEvalCurrentForm<CR>")
