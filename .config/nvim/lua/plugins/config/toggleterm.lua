@@ -28,7 +28,21 @@ return {
 			direction = "float",
 			on_open = function()
 				vim.cmd("startinsert!")
-			end
+			end,
+			float_opts = {
+				border = 'solid'
+			},
+			highlights = {
+				Normal = {
+					link = "TelescopePromptNormal"
+				},
+				NormalFloat = {
+					link = "TelescopePromptNormal"
+				},
+				FloatBorder = {
+					link = "TelescopePromptNormal"
+				},
+			},
 		})
 		function _toggle_lazy()
 			lazygit:toggle()
@@ -40,7 +54,21 @@ return {
 			direction = "float",
 			on_open = function()
 				vim.cmd("startinsert!")
-			end
+			end,
+			float_opts = {
+				border = 'solid'
+			},
+			highlights = {
+				Normal = {
+					link = "TelescopePromptNormal"
+				},
+				NormalFloat = {
+					link = "TelescopePromptNormal"
+				},
+				FloatBorder = {
+					link = "TelescopePromptNormal"
+				},
+			},
 		})
 
 		function _toggle_spotify()
