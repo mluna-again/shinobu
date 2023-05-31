@@ -5,6 +5,7 @@
 <img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/telescope.png">
 <img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/code.png">
 <img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/terminal.png">
+<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/spotify.png">
 
 ## Problems I've encountered that I don't want to forget
 

@@ -21,7 +21,7 @@ bright_cyan = "#7aa89f"
 bright_white = "#c5c9c5"
 [themes.component_style]
 block_title = { fg = "Red"  }
-border = {}
+border = { fg = "Red" }
 playback_track = { fg = "Cyan", modifiers = ["Bold"] }
 playback_artists = { fg = "Cyan", modifiers = ["Bold"] }
 playback_album = { fg = "Yellow" }
@@ -31,4 +31,3 @@ current_playing = { fg = "Green", modifiers = ["Bold"] }
 page_desc = { fg = "Cyan", modifiers = ["Bold"] }
 table_header = { fg = "Blue" }
 selection = { modifiers = ["Bold", "Reversed"] }
-    
