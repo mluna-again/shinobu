@@ -26,14 +26,33 @@ return {
 			cmd = "lazygit",
 			hidden = true,
 			direction = "float",
+			on_open = function()
+				vim.cmd("startinsert!")
+			end
 		})
 		function _toggle_lazy()
 			lazygit:toggle()
+		end
+
+		local spotify = term:new({
+			cmd = "spotify_player",
+			hidden = true,
+			direction = "float",
+			on_open = function()
+				vim.cmd("startinsert!")
+			end
+		})
+
+		function _toggle_spotify()
+			spotify:toggle()
 		end
 
 		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
 		nmap("<Leader>tv", ":ToggleTerm direction=vertical<CR>")
 		nmap("<Leader>ts", ":ToggleTerm direction=horizontal<CR>")
 		nmap("<Leader>tl", "<cmd>lua _toggle_lazy()<CR>")
+
+		vim.api.nvim_create_user_command('LG', ':lua _toggle_lazy()<CR>', {})
+		vim.api.nvim_create_user_command('Spotify', ':lua _toggle_spotify()<CR>', {})
 	end
 }
