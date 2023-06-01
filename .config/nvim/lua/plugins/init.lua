@@ -55,6 +55,7 @@ require("lazy").setup({
 	require("plugins.config.kanagawa"),
 	require("plugins.config.lualine"),
 	require("plugins.config.dap"),
+	require("plugins.config.neodev"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
