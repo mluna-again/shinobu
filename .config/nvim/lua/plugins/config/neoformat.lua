@@ -2,7 +2,7 @@ vim.cmd([[
 augroup fmt
   autocmd!
   autocmd BufWritePre *.go undojoin | Neoformat
-  autocmd BufWritePre *.rust undojoin | Neoformat
+  autocmd BufWritePre *.rs undojoin | Neoformat
 augroup END
 ]])
 
