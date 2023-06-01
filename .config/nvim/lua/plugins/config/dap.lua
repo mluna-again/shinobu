@@ -24,8 +24,9 @@ return {
 				b = { ":lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint", noremap = true, silent = true },
 				c = { ":lua require'dap'.continue()<CR>", "Continue/Start debugging", noremap = true, silent = true },
 				n = { ":lua require'dap'.step_over()<CR>", "Step over", noremap = true, silent = true },
-				p = { ":lua require'dap'.step_into()<CR>", "Step into", noremap = true, silent = true },
+				N = { ":lua require'dap'.step_into()<CR>", "Step into", noremap = true, silent = true },
 				r = { ":lua require'dap'.repl()<CR>", "REPL", noremap = true, silent = true },
+				R = { ":lua require'dapui'.open({ reset = true })<CR>", "Reset UI", noremap = true, silent = true },
 			},
 		}, {
 			prefix = "<Leader>",
