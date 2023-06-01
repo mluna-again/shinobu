@@ -1,6 +1,8 @@
 snippet die "crashes, just that" b
 if err != nil {
-	log.Fatal(err)$1
+	fmt.Println(err.Error())
+	os.Exit(1)
+	return$1
 }
 
 $2
