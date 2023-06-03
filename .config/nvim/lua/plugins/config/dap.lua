@@ -1,6 +1,7 @@
 return {
 	"rcarriga/nvim-dap-ui",
 	dependencies = { "mfussenegger/nvim-dap", "leoluz/nvim-dap-go", "folke/which-key.nvim" },
+	event = "User AlphaClosed",
 	config = function()
 		require("dapui").setup()
 		require("dap-go").setup()
