@@ -1,16 +1,41 @@
-require("core.maps")
+local wk = require("which-key")
 
+wk.register({
+	w = {
+		name = "Window management",
+		k = { ":wincmd k<CR>", "Down", noremap = true, silent = true },
+		j = { ":wincmd j<CR>", "Up", noremap = true, silent = true },
+		h = { ":wincmd h<CR>", "Left", noremap = true, silent = true },
+		l = { ":wincmd l<CR>", "Right", noremap = true, silent = true },
+		w = { "<C-w><C-w>", "Next", noremap = true, silent = true },
+		s = { "<C-w>s", "Open vertical window", noremap = true, silent = true },
+		v = { "<C-w>v", "Open horizontal window", noremap = true, silent = true },
+		d = { "<C-w>q", "Close window", noremap = true, silent = true },
+		q = { "<C-w>q", "Also close window", noremap = true, silent = true },
+	}
+}, { prefix = "<Leader>" })
+
+wk.register({
+	s = {
+		s = { ":w<CR>", "Save buffer", noremap = true, silent = true },
+	},
+	S = {
+		S = { ":noautocmd w<CR>", "Save buffer without autocmds", noremap = true, silent = true }
+	},
+	g = {
+		name = "Buffer navigation",
+		t = { ":BufferLineCycleNext<CR>", "Next", noremap = true, silent = true },
+		r = { ":BufferLineCyclePrev<CR>", "Prev", noremap = true, silent = true },
+		T = { ":BufferLineMoveNext<CR>", "Move to right", noremap = true, silent = true },
+		R = { ":BufferLineMoveNext<CR>", "Move to left", noremap = true, silent = true },
+	}
+})
+
+nmap("Y", "v$hy")
 nmap("<C-Left>", ":vertical resize -2<CR>")
 nmap("<C-Right>", ":vertical resize +2<CR>")
 nmap("<C-Up>", ":resize +2<CR>")
 nmap("<C-Down>", ":resize -2<CR>")
-nmap("Y", "v$hy")
-nmap("ss", ":w<CR>")
-nmap("SS", ":noautocmd w<CR>")
-nmap("gt", ":BufferLineCycleNext<CR>")
-nmap("gr", ":BufferLineCyclePrev<CR>")
-nmap("gT", ":BufferLineMoveNext<CR>")
-nmap("gR", ":BufferLineMovePrev<CR>")
 nmap("<Leader>fd", ":Telescope buffers<CR>")
 nmap("TT", ":only<CR>")
 nmap("tt", ":Bdelete<CR>")
@@ -18,17 +43,6 @@ nmap("dh", ":noh<CR>")
 nmap("Y", "y$")
 nmap("''", "``")
 nmap("!", ":ls<CR>")
-nmap("<Leader>wk", ":wincmd k<CR>")
-nmap("<Leader>wj", ":wincmd j<CR>")
-nmap("<Leader>wh", ":wincmd h<CR>")
-nmap("<Leader>wl", ":wincmd l<CR>")
-nmap("<Leader>ww", "<C-w><C-w>")
-nmap("<Leader>ws", "<C-w>s")
-nmap("<Leader>wv", "<C-w>v")
-nmap("<Leader>wd", "<C-w>q")
-nmap("<Leader>gg", "G")
-nmap("<Leader>q", ":q")
-nmap("<Leader>v", "<C-v>")
 nmap("-", "<C-e>")
 nmap("¿", "<C-y>")
 imap("jj", "<ESC>")
