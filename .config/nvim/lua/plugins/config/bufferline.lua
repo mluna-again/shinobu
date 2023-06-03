@@ -19,7 +19,7 @@ return {
 				enforce_regular_tabs = false,
 				view = "multiwindow",
 				show_buffer_close_icons = false,
-				separator_style = "thin",
+				separator_style = {"", ""},
 				always_show_bufferline = false,
 				diagnostics = false,
 			},
