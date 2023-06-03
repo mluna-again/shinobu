@@ -6,5 +6,4 @@ vim.g.UltiSnipsJumpForwardTrigger = "<C-l>"
 vim.g.UltiSnipsJumpBackwardTrigger = "<nop>"
 return {
 	"SirVer/ultisnips",
-	event = "User AlphaClosed",
 }
