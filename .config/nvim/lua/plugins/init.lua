@@ -14,9 +14,9 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 
 require("lazy").setup({
-	require("plugins.config.nvim-cmp"),
-	require("plugins.config.mason"),
 	require("plugins.config.lsp"),
+	require("plugins.config.mason"),
+	require("plugins.config.nvim-cmp"),
 	require("plugins.config.dashboard"),
 	require("plugins.config.conjure"),
 	require("plugins.config.telescope"),

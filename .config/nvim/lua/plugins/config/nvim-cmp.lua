@@ -11,6 +11,7 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"quangnguyen30192/cmp-nvim-ultisnips",
 		"neovim/nvim-lspconfig",
+		"williamboman/mason-lspconfig.nvim",
 	},
 	config = function()
 		local kind_icons = {
