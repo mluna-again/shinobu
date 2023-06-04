@@ -149,7 +149,7 @@ return {
 					},
 				},
 				lualine_b = {
-					{ "filetype", icon_only = true, cond = shouldShowFilename },
+					-- { "filetype", icon_only = true, cond = shouldShowFilename },
 					{
 						"filename",
 						cond = shouldShowFilename,
@@ -161,7 +161,7 @@ return {
 				},
 				lualine_c = { { "branch", icon = "" } },
 				lualine_x = { { "diagnostics" } },
-				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = " " } },
+				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = "" } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
 			inactive_sections = {
