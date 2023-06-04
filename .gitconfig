@@ -1,0 +1,11 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+name = Manuel Luna
+email = manuellunada@gmail.com
+[core]
+	excludesFile = ~/.gitignore
+[push]
+	autoSetupRemote = true
+[pull]
+	rebase = false
