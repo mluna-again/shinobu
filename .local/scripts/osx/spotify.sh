@@ -9,6 +9,8 @@ get_info() {
 
 output=$(get_info)
 
+[ -z "$output" ] && exit
+
 get_song_name() {
 	[ $using_spotify = no ] && { echo $output | jq '.playable.title' | sed 's/"//g' && return; }
 
