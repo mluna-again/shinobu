@@ -10,17 +10,17 @@ if [ "$plugged" == "yes" ]; then
 elif [ "$low_battery" == "no" ]; then
 
 	if [ "$percentage" -ge "90" ]; then
-		echo "#[fg=black,bg=red]  $percentage%"
+		echo "#[fg=black,bg=red] 󰁹 $percentage%"
 	elif [ "$percentage" -ge "70" ]; then
-		echo "#[fg=black,bg=red]  $percentage%"
+		echo "#[fg=black,bg=red] 󰂂 $percentage%"
 	elif [ "$percentage" -ge "50" ]; then
-		echo "#[fg=black,bg=red]  $percentage%"
+		echo "#[fg=black,bg=red] 󰂀 $percentage%"
 	elif [ "$percentage" -ge "30" ]; then
-		echo "#[fg=black,bg=red]  $percentage%"
+		echo "#[fg=black,bg=red] 󰁾 $percentage%"
 	elif [ "$percentage" -ge "20" ]; then
-		echo "#[fg=black,bg=red]  $percentage%"
+		echo "#[fg=black,bg=red] 󰁻 $percentage%"
 	fi
 
 else
-	echo "#[fg=black,bg=red]  $percentage%"
+	echo "#[fg=black,bg=red] 󰁺 $percentage%"
 fi
