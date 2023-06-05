@@ -18,9 +18,9 @@ return {
 			source_selector = {
 				winbar = true,
 				sources = {
-					{ source = "filesystem" },
-					{ source = "buffers" },
-					{ source = "git_status" },
+					{ source = "filesystem", display_name = "󰉋 Files" },
+					{ source = "buffers", display_name = " Buffers" },
+					{ source = "git_status", display_name = " Git" },
 					-- { source = "document_symbols" },
 				},
 			},
