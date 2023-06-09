@@ -1,12 +1,35 @@
 require("core.maps")
 
+local function greetings()
+	local time = tonumber(os.date("%H"))
+
+	if time >= 0 and time < 6 then
+		return "go to sleep"
+	end
+
+	if time >= 6 and time < 12 then
+		return "good morning"
+	end
+
+	if time >= 12 and time < 18 then
+		return "have a nice day :)"
+	end
+
+	if time >= 18 and time < 21 then
+		return "what a day, huh?"
+	end
+
+	return "good night"
+	-- return "insufficient data for meaningful answer."
+end
+
 return {
 	"goolord/alpha-nvim",
 	config = function()
 		local alpha = require("alpha")
 		require("alpha.term")
 
-		dashboard = require("alpha.themes.dashboard")
+		local dashboard = require("alpha.themes.dashboard")
 
 		dashboard.section.buttons.val = {
 			dashboard.button("SPC c n", "  New file", ":enew<CR>"),
@@ -23,7 +46,7 @@ return {
 		dashboard.section.terminal.height = 20
 		dashboard.section.terminal.opts.position = "center"
 
-		dashboard.section.footer.val = "insufficient data for meaningful answer."
+		dashboard.section.footer.val = greetings()
 
 		dashboard.config.layout = {
 			dashboard.section.terminal,
