@@ -27,7 +27,10 @@ local function greetings()
 			"",
 			"programming is rather thankless. u see your works become replaced by superior",
 			"             ones in a year. unable to run at all in a few more."
-		}
+		},
+		"rust is overrated, come at me",
+		"insufficient data for meaningful answer",
+		"it is what it is",
 	}
 
 	math.randomseed(os.time())
