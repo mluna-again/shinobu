@@ -1,26 +1,39 @@
 require("core.maps")
 
 local function greetings()
-	local time = tonumber(os.date("%H"))
+	local options = {
+		"do you like the way it sounds?",
+		"where did it go?",
+		"are dreams real?",
+		"do you like yellow?",
+		"tomorrow will be sunny",
+		"tonight will rain",
+		"wof, wof, wof",
+		"the sky is red",
+		"do you remember?",
+		"i miss my turtle",
+		"i lost my turtle once",
+		"try pressing alt-f4",
+		"i don't know what else to put here",
+		"cyberpunk 2077 wasn't that bad",
+		"i like lisp",
+		"perl is not that bad",
+		"a strange game. the only winning move is not to play.",
+		"when in doubt, leave it out.",
+		"simplicity is prerequisite for reliability.",
+		"the grass is always greener on the other side",
+		"the cat ate my source code",
+		{
+			"",
+			"programming is rather thankless. u see your works become replaced by superior",
+			"             ones in a year. unable to run at all in a few more."
+		}
+	}
 
-	if time >= 0 and time < 6 then
-		return "go to sleep"
-	end
+	math.randomseed(os.time())
+	local index = tonumber(math.random(1, #options))
 
-	if time >= 6 and time < 12 then
-		return "good morning"
-	end
-
-	if time >= 12 and time < 18 then
-		return "have a nice day :)"
-	end
-
-	if time >= 18 and time < 21 then
-		return "what a day, huh?"
-	end
-
-	return "good night"
-	-- return "insufficient data for meaningful answer."
+	return options[index]
 end
 
 return {
@@ -46,6 +59,7 @@ return {
 		dashboard.section.terminal.height = 20
 		dashboard.section.terminal.opts.position = "center"
 
+		dashboard.section.footer.opts.position = "center"
 		dashboard.section.footer.val = greetings()
 
 		dashboard.config.layout = {
@@ -58,11 +72,11 @@ return {
 		alpha.setup(dashboard.config)
 
 		vim.cmd([[
-    augroup DashboardTweaks
-    autocmd!
-    autocmd FileType dashboard set noruler
-    autocmd FileType dashboard nmap <buffer> q :quit<CR>
-    augroup END
-    ]])
+		augroup DashboardTweaks
+		autocmd!
+		autocmd FileType dashboard set noruler
+		autocmd FileType dashboard nmap <buffer> q :quit<CR>
+		augroup END
+		]])
 	end,
 }
