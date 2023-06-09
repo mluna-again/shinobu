@@ -23,6 +23,8 @@ return {
 		dashboard.section.terminal.height = 20
 		dashboard.section.terminal.opts.position = "center"
 
+		dashboard.section.footer.val = "insufficient data for meaningful answer."
+
 		dashboard.config.layout = {
 			dashboard.section.terminal,
 			{ type = "padding", val = 5 },
