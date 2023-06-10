@@ -1,11 +1,14 @@
 snippet die "crashes, just that" b
+os.Exit(1)
+return$1
+endsnippet
+
+snippet edie "crashes, just that" b
 if err != nil {
 	fmt.Println(err.Error())
 	os.Exit(1)
 	return$1
-}
-
-$2
+}$2
 endsnippet
 
 snippet iferr "if err" b
