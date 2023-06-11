@@ -31,7 +31,8 @@ local function greetings()
 		"rust is overrated, come at me",
 		"insufficient data for meaningful answer",
 		"it is what it is",
-		"in the face of ambiguity, refuse the temptation to guess"
+		"in the face of ambiguity, refuse the temptation to guess",
+		"let it crash"
 	}
 
 	math.randomseed(os.time())
