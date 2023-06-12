@@ -32,7 +32,14 @@ local function greetings()
 		"insufficient data for meaningful answer",
 		"it is what it is",
 		"in the face of ambiguity, refuse the temptation to guess",
-		"let it crash"
+		"in the face of ambiguity, refuse the temptation to guess",
+		"in the face of ambiguity, refuse the temptation to guess",
+		"in the face of ambiguity, refuse the temptation to guess",
+		"in the face of ambiguity, refuse the temptation to guess",
+		"let it crash",
+		"let it crash",
+		"let it crash",
+		"let it crash",
 	}
 
 	math.randomseed(os.time())
