@@ -46,7 +46,8 @@ return {
 				},
 			},
 		})
-		function _toggle_lazy()
+
+		local function toggle_lazy()
 			lazygit:toggle()
 		end
 
@@ -73,7 +74,7 @@ return {
 			},
 		})
 
-		function _toggle_spotify()
+		local function toggle_spotify()
 			spotify:toggle()
 		end
 
@@ -82,7 +83,7 @@ return {
 		nmap("<Leader>ts", ":ToggleTerm direction=horizontal<CR>")
 		nmap("<Leader>tl", "<cmd>lua _toggle_lazy()<CR>")
 
-		vim.api.nvim_create_user_command("LG", ":lua _toggle_lazy()<CR>", {})
-		vim.api.nvim_create_user_command("Spotify", ":lua _toggle_spotify()<CR>", {})
+		vim.api.nvim_create_user_command("LG", function() toggle_lazy() end, {})
+		vim.api.nvim_create_user_command("Spotify", function() toggle_spotify() end, {})
 	end,
 }
