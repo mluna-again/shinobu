@@ -40,6 +40,8 @@ local function greetings()
 		"let it crash",
 		"let it crash",
 		"let it crash",
+		"too bad she won't live, but then again, who does?",
+		"i've seen things you people wouldn't believe..."
 	}
 
 	math.randomseed(os.time())
