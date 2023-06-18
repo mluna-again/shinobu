@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
+
+	"golang.org/x/term"
 )
 
 func main() {
@@ -12,7 +15,30 @@ func main() {
 		return
 	}
 
+	w, _, err := term.GetSize(int(os.Stdin.Fd()))
+	if err != nil {
+		if len(os.Args) < 3 {
+			fmt.Println(err.Error())
+			os.Exit(1)
+			return
+		}
+		wParam := os.Args[2]
+		wParamInt, err := strconv.Atoi(wParam)
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(1)
+			return
+		}
+		w = wParamInt
+	}
+
 	p := os.Args[1]
+
+	if w < 100 {
+		cmps := strings.Split(p, "/")
+		fmt.Print(cmps[len(cmps)-1])
+		return
+	}
 
 	home := os.Getenv("HOME")
 
