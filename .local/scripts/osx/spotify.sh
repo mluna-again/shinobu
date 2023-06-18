@@ -1,5 +1,9 @@
 #! /bin/sh
 
+term_width="$1"
+
+width=`[ $term_width -lt 100 ] && echo 15 || echo 30`
+
 pgrep pgrep Spotify &>/dev/null || exit
 
 icon=""
@@ -15,8 +19,8 @@ get_artist() {
 artist=$(get_artist)
 
 title="$song_name - $artist"
-short_title=$(echo $title | cut -c -30)
+short_title=$(echo $title | cut -c -$width)
 
-should_truncate=$([ ${#title} -gt 30 ] && echo yes || echo no)
+should_truncate=$([ ${#title} -gt $width ] && echo yes || echo no)
 
 [ "$should_truncate" == yes ] && echo "#[bg=red,fg=black] $icon $short_title...#[fg=default]" || echo "#[bg=red,fg=black] $icon $title#[fg=default]"
