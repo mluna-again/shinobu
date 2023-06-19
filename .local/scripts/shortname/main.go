@@ -34,16 +34,16 @@ func main() {
 
 	p := os.Args[1]
 
-	if w < 100 {
-		cmps := strings.Split(p, "/")
-		fmt.Print(cmps[len(cmps)-1])
-		return
-	}
-
 	home := os.Getenv("HOME")
 
 	if strings.TrimSpace(p) == strings.TrimSpace(home) {
 		fmt.Print("~")
+		return
+	}
+
+	if w < 100 {
+		cmps := strings.Split(p, "/")
+		fmt.Print(cmps[len(cmps)-1])
 		return
 	}
 
