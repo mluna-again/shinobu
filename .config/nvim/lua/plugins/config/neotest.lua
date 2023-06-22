@@ -1,5 +1,3 @@
-local notification = {}
-
 return {
 	"nvim-neotest/neotest",
 	dependencies = {
@@ -19,9 +17,12 @@ return {
 						local record = require("notify")("Tests started...", vim.log.levels.INFO, {
 							title = "Neotest",
 							render = "simple",
+							keep = function ()
+								return true
+							end
 						})
 
-						notification[1] = record
+						_G.current_notification = record
 					end
 
 					client.listeners.results = function (adapter_id, _, partial)
@@ -48,10 +49,13 @@ return {
 						local record = require("notify")(message, type, {
 							title = "Neotest",
 							render = "simple",
-							replace = notification[1]
+							replace = _G.current_notification,
+							keep = function ()
+								return false
+							end
 						})
 
-						notification[1] = record
+						_G.current_notification = record
 					end
 					return {}
 				end
