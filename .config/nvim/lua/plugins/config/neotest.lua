@@ -5,13 +5,24 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"antoinemadec/FixCursorHold.nvim",
 		"jfpedroza/neotest-elixir",
+		"nvim-neotest/neotest-go",
 	},
 	event = "User AlphaClosed",
 	config = function()
 		require("neotest").setup({
 			adapters = {
 				require("neotest-elixir"),
+				require("neotest-go"),
 			},
+			summary = {
+				mappings = {
+					jumpto = "<CR>",
+					run = "r",
+					watch = "=",
+					expand_all = "e"
+				},
+				animated = true
+			}
 		})
 
 		local wk = require("which-key")
@@ -35,6 +46,8 @@ return {
 			T = {
 				function()
 					require("neotest").run.run({ suite = true })
+					require("neotest").summary.open()
+					vim.cmd("wincmd l")
 				end,
 				"Run test file",
 				noremap = true,
