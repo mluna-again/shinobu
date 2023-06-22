@@ -109,6 +109,22 @@ return {
 		wk.register({
 			t = {
 				name = "Testing/Terminal",
+				n = {
+					function ()
+						require("neotest").jump.next({ status = "failed" })
+					end,
+					"Jump to next failed test",
+					noremap = true,
+					silent = true,
+				},
+				p = {
+					function ()
+						require("neotest").jump.prev({ status = "failed" })
+					end,
+					"Jump to previous failed test",
+					noremap = true,
+					silent = true,
+				},
 				r = {
 					function()
 						require("neotest").run.run()
