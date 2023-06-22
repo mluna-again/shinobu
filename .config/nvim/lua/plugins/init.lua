@@ -27,7 +27,7 @@ require("lazy").setup({
 	require("plugins.config.neoscroll"),
 	require("plugins.config.tags"),
 	require("plugins.config.emmet"),
-	require("plugins.config.vim-test"),
+	require("plugins.config.neotest"),
 	require("plugins.config.todo"),
 	require("plugins.config.lightspeed"),
 	require("plugins.config.treesitter"),

@@ -3,6 +3,7 @@ require("core.maps")
 vim.cmd([[
 let test#strategy = "neovim"
 let test#neovim#term_position = "vert"
+let g:test#neovim#start_normal = 1
 ]])
 
 return {
