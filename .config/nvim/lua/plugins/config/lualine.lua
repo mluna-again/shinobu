@@ -10,7 +10,9 @@ local function shouldShowFilename()
 	return true
 end
 
-local function testsStatus(adapters)
+local function testsStatus()
+	local adapters = require("neotest").state.adapter_ids()
+
 	if #adapters == 0 then
 		return ""
 	end
@@ -151,8 +153,6 @@ return {
 			},
 		}
 
-		local neotestAdapters = require("neotest").state.adapter_ids()
-
 		require("lualine").setup({
 			options = {
 				theme = theme,
@@ -185,7 +185,7 @@ return {
 					},
 				},
 				lualine_c = { { "branch", icon = "" } },
-				lualine_x = { { function() return testsStatus(neotestAdapters) end }, { "diagnostics" } },
+				lualine_x = { { testsStatus }, { "diagnostics" } },
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = "" } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
