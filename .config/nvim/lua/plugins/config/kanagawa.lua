@@ -21,6 +21,8 @@ return {
 		autocmd ColorScheme * hi link CmpItemKindFile Orange
 		autocmd ColorScheme * hi link CmpItemKindFolder Orange
 
+		autocmd ColorScheme * hi NeotestFocused gui=none
+
 		set fillchars+=vert:\ 
 		set fillchars+=eob:\ 
 		augroup end
@@ -91,6 +93,12 @@ return {
 					BufferLineIndicator = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 					BufferLineIndicatorSelected = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 					BufferLineIndicatorVisible = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					NeotestFile = { fg = colors.palette.dragonGray },
+					NeotestDir = { fg = colors.palette.dragonWhite },
+					NeotestFailed = { fg = colors.palette.peachRed },
+					NeotestPassed = { fg = colors.palette.autumnGreen },
+					NeotestRunning = { fg = colors.palette.dragonYellow },
+					NeotestAdapterName = { fg = colors.palette.dragonAqua },
 				}
 			end,
 		})
