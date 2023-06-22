@@ -17,8 +17,28 @@ return {
 			quickfix = {
 				enabled = false,
 			},
-			status = {
-				signs = false,
+			diagnostic = {
+				enabled = false,
+			},
+			icons = {
+				running_animated = {
+					"󱑊",
+					"󱑀",
+					"󱑁",
+					"󱑂",
+					"󱑃",
+					"󱑄",
+					"󱑅",
+					"󱑆",
+					"󱑇",
+					"󱑉",
+				},
+				running = "󱑁",
+				passed = "",
+				failed = "",
+				skipped = "",
+				watching = "󰈈",
+				unknown = "",
 			},
 			summary = {
 				mappings = {
