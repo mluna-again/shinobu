@@ -20,6 +20,14 @@ return {
 			diagnostic = {
 				enabled = false,
 			},
+			floating = {
+				enabled = true,
+				max_height = 0.9,
+				max_width = 0.9
+			},
+			output_panel = {
+				open = "botright split | resize 20"
+			},
 			icons = {
 				running_animated = {
 					"󱑊",
@@ -76,6 +84,7 @@ return {
 				T = {
 					function()
 						require("neotest").run.run({ suite = true })
+						require("neotest").summary.open({ enter = true })
 					end,
 					"Run test suite",
 					noremap = true,
@@ -83,9 +92,9 @@ return {
 				},
 				o = {
 					function ()
-						require("neotest").summary.open({ enter = true })
+						require("neotest").summary.toggle({ enter = true })
 					end,
-					"Open summary panel",
+					"Toggle summary panel",
 					noremap = true,
 					silent = true,
 				}
