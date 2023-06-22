@@ -10,6 +10,29 @@ local function shouldShowFilename()
 	return true
 end
 
+local function testsStatus(adapters)
+	if #adapters == 0 then
+		return ""
+	end
+
+	local current = adapters[1]
+	local state = require("neotest").state.status_counts(current)
+
+	if state == nil then
+		return ""
+	end
+
+	local total = state.total
+	local running = total - state.running
+	local failed = state.failed
+
+	if failed > 0 then
+		return string.format("󰙨 %d/%d  %d", running, total, failed)
+	end
+
+	return string.format("󰙨 %d/%d", running, total)
+end
+
 local function prettyMode(mode)
 	local icons = {}
 	-- icons["NORMAL"] = "󱌢 Normal"
@@ -128,6 +151,8 @@ return {
 			},
 		}
 
+		local neotestAdapters = require("neotest").state.adapter_ids()
+
 		require("lualine").setup({
 			options = {
 				theme = theme,
@@ -160,7 +185,7 @@ return {
 					},
 				},
 				lualine_c = { { "branch", icon = "" } },
-				lualine_x = { { "diagnostics" } },
+				lualine_x = { { function() return testsStatus(neotestAdapters) end }, { "diagnostics" } },
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = "" } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
