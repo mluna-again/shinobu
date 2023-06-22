@@ -15,48 +15,60 @@ return {
 				require("neotest-go"),
 			},
 			quickfix = {
-				enabled = false
+				enabled = false,
+			},
+			status = {
+				signs = false,
 			},
 			summary = {
 				mappings = {
 					jumpto = "<CR>",
 					run = "r",
 					watch = "=",
-					expand_all = "e"
+					expand_all = "e",
 				},
 				animated = true,
 				open = "botright vsplit | vertical resize 60",
-				expand_errors = false
-			}
+				expand_errors = false,
+			},
 		})
 
 		local wk = require("which-key")
 		wk.register({
-			r = {
-				function()
-					require("neotest").run.run()
-				end,
-				"Run test under cursor",
-				noremap = true,
-				silent = true,
-			},
-			R = {
-				function()
-					require("neotest").run.run(vim.fn.expand("%"))
-					require("neotest").summary.open({ enter = true })
-				end,
-				"Run test file",
-				noremap = true,
-				silent = true,
-			},
-			T = {
-				function()
-					require("neotest").run.run({ suite = true })
-					require("neotest").summary.open({ enter = true })
-				end,
-				"Run test file",
-				noremap = true,
-				silent = true,
+			t = {
+				name = "Testing/Terminal",
+				r = {
+					function()
+						require("neotest").run.run()
+					end,
+					"Run test under cursor",
+					noremap = true,
+					silent = true,
+				},
+				R = {
+					function()
+						require("neotest").run.run(vim.fn.expand("%"))
+					end,
+					"Run test file",
+					noremap = true,
+					silent = true,
+				},
+				T = {
+					function()
+						require("neotest").run.run({ suite = true })
+					end,
+					"Run test suite",
+					noremap = true,
+					silent = true,
+				},
+				o = {
+					function ()
+						require("neotest").summary.open({ enter = true })
+					end,
+					"Open summary panel",
+					noremap = true,
+					silent = true,
+				}
 			},
 		}, { prefix = "<Leader>" })
 	end,

@@ -78,10 +78,15 @@ return {
 			spotify:toggle()
 		end
 
+		local wk = require("which-key")
+		wk.register({
+			t = {
+				name = "Testing/Terminal",
+				v = { ":ToggleTerm direction=vertical<CR>", "Vertical terminal", noremap = true, silent = true },
+				s = { ":ToggleTerm direction=horizontal<CR>", "Horizontal terminal", noremap = true, silent = true },
+			}
+		}, {prefix = "<Leader>"})
 		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
-		nmap("<Leader>tv", ":ToggleTerm direction=vertical<CR>")
-		nmap("<Leader>ts", ":ToggleTerm direction=horizontal<CR>")
-		nmap("<Leader>tl", "<cmd>lua _toggle_lazy()<CR>")
 
 		vim.api.nvim_create_user_command("LG", function() toggle_lazy() end, {})
 		vim.api.nvim_create_user_command("Spotify", function() toggle_spotify() end, {})
