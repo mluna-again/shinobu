@@ -185,7 +185,7 @@ return {
 					},
 				},
 				lualine_c = { { "branch", icon = "" } },
-				lualine_x = { { testsStatus }, { "diagnostics" } },
+				lualine_x = { { "diagnostics" } },
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = "" } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
