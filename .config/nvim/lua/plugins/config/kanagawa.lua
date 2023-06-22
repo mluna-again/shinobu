@@ -104,6 +104,18 @@ return {
 					NeotestExpandMarker = { fg = colors.palette.dragonBlack4 },
 					NeotestUnknown = { fg = colors.palette.dragonOrange },
 					NeotestSkipped = { fg = colors.palette.dragonAqua },
+
+					NotifyINFOBody = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonWhite },
+					NotifyINFOBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					NotifyINFOTitle = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonWhite },
+
+					NotifyDEBUGBody = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
+					NotifyDEBUGBorder = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonGreen },
+					NotifyDEBUGTitle = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
+
+					NotifyERRORBody = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
+					NotifyERRORBorder = { bg = colors.palette.peachRed, fg = colors.palette.peachRed },
+					NotifyERRORTitle = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
 				}
 			end,
 		})

@@ -16,10 +16,7 @@ return {
 					client.listeners.run = function (_, _, _)
 						local record = require("notify")("Tests started...", vim.log.levels.INFO, {
 							title = "Neotest",
-							render = "simple",
-							keep = function ()
-								return true
-							end
+							render = "compact",
 						})
 
 						_G.current_notification = record
@@ -48,11 +45,8 @@ return {
 
 						local record = require("notify")(message, type, {
 							title = "Neotest",
-							render = "simple",
+							render = "compact",
 							replace = _G.current_notification,
-							keep = function ()
-								return false
-							end
 						})
 
 						_G.current_notification = record
