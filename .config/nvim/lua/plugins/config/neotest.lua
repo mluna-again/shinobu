@@ -43,8 +43,7 @@ return {
 			R = {
 				function()
 					require("neotest").run.run(vim.fn.expand("%"))
-					require("neotest").summary.open()
-					vim.cmd("wincmd l")
+					require("neotest").summary.open({ enter = true })
 				end,
 				"Run test file",
 				noremap = true,
@@ -53,8 +52,7 @@ return {
 			T = {
 				function()
 					require("neotest").run.run({ suite = true })
-					require("neotest").summary.open()
-					vim.cmd("wincmd l")
+					require("neotest").summary.open({ enter = true })
 				end,
 				"Run test file",
 				noremap = true,
