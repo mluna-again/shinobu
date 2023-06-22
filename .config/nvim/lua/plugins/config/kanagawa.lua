@@ -95,10 +95,15 @@ return {
 					BufferLineIndicatorVisible = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 					NeotestFile = { fg = colors.palette.dragonGray },
 					NeotestDir = { fg = colors.palette.dragonWhite },
+					NeotestNamespace = { fg = colors.palette.dragonWhite },
 					NeotestFailed = { fg = colors.palette.peachRed },
 					NeotestPassed = { fg = colors.palette.autumnGreen },
 					NeotestRunning = { fg = colors.palette.dragonYellow },
 					NeotestAdapterName = { fg = colors.palette.dragonAqua },
+					NeotestIndent = { fg = colors.palette.dragonBlack4 },
+					NeotestExpandMarker = { fg = colors.palette.dragonBlack4 },
+					NeotestUnknown = { fg = colors.palette.dragonOrange },
+					NeotestSkipped = { fg = colors.palette.dragonAqua },
 				}
 			end,
 		})

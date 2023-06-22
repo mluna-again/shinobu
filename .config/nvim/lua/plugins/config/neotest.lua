@@ -14,6 +14,9 @@ return {
 				require("neotest-elixir"),
 				require("neotest-go"),
 			},
+			quickfix = {
+				enabled = false
+			},
 			summary = {
 				mappings = {
 					jumpto = "<CR>",
@@ -21,7 +24,9 @@ return {
 					watch = "=",
 					expand_all = "e"
 				},
-				animated = true
+				animated = true,
+				open = "botright vsplit | vertical resize 60",
+				expand_errors = false
 			}
 		})
 
@@ -38,6 +43,8 @@ return {
 			R = {
 				function()
 					require("neotest").run.run(vim.fn.expand("%"))
+					require("neotest").summary.open()
+					vim.cmd("wincmd l")
 				end,
 				"Run test file",
 				noremap = true,
