@@ -116,6 +116,7 @@ return {
 					NotifyERRORBody = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
 					NotifyERRORBorder = { bg = colors.palette.peachRed, fg = colors.palette.peachRed },
 					NotifyERRORTitle = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
+					MiniTrailspace = { bg = colors.palette.peachRed }
 				}
 			end,
 		})

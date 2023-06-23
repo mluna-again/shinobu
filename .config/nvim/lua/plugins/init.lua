@@ -24,6 +24,7 @@ require("lazy").setup({
 	require("plugins.config.which_key"),
 	require("plugins.config.toggleterm"),
 	require("plugins.config.ultisnips"),
+	require("plugins.config.mini"),
 	require("plugins.config.neoscroll"),
 	require("plugins.config.tags"),
 	require("plugins.config.emmet"),
