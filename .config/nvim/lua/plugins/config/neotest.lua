@@ -72,6 +72,10 @@ return {
 			output_panel = {
 				open = "botright split | resize 20"
 			},
+			output = {
+				open_on_run = true,
+				enabled = true
+			},
 			icons = {
 				running_animated = {
 					"󱑊",
@@ -109,6 +113,14 @@ return {
 		wk.register({
 			t = {
 				name = "Testing/Terminal",
+				i = {
+					function ()
+						require("neotest").output.open({ last_run = true })
+					end,
+					"Open output of last test ran",
+					noremap = true,
+					silent = true,
+				},
 				n = {
 					function ()
 						require("neotest").jump.next({ status = "failed" })
