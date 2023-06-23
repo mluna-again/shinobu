@@ -1,8 +1,13 @@
 -- lord forgive me
-local possible_states = {}
-possible_states.individual = 1
-possible_states.buffer = 2
-possible_states.suite = 3
+local state = {
+	possible_states = {},
+	current_notification = nil,
+	running_type = nil,
+	current_buffer = nil
+}
+state.possible_states.individual = 1
+state.possible_states.buffer = 2
+state.possible_states.suite = 3
 
 return {
 	"nvim-neotest/neotest",
@@ -20,7 +25,7 @@ return {
 			consumers = {
 				notify = function(client)
 					client.listeners.run = function (_, _, _)
-						if _G.running_type == possible_states.individual then
+						if state.running_type == state.possible_states.individual then
 							return
 						end
 
@@ -30,27 +35,27 @@ return {
 							timeout = 5000
 						})
 
-						_G.current_notification = record
+						state.current_notification = record
 					end
 
 					client.listeners.results = function (adapter_id, _, partial)
-						if (_G.running_type == possible_states.individual) and partial then
+						if (state.running_type == state.possible_states.individual) and partial then
 							return
 						end
 
-						if (_G.running_type == possible_states.individual) and not partial then
+						if (state.running_type == state.possible_states.individual) and not partial then
 							require("neotest").output.open({ last_run = true, enter = true })
 							return
 						end
 
 						local buffer = nil
-						if _G.running_type == possible_states.buffer then
-							buffer = vim.api.nvim_get_current_buf()
+						if state.running_type == state.possible_states.buffer then
+							buffer = state.current_buffer
 						end
 
-						local state = require("neotest").state.status_counts(adapter_id, { buffer = buffer })
-						local running = state.running
-						local errCount = state.failed
+						local status = require("neotest").state.status_counts(adapter_id, { buffer = buffer })
+						local running = status.running
+						local errCount = status.failed
 
 						local message = ""
 						local type = vim.log.levels.INFO
@@ -74,11 +79,11 @@ return {
 						local record = require("notify")(message, type, {
 							title = "Neotest",
 							render = "compact",
-							replace = _G.current_notification,
+							replace = state.current_notification,
 							timeout = timeout
 						})
 
-						_G.current_notification = record
+						state.current_notification = record
 					end
 					return {}
 				end
@@ -168,7 +173,7 @@ return {
 				},
 				r = {
 					function()
-						_G.running_type = possible_states.individual
+						state.running_type = state.possible_states.individual
 						require("neotest").run.run()
 					end,
 					"Run test under cursor",
@@ -177,7 +182,8 @@ return {
 				},
 				R = {
 					function()
-						_G.running_type = possible_states.buffer
+						state.current_buffer = vim.api.nvim_get_current_buf()
+						state.running_type = state.possible_states.buffer
 						require("neotest").run.run(vim.fn.expand("%"))
 					end,
 					"Run test file",
@@ -186,7 +192,7 @@ return {
 				},
 				T = {
 					function()
-						_G.running_type = possible_states.suite
+						state.running_type = state.possible_states.suite
 						require("neotest").run.run({ suite = true })
 					end,
 					"Run test suite",
