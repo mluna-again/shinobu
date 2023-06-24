@@ -202,6 +202,7 @@ return {
 				o = {
 					function ()
 						require("neotest").summary.toggle({ enter = true })
+						vim.cmd("wincmd w")
 					end,
 					"Toggle summary panel",
 					noremap = true,
@@ -211,9 +212,12 @@ return {
 		}, { prefix = "<Leader>" })
 
 		-- change summary background color
-		vim.api.nvim_create_autocmd("WinNew", {
+		vim.api.nvim_create_autocmd("WinEnter", {
 			pattern = "*",
 			callback = function ()
+				if not (vim.bo.filetype == "neotest-summary") then
+					return
+				end
 				vim.wo.winhighlight = "Normal:NeotestSummary"
 			end
 		})
