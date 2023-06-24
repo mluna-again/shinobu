@@ -209,5 +209,13 @@ return {
 				}
 			},
 		}, { prefix = "<Leader>" })
+
+		-- change summary background color
+		vim.api.nvim_create_autocmd("WinNew", {
+			pattern = "*",
+			callback = function ()
+				vim.wo.winhighlight = "Normal:NeotestSummary"
+			end
+		})
 	end,
 }

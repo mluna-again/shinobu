@@ -104,6 +104,7 @@ return {
 					NeotestExpandMarker = { fg = colors.palette.dragonBlack4 },
 					NeotestUnknown = { fg = colors.palette.dragonOrange },
 					NeotestSkipped = { fg = colors.palette.dragonAqua },
+					NeotestSummary = { bg = colors.palette.dragonBlack2 },
 
 					NotifyINFOBody = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonWhite },
 					NotifyINFOBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
@@ -116,7 +117,7 @@ return {
 					NotifyERRORBody = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
 					NotifyERRORBorder = { bg = colors.palette.peachRed, fg = colors.palette.peachRed },
 					NotifyERRORTitle = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
-					MiniTrailspace = { bg = colors.palette.peachRed }
+					MiniTrailspace = { bg = colors.palette.peachRed },
 				}
 			end,
 		})
