@@ -8,7 +8,7 @@ return {
 		local null = require("null-ls")
 
 		null.setup({
-			sources = {}
+			sources = { null.builtins.formatting.goimports }
 		})
 
 		local function format()
