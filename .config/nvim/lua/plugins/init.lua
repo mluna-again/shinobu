@@ -32,7 +32,7 @@ require("lazy").setup({
 	require("plugins.config.todo"),
 	require("plugins.config.lightspeed"),
 	require("plugins.config.treesitter"),
-	require("plugins.config.neoformat"),
+	require("plugins.config.null-ls"),
 	require("plugins.config.devicons"),
 	require("plugins.config.bufferline"),
 	require("plugins.config.gitsigns"),

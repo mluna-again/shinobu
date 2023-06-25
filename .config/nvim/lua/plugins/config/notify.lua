@@ -2,7 +2,8 @@ return {
 	"rcarriga/nvim-notify",
 	config = function ()
 		vim.opt.termguicolors = true
-		require("notify").setup({
+		local notify = require("notify")
+		notify.setup({
 			stages = "slide",
 			timeout = 2500,
 		})
