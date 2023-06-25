@@ -118,6 +118,8 @@ return {
 					NotifyERRORBorder = { bg = colors.palette.peachRed, fg = colors.palette.peachRed },
 					NotifyERRORTitle = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
 					MiniTrailspace = { bg = colors.palette.peachRed },
+
+					LspSignatureActiveParameter = { fg = colors.palette.peachRed }
 				}
 			end,
 		})
