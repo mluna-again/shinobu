@@ -65,7 +65,6 @@ return {
 			dashboard.button("SPC f o", "  Recent files", ":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>"),
 			dashboard.button("SPC f w", "  Find word", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>"),
 			dashboard.button("SPC s l", "  Load last session", ":source Session.vim<CR>"),
-			dashboard.button("SPC o c", "  Open config", ":cd ~/.config/nvim | :Telescope find_files<CR>"),
 			dashboard.button("q", "󰜎  Quit Neovim", ":q<CR>"),
 		}
 
@@ -80,7 +79,7 @@ return {
 
 		dashboard.config.layout = {
 			dashboard.section.terminal,
-			{ type = "padding", val = 2 },
+			{ type = "padding", val = 5 },
 			dashboard.section.buttons,
 			dashboard.section.footer,
 		}
