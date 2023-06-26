@@ -1,8 +1,13 @@
-#! /bin/sh
+#! /bin/bash
 
 # This script prints the colored (tmux format) current battery percentage.
+command -v upower &>/dev/null || { echo "Please install upower :)"; exit; }
 
-battery=$(upower -e | grep -i bat0)
+battery=$(upower -e 2>/dev/null | grep -i bat0)
+
+# something bad happened, for example, you tried to use wsl (windows 🤮) and
+# that is something very, very bad.
+[ $? -ne 0 ] && { echo "󰂑 ???%"; exit; }
 
 percentage=$(upower -i $battery | grep -i percentage | awk '{print $2}')
 percentage_num=$(echo $percentage | cut -c -3)

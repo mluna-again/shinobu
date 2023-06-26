@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if uname | grep -i darwin &>/dev/null; then
+if [ ! -z $(uname | grep -i darwin) ]; then
 	~/.local/scripts/osx/battery.sh "$@"
 else
 	~/.local/scripts/linux/battery.sh "$@"
