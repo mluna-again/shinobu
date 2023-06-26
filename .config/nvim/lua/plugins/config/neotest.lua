@@ -77,14 +77,14 @@ return {
 						end
 
 						local timeout = 5000
-						if not partial then
-							timeout = 3000
-						end
 						local record = require("notify")(message, type, {
 							title = "Neotest",
 							render = "compact",
 							replace = state.current_notification,
-							timeout = timeout
+							timeout = timeout,
+							keep = function()
+								return partial
+							end
 						})
 
 						state.current_notification = record
@@ -153,7 +153,7 @@ return {
 				name = "Testing/Terminal",
 				c = {
 					function()
-						require("neotest").dismiss()
+						require("notify").dismiss()
 					end,
 					"Remove old notifications",
 					noremap = true,
