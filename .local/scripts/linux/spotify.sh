@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # This scripts just returns the current spotify song. ;)
 
