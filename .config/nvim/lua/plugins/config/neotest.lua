@@ -24,7 +24,8 @@ return {
 		require("neotest").setup({
 			consumers = {
 				notify = function(client)
-					client.listeners.run = function (_, _, _)
+					client.listeners.run = function(_, _, _)
+						require("notify").dismiss()
 						if state.running_type == state.possible_states.individual then
 							return
 						end
@@ -32,13 +33,16 @@ return {
 						local record = require("notify")("Tests started...", vim.log.levels.INFO, {
 							title = "Neotest",
 							render = "compact",
-							timeout = 5000
+							timeout = 5000,
+							keep = function()
+								return true
+							end
 						})
 
 						state.current_notification = record
 					end
 
-					client.listeners.results = function (adapter_id, _, partial)
+					client.listeners.results = function(adapter_id, _, partial)
 						if (state.running_type == state.possible_states.individual) and partial then
 							return
 						end
@@ -147,8 +151,16 @@ return {
 		wk.register({
 			t = {
 				name = "Testing/Terminal",
+				c = {
+					function()
+						require("neotest").dismiss()
+					end,
+					"Remove old notifications",
+					noremap = true,
+					silent = true,
+				},
 				i = {
-					function ()
+					function()
 						require("neotest").output.open({ last_run = true })
 					end,
 					"Open output of last test ran",
@@ -156,7 +168,7 @@ return {
 					silent = true,
 				},
 				n = {
-					function ()
+					function()
 						require("neotest").jump.next({ status = "failed" })
 					end,
 					"Jump to next failed test",
@@ -164,7 +176,7 @@ return {
 					silent = true,
 				},
 				p = {
-					function ()
+					function()
 						require("neotest").jump.prev({ status = "failed" })
 					end,
 					"Jump to previous failed test",
@@ -192,15 +204,21 @@ return {
 				},
 				T = {
 					function()
-						state.running_type = state.possible_states.suite
-						require("neotest").run.run({ suite = true })
+						vim.ui.input({ prompt = "Run all tests? [yN] " }, function(input)
+							if not (input == "y") then
+								vim.notify("Not running")
+								return
+							end
+							state.running_type = state.possible_states.suite
+							require("neotest").run.run({ suite = true })
+						end)
 					end,
 					"Run test suite",
 					noremap = true,
 					silent = true,
 				},
 				o = {
-					function ()
+					function()
 						require("neotest").summary.toggle({ enter = true })
 						vim.cmd("wincmd w")
 					end,
@@ -214,7 +232,7 @@ return {
 		-- change summary background color
 		vim.api.nvim_create_autocmd("WinEnter", {
 			pattern = "*",
-			callback = function ()
+			callback = function()
 				if not (vim.bo.filetype == "neotest-summary") then
 					return
 				end
