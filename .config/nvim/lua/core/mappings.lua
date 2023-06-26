@@ -54,7 +54,7 @@ nmap("<Leader>fo", ":lua require('telescope.builtin').oldfiles({prompt_title='Hi
 nmap("<Leader>fw", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>")
 nmap("<Leader>ff", ":Telescope find_files<CR>")
 nmap("<Leader>cn", ":enew<CR>")
-nmap("<Leader>fn", ":Oil --float .<CR>")
+nmap("<Leader>fn", ":Oil --float<CR>")
 
 -- nmap("<Leader>dd", ":DiffviewOpen<CR>")
 -- nmap("<Leader>D", ":DiffviewClose<CR>")
