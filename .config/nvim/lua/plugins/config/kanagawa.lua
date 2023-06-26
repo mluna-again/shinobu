@@ -30,7 +30,6 @@ return {
 
 		require("kanagawa").setup({
 			theme = "dragon",
-			dimInactive = true,
 			colors = {
 				theme = {
 					all = {
