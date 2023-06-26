@@ -52,7 +52,7 @@ nmap("<Leader>sl", ":source Session.vim<CR>")
 nmap("<Leader>ss", ":Obsession<CR>")
 nmap("<Leader>fo", ":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>")
 nmap("<Leader>fw", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>")
-nmap("<Leader>ff", ":Telescope find_files<CR>")
+nmap("<Leader>ff", ":Oil --float .<CR>")
 nmap("<Leader>cn", ":enew<CR>")
 nmap("<Leader>fn", ":NeoTreeReveal<CR>")
 
