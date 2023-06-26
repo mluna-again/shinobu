@@ -20,17 +20,17 @@ font:
 
   bold:
     family: FiraCode Nerd Font
-    style: retina
+    style: Retina
 
   italic:
     family: FiraCode Nerd Font
-    style: retina
+    style: Retina
 
   bold_italic:
     family: FiraCode Nerd Font
-    style: retina
+    style: Retina
 
-  size: 12
+  size: 16
 
 cursor:
   style:
