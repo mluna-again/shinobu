@@ -119,7 +119,12 @@ return {
 					NotifyERRORTitle = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
 					MiniTrailspace = { bg = colors.palette.peachRed },
 
-					LspSignatureActiveParameter = { fg = colors.palette.peachRed }
+					LspSignatureActiveParameter = { fg = colors.palette.peachRed },
+
+					OilBackground = { bg = colors.palette.dragonBlack2 },
+					OilBorder = { bg = colors.palette.dragonBlack2, fg = colors.palette.dragonBlack2 },
+					OilPreviewBackground = { bg = colors.palette.dragonBlack4 },
+					OilPreviewBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
 				}
 			end,
 		})

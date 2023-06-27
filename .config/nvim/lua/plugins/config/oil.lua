@@ -26,7 +26,7 @@ return {
 			},
 			float = {
 				win_options = {
-					winblend = 0
+					winblend = 0,
 				},
 				padding = 6
 			},
@@ -34,6 +34,21 @@ return {
 				buflisted = false,
 				bufhidden = "hide",
 			},
+		})
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "oil", "oil_preview" },
+			callback = function()
+				if vim.bo.filetype == "oil" then
+					vim.wo.winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder"
+					return
+				end
+
+				if vim.bo.filetype == "oil_preview" then
+					vim.wo.winhighlight = "Normal:OilPreviewBackground,FloatBorder:OilPreviewBorder,FloatTitle:OilBorder"
+					return
+				end
+			end
 		})
 	end
 }
