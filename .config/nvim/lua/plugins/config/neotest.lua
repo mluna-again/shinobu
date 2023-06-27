@@ -85,7 +85,7 @@ return {
 							replace = state.current_notification,
 							timeout = timeout,
 							keep = function()
-								return partial
+								return true
 							end
 						})
 
