@@ -1,12 +1,13 @@
 #! /bin/bash
 
+pat="~/.local/scripts/shortname"
 osx() {
-	[ ! -e ./shortname_osx ] && go build -o shortname_osx &>/dev/null
+	[ ! -e "$pat/shortname_osx" ] && go build -C "$pat" -o "$pat/shortname_osx" &>/dev/null
 	~/.local/scripts/shortname/shortname_osx "$@"
 }
 
 linux() {
-	[ ! -e ./shortname_linux ] && go build -o shortname_linux &>/dev/null
+	[ ! -e "$pat/shortname_linux" ] && go build -C "$pat" -o "$pat/shortname_linux" &>/dev/null
 	~/.local/scripts/shortname/shortname_linux "$@"
 }
 
