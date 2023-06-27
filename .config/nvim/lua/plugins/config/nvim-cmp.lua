@@ -125,5 +125,10 @@ return {
 				end,
 			},
 		})
+
+		-- disable for some filetypes
+		cmp.setup.filetype({ 'oil', 'oil_preview' }, {
+			sources = {}
+		})
 	end,
 }
