@@ -17,7 +17,8 @@ return {
 		"antoinemadec/FixCursorHold.nvim",
 		"jfpedroza/neotest-elixir",
 		"nvim-neotest/neotest-go",
-		"rcarriga/nvim-notify"
+		"rcarriga/nvim-notify",
+		"akinsho/toggleterm.nvim",
 	},
 	event = "User AlphaClosed",
 	config = function()
@@ -111,7 +112,7 @@ return {
 				open = "botright split | resize 20"
 			},
 			output = {
-				open_on_run = true,
+				open_on_run = "short",
 				enabled = true
 			},
 			icons = {
@@ -239,5 +240,16 @@ return {
 				vim.wo.winhighlight = "Normal:NeotestSummary"
 			end
 		})
+
+		vim.api.nvim_create_user_command("ElixirTest", function()
+			if not (vim.bo.filetype == "elixir") then
+				vim.notify("Not an Elixir file")
+			end
+
+			local filename = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+			local current_line = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1]
+			local cmd = string.format("TermExec cmd='mix test %s:%s'", filename, current_line)
+			vim.cmd(cmd)
+		end, {})
 	end,
 }
