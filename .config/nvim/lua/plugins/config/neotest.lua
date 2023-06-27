@@ -19,6 +19,7 @@ return {
 		"nvim-neotest/neotest-go",
 		"rcarriga/nvim-notify",
 		"akinsho/toggleterm.nvim",
+		"vim-test/vim-test",
 	},
 	event = "User AlphaClosed",
 	config = function()
@@ -240,16 +241,8 @@ return {
 				vim.wo.winhighlight = "Normal:NeotestSummary"
 			end
 		})
-
-		vim.api.nvim_create_user_command("ElixirTest", function()
-			if not (vim.bo.filetype == "elixir") then
-				vim.notify("Not an Elixir file")
-			end
-
-			local filename = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-			local current_line = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1]
-			local cmd = string.format("TermExec cmd='mix test %s:%s'", filename, current_line)
-			vim.cmd(cmd)
+		vim.api.nvim_create_user_command("RunTest", function()
+			vim.cmd("TestNearest")
 		end, {})
 	end,
 }
