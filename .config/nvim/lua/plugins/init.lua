@@ -53,6 +53,7 @@ require("lazy").setup({
 	require("plugins.config.notify"),
 	require("plugins.config.lsp-signature"),
 	require("plugins.config.oil"),
+	require("plugins.config.vim-test"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",

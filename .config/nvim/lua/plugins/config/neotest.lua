@@ -188,7 +188,7 @@ return {
 				r = {
 					function()
 						state.running_type = state.possible_states.individual
-						require("neotest").run.run()
+						vim.cmd("TestNearest")
 					end,
 					"Run test under cursor",
 					noremap = true,
@@ -241,8 +241,5 @@ return {
 				vim.wo.winhighlight = "Normal:NeotestSummary"
 			end
 		})
-		vim.api.nvim_create_user_command("RunTest", function()
-			vim.cmd("TestNearest")
-		end, {})
 	end,
 }
