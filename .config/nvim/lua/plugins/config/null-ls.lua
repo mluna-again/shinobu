@@ -16,10 +16,5 @@ return {
 		end
 
 		vim.api.nvim_create_user_command("Format", format, { range = true })
-
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = "*",
-			callback = format
-		})
 	end
 }

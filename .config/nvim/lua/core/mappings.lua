@@ -20,7 +20,10 @@ wk.register({
 		s = { ":w<CR>", "Save buffer", noremap = true, silent = true },
 	},
 	S = {
-		S = { ":noautocmd w<CR>", "Save buffer without autocmds", noremap = true, silent = true }
+		S = { function ()
+			vim.lsp.buf.format({ async = false })
+			vim.cmd("w")
+		end, "Save buffer with formatting", noremap = true, silent = true }
 	},
 	g = {
 		name = "Buffer navigation",
