@@ -109,7 +109,7 @@ return {
 					NeotestFile = { fg = colors.palette.dragonGray },
 					NeotestDir = { fg = colors.palette.dragonWhite },
 					NeotestNamespace = { fg = colors.palette.dragonWhite },
-					NeotestFailed = { fg = colors.palette.peachRed },
+					NeotestFailed = { fg = colors.palette.dragonRed },
 					NeotestPassed = { fg = colors.palette.autumnGreen },
 					NeotestRunning = { fg = colors.palette.dragonYellow },
 					NeotestAdapterName = { fg = colors.palette.dragonAqua },
@@ -129,19 +129,24 @@ return {
 					NotifyDEBUGTitle = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
 					NotifyDEBUGIcon = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
 
-					NotifyERRORBody = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
-					NotifyERRORBorder = { bg = colors.palette.peachRed, fg = colors.palette.peachRed },
-					NotifyERRORTitle = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
-					NotifyERRORIcon = { bg = colors.palette.peachRed, fg = colors.palette.dragonBlack4 },
+					NotifyERRORBody = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					NotifyERRORBorder = { bg = colors.palette.dragonRed, fg = colors.palette.dragonRed },
+					NotifyERRORTitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					NotifyERRORIcon = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
 
-					MiniTrailspace = { bg = colors.palette.peachRed },
+					MiniTrailspace = { bg = colors.palette.dragonRed },
 
-					LspSignatureActiveParameter = { fg = colors.palette.peachRed },
+					LspSignatureActiveParameter = { fg = colors.palette.dragonRed },
 
 					OilBackground = { bg = colors.palette.dragonBlack2 },
 					OilBorder = { bg = colors.palette.dragonBlack2, fg = colors.palette.dragonBlack2 },
 					OilPreviewBackground = { bg = colors.palette.dragonBlack4 },
 					OilPreviewBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+
+					NoiceCmdlinePopup = { bg = colors.palette.dragonBlack4 },
+					NoiceCmdlinePopupBorder = { fg = colors.palette.dragonBlack4 },
+					NoiceCmdlinePopupTitle = { fg = colors.palette.dragonBlack4, bg = colors.palette.dragonRed },
+					NoiceCmdlinePopupIcon = { fg = colors.palette.dragonWhite },
 				}
 			end,
 		})

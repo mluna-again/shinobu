@@ -56,6 +56,7 @@ require("lazy").setup({
 	require("plugins.config.vim-test"),
 	require("plugins.config.better-escape"),
 	require("plugins.config.tint"),
+	require("plugins.config.noice"),
 	"RRethy/nvim-treesitter-endwise",
 	"editorconfig/editorconfig-vim",
 	"nvim-lua/popup.nvim",
