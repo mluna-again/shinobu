@@ -134,6 +134,16 @@ return {
 					NotifyERRORTitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
 					NotifyERRORIcon = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
 
+					NotifyTRACEBody = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					NotifyTRACEBorder = { bg = colors.palette.dragonRed, fg = colors.palette.dragonRed },
+					NotifyTRACETitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					NotifyTRACEIcon = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+
+					NotifyWARNBody = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+					NotifyWARNBorder = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonYellow },
+					NotifyWARNTitle = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+					NotifyWARNIcon = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+
 					MiniTrailspace = { bg = colors.palette.dragonRed },
 
 					LspSignatureActiveParameter = { fg = colors.palette.dragonRed },

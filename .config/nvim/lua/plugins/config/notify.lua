@@ -6,6 +6,8 @@ return {
 		notify.setup({
 			stages = "slide",
 			timeout = 2500,
+			render = "compact",
+			level = vim.log.levels.INFO
 		})
 	end
 }
