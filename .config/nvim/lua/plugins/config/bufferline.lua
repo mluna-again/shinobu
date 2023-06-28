@@ -6,6 +6,9 @@ return {
 		require("bufferline").setup({
 			options = {
 				-- offsets = { { filetype = "neo-tree", text = "" } },
+				indicator = {
+					style = 'none'
+				},
 				offsets = {},
 				show_buffer_icons = false,
 				show_close_icon = false,
@@ -15,7 +18,7 @@ return {
 				max_name_length = 14,
 				max_prefix_length = 13,
 				tab_size = 20,
-				show_tab_indicators = true,
+				show_tab_indicators = false,
 				enforce_regular_tabs = false,
 				view = "multiwindow",
 				show_buffer_close_icons = false,
