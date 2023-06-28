@@ -28,7 +28,7 @@ return {
 					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex", title = " SEARCH " },
 					filter = { pattern = "^:%s*!", icon = "", lang = "bash", title = " SHELL " },
 					lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua", title = " LUA " },
-					help = { pattern = "^:%s*he?l?p?%s+", icon = "", title = " HELP " },
+					help = { pattern = "^:%s*he?l?p?%s+", icon = "", title = " HELP " },
 					input = {}, -- Used by input()
 					-- lua = false, -- to disable a format, set to `false`
 				},
