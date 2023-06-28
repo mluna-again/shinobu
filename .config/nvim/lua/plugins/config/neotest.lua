@@ -220,7 +220,9 @@ return {
 					function()
 						vim.ui.input({ prompt = "Run all tests? [yN] " }, function(input)
 							if not (input == "y") then
-								vim.notify("Not running")
+								vim.notify("Not running", vim.log.levels.INFO, {
+									title = "Neotest"
+								})
 								return
 							end
 							state.running_type = state.possible_states.suite
