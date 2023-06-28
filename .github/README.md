@@ -3,9 +3,11 @@
 # neovim
 <img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/shinobu.png">
 <img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/telescope.png">
-<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/code.png">
-<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/terminal.png">
-<img width="1920" target="_blank" alt="neofetch" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/spotify.png">
+<img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/code.png">
+<img width="1920" target="_blank" alt="neotest" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/neotest.png">
+<img width="1920" target="_blank" alt="noice" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/noice.png">
+<img width="1920" target="_blank" alt="dap" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/dap.png">
+<img width="1920" target="_blank" alt="spotify" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/spotify.png">
 
 ## Problems I've encountered that I don't want to forget
 
