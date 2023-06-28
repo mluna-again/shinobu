@@ -8,6 +8,8 @@ return {
 		"rcarriga/nvim-notify",
 	},
 	config = function()
+		vim.opt.shortmess:append("W")
+		vim.opt.shortmess:append("F")
 		require("noice").setup(
 		{
 			cmdline = {
@@ -198,7 +200,23 @@ return {
 			---@type NoiceConfigViews
 			views = {}, ---@see section on views
 			---@type NoiceRouteConfig[]
-			routes = {}, --- @see section on routes
+			routes = {
+				{
+					filter = {
+						event = "msg_show",
+						kind = "",
+						find = "written",
+					},
+					opts = { skip = true },
+				},
+				{
+					filter = {
+						event = "msg_show",
+						kind = "",
+					},
+					opts = { skip = true },
+				},
+			}, --- @see section on routes
 			---@type table<string, NoiceFilter>
 			status = {}, --- @see section on statusline components
 			---@type NoiceFormatOptions

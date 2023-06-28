@@ -149,6 +149,18 @@ return {
 			},
 		})
 
+		require("neotest.lib").notify = function(msg, level, opts)
+			vim.schedule(function()
+				return vim.notify(
+				msg,
+				level,
+				vim.tbl_extend("keep", opts or {}, {
+					title = "Neotest",
+				})
+				)
+			end)
+		end
+
 		local wk = require("which-key")
 		wk.register({
 			t = {
