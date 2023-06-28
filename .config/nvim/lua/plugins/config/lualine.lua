@@ -10,31 +10,6 @@ local function shouldShowFilename()
 	return true
 end
 
-local function testsStatus()
-	local adapters = require("neotest").state.adapter_ids()
-
-	if #adapters == 0 then
-		return ""
-	end
-
-	local current = adapters[1]
-	local state = require("neotest").state.status_counts(current)
-
-	if state == nil then
-		return ""
-	end
-
-	local total = state.total
-	local running = total - state.running
-	local failed = state.failed
-
-	if failed > 0 then
-		return string.format("󰙨 %d/%d  %d", running, total, failed)
-	end
-
-	return string.format("󰙨 %d/%d", running, total)
-end
-
 local function prettyMode(mode)
 	local icons = {}
 	-- icons["NORMAL"] = "󱌢 Normal"
@@ -55,49 +30,45 @@ end
 
 local function prettyProgress(progress)
 	if progress == "Top" then
-		return ""
+		return "Top"
 	end
 
 	if progress == "Bot" then
-		return ""
+		return "Bot"
 	end
 
 	local progress_num = string.gsub(progress, "%%", "")
 	local num = tonumber(progress_num)
 
 	if num < 20 then
-		return ""
+		return "▁▁▁ " .. progress_num .. "%%"
 	end
 
 	if num < 30 then
-		return ""
+		return "▂▂▂ " .. progress_num .. "%%"
 	end
 
 	if num < 40 then
-		return ""
+		return "▃▃▃ " .. progress_num .. "%%"
 	end
 
 	if num < 50 then
-		return ""
+		return "▄▄▄ " .. progress_num .. "%%"
 	end
 
 	if num < 60 then
-		return ""
+		return "▅▅▅ " .. progress_num .. "%%"
 	end
 
 	if num < 70 then
-		return ""
+		return "▆▆▆ " .. progress_num .. "%%"
 	end
 
 	if num < 80 then
-		return ""
+		return "▇▇▇ " .. progress_num .. "%%"
 	end
 
-	if num < 90 then
-		return ""
-	end
-
-	return ""
+	return "███ " .. progress_num .. "%%"
 end
 
 return {
@@ -174,12 +145,11 @@ return {
 					},
 				},
 				lualine_b = {
-					-- { "filetype", icon_only = true, cond = shouldShowFilename },
 					{
 						"filename",
 						cond = shouldShowFilename,
 						symbols = {
-							modified = "",
+							modified = "",
 						},
 						color = { gui = "bold" },
 					},
