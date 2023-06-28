@@ -1,4 +1,5 @@
 return {
+
 	"rebelot/kanagawa.nvim",
 	config = function()
 		vim.cmd([[
@@ -87,7 +88,7 @@ return {
 					BufferLineBufferModifiedVisible = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonRed },
 					BufferLineBufferSelected = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonRed },
 					BufferLineBufferVisible = { fg = colors.palette.dragonRed, bg = colors.palette.dragonBlack3 },
-					BufferLineModified = { fg = colors.palette.dragonRed, bg = colors.palette.dragonBlack3 },
+					BufferLineModified = { fg = colors.palette.dragonBlack4, bg = colors.palette.dragonBlack3 },
 					BufferLineModifiedVisible = { fg = colors.palette.dragonRed, bg = colors.palette.dragonBlack3 },
 					BufferLineModifiedSelected = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonRed },
 					BufferLineSelected = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonRed },
