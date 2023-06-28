@@ -42,7 +42,9 @@ local function greetings()
 		"let it crash",
 		"too bad she won't live, but then again, who does?",
 		"i've seen things you people wouldn't believe...",
-		"they didn't suffer"
+		"they didn't suffer",
+		"is this all there is?",
+		"there is no such thing as that rose-colored life"
 	}
 
 	math.randomseed(os.time())
