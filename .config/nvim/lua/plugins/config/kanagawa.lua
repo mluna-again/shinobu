@@ -160,6 +160,9 @@ return {
 					NoiceCmdlinePopupBorder = { fg = colors.palette.dragonBlack4 },
 					NoiceCmdlinePopupTitle = { fg = colors.palette.dragonBlack4, bg = colors.palette.dragonRed },
 					NoiceCmdlinePopupIcon = { fg = colors.palette.dragonWhite },
+					NoiceMissingMenu = { fg = colors.palette.dragonWhite, bg = colors.palette.dragonBlack2 },
+					NoiceMissingMenuBorder = { fg = colors.palette.dragonBlack2, bg = colors.palette.dragonBlack2 },
+					NoiceScrollbar = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonBlack3 },
 				}
 			end,
 		})

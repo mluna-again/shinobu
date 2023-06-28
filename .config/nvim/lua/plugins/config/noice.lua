@@ -198,7 +198,16 @@ return {
 			},
 			throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
 			---@type NoiceConfigViews
-			views = {}, ---@see section on views
+			views = {
+				cmdline_popupmenu = {
+					win_options = {
+						winhighlight = {
+							Normal = "NoiceMissingMenu",
+							FloatBorder = "NoiceMissingMenuBorder",
+						}
+					}
+				}
+			}, ---@see section on views
 			---@type NoiceRouteConfig[]
 			routes = {
 				{
