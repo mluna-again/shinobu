@@ -135,6 +135,7 @@ return {
 					NotifyERRORBorder = { bg = colors.palette.dragonRed, fg = colors.palette.dragonRed },
 					NotifyERRORTitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
 					NotifyERRORIcon = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					ErrorMsg = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
 
 					NotifyTRACEBody = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
 					NotifyTRACEBorder = { bg = colors.palette.dragonRed, fg = colors.palette.dragonRed },
