@@ -31,6 +31,8 @@ return {
 
 		require("kanagawa").setup({
 			theme = "dragon",
+			keywordStyle = { italic = false },
+			commentStyle = { italic = false },
 			colors = {
 				theme = {
 					all = {
