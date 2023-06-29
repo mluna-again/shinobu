@@ -10,7 +10,8 @@ return {
 		null.setup({
 			sources = {
 				null.builtins.formatting.goimports,
-				null.builtins.diagnostics.shellcheck
+				null.builtins.diagnostics.shellcheck,
+				null.builtins.formatting.jq,
 			}
 		})
 
