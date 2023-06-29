@@ -2,6 +2,6 @@ vim.g.user_emmet_leader_key = "<C-k>"
 
 return {
 	"mattn/emmet-vim",
-	lazy = true,
+	event = "VeryLazy",
 	ft = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact" },
 }
