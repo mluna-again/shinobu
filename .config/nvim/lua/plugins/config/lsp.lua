@@ -1,9 +1,14 @@
 return {
 	"williamboman/mason-lspconfig.nvim",
 	event = "VeryLazy",
-	dependencies = { "folke/neodev.nvim" },
+	dependencies = {
+		"folke/neodev.nvim",
+		"williamboman/mason.nvim",
+	},
 	config = function()
-		require("mason-lspconfig").setup()
+		require("mason-lspconfig").setup({
+			automatic_installation = true,
+		})
 
 		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -17,7 +22,7 @@ return {
 			"kotlin_language_server",
 			"gopls",
 			"metals",
-			"csharp_ls",
+			-- "csharp_ls",
 			"golangci_lint_ls",
 			"volar",
 			"lua_ls",
