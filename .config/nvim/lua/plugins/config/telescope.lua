@@ -1,5 +1,8 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	dependencies = {
+		"nvim-telescope/telescope-fzf-native.nvim",
+	},
 	event = "VeryLazy",
 	config = function()
 		require("telescope").setup({
@@ -48,5 +51,7 @@ return {
 				buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
 			},
 		})
+
+		require('telescope').load_extension('fzf')
 	end,
 }
