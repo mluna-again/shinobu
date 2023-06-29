@@ -8,5 +8,5 @@ augroup END
 
 return {
 	"sbdchd/neoformat",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 }

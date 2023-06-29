@@ -1,6 +1,6 @@
 return {
 	"williamboman/mason-lspconfig.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	dependencies = { "folke/neodev.nvim" },
 	config = function()
 		require("mason-lspconfig").setup()

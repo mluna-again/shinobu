@@ -21,7 +21,7 @@ return {
 		"akinsho/toggleterm.nvim",
 		"vim-test/vim-test",
 	},
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("neotest").setup({
 			consumers = {

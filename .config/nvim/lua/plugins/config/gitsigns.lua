@@ -1,6 +1,6 @@
 return {
 	"lewis6991/gitsigns.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("gitsigns").setup({
 			signs = {

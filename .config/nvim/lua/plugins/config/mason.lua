@@ -1,6 +1,6 @@
 return {
 	"williamboman/mason.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("mason").setup()
 	end,

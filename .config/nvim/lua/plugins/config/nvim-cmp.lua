@@ -2,7 +2,7 @@ require("core.maps")
 
 return {
 	"hrsh7th/nvim-cmp",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-emoji",

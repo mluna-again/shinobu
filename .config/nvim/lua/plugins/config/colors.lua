@@ -1,6 +1,6 @@
 return {
 	"norcalli/nvim-colorizer.lua",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		vim.cmd("set termguicolors")
 		require("colorizer").setup({

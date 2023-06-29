@@ -1,6 +1,6 @@
 return {
 	"folke/trouble.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("trouble").setup({})
 	end,

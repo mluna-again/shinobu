@@ -1,6 +1,6 @@
 return {
 	"folke/which-key.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("which-key").setup({})
 	end,

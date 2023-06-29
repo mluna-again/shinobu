@@ -6,7 +6,7 @@ map SX <Plug>Lightspeed_S
 
 return {
 	"ggandor/lightspeed.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("lightspeed").setup({})
 	end,

@@ -3,7 +3,7 @@ return {
 	dependencies = {
 		"rcarriga/nvim-notify",
 	},
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		local null = require("null-ls")
 

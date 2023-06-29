@@ -1,6 +1,6 @@
 return {
 	"windwp/nvim-autopairs",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("nvim-autopairs").setup({
 			disable_filetype = { "clojure" },

@@ -1,6 +1,6 @@
 return {
 	"f-person/git-blame.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		vim.cmd([[
     let g:gitblame_delay = 1000

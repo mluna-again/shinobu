@@ -1,6 +1,6 @@
 return {
 	"levouh/tint.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("tint").setup({
 			tint = -60,

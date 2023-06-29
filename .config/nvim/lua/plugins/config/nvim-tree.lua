@@ -3,6 +3,7 @@ vim.g.nvim_tree_side = "right"
 
 return {
 	"kyazdani42/nvim-tree.lua",
+	event = "VeryLazy",
 	config = function()
 		require("nvim-tree").setup({
 			auto_reload_on_write = true,

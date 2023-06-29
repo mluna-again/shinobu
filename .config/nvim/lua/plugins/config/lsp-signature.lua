@@ -1,6 +1,6 @@
 return {
 	"ray-x/lsp_signature.nvim",
-	event = "User AlphaClosed",
+	event = "VeryLazy",
 	config = function()
 		require("lsp_signature").setup({
 			hint_prefix = " ",
