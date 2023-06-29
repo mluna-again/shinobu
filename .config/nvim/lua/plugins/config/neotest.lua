@@ -152,11 +152,11 @@ return {
 		require("neotest.lib").notify = function(msg, level, opts)
 			vim.schedule(function()
 				return vim.notify(
-				msg,
-				level,
-				vim.tbl_extend("keep", opts or {}, {
-					title = "Neotest",
-				})
+					msg,
+					level,
+					vim.tbl_extend("keep", opts or {}, {
+						title = "Neotest",
+					})
 				)
 			end)
 		end
@@ -218,16 +218,21 @@ return {
 				},
 				T = {
 					function()
-						vim.ui.input({ prompt = "Run all tests? [yN] " }, function(input)
-							if not (input == "y") then
-								vim.notify("Not running", vim.log.levels.INFO, {
-									title = "Neotest"
-								})
-								return
+						vim.ui.select({ "Run", "Cancel" },
+							{
+								prompt = "Run all tests?"
+							},
+							function(choice)
+								if choice == "Run" then
+									state.running_type = state.possible_states.suite
+									require("neotest").run.run({ suite = true })
+								else
+									vim.notify("Not running", vim.log.levels.INFO, {
+										title = "Neotest"
+									})
+								end
 							end
-							state.running_type = state.possible_states.suite
-							require("neotest").run.run({ suite = true })
-						end)
+						)
 					end,
 					"Run test suite",
 					noremap = true,
