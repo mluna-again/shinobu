@@ -166,6 +166,11 @@ return {
 					NoiceMissingMenu = { fg = colors.palette.dragonWhite, bg = colors.palette.dragonBlack2 },
 					NoiceMissingMenuBorder = { fg = colors.palette.dragonBlack2, bg = colors.palette.dragonBlack2 },
 					NoiceScrollbar = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonBlack3 },
+
+					DiagnosticError = { fg = colors.palette.dragonRed },
+					DiagnosticWarn = { fg = colors.palette.dragonOrange },
+					DiagnosticInfo = { fg = colors.palette.dragonBlue },
+					DiagnosticHint = { fg = colors.palette.dragonYellow },
 				}
 			end,
 		})

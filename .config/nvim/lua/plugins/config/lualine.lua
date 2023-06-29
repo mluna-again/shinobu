@@ -1,6 +1,6 @@
 local function shouldShowFilename()
 	local badFiletypes =
-		{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
+	{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
 	local ft = vim.bo.filetype
 	for _, filetype in pairs(badFiletypes) do
 		if ft == filetype then
@@ -124,6 +124,7 @@ return {
 			},
 		}
 
+
 		require("lualine").setup({
 			options = {
 				theme = theme,
@@ -155,7 +156,17 @@ return {
 					},
 				},
 				lualine_c = { { "branch", icon = "" } },
-				lualine_x = { { "diagnostics" } },
+				lualine_x = { {
+					"diagnostics",
+					diagnostics_color = {
+						-- Same values as the general color option can be used here.
+						error = 'DiagnosticError', -- Changes diagnostics' error color.
+						warn  = 'DiagnosticWarn',  -- Changes diagnostics' warn color.
+						info  = 'DiagnosticInfo',  -- Changes diagnostics' info color.
+						hint  = 'DiagnosticHint',  -- Changes diagnostics' hint color.
+					},
+					symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+				} },
 				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = "" } },
 				lualine_z = { { "progress", fmt = prettyProgress } },
 			},
