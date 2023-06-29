@@ -53,6 +53,17 @@ local function greetings()
 	return options[index]
 end
 
+local function mkButton(key, desc, action)
+	local button = require("alpha.themes.dashboard").button
+
+	local btn = button(key, desc, action)
+	btn.opts.hl = "AlphaButton"
+	btn.opts.hl_shortcut = "AlphaButtonKey"
+	btn.opts.cursor = 0
+
+	return btn
+end
+
 return {
 	"goolord/alpha-nvim",
 	config = function()
@@ -62,16 +73,17 @@ return {
 		local dashboard = require("alpha.themes.dashboard")
 
 		dashboard.section.buttons.val = {
-			dashboard.button("SPC c n", "  New file", ":enew<CR>"),
-			dashboard.button("SPC f f", "󰱼  Find file", ":Telescope find_files<CR>"),
-			dashboard.button("SPC f o", "  Recent files",
+			mkButton(" SPC c n ", "New file", ":enew<CR>"),
+			mkButton(" SPC f f ", "Find file", ":Telescope find_files<CR>"),
+			mkButton(" SPC f o ", "Recent files",
 				":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>"),
-			dashboard.button("SPC f w", "  Find word",
+			mkButton(" SPC f w ", "Find word",
 				":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>"),
-			dashboard.button("SPC s l", "  Load last session", ":source Session.vim<CR>"),
-			dashboard.button("q", "󰜎  Quit Neovim", ":q<CR>"),
+			mkButton(" SPC s l ", "Load last session", ":source Session.vim<CR>"),
+			mkButton("    q    ", "Quit Neovim", ":q<CR>"),
 		}
 
+		local plugins_count = require("lazy").stats().count
 		local banner = {
 			type = "text",
 			val = {
@@ -105,13 +117,33 @@ return {
 		}
 
 		dashboard.section.footer.opts.position = "center"
+		dashboard.section.footer.opts.hl = "AlphaFooter"
 		dashboard.section.footer.val = greetings()
 
 		dashboard.config.layout = {
 			banner,
-			{ type = "padding", val = 5 },
+			{
+				type = "padding",
+				val = 3
+			},
 			dashboard.section.buttons,
+			{
+				type = "padding",
+				val = 1
+			},
 			dashboard.section.footer,
+			{
+				type = "padding",
+				val = 1
+			},
+			{
+				type = "text",
+				val = string.format("%d plugins loaded", plugins_count),
+				opts = {
+					position = "center",
+					hl = "AlphaPluginCount"
+				}
+			}
 		}
 
 		alpha.setup(dashboard.config)

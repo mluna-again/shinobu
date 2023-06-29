@@ -171,6 +171,11 @@ return {
 					DiagnosticWarn = { fg = colors.palette.dragonOrange },
 					DiagnosticInfo = { fg = colors.palette.dragonBlue },
 					DiagnosticHint = { fg = colors.palette.dragonYellow },
+
+					AlphaPluginCount = { fg = colors.palette.dragonYellow },
+					AlphaFooter = { fg = colors.palette.dragonBlue },
+					AlphaButton = { fg = colors.palette.dragonRed },
+					AlphaButtonKey = { fg = colors.palette.dragonRed, bg = colors.palette.dragonBlack4 },
 				}
 			end,
 		})
