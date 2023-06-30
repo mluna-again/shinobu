@@ -125,9 +125,7 @@ yt() {
   yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$link"
 }
 
-t() {
-  tmuxinator start && return || clear && tmux
-}
+alias t="tmux"
 
 paragraph() {
   awk -v RS= "NR==${2:-1}" $1
