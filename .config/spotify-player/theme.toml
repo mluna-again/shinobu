@@ -1,7 +1,7 @@
 [[themes]]
 name = "kanagawa-dragon"
 [themes.palette]
-background = "#282727"
+background = "#1D1C19"
 foreground = "#c8c093"
 black = "#0d0c0c"
 red = "#c4746e"
