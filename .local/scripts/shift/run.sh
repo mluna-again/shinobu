@@ -19,7 +19,9 @@ rm .__SHIFT__
 
 case "$mode" in
 	create)
-		tmux new-session -d -s "$session_name" -c "$session_path" && tmux switch-client -t "$session_name"
+		[ -n "$session_path" ] && tmux new-session -d -s "$session_name" -c "$(eval echo "$session_path")" && tmux switch-client -t "$session_name" && exit
+
+		tmux new-session -d -s "$session_name" -c "$HOME" && tmux switch-client -t "$session_name"
 		;;
 
 	switch)
