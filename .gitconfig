@@ -1,11 +1,27 @@
 # This is Git's per-user configuration file.
 [user]
 # Please adapt and uncomment the following lines:
-name = Manuel Luna
-email = manuellunada@gmail.com
-[core]
-	excludesFile = ~/.gitignore
+	name = Manuel Luna
+	email = manuellunada@gmail.com
+
 [push]
 	autoSetupRemote = true
 [pull]
 	rebase = false
+
+[core]
+	excludesFile = ~/.gitignore
+	pager = delta --side-by-side --line-numbers || less
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true    # use n and N to move between diff sections
+	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	colorMoved = default
