@@ -115,7 +115,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "tab", "down", "ctrl+n":
-			if m.cursor == maxSessionsAtATime-1 {
+			if m.cursor == len(m.filtered)-1 {
 				m.cursor = 0
 			} else {
 				m.cursor++
@@ -123,7 +123,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "shift+tab", "up", "ctrl+p":
 			if m.cursor == 0 {
-				m.cursor = maxSessionsAtATime - 1
+				m.cursor = len(m.filtered) - 1
 			} else {
 				m.cursor--
 			}
