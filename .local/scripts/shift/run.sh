@@ -3,7 +3,11 @@
 w="$1"
 h="$2"
 
-"$HOME"/.local/scripts/shift/shift "$w" "$h" || { echo "Something went wrong..."; exit 1; }
+path="$HOME/.local/scripts/shift"
+
+[ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
+
+"$path/shift" "$w" "$h" || { echo "Something went wrong..."; exit 1; }
 
 [ ! -e .__SHIFT__ ] && exit
 
