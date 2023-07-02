@@ -169,6 +169,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.mode = renameSession
 				m.input.Prompt = renamePrompt
 			}
+
+		default:
+			m.table.GotoTop()
 		}
 	}
 	m.fuzzyFind()
