@@ -199,6 +199,7 @@ git_list_modified() {
 # </Function>
 
 # <Env>
+export COLORTERM=truecolor
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export FZF_DEFAULT_COMMAND='ag -g ""'

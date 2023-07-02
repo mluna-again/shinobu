@@ -22,10 +22,6 @@ var headerTitle = lipgloss.NewStyle().
 	Foreground(lipgloss.Color(dark)).
 	Bold(true)
 
-var body = lipgloss.NewStyle().
-	Background(lipgloss.Color(darkLight)).
-	Foreground(lipgloss.Color(light))
-
 var line = lipgloss.NewStyle().
 	Background(lipgloss.Color(darkLight)).
 	Foreground(lipgloss.Color(light))
