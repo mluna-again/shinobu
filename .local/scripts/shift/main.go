@@ -169,13 +169,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.mode = renameSession
 				m.input.Prompt = renamePrompt
 			}
-
-		default:
-			m.table.GotoTop()
 		}
 	}
 	m.fuzzyFind()
-	m.table.SetRows(sessionsToRows(m.filtered))
 
 	var cmds []tea.Cmd
 	var cmd tea.Cmd
@@ -184,6 +180,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	m.table, cmd = m.table.Update(msg)
 	cmds = append(cmds, cmd)
+
+	m.table.SetRows(sessionsToRows(m.filtered))
+	key, ok := msg.(tea.KeyMsg)
+	if ok && shouldGoToTop(key.String()) {
+		m.table.GotoTop()
+	}
 
 	return m, tea.Batch(cmds...)
 }
