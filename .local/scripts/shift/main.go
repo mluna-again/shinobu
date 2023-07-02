@@ -15,8 +15,6 @@ import (
 	"golang.org/x/term"
 )
 
-const maxSessionsAtATime = 5
-
 var createSessionParams string
 var renameSessionParam string
 var selectedMode mode
@@ -135,16 +133,17 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "enter":
-			m.selected = m.table.SelectedRow()[0]
-
-			selected = m.selected
-			selectedMode = m.mode
+			if m.mode == switchSession {
+				m.selected = m.table.SelectedRow()[0]
+			}
 			if m.mode == createSession {
 				createSessionParams = strings.Replace(m.input.Value(), "n ", "", 1)
 			}
 			if m.mode == renameSession {
 				renameSessionParam = strings.Replace(m.input.Value(), "r ", "", 1)
 			}
+			selected = m.selected
+			selectedMode = m.mode
 
 			return m, tea.Quit
 
@@ -218,12 +217,18 @@ func (m model) View() string {
 	inputText := m.input.View()
 	if m.mode == createSession {
 		inputText = strings.Replace(inputText, "n ", "", 1)
+		v.WriteString(inputText)
+		v.WriteString(header.Render("  "))
 	}
 	if m.mode == renameSession {
 		inputText = strings.Replace(inputText, "r ", "", 1)
+		v.WriteString(inputText)
+		v.WriteString(header.Render("  "))
+	}
+	if m.mode == switchSession {
+		v.WriteString(inputText)
 	}
 
-	v.WriteString(inputText)
 	v.WriteRune('\n')
 	v.WriteString(header.Render(strings.Repeat(" ", m.termWidth)))
 	v.WriteRune('\n')
