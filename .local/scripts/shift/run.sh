@@ -7,6 +7,22 @@ h="$2"
 
 [ ! -e .__SHIFT__ ] && exit
 
-selection="$(cat .__SHIFT__)"
+mode="$(awk '{print $1}' .__SHIFT__)"
+session_name="$(awk '{print $2}' .__SHIFT__)"
+session_path="$(awk '{print $3}' .__SHIFT__)"
+
 rm .__SHIFT__
-tmux switch-client -t "$selection"
+
+case "$mode" in
+	create)
+		tmux new-session -d -s "$session_name" -c "$session_path" && tmux switch-client -t "$session_name"
+		;;
+
+	switch)
+		tmux switch-client -t "$session_name"
+		;;
+
+	*)
+		exit
+		;;
+esac

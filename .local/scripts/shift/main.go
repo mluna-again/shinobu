@@ -13,8 +13,25 @@ import (
 	"golang.org/x/term"
 )
 
+const maxSessionsAtATime = 5
+
+var createSessionParams string
+var selectedMode mode
 var selected string
 var escaped bool
+
+var switchPrompt = "  "
+var createPrompt = "  "
+
+var switchTitle = " Switch session "
+var createTitle = " New session "
+
+type mode int
+
+const (
+	switchSession mode = iota
+	createSession
+)
 
 type model struct {
 	input      textinput.Model
@@ -24,6 +41,7 @@ type model struct {
 	filtered   []string
 	cursor     int
 	selected   string
+	mode       mode
 }
 
 func newModel() (model, error) {
@@ -56,8 +74,11 @@ func newModel() (model, error) {
 
 	i := textinput.New()
 	i.Focus()
-	i.Width = w - 2 // padding
-	i.Prompt = " "
+	i.Width = w
+	i.Prompt = switchPrompt
+	i.PromptStyle = prompt
+	i.Cursor.Style = prompt
+	i.Cursor.TextStyle = prompt
 	i.TextStyle = prompt
 	i.PromptStyle = prompt
 	i.Cursor.Style = prompt
@@ -69,6 +90,7 @@ func newModel() (model, error) {
 		sessions:   sessions,
 		filtered:   []string{},
 		cursor:     0,
+		mode:       switchSession,
 	}, nil
 }
 
@@ -88,16 +110,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			escaped = true
 			return m, tea.Quit
 
-		case "tab":
-			if m.cursor == len(m.filtered)-1 {
+		case "tab", "down", "ctrl+n":
+			if m.cursor == maxSessionsAtATime-1 {
 				m.cursor = 0
 			} else {
 				m.cursor++
 			}
 
-		case "shift+tab":
+		case "shift+tab", "up", "ctrl+p":
 			if m.cursor == 0 {
-				m.cursor = len(m.filtered) - 1
+				m.cursor = maxSessionsAtATime - 1
 			} else {
 				m.cursor--
 			}
@@ -112,7 +134,25 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 			selected = m.selected
+			selectedMode = m.mode
+			if m.mode == createSession {
+				createSessionParams = strings.Replace(m.input.Value(), "n ", "", 1)
+			}
+
 			return m, tea.Quit
+
+		case "backspace":
+			if m.mode == createSession && m.input.Value() == "n " {
+				m.mode = switchSession
+				m.input.Prompt = switchPrompt
+				m.input.Reset()
+			}
+
+		case " ":
+			if m.input.Value() == "n" {
+				m.mode = createSession
+				m.input.Prompt = createPrompt
+			}
 		}
 	}
 	m.fuzzyFind()
@@ -126,7 +166,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	v := strings.Builder{}
 
-	title := " Switch session "
+	title := switchTitle
+	if m.mode == createSession {
+		title = createTitle
+	}
+
 	titleLen := utf8.RuneCount([]byte(title))
 	padding := m.termWidth - titleLen
 
@@ -138,49 +182,70 @@ func (m model) View() string {
 		Render(title)
 
 	hRight := header.
-		Render(strings.Repeat(" ", padding/2))
+		Render(strings.Repeat(" ", m.termWidth-titleLen-(padding/2)))
 
 	v.WriteString(hLeft)
 	v.WriteString(hCenter)
 	v.WriteString(hRight)
 	v.WriteRune('\n')
 
-	v.WriteRune(' ')
-	v.WriteString(m.input.View())
-	v.WriteRune(' ')
+	inputText := m.input.View()
+	if m.mode == createSession {
+		inputText = strings.Replace(inputText, "n ", "", 1)
+	}
+
+	v.WriteString(inputText)
 	v.WriteRune('\n')
 	v.WriteString(header.Render(strings.Repeat(" ", m.termWidth)))
 	v.WriteRune('\n')
 
-	if len(m.filtered) > 0 {
-		v.WriteString(line.Width(m.termWidth).Render(""))
-		v.WriteRune('\n')
-	}
-	for i, session := range m.filtered {
-		v.WriteString(line.Width(2).Render("  "))
-
-		if i == m.cursor {
-			v.WriteString(selectedLine.Width(m.termWidth - 4).Render(session))
-		} else {
-			v.WriteString(line.Width(m.termWidth - 4).Render(session))
+	if m.mode == switchSession {
+		if len(m.filtered) > 0 {
+			v.WriteString(line.Width(m.termWidth).Render(""))
+			v.WriteRune('\n')
 		}
 
-		v.WriteString(line.Width(2).Render("  "))
+		first := []string{}
+		for i := 0; i < len(m.filtered); i++ {
+			if len(first) >= maxSessionsAtATime {
+				break
+			}
+			first = append(first, m.filtered[i])
+		}
+		for i, session := range first {
+			v.WriteString(line.Width(2).Render("  "))
+
+			if i == m.cursor {
+				v.WriteString(selectedLine.Width(m.termWidth - 4).Render(session))
+			} else {
+				v.WriteString(line.Width(m.termWidth - 4).Render(session))
+			}
+
+			v.WriteString(line.Width(2).Render("  "))
+			v.WriteRune('\n')
+		}
+		if len(m.filtered) > 0 {
+			v.WriteString(line.Width(m.termWidth).Render(""))
+		}
 		v.WriteRune('\n')
 	}
-	if len(m.filtered) > 0 {
-		v.WriteString(line.Width(m.termWidth).Render(""))
-	}
-	v.WriteRune('\n')
 
-	remainingSpace := m.termHeight - len(m.sessions) - 5
+	vertMargin := 5
+
+	remainingSpace := m.termHeight - len(m.sessions) - vertMargin
 	if len(m.filtered) > 0 {
-		remainingSpace = m.termHeight - len(m.filtered) - 5
+		remainingSpace = m.termHeight - len(m.filtered) - vertMargin
+	}
+	if len(m.filtered) >= maxSessionsAtATime {
+		remainingSpace = m.termHeight - maxSessionsAtATime - vertMargin
 	}
 	if len(m.filtered) == 0 {
 		remainingSpace = 0
 	}
 
+	if m.mode == createSession {
+		remainingSpace = 0
+	}
 	for i := 0; i < remainingSpace; i++ {
 		v.WriteString(line.Width(m.termWidth).Render(""))
 		if i != remainingSpace-1 {
@@ -217,7 +282,18 @@ func main() {
 		return
 	}
 	defer f.Close()
-	_, err = f.WriteString(selected)
+
+	text := fmt.Sprintf("%s %s", "switch", selected)
+	if selectedMode == createSession {
+		params := strings.Split(createSessionParams, " ")
+		if len(params) == 1 {
+			text = fmt.Sprintf("%s %s", "create", params[0])
+		}
+		if len(params) == 2 {
+			text = fmt.Sprintf("%s %s %s", "create", params[0], params[1])
+		}
+	}
+	_, err = f.WriteString(text)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
