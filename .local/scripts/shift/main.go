@@ -154,6 +154,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.input.Prompt = switchPrompt
 				m.input.Reset()
 			}
+			if m.mode == renameSession && m.input.Value() == "r " {
+				m.mode = switchSession
+				m.input.Prompt = switchPrompt
+				m.input.Reset()
+			}
 
 		case " ":
 			if m.input.Value() == "n" {
