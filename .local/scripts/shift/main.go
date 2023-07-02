@@ -16,21 +16,25 @@ import (
 const maxSessionsAtATime = 5
 
 var createSessionParams string
+var renameSessionParam string
 var selectedMode mode
 var selected string
 var escaped bool
 
 var switchPrompt = "  "
 var createPrompt = "  "
+var renamePrompt = " 󰔤 "
 
 var switchTitle = " Switch session "
 var createTitle = " New session "
+var renameTitle = " Rename session "
 
 type mode int
 
 const (
 	switchSession mode = iota
 	createSession
+	renameSession
 )
 
 type model struct {
@@ -138,6 +142,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.mode == createSession {
 				createSessionParams = strings.Replace(m.input.Value(), "n ", "", 1)
 			}
+			if m.mode == renameSession {
+				renameSessionParam = strings.Replace(m.input.Value(), "r ", "", 1)
+			}
 
 			return m, tea.Quit
 
@@ -152,6 +159,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.input.Value() == "n" {
 				m.mode = createSession
 				m.input.Prompt = createPrompt
+			}
+
+			if m.input.Value() == "r" {
+				m.mode = renameSession
+				m.input.Prompt = renamePrompt
 			}
 		}
 	}
@@ -169,6 +181,9 @@ func (m model) View() string {
 	title := switchTitle
 	if m.mode == createSession {
 		title = createTitle
+	}
+	if m.mode == renameSession {
+		title = renameTitle
 	}
 
 	titleLen := utf8.RuneCount([]byte(title))
@@ -192,6 +207,9 @@ func (m model) View() string {
 	inputText := m.input.View()
 	if m.mode == createSession {
 		inputText = strings.Replace(inputText, "n ", "", 1)
+	}
+	if m.mode == renameSession {
+		inputText = strings.Replace(inputText, "r ", "", 1)
 	}
 
 	v.WriteString(inputText)
@@ -243,7 +261,7 @@ func (m model) View() string {
 		remainingSpace = 0
 	}
 
-	if m.mode == createSession {
+	if m.mode != switchSession {
 		remainingSpace = 0
 	}
 	for i := 0; i < remainingSpace; i++ {
@@ -293,6 +311,11 @@ func main() {
 			text = fmt.Sprintf("%s %s %s", "create", params[0], params[1])
 		}
 	}
+
+	if selectedMode == renameSession {
+		text = fmt.Sprintf("%s %s", "rename", renameSessionParam)
+	}
+
 	_, err = f.WriteString(text)
 	if err != nil {
 		fmt.Println(err.Error())

@@ -22,6 +22,10 @@ case "$mode" in
 		tmux switch-client -t "$session_name"
 		;;
 
+	rename)
+		tmux rename-session "$session_name"
+		;;
+
 	*)
 		exit
 		;;
