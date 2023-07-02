@@ -92,27 +92,22 @@ return {
 			sources = cmp.config.sources({
 				{
 					name = "path",
-					max_item_count = 10,
 					priority = 1,
 				},
 				{
 					name = "emoji",
-					max_item_count = 10,
 					priority = 2,
 				},
 				{
 					name = "buffer",
-					max_item_count = 10,
 					priority = 3,
 				},
 				{
 					name = "ultisnips",
-					max_item_count = 10,
 					priority = 4,
 				},
 				{
 					name = "nvim_lsp",
-					max_item_count = 10,
 					priority = 5,
 				},
 			}),

@@ -24,7 +24,8 @@ var headerTitle = lipgloss.NewStyle().
 
 var line = lipgloss.NewStyle().
 	Background(lipgloss.Color(darkLight)).
-	Foreground(lipgloss.Color(light))
+	Foreground(lipgloss.Color(light)).
+	PaddingLeft(1)
 
 var selectedLine = lipgloss.NewStyle().
 	Background(lipgloss.Color(red)).

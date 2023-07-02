@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"strings"
+
+	"github.com/charmbracelet/bubbles/table"
 )
 
 func splitSessions(sessions []string) ([]string, error) {
@@ -34,4 +36,14 @@ func (m *model) fuzzyFind() {
 			m.filtered = append(m.filtered, session)
 		}
 	}
+}
+
+func sessionsToRows(sessions []string) []table.Row {
+	rows := []table.Row{}
+
+	for _, session := range sessions {
+		rows = append(rows, table.Row{session})
+	}
+
+	return rows
 }

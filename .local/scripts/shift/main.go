@@ -8,6 +8,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"golang.org/x/term"
@@ -39,11 +41,11 @@ const (
 
 type model struct {
 	input      textinput.Model
+	table      table.Model
 	termWidth  int
 	termHeight int
 	sessions   []string
 	filtered   []string
-	cursor     int
 	selected   string
 	mode       mode
 }
@@ -78,7 +80,7 @@ func newModel() (model, error) {
 
 	i := textinput.New()
 	i.Focus()
-	i.Width = w
+	i.Width = w - 4
 	i.Prompt = switchPrompt
 	i.PromptStyle = prompt
 	i.Cursor.Style = prompt
@@ -87,13 +89,31 @@ func newModel() (model, error) {
 	i.PromptStyle = prompt
 	i.Cursor.Style = prompt
 
+	// 5 -> 2 from top/bottom margin, 3 for header and the other one ehh idk lol
+	// 4 -> margin
+	t := table.New(table.WithColumns([]table.Column{{Width: w - 4}}),
+		table.WithRows(sessionsToRows(sessions)),
+		table.WithFocused(true),
+		table.WithHeight(h-6))
+
+	st := table.DefaultStyles()
+	st.Header = line
+	st.Selected = selectedLine
+	t.SetStyles(st)
+	t.KeyMap.LineUp = key.NewBinding(func(opt *key.Binding) {
+		opt.SetKeys("up", "shift+tab", "ctrl+p")
+	})
+	t.KeyMap.LineDown = key.NewBinding(func(opt *key.Binding) {
+		opt.SetKeys("down", "tab", "ctrl+n")
+	})
+
 	return model{
 		input:      i,
+		table:      t,
 		termWidth:  w,
 		termHeight: h,
 		sessions:   sessions,
 		filtered:   []string{},
-		cursor:     0,
 		mode:       switchSession,
 	}, nil
 }
@@ -114,28 +134,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			escaped = true
 			return m, tea.Quit
 
-		case "tab", "down", "ctrl+n":
-			if m.cursor == len(m.filtered)-1 {
-				m.cursor = 0
-			} else {
-				m.cursor++
-			}
-
-		case "shift+tab", "up", "ctrl+p":
-			if m.cursor == 0 {
-				m.cursor = len(m.filtered) - 1
-			} else {
-				m.cursor--
-			}
-
 		case "enter":
-			if len(m.filtered) > 0 {
-				m.selected = m.filtered[m.cursor]
-			} else {
-				if len(m.sessions) > 0 {
-					m.selected = m.sessions[0]
-				}
-			}
+			m.selected = m.table.SelectedRow()[0]
 
 			selected = m.selected
 			selectedMode = m.mode
@@ -173,11 +173,17 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 	m.fuzzyFind()
+	m.table.SetRows(sessionsToRows(m.filtered))
 
+	var cmds []tea.Cmd
 	var cmd tea.Cmd
 	m.input, cmd = m.input.Update(msg)
+	cmds = append(cmds, cmd)
 
-	return m, cmd
+	m.table, cmd = m.table.Update(msg)
+	cmds = append(cmds, cmd)
+
+	return m, tea.Batch(cmds...)
 }
 
 func (m model) View() string {
@@ -223,57 +229,11 @@ func (m model) View() string {
 	v.WriteRune('\n')
 
 	if m.mode == switchSession {
-		if len(m.filtered) > 0 {
-			v.WriteString(line.Width(m.termWidth).Render(""))
-			v.WriteRune('\n')
-		}
-
-		first := []string{}
-		for i := 0; i < len(m.filtered); i++ {
-			if len(first) >= maxSessionsAtATime {
-				break
-			}
-			first = append(first, m.filtered[i])
-		}
-		for i, session := range first {
-			v.WriteString(line.Width(2).Render("  "))
-
-			if i == m.cursor {
-				v.WriteString(selectedLine.Width(m.termWidth - 4).Render(session))
-			} else {
-				v.WriteString(line.Width(m.termWidth - 4).Render(session))
-			}
-
-			v.WriteString(line.Width(2).Render("  "))
-			v.WriteRune('\n')
-		}
-		if len(m.filtered) > 0 {
-			v.WriteString(line.Width(m.termWidth).Render(""))
-		}
+		t := line.Render(m.table.View())
+		v.WriteString(strings.Join(strings.Split(t, "\n")[1:], "\n"))
 		v.WriteRune('\n')
-	}
-
-	vertMargin := 5
-
-	remainingSpace := m.termHeight - len(m.sessions) - vertMargin
-	if len(m.filtered) > 0 {
-		remainingSpace = m.termHeight - len(m.filtered) - vertMargin
-	}
-	if len(m.filtered) >= maxSessionsAtATime {
-		remainingSpace = m.termHeight - maxSessionsAtATime - vertMargin
-	}
-	if len(m.filtered) == 0 {
-		remainingSpace = 0
-	}
-
-	if m.mode != switchSession {
-		remainingSpace = 0
-	}
-	for i := 0; i < remainingSpace; i++ {
 		v.WriteString(line.Width(m.termWidth).Render(""))
-		if i != remainingSpace-1 {
-			v.WriteRune('\n')
-		}
+		v.WriteRune('\n')
 	}
 
 	return v.String()
