@@ -25,13 +25,13 @@ func splitSessions(sessions []string) ([]string, error) {
 
 func (m *model) fuzzyFind() {
 	if len(m.input.Value()) == 0 {
-		m.filtered = m.sessions
+		m.filtered = m.app.lines
 		return
 	}
 
 	m.filtered = []string{}
 
-	for _, session := range m.sessions {
+	for _, session := range m.app.lines {
 		if strings.Contains(strings.TrimSpace(session), strings.TrimSpace(m.input.Value())) {
 			m.filtered = append(m.filtered, session)
 		}

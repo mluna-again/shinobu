@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"unicode/utf8"
@@ -14,6 +13,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"golang.org/x/term"
 )
+
+type app struct {
+	lines []string
+}
 
 var createSessionParams string
 var renameSessionParam string
@@ -42,13 +45,13 @@ type model struct {
 	table      table.Model
 	termWidth  int
 	termHeight int
-	sessions   []string
 	filtered   []string
 	selected   string
 	mode       mode
+	app        *app
 }
 
-func newModel() (model, error) {
+func newModel(app *app) (model, error) {
 	var w int
 	var h int
 	var err error
@@ -61,17 +64,6 @@ func newModel() (model, error) {
 	} else {
 		w, h, err = term.GetSize(int(os.Stdin.Fd()))
 	}
-	if err != nil {
-		return model{}, err
-	}
-
-	out, err := exec.Command("tmux", "list-sessions").Output()
-	if err != nil {
-		return model{}, err
-	}
-
-	s := strings.Split(string(out), "\n")
-	sessions, err := splitSessions(s[:len(s)-1])
 	if err != nil {
 		return model{}, err
 	}
@@ -90,7 +82,7 @@ func newModel() (model, error) {
 	// 5 -> 2 from top/bottom margin, 3 for header and the other one ehh idk lol
 	// 4 -> margin
 	t := table.New(table.WithColumns([]table.Column{{Width: w - 4}}),
-		table.WithRows(sessionsToRows(sessions)),
+		table.WithRows(sessionsToRows(app.lines)),
 		table.WithFocused(true),
 		table.WithHeight(h-5))
 
@@ -110,9 +102,9 @@ func newModel() (model, error) {
 		table:      t,
 		termWidth:  w,
 		termHeight: h,
-		sessions:   sessions,
 		filtered:   []string{},
 		mode:       switchSession,
+		app:        app,
 	}, nil
 }
 
@@ -250,7 +242,15 @@ func (m model) View() string {
 }
 
 func main() {
-	model, err := newModel()
+	app := app{}
+	err := app.loadLines()
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+		return
+	}
+
+	model, err := newModel(&app)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

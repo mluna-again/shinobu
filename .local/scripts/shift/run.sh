@@ -7,7 +7,13 @@ path="$HOME/.local/scripts/shift"
 
 [ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
-"$path/shift" "$w" "$h" || { echo "Something went wrong..."; exit 1; }
+get_sessions() {
+	tmux list-sessions |\
+		awk '{print $1}' |\
+		awk '{ gsub(/:/, "", $1); print $1 }'
+}
+
+get_sessions | "$path/shift" "$w" "$h" || { echo "Something went wrong..."; exit 1; }
 
 [ ! -e .__SHIFT__ ] && exit
 
