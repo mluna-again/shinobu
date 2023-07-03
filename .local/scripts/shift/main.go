@@ -92,7 +92,7 @@ func newModel() (model, error) {
 	t := table.New(table.WithColumns([]table.Column{{Width: w - 4}}),
 		table.WithRows(sessionsToRows(sessions)),
 		table.WithFocused(true),
-		table.WithHeight(h-6))
+		table.WithHeight(h-5))
 
 	st := table.DefaultStyles()
 	st.Header = line

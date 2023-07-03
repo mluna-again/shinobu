@@ -3,6 +3,11 @@ return {
 	config = function()
 		require("nvim-web-devicons").setup({
 			override = {
+				hurl = {
+					icon = "󱘖",
+					color = "#514e60",
+					name = "hurl",
+				},
 				lisp = {
 					icon = "󰚀",
 					color = "#bef5b2",
