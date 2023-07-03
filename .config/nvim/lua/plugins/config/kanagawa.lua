@@ -176,6 +176,7 @@ return {
 					AlphaFooter = { fg = colors.palette.dragonBlue },
 					AlphaButton = { fg = colors.palette.dragonRed },
 					AlphaButtonKey = { fg = colors.palette.dragonRed, bg = colors.palette.dragonBlack4 },
+					AlphaBanner = { fg = colors.palette.dragonYellow },
 				}
 			end,
 		})
