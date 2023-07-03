@@ -15,6 +15,7 @@ return {
 				["<C-t>"] = "actions.select_tab",
 				["<C-p>"] = "actions.preview",
 				["<C-c>"] = "actions.close",
+				["q"] = "actions.close",
 				["<C-l>"] = "actions.refresh",
 				["<BS>"] = "actions.parent",
 				["_"] = "actions.open_cwd",
@@ -26,8 +27,10 @@ return {
 				show_hidden = true
 			},
 			float = {
+				border = "none",
 				win_options = {
 					winblend = 0,
+					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder",
 				},
 				padding = 6
 			},
@@ -35,21 +38,16 @@ return {
 				buflisted = false,
 				bufhidden = "hide",
 			},
-		})
-
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = { "oil", "oil_preview" },
-			callback = function()
-				if vim.bo.filetype == "oil" then
-					vim.wo.winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder"
-					return
-				end
-
-				if vim.bo.filetype == "oil_preview" then
-					vim.wo.winhighlight = "Normal:OilPreviewBackground,FloatBorder:OilPreviewBorder,FloatTitle:OilBorder"
-					return
-				end
-			end
+			preview = {
+				win_options = {
+					winblend = 0,
+					winhighlight = "Normal:OilPreviewBackground,FloatBorder:OilPreviewBorder,FloatTitle:OilBorder"
+				}
+			},
+			win_options = {
+				winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder"
+			},
+      skip_confirm_for_simple_edits = true,
 		})
 	end
 }
