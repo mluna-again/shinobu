@@ -15,29 +15,11 @@ import (
 )
 
 type app struct {
-	lines []string
-	createSessionParams string
-	renameSessionParam string
+	lines        []string
 	selectedMode mode
-	selected string
-	escaped bool
+	escaped      bool
+	modes        []mode
 }
-
-var switchPrompt = "  "
-var createPrompt = "  "
-var renamePrompt = " 󰔤 "
-
-var switchTitle = " Switch session "
-var createTitle = " New session "
-var renameTitle = " Rename session "
-
-type mode int
-
-const (
-	switchSession mode = iota
-	createSession
-	renameSession
-)
 
 type model struct {
 	input      textinput.Model
@@ -45,8 +27,7 @@ type model struct {
 	termWidth  int
 	termHeight int
 	filtered   []string
-	selected   string
-	mode       mode
+	mode       modeType
 	app        *app
 }
 
@@ -67,10 +48,12 @@ func newModel(app *app) (model, error) {
 		return model{}, err
 	}
 
+	activeMode := app.modes[0]
+
 	i := textinput.New()
 	i.Focus()
 	i.Width = w - 4
-	i.Prompt = switchPrompt
+	i.Prompt = activeMode.prompt
 	i.PromptStyle = prompt
 	i.Cursor.Style = prompt
 	i.Cursor.TextStyle = prompt
@@ -102,7 +85,7 @@ func newModel(app *app) (model, error) {
 		termWidth:  w,
 		termHeight: h,
 		filtered:   []string{},
-		mode:       switchSession,
+		mode:       activeMode.mType,
 		app:        app,
 	}, nil
 }
@@ -124,41 +107,37 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "enter":
-			if m.mode == switchSession {
-				m.selected = m.table.SelectedRow()[0]
+			for range m.app.modes {
+				m.app.selectedMode = m.app.modes[m.mode]
+				// only special case
+				if m.mode == switchSession {
+					if len(m.table.SelectedRow()) > 0 {
+						m.app.selectedMode.params = m.table.SelectedRow()[0]
+					}
+					continue
+				}
+
+				m.app.selectedMode.params = m.app.cleanUpModeParams(m.input.Value())
 			}
-			if m.mode == createSession {
-				m.app.createSessionParams = strings.Replace(m.input.Value(), "n ", "", 1)
-			}
-			if m.mode == renameSession {
-				m.app.renameSessionParam = strings.Replace(m.input.Value(), "r ", "", 1)
-			}
-			m.app.selected = m.selected
-			m.app.selectedMode = m.mode
 
 			return m, tea.Quit
 
 		case "backspace":
-			if m.mode == createSession && m.input.Value() == "n " {
-				m.mode = switchSession
-				m.input.Prompt = switchPrompt
-				m.input.Reset()
-			}
-			if m.mode == renameSession && m.input.Value() == "r " {
-				m.mode = switchSession
-				m.input.Prompt = switchPrompt
-				m.input.Reset()
+			for _, mode := range m.app.modes {
+				if m.mode == mode.mType && m.input.Value() == mode.prefix {
+					mode := m.app.switchMode()
+					m.mode = mode.mType
+					m.input.Prompt = mode.prompt
+					m.input.Reset()
+				}
 			}
 
 		case " ":
-			if m.input.Value() == "n" {
-				m.mode = createSession
-				m.input.Prompt = createPrompt
-			}
-
-			if m.input.Value() == "r" {
-				m.mode = renameSession
-				m.input.Prompt = renamePrompt
+			for _, mode := range m.app.modes {
+				if m.input.Value() == mode.prefix {
+					m.mode = mode.mType
+					m.input.Prompt = mode.prompt
+				}
 			}
 		}
 	}
@@ -184,12 +163,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	v := strings.Builder{}
 
-	title := switchTitle
-	if m.mode == createSession {
-		title = createTitle
-	}
-	if m.mode == renameSession {
-		title = renameTitle
+	title := ""
+	for _, mode := range m.app.modes {
+		if m.mode == mode.mType {
+			title = mode.title
+		}
 	}
 
 	titleLen := utf8.RuneCount([]byte(title))
@@ -211,17 +189,10 @@ func (m model) View() string {
 	v.WriteRune('\n')
 
 	inputText := m.input.View()
-	if m.mode == createSession {
-		inputText = strings.Replace(inputText, "n ", "", 1)
-		v.WriteString(inputText)
+	if m.mode != switchSession {
+		v.WriteString(m.app.cleanUpModeParamsForView(inputText))
 		v.WriteString(header.Render("  "))
-	}
-	if m.mode == renameSession {
-		inputText = strings.Replace(inputText, "r ", "", 1)
-		v.WriteString(inputText)
-		v.WriteString(header.Render("  "))
-	}
-	if m.mode == switchSession {
+	} else {
 		v.WriteString(inputText)
 	}
 
@@ -248,6 +219,7 @@ func main() {
 		os.Exit(1)
 		return
 	}
+	app.loadModes()
 
 	model, err := newModel(&app)
 	if err != nil {
@@ -275,20 +247,7 @@ func main() {
 	}
 	defer f.Close()
 
-	text := fmt.Sprintf("%s %s", "switch", app.selected)
-	if app.selectedMode == createSession {
-		params := strings.Split(app.createSessionParams, " ")
-		if len(params) == 1 {
-			text = fmt.Sprintf("%s %s", "create", params[0])
-		}
-		if len(params) == 2 {
-			text = fmt.Sprintf("%s %s %s", "create", params[0], params[1])
-		}
-	}
-
-	if app.selectedMode == renameSession {
-		text = fmt.Sprintf("%s %s", "rename", app.renameSessionParam)
-	}
+	text := fmt.Sprintf("%s %s", app.selectedMode.name, app.selectedMode.params)
 
 	_, err = f.WriteString(text)
 	if err != nil {
