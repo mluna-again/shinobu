@@ -141,7 +141,7 @@ return {
 			callback = function()
 				local stats = require("lazy").stats()
 				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-				dashboard.config.layout[7].val = string.format("%d plugins loaded in %dms", stats.count, ms)
+				dashboard.config.layout[8].val = string.format("%d plugins loaded in %dms", stats.count, ms)
 				pcall(vim.cmd.AlphaRedraw)
 			end,
 		})
