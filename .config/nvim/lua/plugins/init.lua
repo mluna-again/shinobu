@@ -51,7 +51,6 @@ require("lazy").setup({
 	require("plugins.config.dap"),
 	require("plugins.config.neodev"),
 	require("plugins.config.notify"),
-	require("plugins.config.lsp-signature"),
 	require("plugins.config.oil"),
 	require("plugins.config.vim-test"),
 	require("plugins.config.better-escape"),
