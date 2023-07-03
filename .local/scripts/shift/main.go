@@ -16,13 +16,12 @@ import (
 
 type app struct {
 	lines []string
+	createSessionParams string
+	renameSessionParam string
+	selectedMode mode
+	selected string
+	escaped bool
 }
-
-var createSessionParams string
-var renameSessionParam string
-var selectedMode mode
-var selected string
-var escaped bool
 
 var switchPrompt = "  "
 var createPrompt = "  "
@@ -117,11 +116,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c":
-			escaped = true
+			m.app.escaped = true
 			return m, tea.Quit
 
 		case "esc":
-			escaped = true
+			m.app.escaped = true
 			return m, tea.Quit
 
 		case "enter":
@@ -129,13 +128,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.selected = m.table.SelectedRow()[0]
 			}
 			if m.mode == createSession {
-				createSessionParams = strings.Replace(m.input.Value(), "n ", "", 1)
+				m.app.createSessionParams = strings.Replace(m.input.Value(), "n ", "", 1)
 			}
 			if m.mode == renameSession {
-				renameSessionParam = strings.Replace(m.input.Value(), "r ", "", 1)
+				m.app.renameSessionParam = strings.Replace(m.input.Value(), "r ", "", 1)
 			}
-			selected = m.selected
-			selectedMode = m.mode
+			m.app.selected = m.selected
+			m.app.selectedMode = m.mode
 
 			return m, tea.Quit
 
@@ -264,7 +263,7 @@ func main() {
 		return
 	}
 
-	if escaped {
+	if app.escaped {
 		return
 	}
 
@@ -276,9 +275,9 @@ func main() {
 	}
 	defer f.Close()
 
-	text := fmt.Sprintf("%s %s", "switch", selected)
-	if selectedMode == createSession {
-		params := strings.Split(createSessionParams, " ")
+	text := fmt.Sprintf("%s %s", "switch", app.selected)
+	if app.selectedMode == createSession {
+		params := strings.Split(app.createSessionParams, " ")
 		if len(params) == 1 {
 			text = fmt.Sprintf("%s %s", "create", params[0])
 		}
@@ -287,8 +286,8 @@ func main() {
 		}
 	}
 
-	if selectedMode == renameSession {
-		text = fmt.Sprintf("%s %s", "rename", renameSessionParam)
+	if app.selectedMode == renameSession {
+		text = fmt.Sprintf("%s %s", "rename", app.renameSessionParam)
 	}
 
 	_, err = f.WriteString(text)
