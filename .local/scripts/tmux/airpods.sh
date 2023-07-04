@@ -2,7 +2,7 @@
 #
 background="#282727"
 colors="#[fg=white,bg=$background]"
-pgrep pgrep Spotify &>/dev/null || colors="#[fg=$background,bg=white]"
+pgrep Spotify &>/dev/null || colors="#[fg=$background,bg=white]"
 
 uname | grep -i darwin &>/dev/null || exit
 

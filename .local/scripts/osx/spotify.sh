@@ -4,7 +4,7 @@ term_width="$1"
 
 width=`[ $term_width -lt 100 ] && echo 15 || echo 30`
 
-pgrep pgrep Spotify &>/dev/null || exit
+pgrep Spotify &>/dev/null || exit
 
 icon=""
 
