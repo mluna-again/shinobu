@@ -1,5 +1,6 @@
 return {
-	"akinsho/bufferline.nvim",
+	"mluna-again/bufferline.nvim",
+	branch = "feature/trunc_sep_hl",
 	event = "VeryLazy",
 	dependencies = "kanagawa.nvim",
 	config = function()
@@ -17,7 +18,7 @@ return {
 				right_trunc_marker = "",
 				max_name_length = 14,
 				max_prefix_length = 13,
-				tab_size = 20,
+				tab_size = 0,
 				show_tab_indicators = false,
 				enforce_regular_tabs = false,
 				view = "multiwindow",
