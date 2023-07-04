@@ -1,6 +1,6 @@
 #!/bin/sh
 
-bg="red"
+bg="yellow"
 fg="black"
 
 percentage=$(system_profiler SPPowerDataType | grep -i "state of charge" | awk '{print $(NF)}')

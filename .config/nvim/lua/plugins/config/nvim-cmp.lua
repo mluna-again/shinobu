@@ -30,7 +30,9 @@ local normalized = {
 	Snippet     = "Snippet    ",
 	File        = "File       ",
 	Folder      = "Folder     ",
-	Module      = "Module     "
+	Module      = "Module     ",
+	Enum        = "Enum       ",
+	EnumMember  = "Enum       ",
 }
 
 return {

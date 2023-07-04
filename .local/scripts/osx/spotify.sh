@@ -23,4 +23,4 @@ short_title=$(echo $title | cut -c -$width)
 
 should_truncate=$([ ${#title} -gt $width ] && echo yes || echo no)
 
-[ "$should_truncate" == yes ] && echo "#[bg=red,fg=black] $icon $short_title...#[fg=default]" || echo "#[bg=red,fg=black] $icon $title#[fg=default]"
+[ "$should_truncate" == yes ] && echo "#[bg=yellow,fg=black] $icon $short_title...#[fg=default]" || echo "#[bg=yellow,fg=black] $icon $title#[fg=default]"

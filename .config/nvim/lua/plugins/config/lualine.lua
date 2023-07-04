@@ -81,10 +81,10 @@ return {
 		local colors = {
 			black = kanagawa.dragonBlack4,
 			white = kanagawa.dragonWhite,
-			red = kanagawa.dragonRed,
+			red = kanagawa.dragonYellow,
 			green = kanagawa.dragonGreen,
 			blue = kanagawa.dragonBlue,
-			yellow = kanagawa.dragonYellow,
+			yellow = kanagawa.dragonRed,
 			gray = kanagawa.dragonGray,
 			darkgray = kanagawa.dragonBlack2,
 			lightgray = kanagawa.dragonBlack5,

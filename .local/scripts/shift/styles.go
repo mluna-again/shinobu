@@ -7,7 +7,7 @@ const darkLight = "#282727"
 const dark = "#181616"
 const darker = "#1D1C19"
 const light = "#c5c9c5"
-const red = "#c4746e"
+const yellow = "#c4b28a"
 
 var header = lipgloss.NewStyle().
 	Background(lipgloss.Color(darker)).
@@ -18,7 +18,7 @@ var prompt = lipgloss.NewStyle().
 	Foreground(lipgloss.Color(light))
 
 var headerTitle = lipgloss.NewStyle().
-	Background(lipgloss.Color(red)).
+	Background(lipgloss.Color(yellow)).
 	Foreground(lipgloss.Color(dark)).
 	Bold(true)
 
@@ -28,5 +28,5 @@ var line = lipgloss.NewStyle().
 	PaddingLeft(1)
 
 var selectedLine = lipgloss.NewStyle().
-	Background(lipgloss.Color(red)).
+	Background(lipgloss.Color(yellow)).
 	Foreground(lipgloss.Color(dark))
