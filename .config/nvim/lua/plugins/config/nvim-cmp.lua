@@ -1,5 +1,38 @@
 require("core.maps")
 
+-- local hls = {
+-- 	Text = "CmpItemKindText",
+-- 	Method = "CmpItemKindMethod",
+-- 	Function = "CmpItemKindFunction",
+-- 	Constructor = "CmpItemKindConstructor",
+-- 	Field = "CmpItemKindField",
+-- 	Variable = "CmpItemKindVariable",
+-- 	Class = "CmpItemKindClass",
+-- 	Interface = "CmpItemKindInterface",
+-- 	Value = "CmpItemKindValue",
+-- 	Keyword = "CmpItemKindKeyword",
+-- 	Snippet = "CmpItemKindSnippet",
+-- 	File = "CmpItemKindFile",
+-- 	Folder = "CmpItemKindFolder",
+-- }
+
+local normalized = {
+	Constructor = "Constructor",
+	Text        = "Text       ",
+	Method      = "Method     ",
+	Function    = "Function   ",
+	Field       = "Field      ",
+	Variable    = "Variable   ",
+	Class       = "Class      ",
+	Interface   = "Interface  ",
+	Value       = "Value      ",
+	Keyword     = "Keyword    ",
+	Snippet     = "Snippet    ",
+	File        = "File       ",
+	Folder      = "Folder     ",
+	Module      = "Module     "
+}
+
 return {
 	"hrsh7th/nvim-cmp",
 	event = "VeryLazy",
@@ -112,11 +145,9 @@ return {
 				},
 			}),
 			formatting = {
-				format = function(entry, vim_item)
-					-- Kind icons
-					vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-					-- Source
-					return vim_item
+				format = function(entry, item)
+					item.kind = string.format(' %s %s ', kind_icons[item.kind], normalized[item.kind])
+					return item
 				end,
 			},
 		})

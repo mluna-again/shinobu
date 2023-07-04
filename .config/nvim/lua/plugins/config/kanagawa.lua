@@ -7,21 +7,6 @@ return {
 		autocmd!
 		autocmd ColorScheme * hi Normal guibg=NONE
 		autocmd ColorScheme * hi Folded guibg=NONE ctermbg=NONE
-		autocmd ColorScheme * hi link CmpItemAbbrMatchFuzzy Aqua
-		autocmd ColorScheme * hi link CmpItemKindText Fg
-		autocmd ColorScheme * hi link CmpItemKindMethod Purple
-		autocmd ColorScheme * hi link CmpItemKindFunction Purple
-		autocmd ColorScheme * hi link CmpItemKindConstructor Green
-		autocmd ColorScheme * hi link CmpItemKindField Aqua
-		autocmd ColorScheme * hi link CmpItemKindVariable Blue
-		autocmd ColorScheme * hi link CmpItemKindClass Green
-		autocmd ColorScheme * hi link CmpItemKindInterface Green
-		autocmd ColorScheme * hi link CmpItemKindValue Orange
-		autocmd ColorScheme * hi link CmpItemKindKeyword Keyword
-		autocmd ColorScheme * hi link CmpItemKindSnippet Red
-		autocmd ColorScheme * hi link CmpItemKindFile Orange
-		autocmd ColorScheme * hi link CmpItemKindFolder Orange
-
 		autocmd ColorScheme * hi NeotestFocused gui=none
 
 		set fillchars+=vert:\ 
@@ -177,6 +162,23 @@ return {
 					AlphaButton = { fg = colors.palette.dragonRed },
 					AlphaButtonKey = { fg = colors.palette.dragonRed, bg = colors.palette.dragonBlack4 },
 					AlphaBanner = { fg = colors.palette.dragonYellow },
+
+					CmpItemAbbrMatchFuzzy = { fg = colors.palette.dragonYellow },
+					CmpItemKindText = { bg = colors.palette.dragonGray, fg = colors.palette.dragonBlack4 },
+					CmpItemKindMethod = { bg = colors.palette.dragonOrange, fg = colors.palette.dragonBlack4 },
+					CmpItemKindFunction = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+					CmpItemKindConstructor = { bg = colors.palette.dragonViolet, fg = colors.palette.dragonBlack4 },
+					CmpItemKindField = { bg = colors.palette.dragonBlue, fg = colors.palette.dragonBlack4 },
+					CmpItemKindModule = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					CmpItemKindVariable = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
+					CmpItemKindClass = { bg = colors.palette.dragonViolet, fg = colors.palette.dragonBlack4 },
+					CmpItemKindStruct = { bg = colors.palette.dragonViolet, fg = colors.palette.dragonBlack4 },
+					CmpItemKindInterface = { bg = colors.palette.dragonTeal, fg = colors.palette.dragonBlack4 },
+					CmpItemKindValue = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
+					CmpItemKindKeyword = { bg = colors.palette.dragonPink, fg = colors.palette.dragonBlack4 },
+					CmpItemKindSnippet = { bg = colors.palette.dragonAqua, fg = colors.palette.dragonBlack4 },
+					CmpItemKindFile = { bg = colors.palette.dragonGray, fg = colors.palette.dragonBlack4 },
+					CmpItemKindFolder = { bg = colors.palette.dragonGray, fg = colors.palette.dragonBlack4 },
 				}
 			end,
 		})
