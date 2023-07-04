@@ -5,17 +5,15 @@ return {
 	},
 	event = "VeryLazy",
 	config = function()
-		require("telescope").setup({
+		require('telescope').setup {
 			defaults = {
-				vimgrep_arguments = {
-					"rg",
-					"--color=never",
-					"--no-heading",
-					"--with-filename",
-					"--line-number",
-					"--column",
-					"--smart-case",
+				mappings = {
 				},
+				path_display = { "truncate" },
+				winblend = 0,
+				borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+				color_devicons = false,
+				use_less = true,
 				prompt_prefix = "  ",
 				selection_caret = "  ",
 				entry_prefix = "  ",
@@ -36,21 +34,19 @@ return {
 					height = 0.90,
 					preview_cutoff = 120,
 				},
-				file_sorter = require("telescope.sorters").get_fuzzy_file,
-				file_ignore_patterns = { "node_modules" },
-				generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-				path_display = { "truncate" },
-				winblend = 0,
-				borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
-				color_devicons = true,
-				use_less = true,
-				set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-				file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-				grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-				qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-				buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
 			},
-		})
+			pickers = {
+			},
+			extensions = {
+				fzf = {
+					fuzzy = true,              -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "ignore_case",  -- or "ignore_case" or "respect_case"
+					-- the default case_mode is "smart_case"
+				}
+			}
+		}
 
 		require('telescope').load_extension('fzf')
 	end,

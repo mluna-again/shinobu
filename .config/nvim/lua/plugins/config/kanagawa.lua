@@ -182,6 +182,10 @@ return {
 					CmpItemKindFolder = { bg = colors.palette.dragonGray, fg = colors.palette.dragonBlack4 },
 					CmpItemKindEnum = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 					CmpItemKindEnumMember = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+
+					LightspeedShortcut = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+					LightspeedLabel = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+					LightspeedOneCharMatch = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 				}
 			end,
 		})
