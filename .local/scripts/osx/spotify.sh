@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 term_width="$1"
 
