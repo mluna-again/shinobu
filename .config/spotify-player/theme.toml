@@ -3,7 +3,7 @@ name = "kanagawa-dragon"
 [themes.palette]
 background = "#181616"
 foreground = "#c8c093"
-black = "#0d0c0c"
+black = "#282727"
 red = "#c4746e"
 green = "#8a9a7b"
 yellow = "#c4b28a"
@@ -20,13 +20,13 @@ bright_magenta = "#938aa9"
 bright_cyan = "#7aa89f"
 bright_white = "#c5c9c5"
 [themes.component_style]
-block_title = { fg = "Red"  }
-border = { fg = "Red" }
+block_title = { fg = "Yellow"  }
+border = { fg = "Yellow" }
 playback_track = { fg = "Cyan", modifiers = ["Bold"] }
 playback_artists = { fg = "Cyan", modifiers = ["Bold"] }
 playback_album = { fg = "Yellow" }
 playback_metadata = { fg = "BrightBlack" }
-playback_progress_bar = { bg = "Red", fg = "Black" }
+playback_progress_bar = { bg = "Yellow", fg = "Black" }
 current_playing = { fg = "Green", modifiers = ["Bold"] }
 page_desc = { fg = "Cyan", modifiers = ["Bold"] }
 table_header = { fg = "Blue" }
