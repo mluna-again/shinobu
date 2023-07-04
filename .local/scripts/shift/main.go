@@ -66,7 +66,7 @@ func newModel(app *app) (model, error) {
 	t := table.New(table.WithColumns([]table.Column{{Width: w - 4}}),
 		table.WithRows(sessionsToRows(app.lines)),
 		table.WithFocused(true),
-		table.WithHeight(h-5))
+		table.WithHeight(h-4))
 
 	st := table.DefaultStyles()
 	st.Header = line
@@ -202,8 +202,8 @@ func (m model) View() string {
 
 	if m.mode == switchSession {
 		t := line.Render(m.table.View())
-		v.WriteString(strings.Join(strings.Split(t, "\n")[1:], "\n"))
-		v.WriteRune('\n')
+		tc := strings.Split(t, "\n")[1:]
+		v.WriteString(strings.Join(tc, "\n"))
 		v.WriteString(line.Width(m.termWidth).Render(""))
 		v.WriteRune('\n')
 	}

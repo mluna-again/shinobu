@@ -40,8 +40,17 @@ func (app *app) loadLines() error {
 		return err
 	}
 
-	app.lines = strings.Split(string(output), "\n")
+	lines := strings.Split(string(output), "\n")
+	nonEmpty := []string{}
+	for _, line := range lines {
+		if line == "" {
+			continue
+		}
 
+		nonEmpty = append(nonEmpty, line)
+	}
+
+	app.lines = nonEmpty
 	return nil
 }
 
