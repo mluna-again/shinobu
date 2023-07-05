@@ -9,14 +9,25 @@
 <img width="1920" target="_blank" alt="spotify" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/spotify.png">
 <img width="1920" target="_blank" alt="tmux-sessions" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/sessions.png">
 
+## Dependencies
+    * Required
+        1. nvim
+        2. tmux
+        3. zsh
+        4. starship
+        5. git
+        6. gcc
+
+    * Recommended
+        1. ripgrep
+        2. fzf
+        3. go
+        4. spotify-player
+        5. spotify (desktop)
+        6. hurl
+
 ## Problems I've encountered that I don't want to forget
 
 * You open a file and no status line and/or highlight on:
 
     - Install the corresponding lsp for that language (:MasonInstall \<lsp-name\>)
-
-* :Neorg sync-parsers throws an error:
-
-    - Install a recent c++ compiler with `brew install gcc`
-    - Get c++ compiler path with `brew info gcc`
-    - Export the `CC` env variable as `export CC=<gcc path>`
