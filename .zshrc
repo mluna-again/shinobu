@@ -34,10 +34,10 @@ run() {
   nodemon $1 --exec "clear; PYTHONWARNINGS=ignore $what $*"
 }
 alias q="exit"
-alias cd="z"
+alias cd="z || cd"
 alias :q="exit"
-alias ls="exa --icons"
-alias ll="exa --icons -lh"
+alias ls="exa --icons || /bin/ls"
+alias ll="exa --icons -lh || /bin/ls -lh"
 alias rice='curl -L rum.sh/ricebowl'
 alias rice='curl -L git.io/rice'
 alias darkness="cat -p ~/.config/nvim/banners/darkness"

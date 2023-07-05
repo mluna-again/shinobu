@@ -18,6 +18,7 @@
     5. starship
     6. git
     7. gcc
+    8. zoxide
 
 * Recommended
     1. ripgrep
@@ -26,6 +27,11 @@
     4. spotify-player
     5. spotify (desktop)
     6. hurl
+    7. jq
+    8. jqp
+    9. httpie
+    10. exa
+    11. delta
 
 ## Problems I've encountered that I don't want to forget
 

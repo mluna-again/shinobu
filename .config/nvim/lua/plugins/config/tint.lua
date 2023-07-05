@@ -1,7 +1,9 @@
 local ignored_fts = {
 	"neo-tree",
 	"dap",
-	"diff"
+	"diff",
+	"terminal",
+	"toggleterm"
 }
 
 return {
