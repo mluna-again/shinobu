@@ -2,7 +2,7 @@ vim.o.termguicolors = true
 vim.g.nvim_tree_side = "right"
 
 return {
-	"kyazdani42/nvim-tree.lua",
+	"nvim-tree/nvim-tree.lua",
 	event = "VeryLazy",
 	config = function()
 		require("nvim-tree").setup({
