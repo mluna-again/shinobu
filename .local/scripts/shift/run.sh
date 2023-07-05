@@ -16,7 +16,8 @@ get_sessions() {
 
 get_windows() {
 	tmux list-windows |\
-		awk '{print $2}'
+		awk '{print $2}' |\
+		awk '{ gsub(/[\*#-]/, "", $1); print $1 }'
 }
 
 handle_sessions() {
@@ -57,7 +58,6 @@ handle_windows() {
 	[ ! -e .__SHIFT__ ] && exit
 
 	window_name="$(awk '{print $2}' .__SHIFT__)"
-	window_name="$(awk '{ gsub(/[*-]/, "", $1); print $1 }' <<< "$window_name")"
 	rm .__SHIFT__
 
 	tmux select-window -t "$window_name"
