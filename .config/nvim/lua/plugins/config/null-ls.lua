@@ -3,7 +3,7 @@ return {
 	dependencies = {
 		"rcarriga/nvim-notify",
 	},
-	event = "VeryLazy",
+	event = "LspAttach",
 	config = function()
 		local null = require("null-ls")
 
