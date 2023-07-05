@@ -9,15 +9,35 @@ path="$HOME/.local/scripts/shift"
 [ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
 get_sessions() {
-	tmux list-sessions |\
-		awk '{print $1}' |\
-		awk '{ gsub(/:/, "", $1); print $1 }'
+	sessions="$(tmux list-sessions)"
+
+	current="$(grep -i attached <<< "$sessions")"
+	without_current="$(grep -iv attached <<< "$sessions")"
+
+	# clean up lines
+	current="$(awk '{ print $1 }' <<< "$current" |\
+						 awk '{ gsub(/:/, "", $1); print $1 }')"
+	without_current="$(awk '{ print $1 }' <<< "$without_current" |\
+						 awk '{ gsub(/:/, "", $1); print $1 }')"
+
+	# print current session always first
+	echo "$current"
+	echo "$without_current"
 }
 
 get_windows() {
-	tmux list-windows |\
-		awk '{print $2}' |\
-		awk '{ gsub(/[\*#-]/, "", $1); print $1 }'
+	windows="$(tmux list-windows)"
+
+	current="$(grep -i active <<< "$windows")"
+	without_current="$(grep -iv active <<< "$windows")"
+
+	current="$(awk '{ print $2 }' <<< "$current" |\
+		         awk '{ gsub(/[\*#-]/, "", $1); print $1 }')"
+	without_current="$(awk '{ print $2 }' <<< "$without_current" |\
+		         awk '{ gsub(/[\*#-]/, "", $1); print $1 }')"
+
+	echo "$current"
+	echo "$without_current"
 }
 
 handle_sessions() {
