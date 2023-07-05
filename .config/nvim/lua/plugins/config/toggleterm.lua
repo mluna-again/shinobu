@@ -25,32 +25,6 @@ return {
 		})
 
 		local term = require("toggleterm.terminal").Terminal
-		local lazygit = term:new({
-			cmd = "lazygit",
-			hidden = true,
-			direction = "float",
-			on_open = function()
-				vim.cmd("startinsert!")
-			end,
-			float_opts = {
-				border = "solid",
-			},
-			highlights = {
-				Normal = {
-					link = "TelescopePromptNormal",
-				},
-				NormalFloat = {
-					link = "TelescopePromptNormal",
-				},
-				FloatBorder = {
-					link = "TelescopePromptNormal",
-				},
-			},
-		})
-
-		local function toggle_lazy()
-			lazygit:toggle()
-		end
 
 		local spotify = term:new({
 			cmd = "spotify_player",
@@ -89,7 +63,6 @@ return {
 		}, {prefix = "<Leader>"})
 		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
 
-		vim.api.nvim_create_user_command("LG", function() toggle_lazy() end, {})
 		vim.api.nvim_create_user_command("Spotify", function() toggle_spotify() end, {})
 	end,
 }
