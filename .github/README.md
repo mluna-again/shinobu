@@ -10,21 +10,22 @@
 <img width="1920" target="_blank" alt="tmux-sessions" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/sessions.png">
 
 ## Dependencies
-    * Required
-        1. nvim
-        2. tmux
-        3. zsh
-        4. starship
-        5. git
-        6. gcc
+* Required
+    1. nvim
+    2. tmux
+    3. zsh
+    4. yadm
+    5. starship
+    6. git
+    7. gcc
 
-    * Recommended
-        1. ripgrep
-        2. fzf
-        3. go
-        4. spotify-player
-        5. spotify (desktop)
-        6. hurl
+* Recommended
+    1. ripgrep
+    2. fzf
+    3. go
+    4. spotify-player
+    5. spotify (desktop)
+    6. hurl
 
 ## Problems I've encountered that I don't want to forget
 
