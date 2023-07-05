@@ -36,7 +36,7 @@ func newModel(app *app) (model, error) {
 	var h int
 	var err error
 	// dimensions were passed as args
-	if len(os.Args) == 3 {
+	if len(os.Args) >= 3 {
 		w, err = strconv.Atoi(os.Args[1])
 		if err == nil {
 			h, err = strconv.Atoi(os.Args[2])
