@@ -70,4 +70,5 @@ require("lazy").setup({
 	require("plugins.config.repeat"),
 	require("plugins.config.vim-elixir"),
 	require("plugins.config.fzf-native"),
+	require("plugins.config.goto"),
 })

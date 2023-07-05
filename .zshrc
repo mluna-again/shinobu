@@ -82,6 +82,7 @@ alias dotsp="dots push"
 alias dotsP="dots pull"
 alias dotsb="dots branch"
 alias dotsd="dots diff"
+alias dotsdd="dots diff --cached"
 dotsc() {
   dots commit -m "$*"
 }

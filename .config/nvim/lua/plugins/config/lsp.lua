@@ -4,6 +4,8 @@ return {
 	dependencies = {
 		"folke/neodev.nvim",
 		"williamboman/mason.nvim",
+		"rmagatti/goto-preview",
+		"folke/which-key.nvim",
 	},
 	config = function()
 		require("mason-lspconfig").setup({
@@ -19,10 +21,8 @@ return {
 			"solargraph",
 			"rust_analyzer",
 			"clojure_lsp",
-			"kotlin_language_server",
 			"gopls",
 			"metals",
-			-- "csharp_ls",
 			"golangci_lint_ls",
 			"volar",
 			"lua_ls",
@@ -34,10 +34,59 @@ return {
 			})
 		end
 
-		nmap("<Leader>lh", ":lua vim.lsp.buf.hover()<CR>")
-		nmap("<Leader>lr", ":lua vim.lsp.buf.rename()<CR>")
-		nmap("<Leader>lf", ":lua vim.lsp.buf.definition()<CR>")
-		nmap("<Leader>ld", ":lua vim.diagnostic.open_float()<CR>")
-		nmap("<Leader>ll", ":LspRestart<CR>")
+		local wk = require("which-key")
+		wk.register({
+			l = {
+				name = "Lsp",
+				h = {
+					function()
+						vim.lsp.buf.hover()
+					end,
+					"Hover",
+					noremap = true,
+					silent = true
+				},
+				r = {
+					function()
+						vim.lsp.buf.rename()
+					end,
+					"Rename",
+					noremap = true,
+					silent = true
+				},
+				f = {
+					function()
+						require("goto-preview").goto_preview_definition()
+					end,
+					"Definition preview",
+					noremap = true,
+					silent = true
+				},
+				F = {
+					function()
+						vim.lsp.buf.definition()
+					end,
+					"Go to definition",
+					noremap = true,
+					silent = true
+				},
+				d = {
+					function()
+						vim.diagnostic.open_float()
+					end,
+					"Diagnostics",
+					noremap = true,
+					silent = true
+				},
+				R = {
+					function()
+						vim.cmd("LspRestart")
+					end,
+					"Restart server",
+					noremap = true,
+					silent = true
+				},
+			}
+		}, { prefix = "<Leader>" })
 	end,
 }
