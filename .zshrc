@@ -127,6 +127,7 @@ yt() {
 }
 
 alias t="tmux attach || tmux"
+alias tC="rm -rf $HOME/.cache/resurrect"
 
 paragraph() {
   awk -v RS= "NR==${2:-1}" $1
