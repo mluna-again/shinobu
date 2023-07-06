@@ -1,0 +1,66 @@
+snippet redirect "adds redirection to a request" b
+[Options]
+location: true
+HTTP 200
+endsnippet
+
+snippet header "displays a comment with a header example" b
+Authorization: "Bearer token"
+endsnippet
+
+snippet queryParams "displays a comment with a query params example" b
+[QueryStringParams]
+id: 42
+order_by: date
+endsnippet
+
+snippet cookies "displays a comment with a cookies example" b
+[Cookies]
+session_id: ASDFASDF
+endsnippet
+
+snippet formParams "displays a comment with a form example" b
+[FormParams]
+email: jane@doe.com
+number: 1234567890
+endsnippet
+
+snippet multiForm "displays a comment with a multipart form example" b
+[MultipartFormData]
+name: jane doe
+contacts: file,contacts.csv; text/csv # content-type is optional
+endsnippet
+
+snippet file "displays a comment with a file post example" b
+POST https://www.example.org
+file,data.csv;
+endsnippet
+
+snippet options "displays options available" b
+[Options]
+cacert: /etc/cert.pem   # a custom certificate file
+compressed: true        # request a compressed response
+insecure: true          # allows insecure SSL connections and transfers
+location: true          # follow redirection for this request
+max-redirs: 10          # maximum number of redirections
+path-as-is: true        # tell curl to not handle sequences of /../ or /./ in the given URL path
+variable: country=Italy # define variable country
+variable: planet=Earth  # define variable planet
+verbose: true           # allow verbose output
+very-verbose: true      # allow more verbose output
+endsnippet
+
+snippet captures "displays a capture example" b
+GET https://www.example.org
+HTTP 200
+[Captures]
+csrf_token: xpath "normalize-space(//meta[@name='_csrf_token']/@content)"
+session-id: cookie "LSID"
+next_url: header "Location"
+resp_body: body
+
+# you can use captured values in subsequent requests
+POST https://www.example.org/login
+X-CSRF-TOKEN: {{csrf_token}}
+HTTP 302
+endsnippet
