@@ -1,8 +1,8 @@
 add_newline = false
 
-format = """[┏━](fg:red) $username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$fill${custom.hack}$cmd_duration$memory_usage$jobs[━┓](fg:red)
+format = """[┏━](fg:red) $username@$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$fill${custom.hack}$memory_usage$jobs[━┓](fg:red)
 [┗━](fg:red) $status$character"""
-right_format = "$localip[━┛](fg:red)"
+right_format = "$cmd_duration$localip[━┛](fg:red)"
 palette = "kanagawa"
 
 [palettes.kanagawa]
@@ -28,8 +28,8 @@ disabled = false
 style = "fg:yellow"
 
 [cmd_duration]
-min_time = 200
-show_milliseconds = true
+min_time = 1_000
+show_milliseconds = false
 
 [fill]
 # symbol = "━"
@@ -58,10 +58,12 @@ style = "fg:yellow"
 show_always = true
 style_user = "fg:yellow"
 style_root = "fg:yellow"
+format = '[$user]($style)'
 
 [hostname]
 disabled = false
 ssh_only = false
+format = '[$hostname]($style) in '
 
 [ruby]
 detect_variables = ["RENV_VERSION"]
