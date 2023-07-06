@@ -35,8 +35,8 @@ run() {
 }
 alias q="exit"
 command -v z &>/dev/null && alias cd="z"
-command -v exa &>/dev/null && alias ls="exa --icons || /bin/ls"
-command -v exa &>/dev/null && alias ll="exa --icons -lh || /bin/ls -lh"
+command -v exa &>/dev/null && alias ls="exa --icons -1"
+command -v exa &>/dev/null && alias ll="exa --icons -lh -1"
 alias :q="exit"
 alias rice='curl -L rum.sh/ricebowl'
 alias rice='curl -L git.io/rice'

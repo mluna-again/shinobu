@@ -32,7 +32,8 @@ min_time = 200
 show_milliseconds = true
 
 [fill]
-symbol = "━"
+# symbol = "━"
+symbol = " "
 style = "red"
 
 [character]
