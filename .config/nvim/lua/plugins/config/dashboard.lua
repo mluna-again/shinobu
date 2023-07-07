@@ -44,7 +44,8 @@ local function greetings()
 		"i've seen things you people wouldn't believe...",
 		"they didn't suffer",
 		"is this all there is?",
-		"there is no such thing as that rose-colored life"
+		"there is no such thing as that rose-colored life",
+		"unix is my ide",
 	}
 
 	math.randomseed(os.time())
