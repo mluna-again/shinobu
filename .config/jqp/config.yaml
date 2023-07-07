@@ -7,3 +7,9 @@ theme:
   success: "#87a987"
 
   chromaStyleOverrides: # override parts of the chroma style
+    bg: "#1D1C19"
+    s: "#8ba4b0"
+    m: "#8992a7"
+    k: "#c4b28a"
+    n: "#c5c9c5"
+    p: "#c4746e"
