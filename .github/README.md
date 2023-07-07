@@ -10,28 +10,29 @@
 <img width="1920" target="_blank" alt="tmux-sessions" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/sessions.png">
 
 ## Dependencies
-* Required
-    1. nvim
-    2. tmux
-    3. zsh
-    4. yadm
-    5. starship
-    6. git
-    7. gcc
-    8. zoxide
+### Required
+1. nvim
+2. tmux
+3. zsh
+4. yadm
+5. starship
+6. git
+7. make
 
-* Recommended
-    1. ripgrep
-    2. fzf
-    3. go
-    4. spotify-player
-    5. spotify (desktop)
-    6. hurl
-    7. jq
-    8. jqp
-    9. httpie
-    10. exa
-    11. delta
+### Recommended
+1. fd
+2. ripgrep
+3. zoxide
+4. fzf
+5. go
+6. spotify-player
+7. spotify (desktop)
+8. hurl
+9. jq
+10. jqp
+11. httpie
+12. exa
+13. delta
 
 ## Problems I've encountered that I don't want to forget
 
