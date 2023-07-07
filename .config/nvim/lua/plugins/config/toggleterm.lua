@@ -59,6 +59,7 @@ return {
 				name = "Testing/Terminal",
 				v = { ":ToggleTerm direction=vertical<CR>", "Vertical terminal", noremap = true, silent = true },
 				s = { ":ToggleTerm direction=horizontal<CR>", "Horizontal terminal", noremap = true, silent = true },
+				t = { ":ToggleTerm<CR>", "Toggle main terminal", noremap = true, silent = true },
 			}
 		}, {prefix = "<Leader>"})
 		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
