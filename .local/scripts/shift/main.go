@@ -124,7 +124,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "backspace":
 			for _, mode := range m.app.modes {
-				if m.mode == mode.mType && m.input.Value() == mode.prefix {
+				if m.mode == mode.mType && strings.TrimSpace(m.input.Value()) == mode.prefix {
 					mode := m.app.switchMode()
 					m.mode = mode.mType
 					m.input.Prompt = mode.prompt
