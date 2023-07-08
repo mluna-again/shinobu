@@ -162,6 +162,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	v := strings.Builder{}
+	if m.mode == switchSession {
+		v.WriteString("\n")
+	}
 
 	title := ""
 	for _, mode := range m.app.modes {
@@ -201,9 +204,10 @@ func (m model) View() string {
 	v.WriteRune('\n')
 
 	if m.mode == switchSession {
-		t := line.Render(m.table.View())
+		t := line.Width(m.termWidth).Render(m.table.View())
 		tc := strings.Split(t, "\n")[1:]
 		v.WriteString(strings.Join(tc, "\n"))
+		v.WriteRune('\n')
 		v.WriteString(line.Width(m.termWidth).Render(""))
 		v.WriteRune('\n')
 	}
