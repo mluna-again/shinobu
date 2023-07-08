@@ -53,6 +53,7 @@ func (m *model) autocompletePath() {
 			return
 		}
 		m.autocompleteElements = matches
+		m.autocompleting = true
 		return
 	}
 
@@ -64,6 +65,7 @@ func (m *model) autocompletePath() {
 		return
 	}
 	m.autocompleteElements = matches
+	m.autocompleting = true
 }
 
 func expandHomeDir(p string) (string, error) {
@@ -113,4 +115,5 @@ func (m *model) appendAutocomplete(match string) {
 	newValue = fmt.Sprintf("c %s %s", sessionName, newValue)
 	m.input.SetValue(newValue)
 	m.input.SetCursor(len(newValue))
+	m.autocompleting = false
 }

@@ -31,6 +31,7 @@ type model struct {
 	app        *app
 	autocompleteElements []os.DirEntry
 	autocompleteErr error
+	autocompleting bool
 }
 
 func newModel(app *app) (model, error) {
@@ -126,6 +127,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "backspace":
+			m.autocompleting = false
 			for _, mode := range m.app.modes {
 				if m.mode == mode.mType && strings.TrimSpace(m.input.Value()) == mode.prefix {
 					mode := m.app.switchMode()
@@ -149,6 +151,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 			m.autocompletePath()
+
+		case "/":
+			m.autocompleting = false
 		}
 	}
 	m.fuzzyFind()
@@ -226,7 +231,10 @@ func (m model) View() string {
 		if m.autocompleteErr != nil {
 			v.WriteString(m.autocompleteErr.Error())
 			v.WriteRune('\n')
-		} else {
+		}
+		if m.autocompleting && len(m.autocompleteElements) > 0 {
+			v.WriteString(line.Width(m.termWidth).Render(""))
+			v.WriteRune('\n')
 			for i, elem := range m.autocompleteElements {
 				if i >= 5 {
 					break
@@ -235,6 +243,15 @@ func (m model) View() string {
 				v.WriteString(line.Width(m.termWidth).Render(elem.Name()))
 				v.WriteRune('\n')
 			}
+
+			if len(m.autocompleteElements) > 0 && len(m.autocompleteElements) < 5 {
+				for i := len(m.autocompleteElements); i < 5; i++ {
+					v.WriteString(line.Width(m.termWidth).Render(""))
+					v.WriteRune('\n')
+				}
+			}
+			v.WriteString(line.Width(m.termWidth).Render(""))
+			v.WriteRune('\n')
 		}
 	}
 
