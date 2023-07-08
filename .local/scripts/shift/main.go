@@ -29,6 +29,8 @@ type model struct {
 	filtered   []string
 	mode       modeType
 	app        *app
+	autocompleteElements []os.DirEntry
+	autocompleteErr error
 }
 
 func newModel(app *app) (model, error) {
@@ -87,6 +89,7 @@ func newModel(app *app) (model, error) {
 		filtered:   []string{},
 		mode:       activeMode.mType,
 		app:        app,
+		autocompleteElements: []os.DirEntry{},
 	}, nil
 }
 
@@ -139,6 +142,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.input.Prompt = mode.prompt
 				}
 			}
+
+		case "tab":
+			if m.mode != createSession {
+				break
+			}
+
+			m.autocompletePath()
 		}
 	}
 	m.fuzzyFind()
@@ -210,6 +220,22 @@ func (m model) View() string {
 		v.WriteRune('\n')
 		v.WriteString(line.Width(m.termWidth).Render(""))
 		v.WriteRune('\n')
+	}
+
+	if m.mode == createSession {
+		if m.autocompleteErr != nil {
+			v.WriteString(m.autocompleteErr.Error())
+			v.WriteRune('\n')
+		} else {
+			for i, elem := range m.autocompleteElements {
+				if i >= 5 {
+					break
+				}
+
+				v.WriteString(line.Width(m.termWidth).Render(elem.Name()))
+				v.WriteRune('\n')
+			}
+		}
 	}
 
 	return v.String()
