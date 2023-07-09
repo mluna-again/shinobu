@@ -1,8 +1,8 @@
 add_newline = false
 
-format = """[┏━](fg:red) $username@$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$fill${custom.hack}$memory_usage$jobs[━┓](fg:red)
-[┗━](fg:red) $status$character"""
-right_format = "$cmd_duration$localip[━┛](fg:red)"
+format = """[┏━](fg:yellow) $username@$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$fill${custom.hack}$memory_usage$jobs[━┓](fg:yellow)
+[┗━](fg:yellow) $status$character"""
+right_format = "$cmd_duration$localip[━┛](fg:yellow)"
 palette = "kanagawa"
 
 [palettes.kanagawa]
@@ -34,7 +34,7 @@ show_milliseconds = false
 [fill]
 # symbol = "━"
 symbol = " "
-style = "red"
+style = "yellow"
 
 [character]
 success_symbol = '[\$](purple)'
