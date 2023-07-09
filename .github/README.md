@@ -33,6 +33,7 @@
 11. httpie
 12. exa
 13. delta
+14. direnv
 
 ## Problems I've encountered that I don't want to forget
 
