@@ -6,8 +6,8 @@
 <img width="1920" target="_blank" alt="neotest" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/neotest.png">
 <img width="1920" target="_blank" alt="noice" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/noice.png">
 <img width="1920" target="_blank" alt="dap" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/dap.png">
-<img width="1920" target="_blank" alt="spotify" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/spotify.png">
 <img width="1920" target="_blank" alt="tmux-sessions" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/sessions.png">
+<img width="1920" target="_blank" alt="spotify" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/monitor.png">
 
 ## Dependencies
 ### Required
