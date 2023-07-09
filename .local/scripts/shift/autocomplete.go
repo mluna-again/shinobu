@@ -49,7 +49,7 @@ func (m *model) autocompletePath() {
 			}
 		}
 		if len(matches) == 1 {
-			m.appendAutocomplete(matches[0].Name())
+			m.appendAutocomplete(matches[0])
 			return
 		}
 		m.autocompleteElements = matches
@@ -61,7 +61,7 @@ func (m *model) autocompletePath() {
 	matches = append(matches, entries...)
 
 	if len(matches) == 1 {
-		m.appendAutocomplete(matches[0].Name())
+		m.appendAutocomplete(matches[0])
 		return
 	}
 	m.autocompleteElements = matches
@@ -98,7 +98,7 @@ func getPathDir(p string) (string, bool) {
 	return strings.Join(comps, string(os.PathSeparator)), true
 }
 
-func (m *model) appendAutocomplete(match string) {
+func (m *model) appendAutocomplete(match os.DirEntry) {
 	// i validate that value has at least 3 elements in autocompletePath function
 	sessionName := strings.Split(m.input.Value(), " ")[1]
 	currentValue := strings.Split(m.input.Value(), " ")[2]
@@ -110,7 +110,13 @@ func (m *model) appendAutocomplete(match string) {
 
 	original, _ := strings.CutSuffix(currentValue, lastElem)
 	original, _ = strings.CutSuffix(original, string(os.PathSeparator))
-	newComps := []string{original, match}
+	newComps := []string{original, match.Name()}
+	if match.IsDir() {
+		// append the / at the end, if i use the separator
+		// instead of an empty string the function strings.Join
+		// will duplicate it, so that's why the empty string
+		newComps = append(newComps, "")
+	}
 	newValue := strings.Join(newComps, string(os.PathSeparator))
 	newValue = fmt.Sprintf("c %s %s", sessionName, newValue)
 	m.input.SetValue(newValue)
