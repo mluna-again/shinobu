@@ -38,6 +38,14 @@ return {
 		wk.register({
 			l = {
 				name = "Lsp",
+				u = {
+					function()
+						require('telescope.builtin').lsp_references()
+					end,
+					"References",
+					noremap = true,
+					silent = true
+				},
 				h = {
 					function()
 						vim.lsp.buf.hover()
