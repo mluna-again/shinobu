@@ -8,6 +8,11 @@ path="$HOME/.local/scripts/shift"
 
 [ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
+_remove_trailing_slash() {
+	awk '{print $1}' <<< "$1" |\
+		awk '{sub(/\/$/, "", $1); print $1}'
+}
+
 get_sessions() {
 	sessions="$(tmux list-sessions)"
 
@@ -50,8 +55,9 @@ handle_sessions() {
 
 	case "$mode" in
 		create)
-			session_name="$(awk '{print $1}' <<< "$params")"
+			session_name="$(_remove_trailing_slash "$params")"
 			session_path="$(awk '{print $2}' <<< "$params")"
+			session_path="$(_remove_trailing_slash "$session_path")"
 
 			[ -n "$session_path" ] && tmux new-session -d -s "$session_name" -c "$(eval echo "$session_path")" && tmux switch-client -t "$session_name" && exit
 
@@ -59,12 +65,12 @@ handle_sessions() {
 			;;
 
 		switch)
-			session_name="$(awk '{print $1}' <<< "$params")"
+			session_name="$(_remove_trailing_slash "$params")"
 			tmux switch-client -t "$session_name"
 			;;
 
 		rename)
-			session_name="$(awk '{print $1}' <<< "$params")"
+			session_name="$(_remove_trailing_slash "$params")"
 			tmux rename-session "$session_name"
 			;;
 
