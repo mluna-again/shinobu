@@ -34,6 +34,7 @@
 12. exa
 13. delta
 14. direnv
+15. watchexec
 
 ## Problems I've encountered that I don't want to forget
 
