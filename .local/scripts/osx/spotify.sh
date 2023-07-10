@@ -11,7 +11,7 @@ icon=""
 output=$(spotify status)
 
 get_song_name() {
-	grep -i track <<< "$output" | awk '{print $2}'
+	grep -i track <<< "$output" | awk -F':' '{sub(/ $/, "", $2); sub(/^ /, "", $2); print $2}'
 }
 song_name=$(get_song_name)
 
