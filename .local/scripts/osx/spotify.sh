@@ -2,25 +2,27 @@
 
 term_width="$1"
 
-width=`[ $term_width -lt 100 ] && echo 15 || echo 30`
+width=$([ "$term_width" -lt 100 ] && echo 15 || echo 30)
 
 pgrep Spotify &>/dev/null || exit
 
 icon=""
 
+output=$(spotify status)
+
 get_song_name() {
-	spotify status track
+	grep -i track <<< "$output" | awk '{print $2}'
 }
 song_name=$(get_song_name)
 
 get_artist() {
-	spotify status artist
+	grep -i artist <<< "$output" | awk -F':' '{sub(/^ /, "", $2); print $2}'
 }
 artist=$(get_artist)
 
-title="$song_name - $artist"
-short_title=$(echo $title | cut -c -$width)
+title="$icon $song_name - $artist"
+short_title=$(echo "$title" | cut -c -"$width")
 
-should_truncate=$([ ${#title} -gt $width ] && echo yes || echo no)
+should_truncate=$([ ${#title} -gt "$width" ] && echo yes || echo no)
 
-[ "$should_truncate" == yes ] && echo "#[bg=yellow,fg=black] $icon $short_title...#[fg=default]" || echo "#[bg=yellow,fg=black] $icon $title#[fg=default]"
+[ "$should_truncate" == yes ] && echo "#[bg=yellow,fg=black] $short_title...#[fg=default]" || echo "#[bg=yellow,fg=black] $title#[fg=default]"
