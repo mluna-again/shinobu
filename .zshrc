@@ -330,3 +330,4 @@ rails() {
 	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
 export PATH="$PATH:$HOME/.local/bin/protoc/bin:$(go env GOPATH)/bin"
+export FZF_DEFAULT_OPTS='--layout=reverse --prompt=" " --pointer=" " --header-first --header="Switch session" --color="bg:#1D1C19,bg+:#c4746e,fg+:#1D1C19,gutter:#1D1C19,header:#c4746e,prompt:#c4746e,query:#c5c9c5" --height="50%"'
