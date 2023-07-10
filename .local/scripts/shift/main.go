@@ -22,16 +22,16 @@ type app struct {
 }
 
 type model struct {
-	input      textinput.Model
-	table      table.Model
-	termWidth  int
-	termHeight int
-	filtered   []string
-	mode       modeType
-	app        *app
+	input                textinput.Model
+	table                table.Model
+	termWidth            int
+	termHeight           int
+	filtered             []string
+	mode                 modeType
+	app                  *app
 	autocompleteElements []os.DirEntry
-	autocompleteErr error
-	autocompleting bool
+	autocompleteErr      error
+	autocompleting       bool
 }
 
 func newModel(app *app) (model, error) {
@@ -83,13 +83,13 @@ func newModel(app *app) (model, error) {
 	})
 
 	return model{
-		input:      i,
-		table:      t,
-		termWidth:  w,
-		termHeight: h,
-		filtered:   []string{},
-		mode:       activeMode.mType,
-		app:        app,
+		input:                i,
+		table:                t,
+		termWidth:            w,
+		termHeight:           h,
+		filtered:             []string{},
+		mode:                 activeMode.mType,
+		app:                  app,
 		autocompleteElements: []os.DirEntry{},
 	}, nil
 }
@@ -99,6 +99,8 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	m.input.Width = m.inputWidth()
+
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -133,6 +135,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					mode := m.app.switchMode()
 					m.mode = mode.mType
 					m.input.Prompt = mode.prompt
+					m.input.Width = m.inputWidth()
 					m.input.Reset()
 				}
 			}
@@ -206,12 +209,13 @@ func (m model) View() string {
 	v.WriteString(hRight)
 	v.WriteRune('\n')
 
-	inputText := m.input.View()
+	inputText := header.Render(m.input.View())
 	if m.mode != switchSession {
 		v.WriteString(m.app.cleanUpModeParamsForView(inputText))
 		v.WriteString(header.Render("  "))
 	} else {
 		v.WriteString(inputText)
+		v.WriteString(header.Render(m.counterText()))
 	}
 
 	v.WriteRune('\n')

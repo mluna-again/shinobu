@@ -34,3 +34,17 @@ func (app *app) cleanUpModeParamsForView(params string) string {
 	}
 	return params
 }
+
+func (m model) inputWidth() int {
+	if m.mode == switchSession {
+		return m.termWidth - 4 - len(m.counterText())
+	}
+
+	return m.termWidth - 4
+}
+
+func (m model) counterText() string {
+	total := len(m.app.lines)
+	filtered := len(m.filtered)
+	return fmt.Sprintf("%d/%d ", filtered, total)
+}
