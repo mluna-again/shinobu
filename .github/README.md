@@ -35,6 +35,7 @@
 13. delta
 14. direnv
 15. watchexec
+16. bat
 
 ## Problems I've encountered that I don't want to forget
 
