@@ -70,6 +70,7 @@ return {
 					NeoTreeTabInactive = { bg = colors.palette.dragonBlack3, fg = colors.palette.dragonGray },
 					NeoTreeTabSeparatorActive = { fg = colors.palette.dragonBlack4 },
 					NeoTreeTabSeparatorInactive = { fg = colors.palette.dragonBlack4 },
+					NeoTreeVertSplit = { fg = colors.palette.dragonBlack4, bg = colors.palette.dragonBlack4 },
 
 					BufferLineBufferModified = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonYellow },
 					BufferLineBufferModifiedVisible = { fg = colors.palette.dragonGray, bg = colors.palette.dragonBlack4 },
@@ -182,10 +183,13 @@ return {
 					CmpItemKindFolder = { bg = colors.palette.dragonGray, fg = colors.palette.dragonBlack4 },
 					CmpItemKindEnum = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 					CmpItemKindEnumMember = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+					CmpItemKindProperty = { bg = colors.palette.dragonBlack2, fg = colors.palette.dragonYellow },
 
 					LightspeedShortcut = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 					LightspeedLabel = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 					LightspeedOneCharMatch = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
+
+					WinSeparator = { fg = colors.palette.dragonBlack2, bg = colors.palette.dragonBlack3 },
 				}
 			end,
 		})

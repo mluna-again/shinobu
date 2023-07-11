@@ -54,7 +54,6 @@ require("lazy").setup({
 	require("plugins.config.oil"),
 	require("plugins.config.vim-test"),
 	require("plugins.config.better-escape"),
-	require("plugins.config.tint"),
 	require("plugins.config.noice"),
 	require("plugins.config.dressing"),
 	require("plugins.config.endwise"),
