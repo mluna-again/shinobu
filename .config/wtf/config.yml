@@ -1,0 +1,94 @@
+wtf:
+  colors:
+    border:
+      focusable: darkslateblue
+      focused: orange
+      normal: gray
+  grid:
+    columns: [32, 32, 32, 32, 90]
+    rows: [10, 10, 10, 6, 6, 6, 90]
+  refreshInterval: 1
+  mods:
+    cmdrunner:
+      args: []
+      cmd: "/Users/mluna/.config/wtf/spotify.sh"
+      enabled: true
+      position:
+        top: 0
+        left: 3
+        height: 6
+        width: 2
+      refreshInterval: 5s
+      enabled: true
+      focusable: false
+      title: "Spotify"
+      border: true
+
+    clocks:
+      colors:
+        rows:
+          even: "lightblue"
+          odd: "white"
+      enabled: true
+      locations:
+        # From https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+        - Tokyo: "Asia/Tokyo"
+        - Mexico: "America/Mexico_City"
+        - UTC: "Etc/UTC"
+      timeFormat: 3:04PM
+      position:
+        top: 3
+        left: 0
+        height: 1
+        width: 1
+      refreshInterval: 15s
+      # Valid options are: alphabetical, chronological, natural
+      sort: "alphabetical"
+
+    tokyo:
+      type: prettyweather
+      enabled: true
+      city: "tokyo"
+      position:
+          top: 4
+          left: 0
+          height: 2
+          width: 1
+      refreshInterval: 10m
+      unit: "m"
+      view: 0
+      language: "en"
+      title: "Tokyo"
+
+    mexico:
+      type: prettyweather
+      enabled: true
+      city: "mexico"
+      position:
+          top: 4
+          left: 1
+          height: 2
+          width: 1
+      refreshInterval: 10m
+      unit: "m"
+      view: 0
+      language: "en"
+      title: "CDMX"
+
+    digitalclock:
+      color: orange
+      border: true
+      enabled: true
+      font: digitalfont
+      hourFormat: 12
+      position:
+        top: 3
+        left: 1
+        height: 1
+        width: 1
+      withDatePrefix: False
+      dateFormat: ""
+      refreshInterval: 1s
+      title: "Time"
+      type: "digitalclock"
+
