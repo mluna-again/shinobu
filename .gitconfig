@@ -11,7 +11,7 @@
 
 [core]
 	excludesFile = ~/.gitignore
-	pager = delta --side-by-side --line-numbers || less
+	pager = delta --side-by-side --line-numbers --syntax-theme kanagawa-dragon || less
 
 [interactive]
 	diffFilter = delta --color-only
@@ -25,3 +25,4 @@
 
 [diff]
 	colorMoved = default
+
