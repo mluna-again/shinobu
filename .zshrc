@@ -69,6 +69,15 @@ fv() {
   nvim "$file"
 }
 
+vid() {
+  local file
+  file="$(fzf)"
+
+  [ -z "$file" ] && return
+
+  mpv --no-video "$file"
+}
+
 # phoenix
 alias phs="mix phx.server"
 
