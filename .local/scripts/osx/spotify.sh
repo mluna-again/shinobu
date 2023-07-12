@@ -25,4 +25,4 @@ short_title=$(echo "$title" | cut -c -"$width")
 
 should_truncate=$([ ${#title} -gt "$width" ] && echo yes || echo no)
 
-[ "$should_truncate" == yes ] && echo "#[bg=yellow,fg=black] $short_title...#[fg=default]" || echo "#[bg=yellow,fg=black] $title#[fg=default]"
+[ "$should_truncate" == yes ] && echo "#[bg=yellow,fg=black] $short_title... #[fg=default]" || echo "#[bg=yellow,fg=black] $title #[fg=default]"

@@ -27,15 +27,16 @@
 5. go
 6. spotify-player
 7. spotify (desktop)
-8. hurl
-9. jq
-10. jqp
-11. httpie
-12. exa
-13. delta
-14. direnv
-15. watchexec
-16. bat
+8. shpotify
+9. hurl
+10. jq
+11. jqp
+12. httpie
+13. exa
+14. delta
+15. direnv
+16. watchexec
+17. bat
 
 ## Problems I've encountered that I don't want to forget
 
