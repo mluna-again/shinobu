@@ -3,6 +3,10 @@ return {
 	config = function()
 		require("nvim-web-devicons").setup({
 			override = {
+				zig = {
+					icon = "",
+					name = "zig"
+				},
 				hurl = {
 					icon = "󱘖",
 					color = "#514e60",

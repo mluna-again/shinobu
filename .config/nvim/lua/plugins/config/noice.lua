@@ -40,7 +40,7 @@ return {
 				view = "notify", -- default view for messages
 				view_error = "notify", -- view for errors
 				view_warn = "notify", -- view for warnings
-				view_history = "messages", -- view for :messages
+				view_history = "notify", -- view for :messages
 				view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
 			},
 			popupmenu = {
@@ -70,7 +70,7 @@ return {
 							{ event = "notify" },
 							{ error = true },
 							{ warning = true },
-							{ event = "msg_show", kind = { "" } },
+							-- { event = "msg_show", kind = { "" } },
 							{ event = "lsp", kind = "message" },
 						},
 					},
@@ -223,13 +223,13 @@ return {
 					},
 					opts = { skip = true },
 				},
-				{
-					filter = {
-						event = "msg_show",
-						kind = "",
-					},
-					opts = { skip = true },
-				},
+				-- {
+				-- 	filter = {
+				-- 		event = "msg_show",
+				-- 		kind = "",
+				-- 	},
+				-- 	opts = { skip = true },
+				-- },
 			}, --- @see section on routes
 			---@type table<string, NoiceFilter>
 			status = {}, --- @see section on statusline components

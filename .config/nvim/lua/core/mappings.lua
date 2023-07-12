@@ -17,7 +17,7 @@ wk.register({
 
 wk.register({
 	s = {
-		s = { ":w<CR>", "Save buffer", noremap = true, silent = true },
+		s = { ":silent w<CR>", "Save buffer", noremap = true, silent = true },
 	},
 	S = {
 		S = { function ()
