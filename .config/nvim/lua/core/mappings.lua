@@ -21,8 +21,7 @@ wk.register({
 	},
 	S = {
 		S = { function ()
-			vim.lsp.buf.format({ async = false })
-			vim.cmd("w")
+			vim.cmd("FormatWriteLock")
 		end, "Save buffer with formatting", noremap = true, silent = true }
 	},
 	g = {
