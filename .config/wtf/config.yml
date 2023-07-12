@@ -9,9 +9,10 @@ wtf:
     rows: [10, 10, 10, 6, 6, 6, 90]
   refreshInterval: 1
   mods:
-    cmdrunner:
+    spotify:
+      type: cmdrunner
       args: []
-      cmd: "/Users/mluna/.config/wtf/spotify.sh"
+      cmd: "/Users/mluna/.config/wtf/scripts/spotify.sh"
       enabled: true
       position:
         top: 0
@@ -92,3 +93,16 @@ wtf:
       title: "Time"
       type: "digitalclock"
 
+    dotfiles:
+      type: cmdrunner
+      enabled: true
+      args: []
+      title: "Dotfiles"
+      focusable: false
+      cmd: "/Users/mluna/.config/wtf/scripts/dotfiles.sh"
+      position:
+        top: 0
+        left: 0
+        height: 1
+        width: 3
+      refreshInterval: 8s
