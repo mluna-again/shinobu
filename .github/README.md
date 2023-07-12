@@ -43,3 +43,8 @@
 * You open a file and no status line and/or highlight on:
 
     - Install the corresponding lsp for that language (:MasonInstall \<lsp-name\>)
+
+* OSX key-repeat is too slow:
+    - defaults write -g InitialKeyRepeat -int 15
+    - defaults write -g KeyRepeat -int 1
+    - logout
