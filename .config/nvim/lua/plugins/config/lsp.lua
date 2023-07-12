@@ -25,6 +25,7 @@ return {
 			"metals",
 			"golangci_lint_ls",
 			"volar",
+			"zls",
 			-- "lua_ls",
 		}
 

@@ -173,6 +173,7 @@ return {
 					CmpItemKindField = { bg = colors.palette.dragonBlue, fg = colors.palette.dragonBlack4 },
 					CmpItemKindModule = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 					CmpItemKindVariable = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
+					CmpItemKindConstant = { bg = colors.palette.dragonWhite, fg = colors.palette.dragonBlack4 },
 					CmpItemKindClass = { bg = colors.palette.dragonViolet, fg = colors.palette.dragonBlack4 },
 					CmpItemKindStruct = { bg = colors.palette.dragonViolet, fg = colors.palette.dragonBlack4 },
 					CmpItemKindInterface = { bg = colors.palette.dragonTeal, fg = colors.palette.dragonBlack4 },
