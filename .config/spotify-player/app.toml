@@ -1,6 +1,8 @@
 theme = "kanagawa-dragon"
 cover_img_width = 0
 cover_img_length = 0
+app_refresh_duration_in_ms = 900
+playback_refresh_duration_in_ms = 150
 
 [device]
 name = "spotify-player"
