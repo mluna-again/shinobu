@@ -37,9 +37,9 @@ symbol = " "
 style = "yellow"
 
 [character]
-success_symbol = '[\$](purple)'
-error_symbol = '[\$](red)'
-vicmd_symbol = '[\$](green)'
+success_symbol = '[󱐋](purple)'
+error_symbol = '[󱐋](red)'
+vicmd_symbol = '[󱐋](green)'
 
 [[battery.display]]
 threshold = 100

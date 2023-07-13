@@ -155,7 +155,7 @@ return {
 						color = { gui = "bold" },
 					},
 				},
-				lualine_c = { { "branch", icon = "" } },
+				lualine_c = { { "branch", icon = "" } },
 				lualine_x = { {
 					"diagnostics",
 					diagnostics_color = {
