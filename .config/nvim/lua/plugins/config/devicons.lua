@@ -3,9 +3,13 @@ return {
 	config = function()
 		require("nvim-web-devicons").setup({
 			override = {
+				rs = {
+					icon = "",
+					name = "rust",
+				},
 				zig = {
 					icon = "",
-					name = "zig"
+					name = "zig",
 				},
 				hurl = {
 					icon = "󱘖",
