@@ -3,6 +3,11 @@ return {
 	config = function()
 		require("nvim-web-devicons").setup({
 			override = {
+				gleam = {
+					icon = "󱕅",
+					name = "gleam",
+					color = "#ffb0f3",
+				},
 				rs = {
 					icon = "",
 					name = "rust",
