@@ -26,6 +26,7 @@ return {
 			"golangci_lint_ls",
 			"volar",
 			"zls",
+			"gleam",
 			-- "lua_ls",
 		}
 
