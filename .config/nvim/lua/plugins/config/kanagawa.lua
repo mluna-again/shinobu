@@ -85,7 +85,7 @@ return {
 					BufferLineDuplicate = { fg = colors.palette.dragonGray, bg = colors.palette.dragonBlack4 },
 					BufferLineDuplicateVisible = { fg = colors.palette.dragonGray, bg = colors.palette.dragonBlack4 },
 					BufferLineDuplicateSelected = { fg = colors.palette.dragonBlack3, bg = colors.palette.dragonYellow },
-					BufferLineFill = { fg = colors.palette.dragonBlack1 },
+					BufferLineFill = { fg = colors.palette.dragonYellow },
 					BufferLineBackground = { fg = colors.palette.dragonGray, bg = colors.palette.dragonBlack4 },
 					BufferLineSeparator = { fg = colors.palette.dragonBlack4, bg = colors.palette.dragonBlack4 },
 					BufferLineSeparatorVisible = { fg = colors.palette.dragonBlack4, bg = colors.palette.dragonBlack4 },
