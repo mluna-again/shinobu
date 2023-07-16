@@ -20,6 +20,8 @@ get_artist() {
 }
 artist=$(get_artist)
 
+[ -z "$artist" ] && [ -z "$song_name" ] && exit
+
 title="$icon $song_name - $artist"
 short_title=$(echo "$title" | cut -c -"$width")
 
