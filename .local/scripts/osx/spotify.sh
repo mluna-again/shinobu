@@ -11,12 +11,12 @@ icon=""
 output=$(spotify status)
 
 get_song_name() {
-	grep -i track <<< "$output" | awk -F':' '{sub(/ $/, "", $2); sub(/^ /, "", $2); print $2}'
+	grep "Track:" <<< "$output" | awk -F':' '{sub(/ $/, "", $2); sub(/^ /, "", $2); print $2}'
 }
 song_name=$(get_song_name)
 
 get_artist() {
-	grep -i artist <<< "$output" | awk -F':' '{sub(/^ /, "", $2); print $2}'
+	grep "Artist:" <<< "$output" | awk -F':' '{sub(/^ /, "", $2); print $2}'
 }
 artist=$(get_artist)
 
