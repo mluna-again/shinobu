@@ -1,6 +1,5 @@
 return {
-	"mluna-again/bufferline.nvim",
-	branch = "feature/trunc_sep_hl",
+	"akinsho/bufferline.nvim",
 	event = "VeryLazy",
 	dependencies = "kanagawa.nvim",
 	config = function()
