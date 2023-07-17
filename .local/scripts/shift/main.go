@@ -214,8 +214,9 @@ func (m model) View() string {
 		v.WriteString(m.app.cleanUpModeParamsForView(inputText))
 		v.WriteString(header.Render("  "))
 	} else {
-		v.WriteString(inputText)
-		v.WriteString(header.Render(m.counterText()))
+		counter := m.counterText()
+		v.WriteString(header.Width(m.termWidth-len(counter)-len(inputText)).Render(inputText))
+		v.WriteString(header.Render(counter))
 	}
 
 	v.WriteRune('\n')
