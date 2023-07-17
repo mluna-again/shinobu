@@ -46,5 +46,5 @@ func (m model) inputWidth() int {
 func (m model) counterText() string {
 	total := len(m.app.lines)
 	filtered := len(m.filtered)
-	return fmt.Sprintf("%02d/%d ", filtered, total)
+	return fmt.Sprintf("%02d/%02d ", filtered, total)
 }
