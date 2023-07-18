@@ -80,7 +80,7 @@ return {
 				":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>"),
 			mkButton(" SPC f w ", "Find word",
 				":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>"),
-			mkButton(" SPC s l ", "Load last session", ":source Session.vim<CR>"),
+			mkButton(" SPC s l ", "Load last session", ":SessionLoad<CR>"),
 			mkButton("    q    ", "Quit Neovim", ":q<CR>"),
 		}
 

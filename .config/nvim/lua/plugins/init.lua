@@ -62,7 +62,6 @@ require("lazy").setup({
 	require("plugins.config.popup"),
 	require("plugins.config.plenary"),
 	require("plugins.config.goyo"),
-	require("plugins.config.obsession"),
 	require("plugins.config.fzf"),
 	require("plugins.config.closetag"),
 	require("plugins.config.bbye"),
@@ -71,4 +70,5 @@ require("lazy").setup({
 	require("plugins.config.vim-elixir"),
 	require("plugins.config.fzf-native"),
 	require("plugins.config.goto"),
+	require("plugins.config.persisted"),
 })
