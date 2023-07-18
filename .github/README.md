@@ -37,6 +37,7 @@
 15. direnv
 16. watchexec
 17. bat
+18. r*st
 
 ## Problems I've encountered that I don't want to forget
 
