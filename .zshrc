@@ -147,6 +147,18 @@ dotsL() {
   yadm log --format="%h • %s • %an" | fzf --preview='yadm diff {+1}^ {+1} | delta'
 }
 
+gH() {
+  [ -z "$1" ] && { echo "No file specified."; return; }
+
+  git log --follow --format="%h • %s • %an" -- "$1" | fzf --preview='git diff {+1}^ {+1} | delta'
+}
+
+dotsH() {
+  [ -z "$1" ] && { echo "No file specified."; return; }
+
+  yadm log --follow --format="%h • %s • %an" -- "$1" | fzf --preview='yadm diff {+1}^ {+1} | delta'
+}
+
 yt() {
   link="$1"
   yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$link"
