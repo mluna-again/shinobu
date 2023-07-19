@@ -139,6 +139,14 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 # </Aliases>
 
 # <Function>
+gL() {
+  git log --format="%h • %s • %an" | fzf --preview='git diff {+1}^ {+1} | delta'
+}
+
+dotsL() {
+  yadm log --format="%h • %s • %an" | fzf --preview='yadm diff {+1}^ {+1} | delta'
+}
+
 yt() {
   link="$1"
   yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$link"
@@ -339,4 +347,4 @@ rails() {
 	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
 export PATH="$PATH:$HOME/.local/bin/zig"
-export FZF_DEFAULT_OPTS='--layout=reverse --prompt=" " --pointer=" " --header-first --header="Switch session" --color="bg:#1D1C19,bg+:#c4746e,fg+:#1D1C19,gutter:#1D1C19,header:#c4746e,prompt:#c4746e,query:#c5c9c5" --height="50%"'
+export FZF_DEFAULT_OPTS='--layout=reverse --prompt=" " --pointer=" " --header-first --header="Switch session" --color="bg:#1D1C19,bg+:#c4746e,fg+:#1D1C19,gutter:#1D1C19,header:#c4746e,prompt:#c4746e,query:#c5c9c5" --height="95%"'
