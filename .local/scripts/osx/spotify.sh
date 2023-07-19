@@ -2,7 +2,8 @@
 
 term_width="$1"
 
-width=$([ "$term_width" -lt 100 ] && echo 15 || echo 30)
+width=30
+[ "$term_width" -lt 120 ] && width=15
 
 pgrep Spotify &>/dev/null || exit
 
