@@ -11,22 +11,26 @@ const yellow = "#c4b28a"
 
 var header = lipgloss.NewStyle().
 	Background(lipgloss.Color(darker)).
-	Foreground(lipgloss.Color(light))
+	Foreground(lipgloss.Color(light)).
+	Bold(false)
 
 var prompt = lipgloss.NewStyle().
 	Background(lipgloss.Color(darker)).
-	Foreground(lipgloss.Color(light))
+	Foreground(lipgloss.Color(light)).
+	Bold(false)
 
 var headerTitle = lipgloss.NewStyle().
 	Background(lipgloss.Color(yellow)).
 	Foreground(lipgloss.Color(dark)).
-	Bold(true)
+	Bold(false)
 
 var line = lipgloss.NewStyle().
 	Background(lipgloss.Color(darkLight)).
 	Foreground(lipgloss.Color(light)).
-	PaddingLeft(1)
+	PaddingLeft(1).
+	Bold(false)
 
 var selectedLine = lipgloss.NewStyle().
 	Background(lipgloss.Color(yellow)).
-	Foreground(lipgloss.Color(dark))
+	Foreground(lipgloss.Color(dark)).
+	Bold(false)

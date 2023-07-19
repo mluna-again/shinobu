@@ -25,7 +25,7 @@ type mode struct {
 
 func (app *app) switchMode() mode {
 	return mode{
-		"  ",
+		"  ",
 		" Switch session ",
 		"switch",
 		switchSession,
@@ -57,7 +57,7 @@ func (app *app) loadLines() error {
 func (app *app) loadModes() {
 	app.modes = []mode{
 		{
-			"  ",
+			"  ",
 			" Switch session ",
 			"switch",
 			switchSession,
