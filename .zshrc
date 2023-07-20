@@ -317,28 +317,7 @@ git commit -m "$* 😑👍"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # node
-# pnpm
-export PNPM_HOME="/Users/$USER/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 alias ado="node ace"
-_npm="$(which npm)"
-npm() {
-	local res
-	echo "You are running npm (not pnpm). Are you sure?"
-	read res
-	if [[ $res = "y" ]]; then
-		$_npm "$@"
-	fi
-}
-alias npmd="$PNPM_HOME/pnpm run dev"
-alias npms="$PNPM_HOME/pnpm start"
-alias npmt="$PNPM_HOME/pnpm run test"
-alias npmb="$PNPM_HOME/pnpm run build"
-alias npmi="$PNPM_HOME/pnpm install"
 
 command -v rbenv &>/dev/null && eval "$(rbenv init -)" || true
 
