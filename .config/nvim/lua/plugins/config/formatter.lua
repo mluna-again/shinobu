@@ -49,6 +49,9 @@ return {
 				html = {
 					formatters.html.prettier,
 				},
+				vue = {
+					formatters.vue.prettier,
+				},
 				sh = {
 					formatters.sh.shfmt,
 				},
