@@ -24,9 +24,12 @@ local function greetings()
 		"the grass is always greener on the other side",
 		"the cat ate my source code",
 		{
-			"",
 			"programming is rather thankless. u see your works become replaced by superior",
 			"             ones in a year. unable to run at all in a few more."
+		},
+		{
+			"debugging is twice as hard as writing the code in the first place. Therefore, if you write the code",
+			"          as cleverly as possible, you are, by definition, not smart enough to debug it.",
 		},
 		"rust is overrated, come at me",
 		"insufficient data for meaningful answer",
