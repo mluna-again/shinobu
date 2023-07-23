@@ -28,7 +28,7 @@ local function greetings()
 			"             ones in a year. unable to run at all in a few more."
 		},
 		{
-			"debugging is twice as hard as writing the code in the first place. Therefore, if you write the code",
+			"debugging is twice as hard as writing the code in the first place. therefore, if you write the code",
 			"          as cleverly as possible, you are, by definition, not smart enough to debug it.",
 		},
 		"rust is overrated, come at me",
@@ -49,6 +49,7 @@ local function greetings()
 		"is this all there is?",
 		"there is no such thing as that rose-colored life",
 		"unix is my ide",
+		"explicit is better than implicit. clear code is better than concise code",
 	}
 
 	math.randomseed(os.time())

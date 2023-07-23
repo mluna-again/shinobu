@@ -58,6 +58,9 @@ return {
 				sql = {
 					formatters.sql.pgformat,
 				},
+				rust = {
+					formatters.rust.rustfmt
+				},
 			}
 		}
 
