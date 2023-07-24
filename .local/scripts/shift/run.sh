@@ -60,7 +60,6 @@ handle_sessions() {
 			session_path="$(_remove_trailing_slash "$session_path")"
 
 			[ -z "$session_name" ] && return
-			[ -z "$session_path" ] && return
 
 			[ -n "$session_path" ] && tmux new-session -d -s "$session_name" -c "$(eval echo "$session_path")" && tmux switch-client -t "$session_name" && exit
 
