@@ -58,5 +58,5 @@ nmap("<Leader>fn", ":Oil --float<CR>")
 
 -- nmap("<Leader>dd", ":DiffviewOpen<CR>")
 -- nmap("<Leader>D", ":DiffviewClose<CR>")
-vim.cmd("command Close :bufdo bd | Dashboard")
 vim.cmd("command -nargs=* Figlet :read!figlet -w 80 -f larry3d <args>")
+vim.cmd("command Empty :%bd|e#|bd#")
