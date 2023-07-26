@@ -140,23 +140,39 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 
 # <Function>
 gL() {
-  git log --format="%h • %s • %an" | fzf --header="Search git logs" --preview='git diff {+1}^ {+1} | delta'
+  log=$(git log --format="%h • %s • %an" | fzf --header="Search git logs" --preview='git diff {+1}^ {+1} | delta')
+
+  [ -z "$log" ] && return
+
+  git log -1 $(awk '{ print $1 }' <<< "$log")
 }
 
 dotsL() {
-  yadm log --format="%h • %s • %an" | fzf --header="Search git logs" --preview='yadm diff {+1}^ {+1} | delta'
+  log=$(yadm log --format="%h • %s • %an" | fzf --header="Search git logs" --preview='yadm diff {+1}^ {+1} | delta')
+
+  [ -z "$log" ] && return
+
+  yadm log -1 $(awk '{ print $1 }' <<< "$log")
 }
 
 gH() {
   [ -z "$1" ] && { echo "No file specified."; return; }
 
-  git log --follow --format="%h • %s • %an" -- "$1" | fzf --header="Search file history" --preview='git diff {+1}^ {+1} | delta'
+  log=$(git log --follow --format="%h • %s • %an" -- "$1" | fzf --header="Search file history" --preview='git diff {+1}^ {+1} | delta')
+
+  [ -z "$log" ] && return
+
+  git log -1 $(awk '{ print $1 }' <<< "$log")
 }
 
 dotsH() {
   [ -z "$1" ] && { echo "No file specified."; return; }
 
-  yadm log --follow --format="%h • %s • %an" -- "$1" | fzf --header="Search file history" --preview='yadm diff {+1}^ {+1} | delta'
+  log=$(yadm log --follow --format="%h • %s • %an" -- "$1" | fzf --header="Search file history" --preview='yadm diff {+1}^ {+1} | delta')
+
+  [ -z "$log" ] && return
+
+  yadm log -1 $(awk '{ print $1 }' <<< "$log")
 }
 
 yt() {
