@@ -34,7 +34,6 @@ run() {
   nodemon $1 --exec "clear; PYTHONWARNINGS=ignore $what $*"
 }
 alias q="exit"
-command -v z &>/dev/null && alias cd="z"
 command -v exa &>/dev/null && alias ls="exa --icons -1"
 command -v exa &>/dev/null && alias ll="exa --icons -lh -1"
 alias :q="exit"
@@ -318,6 +317,8 @@ export TERM="xterm-256color"
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
+
+command -v z &>/dev/null && alias cd="z"
 
 ok() {
 git commit -m "$* 😑👍"
