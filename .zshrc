@@ -140,23 +140,23 @@ alias gmc="git --no-pager diff --name-only --diff-filter=U"
 
 # <Function>
 gL() {
-  git log --format="%h • %s • %an" | fzf --preview='git diff {+1}^ {+1} | delta'
+  git log --format="%h • %s • %an" | fzf --header="Search git logs" --preview='git diff {+1}^ {+1} | delta'
 }
 
 dotsL() {
-  yadm log --format="%h • %s • %an" | fzf --preview='yadm diff {+1}^ {+1} | delta'
+  yadm log --format="%h • %s • %an" | fzf --header="Search git logs" --preview='yadm diff {+1}^ {+1} | delta'
 }
 
 gH() {
   [ -z "$1" ] && { echo "No file specified."; return; }
 
-  git log --follow --format="%h • %s • %an" -- "$1" | fzf --preview='git diff {+1}^ {+1} | delta'
+  git log --follow --format="%h • %s • %an" -- "$1" | fzf --header="Search file history" --preview='git diff {+1}^ {+1} | delta'
 }
 
 dotsH() {
   [ -z "$1" ] && { echo "No file specified."; return; }
 
-  yadm log --follow --format="%h • %s • %an" -- "$1" | fzf --preview='yadm diff {+1}^ {+1} | delta'
+  yadm log --follow --format="%h • %s • %an" -- "$1" | fzf --header="Search file history" --preview='yadm diff {+1}^ {+1} | delta'
 }
 
 yt() {
@@ -338,7 +338,7 @@ rails() {
 	[ -e ./bin/rails ] && ./bin/rails "$@" || $_rails "$@"
 }
 export PATH="$PATH:$HOME/.local/bin/zig"
-export FZF_DEFAULT_OPTS='--layout=reverse --prompt=" " --pointer=" " --header-first --header="Switch session" --color="bg:#181616,bg+:#c4746e,fg+:#1D1C19,gutter:#1D1C19,header:#c4746e,prompt:#c4746e,query:#c5c9c5" --height="95%" --bind ¿:preview-up,-:preview-down'
+export FZF_DEFAULT_OPTS='--layout=reverse --prompt=" " --pointer=" " --header-first --color="bg:#181616,bg+:#c4746e,fg+:#1D1C19,gutter:#1D1C19,header:#c4746e,prompt:#c4746e,query:#c5c9c5" --height="95%" --bind ¿:preview-up,-:preview-down'
 
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   tmux attach || tmux
