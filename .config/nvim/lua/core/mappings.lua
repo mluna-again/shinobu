@@ -12,7 +12,22 @@ wk.register({
 		v = { "<C-w>v", "Open horizontal window", noremap = true, silent = true },
 		d = { "<C-w>q", "Close window", noremap = true, silent = true },
 		q = { "<C-w>q", "Also close window", noremap = true, silent = true },
-	}
+	},
+	g = {
+		name = "Git",
+		d = {
+			function()
+				if next(require("diffview.lib").views) == nil then
+					vim.cmd("DiffviewOpen")
+				else
+					vim.cmd("DiffviewClose")
+				end
+			end,
+			"Toggle Diffview",
+			noremap = true,
+			silent = true,
+		},
+	},
 }, { prefix = "<Leader>" })
 
 wk.register({
@@ -20,9 +35,14 @@ wk.register({
 		s = { ":silent w<CR>", "Save buffer", noremap = true, silent = true },
 	},
 	S = {
-		S = { function ()
-			vim.cmd("FormatWriteLock")
-		end, "Save buffer with formatting", noremap = true, silent = true }
+		S = {
+			function()
+				vim.cmd("FormatWriteLock")
+			end,
+			"Save buffer with formatting",
+			noremap = true,
+			silent = true,
+		},
 	},
 	g = {
 		name = "Buffer navigation",
@@ -30,7 +50,7 @@ wk.register({
 		r = { ":BufferLineCyclePrev<CR>", "Prev", noremap = true, silent = true },
 		T = { ":BufferLineMoveNext<CR>", "Move to right", noremap = true, silent = true },
 		R = { ":BufferLineMoveNext<CR>", "Move to left", noremap = true, silent = true },
-	}
+	},
 })
 
 nmap("Y", "v$hy")
@@ -56,7 +76,5 @@ nmap("<Leader>ff", ":Telescope find_files<CR>")
 nmap("<Leader>cn", ":enew<CR>")
 nmap("<Leader>fn", ":Oil --float<CR>")
 
--- nmap("<Leader>dd", ":DiffviewOpen<CR>")
--- nmap("<Leader>D", ":DiffviewClose<CR>")
 vim.cmd("command -nargs=* Figlet :read!figlet -w 80 -f larry3d <args>")
 vim.cmd("command Empty :%bd|e#|bd#")
