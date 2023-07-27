@@ -40,35 +40,37 @@ local function prettyProgress(progress)
 	local progress_num = string.gsub(progress, "%%", "")
 	local num = tonumber(progress_num)
 
-	if num < 20 then
-		return "▁▁▁ " .. progress_num .. "%%"
-	end
+	return progress_num .. "%%"
 
-	if num < 30 then
-		return "▂▂▂ " .. progress_num .. "%%"
-	end
-
-	if num < 40 then
-		return "▃▃▃ " .. progress_num .. "%%"
-	end
-
-	if num < 50 then
-		return "▄▄▄ " .. progress_num .. "%%"
-	end
-
-	if num < 60 then
-		return "▅▅▅ " .. progress_num .. "%%"
-	end
-
-	if num < 70 then
-		return "▆▆▆ " .. progress_num .. "%%"
-	end
-
-	if num < 80 then
-		return "▇▇▇ " .. progress_num .. "%%"
-	end
-
-	return "███ " .. progress_num .. "%%"
+	-- if num < 20 then
+	-- 	return "▁▁▁ " .. progress_num .. "%%"
+	-- end
+	--
+	-- if num < 30 then
+	-- 	return "▂▂▂ " .. progress_num .. "%%"
+	-- end
+	--
+	-- if num < 40 then
+	-- 	return "▃▃▃ " .. progress_num .. "%%"
+	-- end
+	--
+	-- if num < 50 then
+	-- 	return "▄▄▄ " .. progress_num .. "%%"
+	-- end
+	--
+	-- if num < 60 then
+	-- 	return "▅▅▅ " .. progress_num .. "%%"
+	-- end
+	--
+	-- if num < 70 then
+	-- 	return "▆▆▆ " .. progress_num .. "%%"
+	-- end
+	--
+	-- if num < 80 then
+	-- 	return "▇▇▇ " .. progress_num .. "%%"
+	-- end
+	--
+	-- return "███ " .. progress_num .. "%%"
 end
 
 return {
