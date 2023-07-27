@@ -35,7 +35,6 @@ require("lazy").setup({
 	require("plugins.config.nvim-lint"),
 	require("plugins.config.formatter"),
 	require("plugins.config.devicons"),
-	require("plugins.config.bufferline"),
 	require("plugins.config.gitsigns"),
 	require("plugins.config.ufo"),
 	require("plugins.config.autopairs"),

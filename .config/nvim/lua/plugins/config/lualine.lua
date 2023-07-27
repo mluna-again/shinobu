@@ -81,10 +81,10 @@ return {
 		local colors = {
 			black = kanagawa.dragonBlack4,
 			white = kanagawa.dragonWhite,
-			red = kanagawa.dragonYellow,
+			red = kanagawa.dragonRed,
 			green = kanagawa.dragonGreen,
 			blue = kanagawa.dragonBlue,
-			yellow = kanagawa.dragonRed,
+			yellow = kanagawa.dragonYellow,
 			gray = kanagawa.dragonGray,
 			darkgray = kanagawa.dragonBlack2,
 			lightgray = kanagawa.dragonBlack5,
@@ -93,29 +93,29 @@ return {
 		}
 		local theme = {
 			normal = {
-				a = { bg = colors.red, fg = colors.black, gui = "bold" },
+				a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
 				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.black, fg = colors.gray },
+				c = { bg = colors.background, fg = colors.yellow },
 			},
 			insert = {
 				a = { bg = colors.green, fg = colors.black, gui = "bold" },
 				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.black, fg = colors.white },
+				c = { bg = colors.background, fg = colors.yellow },
 			},
 			visual = {
 				a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
 				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.black, fg = colors.black },
+				c = { bg = colors.background, fg = colors.yellow },
 			},
 			replace = {
 				a = { bg = colors.blue, fg = colors.black, gui = "bold" },
 				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.black, fg = colors.white },
+				c = { bg = colors.background, fg = colors.yellow },
 			},
 			command = {
 				a = { bg = colors.white, fg = colors.black, gui = "bold" },
 				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.black, fg = colors.black },
+				c = { bg = colors.background, fg = colors.yellow },
 			},
 			inactive = {
 				a = { bg = colors.background, fg = colors.white },
