@@ -1,7 +1,9 @@
 return {
-	"junegunn/fzf.vim",
-	dependencies = {
-		"junegunn/fzf",
-	},
-	event = "VeryLazy"
+  "ibhagwan/fzf-lua",
+  -- optional for icon support
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    -- calling `setup` is optional for customization
+    require("fzf-lua").setup({})
+  end
 }

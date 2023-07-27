@@ -79,7 +79,7 @@ return {
 
 		dashboard.section.buttons.val = {
 			mkButton(" SPC c n ", "New file", ":enew<CR>"),
-			mkButton(" SPC f f ", "Find file", ":Telescope find_files<CR>"),
+			mkButton(" SPC f f ", "Find file", ":FzfLua files<CR>"),
 			mkButton(" SPC f o ", "Recent files",
 				":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>"),
 			mkButton(" SPC f w ", "Find word",
