@@ -1,5 +1,6 @@
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 [ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^k' autosuggest-accept
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
