@@ -190,6 +190,13 @@ return {
 					LightspeedOneCharMatch = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 
 					WinSeparator = { fg = colors.palette.dragonBlack2, bg = colors.palette.dragonBlack3 },
+
+					FzfLuaNormal = { bg = colors.palette.dragonBlack2 },
+					FzfLuaBufName = { bg = colors.palette.dragonBlack2, fg = colors.palette.dragonWhite },
+					FzfLuaSearch = { bg = colors.palette.dragonBlack2 },
+					FzfLuaBorder = { bg = colors.palette.dragonBlack4, fg = colors.palette.dragonBlack4 },
+					FzfLuaPreviewBorder = { bg = colors.palette.dragonBlack2, fg = colors.palette.dragonBlack2 },
+					FzfLuaPreviewTitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack2 },
 				}
 			end,
 		})
