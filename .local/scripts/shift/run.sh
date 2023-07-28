@@ -31,15 +31,10 @@ get_sessions() {
 }
 
 get_windows() {
-	windows="$(tmux list-windows)"
+	windows="$(tmux list-windows -F '#W')"
 
 	current="$(grep -i active <<< "$windows")"
 	without_current="$(grep -iv active <<< "$windows")"
-
-	current="$(awk '{ print $2 }' <<< "$current" |\
-		         awk '{ gsub(/[\*#-]/, "", $1); print $1 }')"
-	without_current="$(awk '{ print $2 }' <<< "$without_current" |\
-		         awk '{ gsub(/[\*#-]/, "", $1); print $1 }')"
 
 	echo "$current"
 	echo "$without_current"
