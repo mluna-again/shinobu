@@ -44,13 +44,13 @@ wk.register({
 			silent = true,
 		},
 	},
-	g = {
-		name = "Buffer navigation",
-		t = { ":BufferLineCycleNext<CR>", "Next", noremap = true, silent = true },
-		r = { ":BufferLineCyclePrev<CR>", "Prev", noremap = true, silent = true },
-		T = { ":BufferLineMoveNext<CR>", "Move to right", noremap = true, silent = true },
-		R = { ":BufferLineMoveNext<CR>", "Move to left", noremap = true, silent = true },
-	},
+	-- g = {
+	-- 	name = "Buffer navigation",
+	-- 	t = { ":BufferLineCycleNext<CR>", "Next", noremap = true, silent = true },
+	-- 	r = { ":BufferLineCyclePrev<CR>", "Prev", noremap = true, silent = true },
+	-- 	T = { ":BufferLineMoveNext<CR>", "Move to right", noremap = true, silent = true },
+	-- 	R = { ":BufferLineMoveNext<CR>", "Move to left", noremap = true, silent = true },
+	-- },
 })
 
 nmap("Y", "v$hy")
@@ -58,7 +58,6 @@ nmap("<C-Left>", ":vertical resize -2<CR>")
 nmap("<C-Right>", ":vertical resize +2<CR>")
 nmap("<C-Up>", ":resize +2<CR>")
 nmap("<C-Down>", ":resize -2<CR>")
-nmap("<Leader>fd", ":Telescope buffers<CR>")
 nmap("TT", ":only<CR>")
 nmap("tt", ":Bdelete<CR>")
 nmap("dh", ":noh<CR>")
@@ -71,7 +70,8 @@ nmap("<Space>", "<Nop>")
 nmap("/", ":lua require('telescope.builtin').current_buffer_fuzzy_find({prompt_title='Find in current file'})<CR>")
 nmap("<Leader>fo", ":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>")
 nmap("<Leader>fw", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>")
-nmap("ff", ":FzfLua files<CR>")
+nmap("ff", ":lua require('telescope.builtin').buffers({ prompt_title = 'Buffers' })<CR>")
+-- nmap("ff", ":FzfLua files<CR>")
 nmap("<Leader>ff", ":Telescope find_files<CR>")
 nmap("<Leader>cn", ":enew<CR>")
 nmap("<Leader>fn", ":Oil --float<CR>")

@@ -5,11 +5,20 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"MunifTanjim/nui.nvim",
+		"folke/which-key.nvim",
 	},
 	config = function()
 		vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-		vim.api.nvim_set_keymap("n", "<C-l>", ":NeoTreeRevealToggle<CR>", { silent = true, noremap = true })
+		local wk = require("which-key")
+		wk.register({
+			["<C-l>"] = {
+				":Neotree reveal toggle=true<CR>",
+				"Toggle Neotree",
+				noremap = true,
+				silent = true,
+			},
+		})
 
 		vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
 		vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
