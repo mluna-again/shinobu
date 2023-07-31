@@ -117,11 +117,11 @@ return {
 					NotifyDEBUGTitle = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
 					NotifyDEBUGIcon = { bg = colors.palette.dragonGreen, fg = colors.palette.dragonBlack4 },
 
-					NotifyERRORBody = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
+					NotifyERRORBody = { bg = colors.palette.dragonRed, fg = colors.palette.dragonWhite },
 					NotifyERRORBorder = { bg = colors.palette.dragonRed, fg = colors.palette.dragonRed },
-					NotifyERRORTitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
-					NotifyERRORIcon = { bg = colors.palette.dragonRed, fg = colors.palette.dragonBlack4 },
-					ErrorMsg = { fg = colors.palette.dragonBlack4 },
+					NotifyERRORTitle = { bg = colors.palette.dragonRed, fg = colors.palette.dragonWhite },
+					NotifyERRORIcon = { bg = colors.palette.dragonRed, fg = colors.palette.dragonWhite },
+					ErrorMsg = { fg = colors.palette.dragonWhite },
 
 					NotifyTRACEBody = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonBlack4 },
 					NotifyTRACEBorder = { bg = colors.palette.dragonYellow, fg = colors.palette.dragonYellow },
