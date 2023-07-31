@@ -5,6 +5,10 @@ fzf_with_opts() {
 	FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color='bg:236' --header='Search notes'" fzf
 }
 
+fzf_with_opts_and_query() {
+	FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color='bg:236' --header='Search notes'" fzf --print-query
+}
+
 concat_path() {
 	echo "$NOTES_PATH/$1"
 }
@@ -48,9 +52,22 @@ case "$1" in
 		files=$(list_notes)
 		[ -z "$files" ] && { echo "No notes yet, create one!"; create "$@"; exit 1; }
 
-		name=$(fzf_with_opts <<< "$files")
+		name=$(fzf_with_opts_and_query <<< "$files")
+		query=$(awk 'NR==1' <<< "$name" )
+		name=$(awk 'NR==2' <<< "$name" )
 
-		[ -z "$name" ] && exit
+		if [ -z "$name" ]; then
+			[ -z "$query" ] && exit; # script aborted
+
+			printf "No file named %s, do you want to create it? [yN] " "$query"
+			read -r confirmation
+			confirmation="$(tr '[:upper:]' '[:lower:]' <<< "$confirmation")"
+			[ "$confirmation" = "y" ] || exit
+
+			file_path=$(concat_path "$query")
+			touch "$file_path"
+			name="$query"
+		fi
 
 		file_path=$(concat_path "$name")
 		[ ! -e "$file_path" ] && { echo "File doesn't exist."; exit 1; }
