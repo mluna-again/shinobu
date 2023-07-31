@@ -2,7 +2,7 @@
 NOTES_PATH="$HOME/Notes"
 
 fzf_with_opts() {
-	FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color='bg:236'" fzf
+	FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color='bg:236' --header='Search notes'" fzf
 }
 
 concat_path() {
