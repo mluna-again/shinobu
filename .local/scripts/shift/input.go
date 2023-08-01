@@ -26,7 +26,7 @@ type mode struct {
 func (app *app) switchMode() mode {
 	return mode{
 		"  ",
-		" Switch session ",
+		app.switchModeTitle,
 		"switch",
 		switchSession,
 		"",
@@ -58,7 +58,7 @@ func (app *app) loadModes() {
 	app.modes = []mode{
 		{
 			"  ",
-			" Switch session ",
+			app.switchModeTitle,
 			"switch",
 			switchSession,
 			"",

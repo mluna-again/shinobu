@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 	"unicode/utf8"
 
@@ -11,14 +11,14 @@ import (
 	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"golang.org/x/term"
 )
 
 type app struct {
-	lines        []string
-	selectedMode mode
-	escaped      bool
-	modes        []mode
+	lines           []string
+	selectedMode    mode
+	escaped         bool
+	modes           []mode
+	switchModeTitle string
 }
 
 type model struct {
@@ -34,23 +34,7 @@ type model struct {
 	autocompleting       bool
 }
 
-func newModel(app *app) (model, error) {
-	var w int
-	var h int
-	var err error
-	// dimensions were passed as args
-	if len(os.Args) >= 3 {
-		w, err = strconv.Atoi(os.Args[1])
-		if err == nil {
-			h, err = strconv.Atoi(os.Args[2])
-		}
-	} else {
-		w, h, err = term.GetSize(int(os.Stdin.Fd()))
-	}
-	if err != nil {
-		return model{}, err
-	}
-
+func newModel(app *app, w int, h int) (model, error) {
 	activeMode := app.modes[0]
 
 	i := textinput.New()
@@ -215,7 +199,7 @@ func (m model) View() string {
 		v.WriteString(header.Render("  "))
 	} else {
 		counter := m.counterText()
-		v.WriteString(header.Width(m.termWidth-len(counter)-len(inputText)).Render(inputText))
+		v.WriteString(header.Width(m.termWidth - len(counter) - len(inputText)).Render(inputText))
 		v.WriteString(header.Render(counter))
 	}
 
@@ -263,8 +247,21 @@ func (m model) View() string {
 	return v.String()
 }
 
+var switchModeTitle string
+var width int
+var height int
+
 func main() {
+	flag.StringVar(&switchModeTitle, "title", " Switch session ", "Default mode title")
+	flag.IntVar(&width, "width", 100, "Menu width")
+	flag.IntVar(&height, "height", 10, "Menu height")
+	flag.Parse()
+
 	app := app{}
+	if switchModeTitle != "" {
+		app.switchModeTitle = switchModeTitle
+	}
+
 	err := app.loadLines()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -273,7 +270,7 @@ func main() {
 	}
 	app.loadModes()
 
-	model, err := newModel(&app)
+	model, err := newModel(&app, width, height)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
