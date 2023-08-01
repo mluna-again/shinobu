@@ -60,6 +60,8 @@ alias cd..="cd .."
 alias figlet="figlet -f larry3d"
 alias lisp_repl="ros run --eval '(ql:quickload :swank)'  --eval '(swank:create-server :dont-close t)'"
 alias jqp="jqp --config ~/.config/jqp/config.yaml"
+alias http="xh"
+alias https="xhs"
 fv() {
   local file
   file="$(fzf)"

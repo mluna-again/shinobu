@@ -31,7 +31,7 @@
 9. hurl
 10. jq
 11. jqp
-12. httpie
+12. xh
 13. exa
 14. delta
 15. direnv

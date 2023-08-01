@@ -71,7 +71,6 @@ nmap("/", ":lua require('telescope.builtin').current_buffer_fuzzy_find({prompt_t
 nmap("<Leader>fo", ":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>")
 nmap("<Leader>fw", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>")
 nmap("ff", ":lua require('telescope.builtin').buffers({ prompt_title = 'Buffers' })<CR>")
-nmap("ff", ":FzfLua files<CR>")
 nmap("<Leader>ff", ":Telescope find_files<CR>")
 nmap("<Leader>cn", ":enew<CR>")
 nmap("<Leader>fn", ":Oil --float<CR>")
