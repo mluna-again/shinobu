@@ -92,17 +92,17 @@ handle_windows() {
 
 case "$mode" in
 	sessions)
-		get_sessions | "$path/shift" "$w" "$h" || { echo "Something went wrong..."; exit 1; }
+		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
 		handle_sessions
 		;;
 
 	windows)
-		get_windows | "$path/shift" "$w" "$h" "$mode" || { echo "Something went wrong..."; exit 1; }
+		get_windows | "$path/shift" -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
 		handle_windows
 		;;
 
 	*)
-		get_sessions | "$path/shift" "$w" "$h" || { echo "Something went wrong..."; exit 1; }
+		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
 		handle_sessions
 		;;
 esac
