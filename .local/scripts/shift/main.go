@@ -298,6 +298,7 @@ func main() {
 
 	text := fmt.Sprintf("%s %s", app.selectedMode.name, app.selectedMode.params)
 
+	fmt.Println(text)
 	_, err = f.WriteString(text)
 	if err != nil {
 		fmt.Println(err.Error())
