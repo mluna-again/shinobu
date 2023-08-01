@@ -19,6 +19,7 @@ type app struct {
 	escaped         bool
 	modes           []mode
 	switchModeTitle string
+	finalQuery      string
 }
 
 type model struct {
@@ -97,6 +98,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "enter":
+			m.app.finalQuery = m.input.Value()
 			for range m.app.modes {
 				m.app.selectedMode = m.app.modes[m.mode]
 				// only special case
@@ -250,9 +252,13 @@ func (m model) View() string {
 var switchModeTitle string
 var width int
 var height int
+var input string
+var outputFile string
 
 func main() {
 	flag.StringVar(&switchModeTitle, "title", " Switch session ", "Default mode title")
+	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
+	flag.StringVar(&outputFile, "output", "", "Output file")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
 	flag.Parse()
@@ -262,7 +268,7 @@ func main() {
 		app.switchModeTitle = switchModeTitle
 	}
 
-	err := app.loadLines()
+	err := app.loadLines(input)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
@@ -288,7 +294,11 @@ func main() {
 		return
 	}
 
-	f, err := os.Create(".__SHIFT__")
+	filePath := ".__SHIFT__"
+	if outputFile != "" {
+		filePath = outputFile
+	}
+	f, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
@@ -298,11 +308,11 @@ func main() {
 
 	text := fmt.Sprintf("%s %s", app.selectedMode.name, app.selectedMode.params)
 
-	fmt.Println(text)
-	_, err = f.WriteString(text)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-		return
+	if outputFile != "" {
+		_, _ = f.WriteString(app.finalQuery)
+		_, _ = f.WriteString("\n")
+		_, _ = f.WriteString(app.selectedMode.params)
+	} else {
+		_, _ = f.WriteString(text)
 	}
 }

@@ -1,12 +1,28 @@
 #! /usr/bin/env bash
 NOTES_PATH="$HOME/Notes"
+TEMP_PATH="$NOTES_PATH/.temp"
 
-fzf_with_opts() {
-	FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color='bg:236' --header='Search notes'" fzf
+[ ! -e "$TEMP_PATH" ] && touch "$TEMP_PATH"
+
+cleanup() {
+	[ -e "$TEMP_PATH" ] && rm "$TEMP_PATH"
+	exit
 }
 
-fzf_with_opts_and_query() {
-	FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color='bg:236' --header='Search notes'" fzf --print-query
+trap cleanup 1 2 3 6 15
+
+read_result() {
+	tail -1 < "$TEMP_PATH"
+	exit
+}
+
+read_result_with_query() {
+	tail -2 < "$TEMP_PATH"
+	exit
+}
+
+fuzzy() {
+	"$HOME/.local/scripts/shift/shift" -title " Notes " -input "$1" -height 9 -width 65 -output "$TEMP_PATH"
 }
 
 concat_path() {
@@ -14,11 +30,12 @@ concat_path() {
 }
 
 list_notes() {
-	find "$NOTES_PATH" -type f | sed "s|$HOME/Notes/||"
+	find "$NOTES_PATH" -type f -not -iname ".temp" | sed "s|$HOME/Notes/||"
 }
 
 delete() {
-	name=$(fzf_with_opts <<< "$(list_notes)")
+	fuzzy "$(list_notes)"
+	name=$(read_result)
 	file_path=$(concat_path "$name")
 	[ ! -e "$file_path" ] && exit
 	rm "$file_path"
@@ -52,7 +69,8 @@ case "$1" in
 		files=$(list_notes)
 		[ -z "$files" ] && { echo "No notes yet, create one!"; create "$@"; exit 1; }
 
-		name=$(fzf_with_opts_and_query <<< "$files")
+		fuzzy "$files"
+		name=$(read_result_with_query)
 		query=$(awk 'NR==1' <<< "$name" )
 		name=$(awk 'NR==2' <<< "$name" )
 
@@ -74,3 +92,5 @@ case "$1" in
 		nvim "$file_path"
 		;;
 esac
+
+cleanup

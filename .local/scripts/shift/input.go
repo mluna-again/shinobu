@@ -34,13 +34,16 @@ func (app *app) switchMode() mode {
 	}
 }
 
-func (app *app) loadLines() error {
-	output, err := io.ReadAll(os.Stdin)
-	if err != nil {
-		return err
+func (app *app) loadLines(input string) error {
+	if input == "" {
+		output, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			return err
+		}
+		input = string(output)
 	}
 
-	lines := strings.Split(string(output), "\n")
+	lines := strings.Split(input, "\n")
 	nonEmpty := []string{}
 	for _, line := range lines {
 		if line == "" {
