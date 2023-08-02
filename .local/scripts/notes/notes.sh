@@ -28,7 +28,7 @@ read_result_with_query() {
 }
 
 fuzzy() {
-	"$HOME/.local/scripts/shift/shift" -title " Notes " -input "$1" -height 9 -width 65 -output "$TEMP_PATH"
+	"$HOME/.local/scripts/shift/shift" -title " Notes " -input "$1" -height 9 -width 65 -output "$TEMP_PATH" -icon "  "
 }
 
 concat_path() {

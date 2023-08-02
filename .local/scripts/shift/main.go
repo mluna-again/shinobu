@@ -267,12 +267,8 @@ func main() {
 	flag.Parse()
 
 	app := app{}
-	if switchModeTitle != "" {
-		app.switchModeTitle = switchModeTitle
-	}
-	if switchModeIcon != "" {
-		app.switchModeIcon = fmt.Sprintf(" %s ", switchModeIcon)
-	}
+	app.switchModeTitle = switchModeTitle
+	app.switchModeIcon = switchModeIcon
 
 	err := app.loadLines(input)
 	if err != nil {
