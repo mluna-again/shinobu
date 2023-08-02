@@ -7,6 +7,7 @@ commands="$(cat - <<EOF
 Notes
 Clear panes
 Terminate processes
+Terminate processes and clear
 Send command
 EOF
 )"
@@ -50,5 +51,11 @@ case "$(read_input)" in
 	"Send command")
 		input " Command to send " " 󰘳 " " " "rename"
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} "$(read_input)" Enter
+		;;
+
+	"Terminate processes and clear")
+		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
+		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
+		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
 		;;
 esac
