@@ -14,13 +14,14 @@ import (
 )
 
 type app struct {
-	lines           []string
-	selectedMode    mode
-	escaped         bool
-	modes           []mode
-	switchModeTitle string
-	switchModeIcon  string
-	finalQuery      string
+	lines             []string
+	selectedMode      mode
+	escaped           bool
+	modes             []mode
+	startingModeTitle string
+	startingModeIcon  string
+	finalQuery        string
+	startingMode      string
 }
 
 type model struct {
@@ -38,6 +39,11 @@ type model struct {
 
 func newModel(app *app, w int, h int) (model, error) {
 	activeMode := app.modes[0]
+	for _, mode := range app.modes {
+		if mode.name == app.startingMode {
+			activeMode = mode
+		}
+	}
 
 	i := textinput.New()
 	i.Focus()
@@ -256,19 +262,22 @@ var width int
 var height int
 var input string
 var outputFile string
+var startingMode string
 
 func main() {
 	flag.StringVar(&switchModeTitle, "title", " Switch session ", "Default mode title")
 	flag.StringVar(&switchModeIcon, "icon", "  ", "Default mode title")
 	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
 	flag.StringVar(&outputFile, "output", "", "Output file")
+	flag.StringVar(&startingMode, "mode", "switch", "Starting mode, defaults to switch")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
 	flag.Parse()
 
 	app := app{}
-	app.switchModeTitle = switchModeTitle
-	app.switchModeIcon = switchModeIcon
+	app.startingModeTitle = switchModeTitle
+	app.startingModeIcon = switchModeIcon
+	app.startingMode = startingMode
 
 	err := app.loadLines(input)
 	if err != nil {

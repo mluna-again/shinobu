@@ -5,26 +5,50 @@ CACHE_PATH="$HOME/.cache/.i_dont_know_how_to_program_and_my_code_should_be_illeg
 
 commands="$(cat - <<EOF
 Notes
-Clear all panes
-Terminate processes inside panes
+Clear panes
+Terminate processes
+Send command
 EOF
 )"
 
-tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon ' 󰘳 ' -title ' Command Palette ' -input \"$commands\" -output \"$RESULTS_FILE\" -width 65 -height 9"
+input() {
+	local title
+	local icon
+	local input
+	local mode
 
-case "$(tail -1 "$RESULTS_FILE")" in
+	title="$1"
+	icon="$2"
+	input="$3"
+	mode="${4:-switch}"
+
+	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input \"$input\" -output \"$RESULTS_FILE\" -width 65 -height 9 -mode \"$mode\""
+}
+
+read_input() {
+	tail -1 "$RESULTS_FILE"
+}
+
+input " Command Palette " " 󰘳 " "$commands"
+
+case "$(read_input)" in
 	Notes)
 		tmux display-popup -w "65" -h "11" -y 15 -E "$HOME/.local/scripts/notes/notes.sh"
 		[ ! -e "$CACHE_PATH" ] && exit # no note selected
 		tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "$HOME/.local/scripts/tmux/selectedcmd.sh"
 		;;
 
-	"Clear all panes")
+	"Clear panes")
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
 		;;
 
-	"Terminate processes inside panes")
+	"Terminate processes")
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
+		;;
+
+	"Send command")
+		input " Command to send " " 󰘳 " " " "rename"
+		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} "$(read_input)" Enter
 		;;
 esac

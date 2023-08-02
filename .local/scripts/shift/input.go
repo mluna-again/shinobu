@@ -25,8 +25,8 @@ type mode struct {
 
 func (app *app) switchMode() mode {
 	return mode{
-		app.switchModeIcon,
-		app.switchModeTitle,
+		app.startingModeIcon,
+		app.startingModeTitle,
 		"switch",
 		switchSession,
 		"",
@@ -58,10 +58,10 @@ func (app *app) loadLines(input string) error {
 }
 
 func (app *app) loadModes() {
-	app.modes = []mode{
+	modes := []mode{
 		{
-			app.switchModeIcon,
-			app.switchModeTitle,
+			app.startingModeIcon,
+			app.startingModeTitle,
 			"switch",
 			switchSession,
 			"",
@@ -84,4 +84,13 @@ func (app *app) loadModes() {
 			"r",
 		},
 	}
+
+	for i, mode := range modes {
+		if mode.name == app.startingMode {
+			modes[i].title = app.startingModeTitle
+			modes[i].prompt = app.startingModeIcon
+		}
+	}
+
+	app.modes = modes
 }
