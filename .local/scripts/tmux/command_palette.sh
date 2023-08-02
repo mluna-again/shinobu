@@ -5,7 +5,8 @@ CACHE_PATH="$HOME/.cache/.i_dont_know_how_to_program_and_my_code_should_be_illeg
 
 commands="$(cat - <<EOF
 Notes
-Send Ctrl-L to all panes
+Clear all panes
+Terminate processes inside panes
 EOF
 )"
 
@@ -18,7 +19,12 @@ case "$(tail -1 "$RESULTS_FILE")" in
 		tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "$HOME/.local/scripts/tmux/selectedcmd.sh"
 		;;
 
-	"Send Ctrl-L to all panes")
+	"Clear all panes")
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
+		;;
+
+	"Terminate processes inside panes")
+		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
+		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		;;
 esac
