@@ -19,6 +19,7 @@ type app struct {
 	escaped         bool
 	modes           []mode
 	switchModeTitle string
+	switchModeIcon  string
 	finalQuery      string
 }
 
@@ -250,6 +251,7 @@ func (m model) View() string {
 }
 
 var switchModeTitle string
+var switchModeIcon string
 var width int
 var height int
 var input string
@@ -257,6 +259,7 @@ var outputFile string
 
 func main() {
 	flag.StringVar(&switchModeTitle, "title", " Switch session ", "Default mode title")
+	flag.StringVar(&switchModeIcon, "icon", "  ", "Default mode title")
 	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
 	flag.StringVar(&outputFile, "output", "", "Output file")
 	flag.IntVar(&width, "width", 100, "Menu width")
@@ -266,6 +269,9 @@ func main() {
 	app := app{}
 	if switchModeTitle != "" {
 		app.switchModeTitle = switchModeTitle
+	}
+	if switchModeIcon != "" {
+		app.switchModeIcon = fmt.Sprintf(" %s ", switchModeIcon)
 	}
 
 	err := app.loadLines(input)
