@@ -8,7 +8,7 @@ Notes
 EOF
 )"
 
-tmux display-popup -w 65 -h 11 -y 15 -E "rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -title ' Command Palette ' -input \"$commands\" -output \"$RESULTS_FILE\" -width 65 -height 9"
+tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -title ' Command Palette ' -input \"$commands\" -output \"$RESULTS_FILE\" -width 65 -height 9"
 
 case "$(tail -1 "$RESULTS_FILE")" in
 	Notes)

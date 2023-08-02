@@ -3,9 +3,12 @@ NOTES_PATH="$HOME/Notes"
 TEMP_PATH="$NOTES_PATH/.temp"
 CACHE_PATH="$HOME/.cache/.i_dont_know_how_to_program_and_my_code_should_be_illegal"
 
+[ ! -e "$NOTES_PATH" ] && mkdir "$NOTES_PATH"
+
 [ -e "$CACHE_PATH" ] && rm "$CACHE_PATH"
 
-[ ! -e "$TEMP_PATH" ] && touch "$TEMP_PATH"
+[ -e "$TEMP_PATH" ] && rm "$TEMP_PATH"
+touch "$TEMP_PATH"
 
 cleanup() {
 	[ -e "$TEMP_PATH" ] && rm "$TEMP_PATH"
