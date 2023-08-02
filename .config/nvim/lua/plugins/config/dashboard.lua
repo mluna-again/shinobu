@@ -50,6 +50,11 @@ local function greetings()
 		"there is no such thing as that rose-colored life",
 		"unix is my ide",
 		"explicit is better than implicit. clear code is better than concise code",
+		{
+			"        The only truly secure system is one that is powered off, cast in a block of",
+			"concrete and sealed in a lead-lined room with armed guards — and even then I have my doubts."
+		},
+		"there is no quote today",
 	}
 
 	math.randomseed(os.time())
