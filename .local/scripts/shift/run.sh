@@ -97,7 +97,7 @@ case "$mode" in
 		;;
 
 	windows)
-		get_windows | "$path/shift" -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
+		get_windows | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
 		handle_windows
 		;;
 
