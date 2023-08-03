@@ -63,10 +63,6 @@ alias jqp="jqp --config ~/.config/jqp/config.yaml"
 alias http="xh"
 alias https="xhs"
 
-load() {
-  tmuxp load -a "$1" && exit
-}
-
 fv() {
   local file
   file="$(fzf)"
