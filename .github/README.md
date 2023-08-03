@@ -29,15 +29,16 @@
 7. spotify (desktop)
 8. shpotify
 9. hurl
-10. jq
-11. jqp
-12. xh
-13. exa
-14. delta
-15. direnv
-16. watchexec
-17. bat
-18. r*st
+10. tmuxp
+11. jq
+12. jqp
+13. xh
+14. exa
+15. delta
+16. direnv
+17. watchexec
+18. bat
+19. r*st
 
 ## Problems I've encountered that I don't want to forget
 
