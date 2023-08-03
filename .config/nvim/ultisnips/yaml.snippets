@@ -1,0 +1,44 @@
+snippet tmuxp "tmuxp config file example" b
+session_name: example
+start_directory: /var/
+windows:
+  - window_name: should be /var/
+		layout: even-horizontal
+    panes:
+      - shell_command:
+          - echo "\033c
+          - it trickles down from session-level"
+      - echo hello
+  - window_name: should be /var/log
+    start_directory: log
+    panes:
+      - shell_command:
+          - echo '\033c
+          - window start_directory concatenates to session start_directory
+          - if it is not absolute'
+      - echo hello
+  - window_name: should be ~
+    start_directory: "~"
+    panes:
+      - shell_command:
+          - 'echo \\033c ~ has precedence. note: remember to quote ~ in YAML'
+      - echo hello
+  - window_name: should be /bin
+    start_directory: /bin
+    panes:
+      - echo '\033c absolute paths also have precedence.'
+      - echo hello
+  - window_name: should be workspace file's dir
+
+    start_directory: ./
+    panes:
+      - shell_command:
+          - echo '\033c
+          - ./ is relative to workspace file location
+          - ../ will be parent of workspace file
+          - ./test will be \"test\" dir inside dir of workspace file'
+      - shell_command:
+          - echo '\033c
+          - This way you can load up workspaces from projects and maintain
+          - relative paths.'
+endsnippet
