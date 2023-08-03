@@ -9,6 +9,8 @@ Clear panes
 Terminate processes
 Terminate processes and clear
 Send command
+Kill server
+Close session
 EOF
 )"
 
@@ -57,5 +59,13 @@ case "$(read_input)" in
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
+		;;
+
+	"Kill server")
+		tmux kill-server
+		;;
+
+	"Close session")
+		tmux kill-session
 		;;
 esac
