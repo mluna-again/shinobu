@@ -11,6 +11,7 @@ Terminate processes and clear
 Send command
 Kill server
 Close session
+Detach client
 EOF
 )"
 
@@ -67,5 +68,9 @@ case "$(read_input)" in
 
 	"Close session")
 		tmux kill-session
+		;;
+
+	"Detach client")
+		tmux detach
 		;;
 esac
