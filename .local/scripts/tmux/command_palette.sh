@@ -7,16 +7,16 @@ SESSIONS_PATH="$HOME/.cache/shift_sessions"
 [ ! -d "$SESSIONS_PATH" ] && mkdir "$SESSIONS_PATH"
 
 commands="$(cat - <<EOF
-Notes
-Clear panes
-Terminate processes
-Terminate processes and clear
-Send command
-Kill server
-Close session
-Close window
-Open session
-Detach client
+Notes: fuzzy find
+Cleanup: clear panes
+Cleanup: terminate processes and clear panes
+Kill: processes
+Kill: server
+Kill: window
+Kill: session
+Detach: client
+Load: session
+Send: command to panes
 EOF
 )"
 
@@ -41,7 +41,7 @@ read_input() {
 input " Command Palette " " 󰘳 " "$commands"
 
 case "$(read_input)" in
-	"Open session")
+	"Load: session")
 		command -v tmuxp &>/dev/null || {
 			tmux display-popup -w "65" -h "11" -y 15 echo "tmuxp is not installed!"
 			exit
@@ -65,45 +65,45 @@ case "$(read_input)" in
 		fi
 		;;
 
-	Notes)
+	"Notes: fuzzy find")
 		tmux display-popup -w "65" -h "11" -y 15 -E "$HOME/.local/scripts/notes/notes.sh"
 		[ ! -e "$CACHE_PATH" ] && exit # no note selected
 		tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "$HOME/.local/scripts/tmux/selectedcmd.sh"
 		;;
 
-	"Clear panes")
+	"Cleanup: clear panes")
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
 		;;
 
-	"Terminate processes")
+	"Kill: processes")
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		;;
 
-	"Send command")
+	"Send: command to panes")
 		input " Command to send " " 󰘳 " " " "rename"
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} "$(read_input)" Enter
 		;;
 
-	"Terminate processes and clear")
+	"Cleanup: terminate processes and clear panes")
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-c
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
 		;;
 
-	"Kill server")
+	"Kill: server")
 		tmux kill-server
 		;;
 
-	"Close session")
+	"Kill: session")
 		tmux kill-session
 		;;
 
-	"Detach client")
+	"Detach: client")
 		tmux detach
 		;;
 
-	"Close window")
+	"Kill: window")
 		tmux kill-window
 		;;
 esac
