@@ -63,6 +63,27 @@ alias jqp="jqp --config ~/.config/jqp/config.yaml"
 alias http="xh"
 alias https="xhs"
 
+load() {
+  local sess_path
+  local sess_name
+  local usage
+  sess_path="$1"
+  sess_name="$2"
+  usage=$(
+  cat - <<EOF
+  usage:
+    load <session_file_path> <session_name>
+EOF
+)
+
+  [ -z "$sess_path" ] && { echo "$usage"; return 1; }
+  [ -z "$sess_name" ] && { echo "$usage"; return 1; }
+
+  [ -e "$HOME/.cache/shift_sessions/$sess_name.yml" ] && { echo "There is already a session with that name."; return 1; }
+  [ ! -e "./$sess_path" ] && { echo "File '$sess_path' not found."; return 1; }
+  ln -s "$(pwd)/$sess_path" "$HOME/.cache/shift_sessions/$sess_name.yml"
+}
+
 fv() {
   local file
   file="$(fzf)"
