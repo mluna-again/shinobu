@@ -1,7 +1,6 @@
 # Terminal Emulator Settings
 window:
   opacity: 1
-  decorations: None
   padding:
     x: 0
     y: 0
@@ -15,22 +14,22 @@ shell:
 # Font
 font:
   normal:
-    family: FiraCode Nerd Font
-    style: Retina
+    family: Hack Nerd Font
+    style: Regular
 
   bold:
-    family: FiraCode Nerd Font
-    style: Retina
+    family: Hack Nerd Font
+    style: Regular
 
   italic:
-    family: FiraCode Nerd Font
-    style: Retina
+    family: Hack Nerd Font
+    style: Regular
 
   bold_italic:
-    family: FiraCode Nerd Font
-    style: Retina
+    family: Hack Nerd Font
+    style: Regular
 
-  size: 16
+  size: 15
 
 cursor:
   style:
@@ -44,7 +43,7 @@ mouse:
   hide_when_typing: true
 
 key_bindings:
-  - { key: F11, action: ToggleFullscreen }
+  - { key: F, action: ToggleFullscreen, mods: Command }
 
 import:
-  - ~/.config/alacritty/kanawaga.yml
+  - ~/.config/alacritty/kanagawa-dragon.yml

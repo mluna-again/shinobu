@@ -113,11 +113,11 @@ case "$(read_input)" in
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} C-l
 		;;
 
-	"Kill: server")
+	"Destroy: server")
 		tmux kill-server
 		;;
 
-	"Destroy: session")
+	"Kill: session")
 		tmux kill-session
 		;;
 
