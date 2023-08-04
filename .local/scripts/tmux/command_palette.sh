@@ -17,6 +17,7 @@ Destroy: server
 Detach: client
 Load: session
 Send: command to panes
+Time: now
 EOF
 )"
 
@@ -105,5 +106,9 @@ case "$(read_input)" in
 
 	"Kill: window")
 		tmux kill-window
+		;;
+
+	"Time: now")
+		tmux clock-mode
 		;;
 esac
