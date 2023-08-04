@@ -4,6 +4,7 @@ THEMES="$(
 cat - <<EOF
 Kanagawa Dragon
 Kanagawa Wave
+Everforest
 EOF
 )"
 
@@ -148,6 +149,11 @@ case "$(read_input)" in
 			"Kanagawa Wave")
 				send_keys_to_nvim "kanagawa-wave"
 				modify_alacritty_theme kanagawa-wave.yml
+				;;
+
+			"Everforest")
+				send_keys_to_nvim "everforest"
+				modify_alacritty_theme everforest.yml
 				;;
 		esac
 		;;
