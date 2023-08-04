@@ -60,7 +60,7 @@ case "$(read_input)" in
 		if tmux list-sessions | grep -i "$session_name_without_extension" &>/dev/null; then
 			tmux switch-client -t "$session_name_without_extension"
 		else
-			tmuxp load -s "$session_name_without_extension" -d "$session_path" && \
+			tmuxp load -s "$session_name_without_extension" -d "$session_path" >/dev/null && \
 				tmux switch-client -t "$session_name_without_extension"
 		fi
 		;;
