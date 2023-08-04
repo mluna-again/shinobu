@@ -49,7 +49,7 @@ case "$(read_input)" in
 		[  "$session_name" = "No sessions" ] && exit
 		[ ! -e "$RESULTS_FILE" ] && exit
 
-		session_path=$(readlink -f "$session_path")
+		session_path=$(readlink "$session_path")
 		session_name_without_extension=$(sed "s/.yml$//" <<< "$session_name")
 
 		if tmux list-sessions | grep -i "$session_name_without_extension" &>/dev/null; then
