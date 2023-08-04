@@ -41,6 +41,10 @@ input " Command Palette " " 󰘳 " "$commands"
 
 case "$(read_input)" in
 	"Open session")
+		command -v tmuxp &>/dev/null || {
+			tmux display-popup -w "65" -h "11" -y 15 echo "tmuxp is not installed!"
+			exit
+		}
 		sessions=$(find "$SESSIONS_PATH" -type f -or -type l | sed "s|^$SESSIONS_PATH/||")
 		input " Choose session " "  " "${sessions:-No sessions}"
 		session_name=$(read_input)
