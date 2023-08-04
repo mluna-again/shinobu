@@ -59,7 +59,7 @@ create() {
 	[ -e "$file_path" ] && { echo "File already exists."; exit 1; }
 
 	touch "$file_path"
-	echo "$file_path" >> "$OUTPUT_FILE"
+	echo "$file_path" > "$OUTPUT_FILE"
 }
 
 case "$1" in
@@ -95,7 +95,7 @@ case "$1" in
 
 		file_path=$(concat_path "$name")
 		[ ! -e "$file_path" ] && { echo "File doesn't exist."; exit 1; }
-		echo "$file_path" >> "$OUTPUT_FILE"
+		echo "$file_path" > "$OUTPUT_FILE"
 		;;
 esac
 
