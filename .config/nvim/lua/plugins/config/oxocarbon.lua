@@ -1,7 +1,7 @@
 return {
-	"shaunsingh/oxocarbon.nvim",
-	branch = "fennel",
-	config = function()
-		vim.cmd("colorscheme oxocarbon")
-	end,
+  "nyoom-engineering/oxocarbon.nvim"
+  -- Add in any other configuration;
+  --   event = foo,
+  --   config = bar
+  --   end,
 }

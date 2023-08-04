@@ -1,5 +1,12 @@
 #! /usr/bin/env bash
 
+THEMES="$(
+cat - <<EOF
+Kanagawa Dragon
+Oxocarbon
+EOF
+)"
+
 RESULTS_FILE="$HOME/.cache/.shift_command_result"
 
 SESSIONS_PATH="$HOME/.cache/shift_sessions"
@@ -16,7 +23,8 @@ Destroy: server
 Detach: client
 Load: session
 Send: command to panes
-Time: now
+Time: clock
+Theme: choose colorscheme
 EOF
 )"
 
@@ -34,8 +42,20 @@ input() {
 	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input \"$input\" -output \"$RESULTS_FILE\" -width 65 -height 9 -mode \"$mode\""
 }
 
+alert() {
+	tmux display-popup -w 65 -h 11 -y 15 echo "$@"
+}
+
 read_input() {
 	tail -1 "$RESULTS_FILE"
+	rm "$RESULTS_FILE"
+}
+
+send_keys_to_nvim() {
+	tmux list-panes -a -F "#{pane_id} #{pane_current_command}" |\
+		grep -i nvim |\
+		awk '{print $1}' |\
+		xargs -I{} -n1 tmux send-keys -t {} Escape Escape : colorscheme Space "$1" Enter
 }
 
 input " Command Palette " " 󰘳 " "$commands"
@@ -66,7 +86,7 @@ case "$(read_input)" in
 		;;
 
 	"Notes: fuzzy find")
-		tmux display-popup -w "65" -h "11" -y 15 -E "rm \"$RESULTS_FILE\"; $HOME/.local/scripts/notes/notes.sh \"$RESULTS_FILE\""
+		tmux display-popup -w "65" -h "11" -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\"; $HOME/.local/scripts/notes/notes.sh \"$RESULTS_FILE\""
 		[ ! -e "$RESULTS_FILE" ] && exit
 		file="$(cat "$RESULTS_FILE")"
 		[ -z "$file" ] && exit
@@ -111,5 +131,18 @@ case "$(read_input)" in
 
 	"Time: now")
 		tmux clock-mode
+		;;
+
+	"Theme: choose colorscheme")
+		input " Choose colorscheme " " 󰏘 " "$THEMES"
+		case "$(read_input)" in
+			"Kanagawa Dragon")
+				send_keys_to_nvim "kanagawa-dragon"
+				;;
+
+			"Oxocarbon")
+				send_keys_to_nvim "oxocarbon"
+				;;
+		esac
 		;;
 esac
