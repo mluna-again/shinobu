@@ -39,6 +39,7 @@
 17. watchexec
 18. bat
 19. r*st
+20. yq
 
 ## Problems I've encountered that I don't want to forget
 

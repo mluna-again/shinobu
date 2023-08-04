@@ -6,44 +6,33 @@ window:
     y: 0
   scrolling:
     history: 15
-
 # Setting zsh as the default shell
 shell:
-    program: /bin/zsh
-
+  program: /bin/zsh
 # Font
 font:
   normal:
     family: Hack Nerd Font
     style: Regular
-
   bold:
     family: Hack Nerd Font
     style: Regular
-
   italic:
     family: Hack Nerd Font
     style: Regular
-
   bold_italic:
     family: Hack Nerd Font
     style: Regular
-
   size: 15
-
 cursor:
   style:
     shape: Block
     blinking: Always
-
 env:
   TERM: xterm-256color
-
 mouse:
   hide_when_typing: true
-
 key_bindings:
-  - { key: F, action: ToggleFullscreen, mods: Command }
-
+  - {key: F, action: ToggleFullscreen, mods: Command}
 import:
-  - ~/.config/alacritty/kanagawa-dragon.yml
+  - ~/.config/alacritty/themes/kanagawa-wave.yml

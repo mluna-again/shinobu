@@ -3,7 +3,7 @@
 THEMES="$(
 cat - <<EOF
 Kanagawa Dragon
-Oxocarbon
+Kanagawa Wave
 EOF
 )"
 
@@ -56,6 +56,10 @@ send_keys_to_nvim() {
 		grep -i nvim |\
 		awk '{print $1}' |\
 		xargs -I{} -n1 tmux send-keys -t {} Escape Escape : colorscheme Space "$1" Enter
+}
+
+modify_alacritty_theme() {
+	yq -i ".import[0] = \"~/.config/alacritty/themes/$1\"" "$HOME/.config/alacritty/alacritty.yml"
 }
 
 input " Command Palette " " 󰘳 " "$commands"
@@ -138,10 +142,12 @@ case "$(read_input)" in
 		case "$(read_input)" in
 			"Kanagawa Dragon")
 				send_keys_to_nvim "kanagawa-dragon"
+				modify_alacritty_theme kanagawa-dragon.yml
 				;;
 
-			"Oxocarbon")
-				send_keys_to_nvim "oxocarbon"
+			"Kanagawa Wave")
+				send_keys_to_nvim "kanagawa-wave"
+				modify_alacritty_theme kanagawa-wave.yml
 				;;
 		esac
 		;;
