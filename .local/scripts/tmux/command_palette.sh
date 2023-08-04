@@ -95,7 +95,7 @@ case "$(read_input)" in
 		tmux kill-server
 		;;
 
-	"Kill: session")
+	"Destroy: session")
 		tmux kill-session
 		;;
 
