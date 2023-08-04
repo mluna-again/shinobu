@@ -11,9 +11,9 @@ Notes: fuzzy find
 Cleanup: clear panes
 Cleanup: terminate processes and clear panes
 Kill: processes
-Kill: server
 Kill: window
 Kill: session
+Destroy: server
 Detach: client
 Load: session
 Send: command to panes
