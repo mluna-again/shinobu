@@ -71,8 +71,9 @@ load() {
   sess_name="$2"
   usage=$(
   cat - <<EOF
-  usage:
-    load <session_file_path> <session_name>
+loads a session file to cache.
+usage:
+  load <session_file_path> <session_name>
 EOF
 )
 
