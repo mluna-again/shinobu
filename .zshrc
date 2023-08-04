@@ -79,7 +79,14 @@ EOF
   [ -z "$sess_path" ] && { echo "$usage"; return 1; }
   [ -z "$sess_name" ] && { echo "$usage"; return 1; }
 
-  [ -e "$HOME/.cache/shift_sessions/$sess_name.yml" ] && { echo "There is already a session with that name."; return 1; }
+  [ -e "$HOME/.cache/shift_sessions/$sess_name.yml" ] && {
+    printf "There is already a session with that name, override it? [Ny] "
+    read -r resp
+    resp=$(tr '[:upper:]' '[:lower:]' <<< "$resp")
+    [ "$resp" != "y" ] && return 1;
+
+    rm "$HOME/.cache/shift_sessions/$sess_name.yml"
+  }
   [ ! -e "./$sess_path" ] && { echo "File '$sess_path' not found."; return 1; }
   ln -s "$(pwd)/$sess_path" "$HOME/.cache/shift_sessions/$sess_name.yml"
 }
