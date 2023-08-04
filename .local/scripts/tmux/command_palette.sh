@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 
 RESULTS_FILE="$HOME/.cache/.shift_command_result"
-CACHE_PATH="$HOME/.cache/.i_dont_know_how_to_program_and_my_code_should_be_illegal"
 
 SESSIONS_PATH="$HOME/.cache/shift_sessions"
 [ ! -d "$SESSIONS_PATH" ] && mkdir "$SESSIONS_PATH"
@@ -67,9 +66,11 @@ case "$(read_input)" in
 		;;
 
 	"Notes: fuzzy find")
-		tmux display-popup -w "65" -h "11" -y 15 -E "$HOME/.local/scripts/notes/notes.sh"
-		[ ! -e "$CACHE_PATH" ] && exit # no note selected
-		tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "$HOME/.local/scripts/tmux/selectedcmd.sh"
+		tmux display-popup -w "65" -h "11" -y 15 -E "rm \"$RESULTS_FILE\"; $HOME/.local/scripts/notes/notes.sh \"$RESULTS_FILE\""
+		[ ! -e "$RESULTS_FILE" ] && exit
+		file="$(cat "$RESULTS_FILE")"
+		[ -z "$file" ] && exit
+		tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "nvim \"$file\""
 		;;
 
 	"Cleanup: clear panes")

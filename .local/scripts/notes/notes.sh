@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 NOTES_PATH="$HOME/Notes"
 TEMP_PATH="$NOTES_PATH/.temp"
-CACHE_PATH="$HOME/.cache/.i_dont_know_how_to_program_and_my_code_should_be_illegal"
+OUTPUT_FILE="$1"
+
+[ -z "$OUTPUT_FILE" ] && { echo "No output file!"; exit 1; }
 
 [ ! -e "$NOTES_PATH" ] && mkdir "$NOTES_PATH"
-
-[ -e "$CACHE_PATH" ] && rm "$CACHE_PATH"
 
 [ -e "$TEMP_PATH" ] && rm "$TEMP_PATH"
 touch "$TEMP_PATH"
@@ -59,7 +59,7 @@ create() {
 	[ -e "$file_path" ] && { echo "File already exists."; exit 1; }
 
 	touch "$file_path"
-	echo nvim "$file_path" > "$CACHE_PATH"
+	echo "$file_path" >> "$OUTPUT_FILE"
 }
 
 case "$1" in
@@ -95,7 +95,7 @@ case "$1" in
 
 		file_path=$(concat_path "$name")
 		[ ! -e "$file_path" ] && { echo "File doesn't exist."; exit 1; }
-		echo nvim "$file_path" > "$CACHE_PATH"
+		echo "$file_path" >> "$OUTPUT_FILE"
 		;;
 esac
 
