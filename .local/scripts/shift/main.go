@@ -22,6 +22,8 @@ type app struct {
 	startingModeIcon  string
 	finalQuery        string
 	startingMode      string
+	themeName         string
+	theme             Styles
 }
 
 type model struct {
@@ -49,12 +51,12 @@ func newModel(app *app, w int, h int) (model, error) {
 	i.Focus()
 	i.Width = w - 4
 	i.Prompt = activeMode.prompt
-	i.PromptStyle = prompt
-	i.Cursor.Style = prompt
-	i.Cursor.TextStyle = prompt
-	i.TextStyle = prompt
-	i.PromptStyle = prompt
-	i.Cursor.Style = prompt
+	i.PromptStyle = app.theme.prompt
+	i.Cursor.Style = app.theme.prompt
+	i.Cursor.TextStyle = app.theme.prompt
+	i.TextStyle = app.theme.prompt
+	i.PromptStyle = app.theme.prompt
+	i.Cursor.Style = app.theme.prompt
 
 	// 5 -> 2 from top/bottom margin, 3 for header and the other one ehh idk lol
 	// 4 -> margin
@@ -64,8 +66,8 @@ func newModel(app *app, w int, h int) (model, error) {
 		table.WithHeight(h-4))
 
 	st := table.DefaultStyles()
-	st.Header = line
-	st.Selected = selectedLine
+	st.Header = app.theme.line
+	st.Selected = app.theme.selectedLine
 	t.SetStyles(st)
 	t.KeyMap.LineUp = key.NewBinding(func(opt *key.Binding) {
 		opt.SetKeys("up", "shift+tab", "ctrl+p")
@@ -187,14 +189,14 @@ func (m model) View() string {
 	titleLen := utf8.RuneCount([]byte(title))
 	padding := m.termWidth - titleLen
 
-	hLeft := header.
+	hLeft := m.app.theme.header.
 		Render(strings.Repeat(" ", padding/2))
 
-	hCenter := headerTitle.
+	hCenter := m.app.theme.headerTitle.
 		Width(titleLen).
 		Render(title)
 
-	hRight := header.
+	hRight := m.app.theme.header.
 		Render(strings.Repeat(" ", m.termWidth-titleLen-(padding/2)))
 
 	v.WriteString(hLeft)
@@ -202,26 +204,26 @@ func (m model) View() string {
 	v.WriteString(hRight)
 	v.WriteRune('\n')
 
-	inputText := header.Render(m.input.View())
+	inputText := m.app.theme.header.Render(m.input.View())
 	if m.mode != switchSession {
 		v.WriteString(m.app.cleanUpModeParamsForView(inputText))
-		v.WriteString(header.Render("  "))
+		v.WriteString(m.app.theme.header.Render("  "))
 	} else {
 		counter := m.counterText()
-		v.WriteString(header.Width(m.termWidth - len(counter) - len(inputText)).Render(inputText))
-		v.WriteString(header.Render(counter))
+		v.WriteString(m.app.theme.header.Width(m.termWidth - len(counter) - len(inputText)).Render(inputText))
+		v.WriteString(m.app.theme.header.Render(counter))
 	}
 
 	v.WriteRune('\n')
-	v.WriteString(header.Render(strings.Repeat(" ", m.termWidth)))
+	v.WriteString(m.app.theme.header.Render(strings.Repeat(" ", m.termWidth)))
 	v.WriteRune('\n')
 
 	if m.mode == switchSession {
-		t := line.Width(m.termWidth).Render(m.table.View())
+		t := m.app.theme.line.Width(m.termWidth).Render(m.table.View())
 		tc := strings.Split(t, "\n")[1:]
 		v.WriteString(strings.Join(tc, "\n"))
 		v.WriteRune('\n')
-		v.WriteString(line.Width(m.termWidth).Render(""))
+		v.WriteString(m.app.theme.line.Width(m.termWidth).Render(""))
 		v.WriteRune('\n')
 	}
 
@@ -231,24 +233,24 @@ func (m model) View() string {
 			v.WriteRune('\n')
 		}
 		if m.autocompleting && len(m.autocompleteElements) > 0 {
-			v.WriteString(line.Width(m.termWidth).Render(""))
+			v.WriteString(m.app.theme.line.Width(m.termWidth).Render(""))
 			v.WriteRune('\n')
 			for i, elem := range m.autocompleteElements {
 				if i >= 5 {
 					break
 				}
 
-				v.WriteString(line.Width(m.termWidth).Render(elem.Name()))
+				v.WriteString(m.app.theme.line.Width(m.termWidth).Render(elem.Name()))
 				v.WriteRune('\n')
 			}
 
 			if len(m.autocompleteElements) > 0 && len(m.autocompleteElements) < 5 {
 				for i := len(m.autocompleteElements); i < 5; i++ {
-					v.WriteString(line.Width(m.termWidth).Render(""))
+					v.WriteString(m.app.theme.line.Width(m.termWidth).Render(""))
 					v.WriteRune('\n')
 				}
 			}
-			v.WriteString(line.Width(m.termWidth).Render(""))
+			v.WriteString(m.app.theme.line.Width(m.termWidth).Render(""))
 			v.WriteRune('\n')
 		}
 	}
@@ -263,6 +265,7 @@ var height int
 var input string
 var outputFile string
 var startingMode string
+var theme string
 
 func main() {
 	flag.StringVar(&switchModeTitle, "title", " Switch session ", "Default mode title")
@@ -270,6 +273,7 @@ func main() {
 	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
 	flag.StringVar(&outputFile, "output", "", "Output file")
 	flag.StringVar(&startingMode, "mode", "switch", "Starting mode, defaults to switch")
+	flag.StringVar(&startingMode, "theme", "kanagawa-dragon", "Shift's theme, default to kanagawa-dragon")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
 	flag.Parse()
@@ -278,6 +282,9 @@ func main() {
 	app.startingModeTitle = switchModeTitle
 	app.startingModeIcon = switchModeIcon
 	app.startingMode = startingMode
+	app.themeName = theme
+
+	app.loadTheme()
 
 	err := app.loadLines(input)
 	if err != nil {
