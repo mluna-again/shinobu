@@ -169,8 +169,8 @@ case "$(read_input)" in
 
 			"Gruvbox")
 				tmux set -g @components_active_background orange
-				send_keys_to_nvim "gruvbox"
-				modify_nvim_and_alacritty gruvbox
+				send_keys_to_nvim "gruvbox-material"
+				modify_nvim_and_alacritty gruvbox-material
 				;;
 
 			"Catppuccin")

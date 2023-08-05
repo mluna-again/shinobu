@@ -53,7 +53,7 @@ var everforest = Colors{
 var gruvbox = Colors{
 	darkLight: "#504945",
 	dark:      "#3c3836",
-	darker:    "#1d2021",
+	darker:    "#282828",
 	light:     "#d5c4a1",
 	yellow:    "#d79921",
 }
@@ -171,7 +171,7 @@ func (app *app) loadTheme(theme string) {
 	case "everforest":
 		app.theme = everforestStyles
 
-	case "gruvbox":
+	case "gruvbox-material":
 		app.theme = gruvboxStyles
 
 	case "catppuccin":
