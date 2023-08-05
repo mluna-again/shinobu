@@ -5,6 +5,7 @@ cat - <<EOF
 Kanagawa Dragon
 Kanagawa Wave
 Everforest
+Gruvbox
 EOF
 )"
 
@@ -59,8 +60,9 @@ send_keys_to_nvim() {
 		xargs -I{} -n1 tmux send-keys -t {} Escape Escape : colorscheme Space "$1" Enter
 }
 
-modify_alacritty_theme() {
-	yq -i ".import[0] = \"~/.config/alacritty/themes/$1\"" "$HOME/.config/alacritty/alacritty.yml"
+modify_nvim_and_alacritty() {
+	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml"
+	sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua"
 }
 
 input " Command Palette " " 󰘳 " "$commands"
@@ -143,17 +145,22 @@ case "$(read_input)" in
 		case "$(read_input)" in
 			"Kanagawa Dragon")
 				send_keys_to_nvim "kanagawa-dragon"
-				modify_alacritty_theme kanagawa-dragon.yml
+				modify_nvim_and_alacritty kanagawa-dragon
 				;;
 
 			"Kanagawa Wave")
 				send_keys_to_nvim "kanagawa-wave"
-				modify_alacritty_theme kanagawa-wave.yml
+				modify_nvim_and_alacritty kanagawa-wave
 				;;
 
 			"Everforest")
 				send_keys_to_nvim "everforest"
-				modify_alacritty_theme everforest.yml
+				modify_nvim_and_alacritty everforest
+				;;
+
+			"Gruvbox")
+				send_keys_to_nvim "gruvbox"
+				modify_nvim_and_alacritty gruvbox
 				;;
 		esac
 		;;

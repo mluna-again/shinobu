@@ -35,4 +35,4 @@ mouse:
 key_bindings:
   - {key: F, action: ToggleFullscreen, mods: Command}
 import:
-  - ~/.config/alacritty/themes/kanagawa-dragon.yml
+  - ~/.config/alacritty/themes/gruvbox.yml

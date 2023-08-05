@@ -47,6 +47,7 @@ require("lazy").setup({
 	require("plugins.config.colors"),
 	require("plugins.config.kanagawa"),
 	require("plugins.config.everforest"),
+	require("plugins.config.gruvbox"),
 	require("plugins.config.lualine"),
 	require("plugins.config.dap"),
 	require("plugins.config.neodev"),
