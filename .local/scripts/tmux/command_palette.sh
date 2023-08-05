@@ -65,7 +65,13 @@ modify_nvim_and_alacritty() {
 	command -v yq &>/dev/null || { alert "yq is required to run this action!"; exit 1; }
 
 	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml" || true
-	sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
+
+	# -_-
+	if uname | grep -i darwin &>/dev/null; then
+		sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
+	else
+		sed -i "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
+	fi
 
 	[ ! -d "$HOME/.config/shift" ] && mkdir "$HOME/.config/shift"
 	echo "$1" > "$HOME/.config/shift/theme"
