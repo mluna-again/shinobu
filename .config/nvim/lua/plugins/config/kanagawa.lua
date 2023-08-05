@@ -6,9 +6,6 @@ return {
 		vim.cmd([[
 		augroup Kanawaga
 		autocmd!
-		autocmd ColorScheme * hi Normal guibg=NONE
-		autocmd ColorScheme * hi Folded guibg=NONE ctermbg=NONE
-		autocmd ColorScheme * hi NeotestFocused gui=none
 
 		set fillchars+=vert:\ 
 		set fillchars+=eob:\ 
@@ -34,7 +31,7 @@ return {
 					-- so that you can use it where your still want darker windows.
 					-- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
 					NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-					Normal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+					Normal = { fg = theme.ui.fg_dim, bg = theme.ui.bg },
 
 					-- Popular plugins that open floats will link to NormalFloat by default;
 					-- set their background accordingly if you wish to keep them dark and borderless
