@@ -35,6 +35,7 @@ input() {
 	local icon
 	local input
 	local mode
+	rm "$RESULTS_FILE"
 
 	title="$1"
 	icon="$2"
@@ -50,7 +51,6 @@ alert() {
 
 read_input() {
 	tail -1 "$RESULTS_FILE"
-	rm "$RESULTS_FILE"
 }
 
 send_keys_to_nvim() {
