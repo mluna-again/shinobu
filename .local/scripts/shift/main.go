@@ -273,7 +273,7 @@ func main() {
 	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
 	flag.StringVar(&outputFile, "output", "", "Output file")
 	flag.StringVar(&startingMode, "mode", "switch", "Starting mode, defaults to switch")
-	flag.StringVar(&startingMode, "theme", "kanagawa-dragon", "Shift's theme, default to kanagawa-dragon")
+	flag.StringVar(&theme, "theme", "kanagawa-dragon", "Shift's theme, default to kanagawa-dragon")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
 	flag.Parse()

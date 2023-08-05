@@ -28,6 +28,14 @@ var kanagawaDragon = Colors{
 	yellow:    "#c4b28a",
 }
 
+var kanagawaWave = Colors{
+	darkLight: "#252535",
+	dark:      "#1F1F28",
+	darker:    "#16161D",
+	light:     "#DCD7BA",
+	yellow:    "#E6C384",
+}
+
 var kanagawaDragonStyles = Styles{
 	header:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
 	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
@@ -43,10 +51,28 @@ var kanagawaDragonStyles = Styles{
 		Bold(false),
 }
 
+var kanagawaWaveStyles = Styles{
+	header:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaWave.darker)).Foreground(lipgloss.Color(kanagawaWave.light)).Bold(false),
+	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaWave.darker)).Foreground(lipgloss.Color(kanagawaWave.light)).Bold(false),
+	headerTitle: lipgloss.NewStyle().Background(lipgloss.Color(kanagawaWave.yellow)).Foreground(lipgloss.Color(kanagawaWave.dark)).Bold(false),
+	line: lipgloss.NewStyle().
+		Background(lipgloss.Color(kanagawaWave.darkLight)).
+		Foreground(lipgloss.Color(kanagawaWave.light)).
+		PaddingLeft(1).
+		Bold(false),
+	selectedLine: lipgloss.NewStyle().
+		Background(lipgloss.Color(kanagawaWave.yellow)).
+		Foreground(lipgloss.Color(kanagawaWave.dark)).
+		Bold(false),
+}
+
 func (app *app) loadTheme() {
 	switch app.themeName {
 	case "kanagawa-dragon":
 		app.theme = kanagawaDragonStyles
+
+	case "kanagawa-wave":
+		app.theme = kanagawaWaveStyles
 
 	default:
 		app.theme = kanagawaDragonStyles
