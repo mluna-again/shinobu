@@ -79,57 +79,57 @@ return {
 		"rebelot/kanagawa.nvim",
 	},
 	config = function()
-		local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" }).palette
-		local colors = {
-			black = kanagawa.dragonBlack4,
-			white = kanagawa.dragonWhite,
-			red = kanagawa.dragonRed,
-			green = kanagawa.dragonGreen,
-			blue = kanagawa.dragonBlue,
-			yellow = kanagawa.dragonYellow,
-			gray = kanagawa.dragonGray,
-			darkgray = kanagawa.dragonBlack2,
-			lightgray = kanagawa.dragonBlack5,
-			inactivegray = kanagawa.dragonBlack6,
-			background = kanagawa.dragonBlack3,
-		}
-		local theme = {
-			normal = {
-				a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.background, fg = colors.yellow },
-			},
-			insert = {
-				a = { bg = colors.green, fg = colors.black, gui = "bold" },
-				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.background, fg = colors.yellow },
-			},
-			visual = {
-				a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.background, fg = colors.yellow },
-			},
-			replace = {
-				a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.background, fg = colors.yellow },
-			},
-			command = {
-				a = { bg = colors.white, fg = colors.black, gui = "bold" },
-				b = { bg = colors.lightgray, fg = colors.white },
-				c = { bg = colors.background, fg = colors.yellow },
-			},
-			inactive = {
-				a = { bg = colors.background, fg = colors.white },
-				b = { bg = colors.background, fg = colors.white },
-				c = { bg = colors.background, fg = colors.white },
-			},
-		}
+		-- local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" }).theme
+		-- local colors = {
+		-- 	black = kanagawa.ui.bg_gutter,
+		-- 	white = kanagawa.ui.fg,
+		-- 	red = kanagawa.syn.operator,
+		-- 	green = kanagawa.syn.string,
+		-- 	blue = kanagawa.diag.info,
+		-- 	yellow = kanagawa.syn.identifier,
+		-- 	gray = kanagawa.syn.parameter,
+		-- 	darkgray = kanagawa.ui.bg_m1,
+		-- 	lightgray = kanagawa.ui.bg_p2,
+		-- 	inactivegray = kanagawa.ui.whitespace,
+		-- 	background = kanagawa.ui.bg,
+		-- }
+		-- local theme = {
+		-- 	normal = {
+		-- 		a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+		-- 		b = { bg = colors.lightgray, fg = colors.white },
+		-- 		c = { bg = colors.background, fg = colors.yellow },
+		-- 	},
+		-- 	insert = {
+		-- 		a = { bg = colors.green, fg = colors.black, gui = "bold" },
+		-- 		b = { bg = colors.lightgray, fg = colors.white },
+		-- 		c = { bg = colors.background, fg = colors.yellow },
+		-- 	},
+		-- 	visual = {
+		-- 		a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+		-- 		b = { bg = colors.lightgray, fg = colors.white },
+		-- 		c = { bg = colors.background, fg = colors.yellow },
+		-- 	},
+		-- 	replace = {
+		-- 		a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+		-- 		b = { bg = colors.lightgray, fg = colors.white },
+		-- 		c = { bg = colors.background, fg = colors.yellow },
+		-- 	},
+		-- 	command = {
+		-- 		a = { bg = colors.white, fg = colors.black, gui = "bold" },
+		-- 		b = { bg = colors.lightgray, fg = colors.white },
+		-- 		c = { bg = colors.background, fg = colors.yellow },
+		-- 	},
+		-- 	inactive = {
+		-- 		a = { bg = colors.background, fg = colors.white },
+		-- 		b = { bg = colors.background, fg = colors.white },
+		-- 		c = { bg = colors.background, fg = colors.white },
+		-- 	},
+		-- }
 
 
 		require("lualine").setup({
 			options = {
-				theme = theme,
+				-- theme = theme,
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
