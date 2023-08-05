@@ -65,6 +65,9 @@ modify_nvim_and_alacritty() {
 
 	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml" || true
 	sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
+
+	[ ! -d "$HOME/.config/shift" ] && mkdir "$HOME/.config/shift"
+	echo "$1" > "$HOME/.config/shift/theme"
 }
 
 input " Command Palette " " 󰘳 " "$commands"
