@@ -150,26 +150,31 @@ case "$(read_input)" in
 		input " Choose colorscheme " " 󰏘 " "$THEMES"
 		case "$(read_input)" in
 			"Kanagawa Dragon")
+				tmux set -g @components_active_background yellow
 				send_keys_to_nvim "kanagawa-dragon"
 				modify_nvim_and_alacritty kanagawa-dragon
 				;;
 
 			"Kanagawa Wave")
+				tmux set -g @components_active_background yellow
 				send_keys_to_nvim "kanagawa-wave"
 				modify_nvim_and_alacritty kanagawa-wave
 				;;
 
 			"Everforest")
+				tmux set -g @components_active_background green
 				send_keys_to_nvim "everforest"
 				modify_nvim_and_alacritty everforest
 				;;
 
 			"Gruvbox")
+				tmux set -g @components_active_background orange
 				send_keys_to_nvim "gruvbox"
 				modify_nvim_and_alacritty gruvbox
 				;;
 
 			"Catppuccin")
+				tmux set -g @components_active_background red
 				send_keys_to_nvim "catppuccin"
 				modify_nvim_and_alacritty catppuccin
 				;;
