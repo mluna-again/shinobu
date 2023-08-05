@@ -273,7 +273,7 @@ func main() {
 	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
 	flag.StringVar(&outputFile, "output", "", "Output file")
 	flag.StringVar(&startingMode, "mode", "switch", "Starting mode, defaults to switch")
-	flag.StringVar(&theme, "theme", "kanagawa-dragon", "Shift's theme, default to kanagawa-dragon")
+	flag.StringVar(&theme, "theme", "", "Shift's theme, default to the value of ~/.config/shift/theme or 'kanagawa-dragon' if no config file")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
 	flag.Parse()
@@ -282,9 +282,8 @@ func main() {
 	app.startingModeTitle = switchModeTitle
 	app.startingModeIcon = switchModeIcon
 	app.startingMode = startingMode
-	app.themeName = theme
 
-	app.loadTheme()
+	app.loadTheme(theme)
 
 	err := app.loadLines(input)
 	if err != nil {

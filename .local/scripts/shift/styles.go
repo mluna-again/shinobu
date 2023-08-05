@@ -1,6 +1,12 @@
 package main
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"os"
+	"path"
+	"strings"
+
+	"github.com/charmbracelet/lipgloss"
+)
 
 // theme: kanagawa-dragon
 
@@ -66,8 +72,27 @@ var kanagawaWaveStyles = Styles{
 		Bold(false),
 }
 
-func (app *app) loadTheme() {
-	switch app.themeName {
+func getConfigThemeOrDefault() string {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return "kanagawa-dragon"
+	}
+	themePath := path.Join(home, ".config/shift/theme")
+	value, err := os.ReadFile(themePath)
+	if err != nil {
+		return "kanagawa-dragon"
+	}
+	return strings.TrimSpace(string(value))
+}
+
+func (app *app) loadTheme(theme string) {
+	themeName := theme
+	// theme flag was not set
+	if theme == "" {
+		themeName = getConfigThemeOrDefault()
+	}
+
+	switch themeName {
 	case "kanagawa-dragon":
 		app.theme = kanagawaDragonStyles
 
