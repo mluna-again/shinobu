@@ -50,6 +50,14 @@ var everforest = Colors{
 	yellow:    "#DBBC7F",
 }
 
+var gruvbox = Colors{
+	darkLight: "#504945",
+	dark:      "#3c3836",
+	darker:    "#1d2021",
+	light:     "#d5c4a1",
+	yellow:    "#d79921",
+}
+
 var kanagawaDragonStyles = Styles{
 	header:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
 	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
@@ -95,6 +103,21 @@ var everforestStyles = Styles{
 		Bold(false),
 }
 
+var gruvboxStyles = Styles{
+	header:      lipgloss.NewStyle().Background(lipgloss.Color(gruvbox.darker)).Foreground(lipgloss.Color(gruvbox.light)).Bold(false),
+	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(gruvbox.darker)).Foreground(lipgloss.Color(gruvbox.light)).Bold(false),
+	headerTitle: lipgloss.NewStyle().Background(lipgloss.Color(gruvbox.yellow)).Foreground(lipgloss.Color(gruvbox.dark)).Bold(false),
+	line: lipgloss.NewStyle().
+		Background(lipgloss.Color(gruvbox.darkLight)).
+		Foreground(lipgloss.Color(gruvbox.light)).
+		PaddingLeft(1).
+		Bold(false),
+	selectedLine: lipgloss.NewStyle().
+		Background(lipgloss.Color(gruvbox.yellow)).
+		Foreground(lipgloss.Color(gruvbox.dark)).
+		Bold(false),
+}
+
 func getConfigThemeOrDefault() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -124,6 +147,9 @@ func (app *app) loadTheme(theme string) {
 
 	case "everforest":
 		app.theme = everforestStyles
+
+	case "gruvbox":
+		app.theme = gruvboxStyles
 
 	default:
 		app.theme = kanagawaDragonStyles
