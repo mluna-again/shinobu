@@ -29,7 +29,7 @@ vim.opt.colorcolumn = "99999"
 -- vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
 vim.cmd([[highlight VertSplit cterm=NONE guibg=NONE]])
 vim.cmd([[highlight EndOfBuffer guifg=bg]])
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme kanagawa-dragon")
 vim.cmd("set laststatus=3")
 
 -- hurl files
