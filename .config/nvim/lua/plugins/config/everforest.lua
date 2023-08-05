@@ -1,9 +1,7 @@
 return {
-  "neanias/everforest-nvim",
+  "sainnhe/everforest",
   event = "VeryLazy",
   config = function()
-    require("everforest").setup({
-      ui_contrast = "high"
-    })
-  end,
+    vim.cmd("let g:everforest_background = 'hard'")
+  end
 }

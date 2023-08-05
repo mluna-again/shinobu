@@ -42,6 +42,14 @@ var kanagawaWave = Colors{
 	yellow:    "#E6C384",
 }
 
+var everforest = Colors{
+	darkLight: "#2E383C",
+	dark:      "#272E33",
+	darker:    "#1E2326",
+	light:     "#D3C6AA",
+	yellow:    "#DBBC7F",
+}
+
 var kanagawaDragonStyles = Styles{
 	header:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
 	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
@@ -72,6 +80,21 @@ var kanagawaWaveStyles = Styles{
 		Bold(false),
 }
 
+var everforestStyles = Styles{
+	header:      lipgloss.NewStyle().Background(lipgloss.Color(everforest.darker)).Foreground(lipgloss.Color(everforest.light)).Bold(false),
+	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(everforest.darker)).Foreground(lipgloss.Color(everforest.light)).Bold(false),
+	headerTitle: lipgloss.NewStyle().Background(lipgloss.Color(everforest.yellow)).Foreground(lipgloss.Color(everforest.dark)).Bold(false),
+	line: lipgloss.NewStyle().
+		Background(lipgloss.Color(everforest.darkLight)).
+		Foreground(lipgloss.Color(everforest.light)).
+		PaddingLeft(1).
+		Bold(false),
+	selectedLine: lipgloss.NewStyle().
+		Background(lipgloss.Color(everforest.yellow)).
+		Foreground(lipgloss.Color(everforest.dark)).
+		Bold(false),
+}
+
 func getConfigThemeOrDefault() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -98,6 +121,9 @@ func (app *app) loadTheme(theme string) {
 
 	case "kanagawa-wave":
 		app.theme = kanagawaWaveStyles
+
+	case "everforest":
+		app.theme = everforestStyles
 
 	default:
 		app.theme = kanagawaDragonStyles
