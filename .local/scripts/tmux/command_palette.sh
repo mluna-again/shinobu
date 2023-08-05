@@ -63,8 +63,8 @@ send_keys_to_nvim() {
 modify_nvim_and_alacritty() {
 	command -v yq &>/dev/null || { alert "yq is required to run this action!"; exit 1; }
 
-	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml"
-	sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua"
+	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml" || true
+	sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
 }
 
 input " Command Palette " " 󰘳 " "$commands"
