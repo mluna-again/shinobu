@@ -58,6 +58,14 @@ var gruvbox = Colors{
 	yellow:    "#d79921",
 }
 
+var catppuccin = Colors{
+	darkLight: "#24273a",
+	dark:      "#1e2030",
+	darker:    "#181926",
+	light:     "#ed8796",
+	yellow:    "#f4dbd6",
+}
+
 var kanagawaDragonStyles = Styles{
 	header:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
 	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
@@ -118,6 +126,21 @@ var gruvboxStyles = Styles{
 		Bold(false),
 }
 
+var catppuccinStyles = Styles{
+	header:      lipgloss.NewStyle().Background(lipgloss.Color(catppuccin.darker)).Foreground(lipgloss.Color(catppuccin.light)).Bold(false),
+	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(catppuccin.darker)).Foreground(lipgloss.Color(catppuccin.light)).Bold(false),
+	headerTitle: lipgloss.NewStyle().Background(lipgloss.Color(catppuccin.yellow)).Foreground(lipgloss.Color(catppuccin.dark)).Bold(false),
+	line: lipgloss.NewStyle().
+		Background(lipgloss.Color(catppuccin.darkLight)).
+		Foreground(lipgloss.Color(catppuccin.light)).
+		PaddingLeft(1).
+		Bold(false),
+	selectedLine: lipgloss.NewStyle().
+		Background(lipgloss.Color(catppuccin.yellow)).
+		Foreground(lipgloss.Color(catppuccin.dark)).
+		Bold(false),
+}
+
 func getConfigThemeOrDefault() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -150,6 +173,9 @@ func (app *app) loadTheme(theme string) {
 
 	case "gruvbox":
 		app.theme = gruvboxStyles
+
+	case "catppuccin":
+		app.theme = catppuccinStyles
 
 	default:
 		app.theme = kanagawaDragonStyles

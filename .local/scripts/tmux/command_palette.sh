@@ -6,6 +6,7 @@ Kanagawa Dragon
 Kanagawa Wave
 Everforest
 Gruvbox
+Catppuccin
 EOF
 )"
 
@@ -166,6 +167,11 @@ case "$(read_input)" in
 			"Gruvbox")
 				send_keys_to_nvim "gruvbox"
 				modify_nvim_and_alacritty gruvbox
+				;;
+
+			"Catppuccin")
+				send_keys_to_nvim "catppuccin"
+				modify_nvim_and_alacritty catppuccin
 				;;
 		esac
 		;;
