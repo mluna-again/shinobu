@@ -25,6 +25,10 @@ return {
 		require('telescope').setup {
 			defaults = {
 				mappings = {
+					i = {
+						["<C-s>"] = "select_horizontal",
+						["<C-v>"] = "select_vertical",
+					}
 				},
 				path_display = { "truncate" },
 				winblend = 0,
