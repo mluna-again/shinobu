@@ -1,13 +1,11 @@
 <h1 align="center">shinobu 🍙</h1>
 
-<img width="1920" target="_blank" alt="shinobu showcase" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/shinobu.png">
-<img width="1920" target="_blank" alt="telescope" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/telescope.png">
-<img width="1920" target="_blank" alt="code" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/code.png">
-<img width="1920" target="_blank" alt="neotest" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/neotest.png">
-<img width="1920" target="_blank" alt="noice" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/noice.png">
-<img width="1920" target="_blank" alt="dap" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/dap.png">
-<img width="1920" target="_blank" alt="tmux-sessions" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/tmux-switcher.png">
-<img width="1920" target="_blank" alt="monitor" src="https://raw.githubusercontent.com/mluna-again/shinobu/master/.github/previews/monitor.png">
+<img width="1440" alt="Screenshot 2023-08-06 at 2 15 53 a m" src="https://github.com/mluna-again/shinobu/assets/53100040/7b85346d-c445-4ec6-a3ba-a539b9f8f9a2">
+<img width="1440" alt="Screenshot 2023-08-06 at 2 17 00 a m" src="https://github.com/mluna-again/shinobu/assets/53100040/ceaec878-59b8-4374-97e7-fcec73015f0b">
+<img width="1440" alt="Screenshot 2023-08-06 at 2 17 54 a m" src="https://github.com/mluna-again/shinobu/assets/53100040/acfce932-8da7-4b1f-b687-3577a2aebf61">
+<img width="1440" alt="Screenshot 2023-08-06 at 2 18 29 a m" src="https://github.com/mluna-again/shinobu/assets/53100040/57d64364-db4d-4d16-8a6c-77420b9b004d">
+
+https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6cedb5a494d6
 
 ## Dependencies
 ### Required
