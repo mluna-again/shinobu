@@ -2,7 +2,7 @@
 
 icon=""
 
-case "$2" in
+case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 	nvim)
 		icon=""
 		;;
@@ -33,6 +33,10 @@ case "$2" in
 
 	psql)
 		icon=""
+		;;
+
+	python)
+		icon="󰌠"
 		;;
 
 	*)
