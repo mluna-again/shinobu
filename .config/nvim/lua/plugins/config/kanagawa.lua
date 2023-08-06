@@ -39,7 +39,7 @@ return {
 
 					MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
 
-					TelescopeTitle = { fg = theme.ui.special, bold = true },
+					TelescopeTitle = { fg = theme.syn.regex, bold = true },
 					TelescopePromptNormal = { bg = theme.ui.bg_p1 },
 					TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
 					TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
@@ -47,8 +47,9 @@ return {
 					TelescopePreviewNormal = { bg = theme.ui.bg_dim },
 					TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
 					TelescopePromptTitle = { bg = theme.syn.identifier, fg = theme.ui.bg_dim },
-					TelescopePreviewTitle = { bg = theme.syn.identifier, fg = theme.ui.bg_dim },
+					TelescopePreviewTitle = { bg = theme.syn.regex, fg = theme.ui.bg_dim },
 					TelescopeResultsTitle = { bg = theme.syn.statement, fg = theme.ui.bg_dim },
+					TelescopeMatching = { fg = theme.syn.regex },
 
 					Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
 					PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
@@ -195,6 +196,8 @@ return {
 					FzfLuaBorder = { bg = theme.ui.bg_gutter, fg = theme.ui.bg_gutter },
 					FzfLuaPreviewBorder = { bg = theme.ui.bg_m1, fg = theme.ui.bg_m1 },
 					FzfLuaPreviewTitle = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
+
+					CursorLine = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
 				}
 			end,
 		})

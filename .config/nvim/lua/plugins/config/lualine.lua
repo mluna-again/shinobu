@@ -130,11 +130,12 @@ return {
 		require("lualine").setup({
 			options = {
 				-- theme = theme,
+				globalstatus = true,
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
-					statusline = { "alpha" },
-					winbar = { "alpha" },
+					statusline = { "alpha", "TelescopePrompt" },
+					winbar = { "alpha", "TelescopePrompt" },
 				},
 			},
 			sections = {
