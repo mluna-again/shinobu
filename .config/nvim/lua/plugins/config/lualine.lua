@@ -10,126 +10,49 @@ local function shouldShowFilename()
 	return true
 end
 
-local function prettyMode(mode)
-	local icons = {}
-	-- icons["NORMAL"] = "󱌢 Normal"
-	-- icons["INSERT"] = "󰙏 Insert"
-	-- icons["COMMAND"] = " Command"
-	-- icons["V-LINE"] = "󰆾 V-Line"
-	-- icons["V-BLOCK"] = "󰆾 V-Block"
-	-- icons["TERMINAL"] = " Terminal"
-
-	icons["NORMAL"] = "N"
-	icons["INSERT"] = "I"
-	icons["COMMAND"] = "C"
-	icons["V-LINE"] = "V-L"
-	icons["V-BLOCK"] = "V-B"
-	icons["TERMINAL"] = "T"
-	return icons[mode] or mode
-end
-
-local function prettyProgress(progress)
-	if progress == "Top" then
-		return "Top"
-	end
-
-	if progress == "Bot" then
-		return "Bot"
-	end
-
-	local progress_num = string.gsub(progress, "%%", "")
-	local num = tonumber(progress_num)
-
-	return progress_num .. "%%"
-
-	-- if num < 20 then
-	-- 	return "▁▁▁ " .. progress_num .. "%%"
-	-- end
-	--
-	-- if num < 30 then
-	-- 	return "▂▂▂ " .. progress_num .. "%%"
-	-- end
-	--
-	-- if num < 40 then
-	-- 	return "▃▃▃ " .. progress_num .. "%%"
-	-- end
-	--
-	-- if num < 50 then
-	-- 	return "▄▄▄ " .. progress_num .. "%%"
-	-- end
-	--
-	-- if num < 60 then
-	-- 	return "▅▅▅ " .. progress_num .. "%%"
-	-- end
-	--
-	-- if num < 70 then
-	-- 	return "▆▆▆ " .. progress_num .. "%%"
-	-- end
-	--
-	-- if num < 80 then
-	-- 	return "▇▇▇ " .. progress_num .. "%%"
-	-- end
-	--
-	-- return "███ " .. progress_num .. "%%"
-end
-
 return {
 	"hoob3rt/lualine.nvim",
 	dependencies = {
 		"rebelot/kanagawa.nvim",
 	},
 	config = function()
-		-- local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" }).theme
-		-- local colors = {
-		-- 	black = kanagawa.ui.bg_gutter,
-		-- 	white = kanagawa.ui.fg,
-		-- 	red = kanagawa.syn.operator,
-		-- 	green = kanagawa.syn.string,
-		-- 	blue = kanagawa.diag.info,
-		-- 	yellow = kanagawa.syn.identifier,
-		-- 	gray = kanagawa.syn.parameter,
-		-- 	darkgray = kanagawa.ui.bg_m1,
-		-- 	lightgray = kanagawa.ui.bg_p2,
-		-- 	inactivegray = kanagawa.ui.whitespace,
-		-- 	background = kanagawa.ui.bg,
-		-- }
-		-- local theme = {
-		-- 	normal = {
-		-- 		a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-		-- 		b = { bg = colors.lightgray, fg = colors.white },
-		-- 		c = { bg = colors.background, fg = colors.yellow },
-		-- 	},
-		-- 	insert = {
-		-- 		a = { bg = colors.green, fg = colors.black, gui = "bold" },
-		-- 		b = { bg = colors.lightgray, fg = colors.white },
-		-- 		c = { bg = colors.background, fg = colors.yellow },
-		-- 	},
-		-- 	visual = {
-		-- 		a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-		-- 		b = { bg = colors.lightgray, fg = colors.white },
-		-- 		c = { bg = colors.background, fg = colors.yellow },
-		-- 	},
-		-- 	replace = {
-		-- 		a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-		-- 		b = { bg = colors.lightgray, fg = colors.white },
-		-- 		c = { bg = colors.background, fg = colors.yellow },
-		-- 	},
-		-- 	command = {
-		-- 		a = { bg = colors.white, fg = colors.black, gui = "bold" },
-		-- 		b = { bg = colors.lightgray, fg = colors.white },
-		-- 		c = { bg = colors.background, fg = colors.yellow },
-		-- 	},
-		-- 	inactive = {
-		-- 		a = { bg = colors.background, fg = colors.white },
-		-- 		b = { bg = colors.background, fg = colors.white },
-		-- 		c = { bg = colors.background, fg = colors.white },
-		-- 	},
-		-- }
+		local theme = {
+			normal = {
+				a = "StatusLineNormalNormal",
+				b = "StatusLineNormalNormal",
+				c = "StatusLineNormalNormal",
+			},
+			insert = {
+				a = "StatusLineNormalNormal",
+				b = "StatusLineNormalNormal",
+				c = "StatusLineNormalNormal",
+			},
+			visual = {
+				a = "StatusLineNormalNormal",
+				b = "StatusLineNormalNormal",
+				c = "StatusLineNormalNormal",
+			},
+			replace = {
+				a = "StatusLineNormalNormal",
+				b = "StatusLineNormalNormal",
+				c = "StatusLineNormalNormal",
+			},
+			command = {
+				a = "StatusLineNormalNormal",
+				b = "StatusLineNormalNormal",
+				c = "StatusLineNormalNormal",
+			},
+			inactive = {
+				a = "StatusLineNormalNormal",
+				b = "StatusLineNormalNormal",
+				c = "StatusLineNormalNormal",
+			},
+		}
 
 
 		require("lualine").setup({
 			options = {
-				-- theme = theme,
+				theme = theme,
 				globalstatus = true,
 				component_separators = "",
 				section_separators = { left = "", right = "" },
@@ -144,21 +67,23 @@ return {
 						"mode",
 						separator = { left = "" },
 						right_padding = 2,
-						fmt = prettyMode,
 						color = { gui = "bold" },
+						icon = { " ", color = "StatusLineModeIcon" },
 					},
 				},
 				lualine_b = {
 					{
 						"filename",
 						cond = shouldShowFilename,
+						icons_enabled = true,
 						symbols = {
 							modified = "",
 						},
 						color = { gui = "bold" },
+						icon = { " ", color = "StatusLineFileIcon" }
 					},
 				},
-				lualine_c = { { "branch", icon = "" } },
+				lualine_c = { { "branch", icon = { " ", color = "StatusLineBranchIcon" } } },
 				lualine_x = { {
 					"diagnostics",
 					diagnostics_color = {
@@ -170,8 +95,8 @@ return {
 					},
 					symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
 				} },
-				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = "" } },
-				lualine_z = { { "progress", fmt = prettyProgress } },
+				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = { " ", color = "StatusLineFolderIcon" } } },
+				lualine_z = { { "progress", icon = { "󰗈 ", color = "StatusLineProgressIcon" } } },
 			},
 			inactive_sections = {
 				lualine_a = {},
