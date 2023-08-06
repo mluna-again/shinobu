@@ -7,6 +7,34 @@ case "$2" in
 		icon=""
 		;;
 
+	mpv)
+		icon="󰃽"
+		;;
+
+	*spotify*)
+		icon=""
+		;;
+
+	go)
+		icon=""
+		;;
+
+	ruby)
+		icon=""
+		;;
+
+	*cargo*)
+		icon=""
+		;;
+
+	*beam.smp*)
+		icon=""
+		;;
+
+	psql)
+		icon=""
+		;;
+
 	*)
 		icon=""
 esac
