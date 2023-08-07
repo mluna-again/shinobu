@@ -7,6 +7,7 @@ Kanagawa Wave
 Everforest
 Gruvbox
 Catppuccin
+Rosé Pine
 EOF
 )"
 
@@ -183,6 +184,12 @@ case "$(read_input)" in
 				tmux set -g @components_active_background red
 				send_keys_to_nvim "catppuccin"
 				modify_nvim_and_alacritty catppuccin
+				;;
+
+			"Rosé Pine")
+				tmux set -g @components_active_background red
+				send_keys_to_nvim "rose-pine"
+				modify_nvim_and_alacritty rose-pine
 				;;
 		esac
 		;;

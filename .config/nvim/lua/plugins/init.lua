@@ -49,6 +49,7 @@ require("lazy").setup({
 	require("plugins.config.everforest"),
 	require("plugins.config.gruvbox"),
 	require("plugins.config.catppuccin"),
+	require("plugins.config.rose-pine"),
 	require("plugins.config.lualine"),
 	require("plugins.config.dap"),
 	require("plugins.config.neodev"),

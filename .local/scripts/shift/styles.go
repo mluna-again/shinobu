@@ -66,6 +66,14 @@ var catppuccin = Colors{
 	yellow:    "#f4dbd6",
 }
 
+var rosePine = Colors{
+	darkLight: "#403d52",
+	dark:      "#26233a",
+	darker:    "#1f1d2e",
+	light:     "#e0def4",
+	yellow:    "#f6c177",
+}
+
 var kanagawaDragonStyles = Styles{
 	header:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
 	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(kanagawaDragon.darker)).Foreground(lipgloss.Color(kanagawaDragon.light)).Bold(false),
@@ -141,6 +149,21 @@ var catppuccinStyles = Styles{
 		Bold(false),
 }
 
+var rosePineStyles = Styles{
+	header:      lipgloss.NewStyle().Background(lipgloss.Color(rosePine.darker)).Foreground(lipgloss.Color(rosePine.light)).Bold(false),
+	prompt:      lipgloss.NewStyle().Background(lipgloss.Color(rosePine.darker)).Foreground(lipgloss.Color(rosePine.light)).Bold(false),
+	headerTitle: lipgloss.NewStyle().Background(lipgloss.Color(rosePine.yellow)).Foreground(lipgloss.Color(rosePine.dark)).Bold(false),
+	line: lipgloss.NewStyle().
+		Background(lipgloss.Color(rosePine.darkLight)).
+		Foreground(lipgloss.Color(rosePine.light)).
+		PaddingLeft(1).
+		Bold(false),
+	selectedLine: lipgloss.NewStyle().
+		Background(lipgloss.Color(rosePine.yellow)).
+		Foreground(lipgloss.Color(rosePine.dark)).
+		Bold(false),
+}
+
 func getConfigThemeOrDefault() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -176,6 +199,9 @@ func (app *app) loadTheme(theme string) {
 
 	case "catppuccin":
 		app.theme = catppuccinStyles
+
+	case "rose-pine":
+		app.theme = rosePineStyles
 
 	default:
 		app.theme = kanagawaDragonStyles
