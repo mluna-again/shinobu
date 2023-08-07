@@ -211,6 +211,18 @@ return {
 					StatusLineReplaceMode = { bg = theme.syn.constant, fg = theme.ui.fg },
 					StatusLineCommandMode = { bg = theme.syn.keyword, fg = theme.ui.fg },
 					StatusLineInactiveMode = { bg = theme.syn.comment, fg = theme.ui.fg },
+
+					LineNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					SignColumn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAdd = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAddNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAddLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChange = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChangeNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChangeLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDelete = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDeleteNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg },
 				}
 			end,
 		})
