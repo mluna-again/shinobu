@@ -1,6 +1,6 @@
 local function shouldShowFilename()
 	local badFiletypes =
-	{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
+		{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
 	local ft = vim.bo.filetype
 	for _, filetype in pairs(badFiletypes) do
 		if ft == filetype then
@@ -49,12 +49,12 @@ return {
 			},
 		}
 
-
 		require("lualine").setup({
 			options = {
 				theme = theme,
 				globalstatus = true,
 				component_separators = "",
+				padding = 0,
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = { "alpha", "TelescopePrompt" },
@@ -65,10 +65,9 @@ return {
 				lualine_a = {
 					{
 						"mode",
-						separator = { left = "" },
-						right_padding = 2,
 						color = { gui = "bold" },
-						icon = { " ", color = "StatusLineModeIcon" },
+						icon = { "  ", color = "StatusLineModeIcon" },
+						padding = { right = 1 },
 					},
 				},
 				lualine_b = {
@@ -80,23 +79,41 @@ return {
 							modified = "",
 						},
 						color = { gui = "bold" },
-						icon = { " ", color = "StatusLineFileIcon" }
+						icon = { "  ", color = "StatusLineFileIcon" },
+						padding = { right = 1 },
 					},
 				},
-				lualine_c = { { "branch", icon = { " ", color = "StatusLineBranchIcon" } } },
-				lualine_x = { {
-					"diagnostics",
-					diagnostics_color = {
-						-- Same values as the general color option can be used here.
-						error = 'DiagnosticError', -- Changes diagnostics' error color.
-						warn  = 'DiagnosticWarn',  -- Changes diagnostics' warn color.
-						info  = 'DiagnosticInfo',  -- Changes diagnostics' info color.
-						hint  = 'DiagnosticHint',  -- Changes diagnostics' hint color.
+				lualine_c = {
+					{ "branch", padding = { right = 1 }, icon = { "  ", color = "StatusLineBranchIcon" } },
+				},
+				lualine_x = {
+					{
+						"diagnostics",
+						diagnostics_color = {
+							-- Same values as the general color option can be used here.
+							error = "DiagnosticError", -- Changes diagnostics' error color.
+							warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
+							info = "DiagnosticInfo", -- Changes diagnostics' info color.
+							hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+						},
+						symbols = { error = " ", warn = " ", info = " ", hint = " " },
+						padding = { left = 1 },
 					},
-					symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-				} },
-				lualine_y = { { 'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")', icon = { " ", color = "StatusLineFolderIcon" } } },
-				lualine_z = { { "progress", icon = { "󰗈 ", color = "StatusLineProgressIcon" } } },
+				},
+				lualine_y = {
+					{
+						'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")',
+						icon = { "  ", color = "StatusLineFolderIcon", align = "right" },
+						padding = { left = 1 },
+					},
+				},
+				lualine_z = {
+					{
+						"progress",
+						padding = { left = 1 },
+						icon = { " 󰗈 ", color = "StatusLineProgressIcon", align = "right" },
+					},
+				},
 			},
 			inactive_sections = {
 				lualine_a = {},
