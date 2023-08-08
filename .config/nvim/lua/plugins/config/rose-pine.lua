@@ -4,6 +4,7 @@ return {
 	event = "VeryLazy",
 	config = function()
 		require("rose-pine").setup({
+			disable_italics = true,
 			highlight_groups = {
 				StatusLineFolderIcon = { bg = "love", fg = "base" },
 				StatusLineFileIcon = { bg = "rose", fg = "base" },
