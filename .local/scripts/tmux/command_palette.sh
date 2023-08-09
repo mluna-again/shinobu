@@ -157,37 +157,49 @@ case "$(read_input)" in
 		input " Choose colorscheme " " 󰏘 " "$THEMES"
 		case "$(read_input)" in
 			"Kanagawa Dragon")
-				tmux set -g @components_active_background yellow
+				tmux set -g @components_active_background1 yellow
+				tmux set -g @components_active_background2 red
+				tmux set -g @components_active_background3 blue
 				send_keys_to_nvim "kanagawa-dragon"
 				modify_nvim_and_alacritty kanagawa-dragon
 				;;
 
 			"Kanagawa Wave")
-				tmux set -g @components_active_background yellow
+				tmux set -g @components_active_background1 yellow
+				tmux set -g @components_active_background2 orange
+				tmux set -g @components_active_background3 blue
 				send_keys_to_nvim "kanagawa-wave"
 				modify_nvim_and_alacritty kanagawa-wave
 				;;
 
 			"Everforest")
-				tmux set -g @components_active_background green
+				tmux set -g @components_active_background1 green
+				tmux set -g @components_active_background2 red
+				tmux set -g @components_active_background3 yellow
 				send_keys_to_nvim "everforest"
 				modify_nvim_and_alacritty everforest
 				;;
 
 			"Gruvbox")
-				tmux set -g @components_active_background orange
+				tmux set -g @components_active_background1 orange
+				tmux set -g @components_active_background2 red
+				tmux set -g @components_active_background3 blue
 				send_keys_to_nvim "gruvbox-material"
 				modify_nvim_and_alacritty gruvbox-material
 				;;
 
 			"Catppuccin")
-				tmux set -g @components_active_background red
+				tmux set -g @components_active_background1 red
+				tmux set -g @components_active_background2 blue
+				tmux set -g @components_active_background3 yellow
 				send_keys_to_nvim "catppuccin"
 				modify_nvim_and_alacritty catppuccin
 				;;
 
 			"Rosé Pine")
-				tmux set -g @components_active_background red
+				tmux set -g @components_active_background1 red
+				tmux set -g @components_active_background2 blue
+				tmux set -g @components_active_background3 yellow
 				send_keys_to_nvim "rose-pine"
 				modify_nvim_and_alacritty rose-pine
 				;;
