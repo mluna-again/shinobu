@@ -1,6 +1,6 @@
 add_newline = false
 
-format = """$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$time$memory_usage$jobs
+format = """$username$hostname :: $directory$git_branch$git_commit$git_state$git_metrics$git_status$time$memory_usage$jobs
 $status$character"""
 # right_format = "$cmd_duration$localip"
 palette = "kanagawa"
@@ -37,9 +37,9 @@ symbol = " "
 style = "yellow"
 
 [character]
-success_symbol = '[󱐋](yellow)'
-error_symbol = '[󱐋](red)'
-vicmd_symbol = '[󱐋](green)'
+success_symbol = '[λ](yellow)'
+error_symbol = '[λ](red)'
+vicmd_symbol = '[λ](green)'
 
 [[battery.display]]
 threshold = 100
@@ -51,15 +51,15 @@ format = "[${ram}]($style) "
 
 [time]
 format = "[$time](yellow) "
-disabled = false
+disabled = true
 use_12hr = true
 
 [username]
-disabled = true
+disabled = false
 show_always = true
 style_user = "fg:yellow"
 style_root = "fg:yellow"
-format = '[$user]($style)'
+format = "[$user]($style)"
 
 [hostname]
 disabled = true
