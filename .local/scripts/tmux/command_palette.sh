@@ -4,10 +4,11 @@ THEMES="$(
 cat - <<EOF
 Kanagawa Dragon
 Kanagawa Wave
-Everforest
+Yoru
+Rosé Pine
 Gruvbox
 Catppuccin
-Rosé Pine
+Everforest
 EOF
 )"
 
@@ -202,6 +203,14 @@ case "$(read_input)" in
 				tmux set -g @components_active_background3 yellow
 				send_keys_to_nvim "rose-pine"
 				modify_nvim_and_alacritty rose-pine
+				;;
+
+			"Yoru")
+				tmux set -g @components_active_background1 red
+				tmux set -g @components_active_background2 blue
+				tmux set -g @components_active_background3 yellow
+				send_keys_to_nvim "yoru"
+				modify_nvim_and_alacritty yoru
 				;;
 		esac
 		;;
