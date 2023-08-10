@@ -157,6 +157,7 @@ return {
 					DiagnosticInfo = { fg = theme.diag.info, bg = theme.ui.bg },
 					DiagnosticHint = { fg = theme.syn.identifier, bg = theme.ui.bg },
 					DiagnosticSignWarn = { fg = theme.syn.constant, bg = theme.ui.bg },
+					DiagnosticSignError = { fg = theme.syn.special2, bg = theme.ui.bg },
 					DiagnosticSignInfo = { fg = theme.diag.info, bg = theme.ui.bg },
 					DiagnosticSignHint = { fg = theme.syn.identifier, bg = theme.ui.bg },
 
