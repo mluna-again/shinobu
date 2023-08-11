@@ -168,11 +168,11 @@ case "$(read_input)" in
 		;;
 
 	"Layouts: Main-Vertical")
-		tmux select-layout tiled
+		tmux select-layout main-vertical
 		;;
 
 	"Layouts: Main-Horizontal")
-		tmux select-layout tiled
+		tmux select-layout main-horizontal
 		;;
 
 	"Layouts: Tiled")
