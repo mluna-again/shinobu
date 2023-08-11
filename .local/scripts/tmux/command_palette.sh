@@ -24,6 +24,11 @@ Cleanup: terminate processes and clear panes
 Kill: processes
 Kill: window
 Kill: session
+Layouts: Even-Horizontal
+Layouts: Even-Vertical
+Layouts: Tiled
+Layouts: Main-Horizontal
+Layouts: Main-Vertical
 Destroy: server
 Detach: client
 Load: session
@@ -152,6 +157,26 @@ case "$(read_input)" in
 
 	"Time: now")
 		tmux clock-mode
+		;;
+
+	"Layouts: Even-Vertical")
+		tmux select-layout even-vertical
+		;;
+
+	"Layouts: Even-Horizontal")
+		tmux select-layout even-horizontal
+		;;
+
+	"Layouts: Main-Vertical")
+		tmux select-layout tiled
+		;;
+
+	"Layouts: Main-Horizontal")
+		tmux select-layout tiled
+		;;
+
+	"Layouts: Tiled")
+		tmux select-layout tiled
 		;;
 
 	"Theme: choose colorscheme")
