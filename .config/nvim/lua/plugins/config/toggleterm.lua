@@ -15,6 +15,11 @@ return {
 					return vim.o.columns * 0.5
 				end
 			end,
+			highlights = {
+				Normal = {
+					link = "ToggleTermNormal"
+				}
+			},
 			open_mapping = [[<A-m>]],
 			shade_terminals = false,
 			hide_numbers = true, -- hide the number column in toggleterm buffers
@@ -23,35 +28,6 @@ return {
 			close_on_exit = true, -- close the terminal window when the process exits
 			auto_scroll = true, -- automatically scroll to the bottom on terminal output
 		})
-
-		local term = require("toggleterm.terminal").Terminal
-
-		local spotify = term:new({
-			cmd = "spotify_player",
-			hidden = true,
-			direction = "float",
-			on_open = function()
-				vim.cmd("startinsert!")
-			end,
-			float_opts = {
-				border = "solid",
-			},
-			highlights = {
-				Normal = {
-					link = "TelescopePromptNormal",
-				},
-				NormalFloat = {
-					link = "TelescopePromptNormal",
-				},
-				FloatBorder = {
-					link = "TelescopePromptNormal",
-				},
-			},
-		})
-
-		local function toggle_spotify()
-			spotify:toggle()
-		end
 
 		local wk = require("which-key")
 		wk.register({
@@ -63,7 +39,5 @@ return {
 			}
 		}, {prefix = "<Leader>"})
 		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
-
-		vim.api.nvim_create_user_command("Spotify", function() toggle_spotify() end, {})
 	end,
 }

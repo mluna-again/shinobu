@@ -3,14 +3,24 @@ return {
 	"rebelot/kanagawa.nvim",
 	priority = 1000,
 	config = function()
-		vim.cmd([[
-		augroup Kanawaga
-		autocmd!
-
-		set fillchars+=vert:\ 
-		set fillchars+=eob:\ 
-		augroup end
-		]])
+		-- vim.opt.fillchars = {
+		-- 	horiz = "━",
+		-- 	horizup = "┻",
+		-- 	horizdown = "┳",
+		-- 	vert = "┃",
+		-- 	vertleft = "┫",
+		-- 	vertright = "┣",
+		-- 	verthoriz = "╋",
+		-- }
+		vim.opt.fillchars = {
+			horiz = " ",
+			horizup = " ",
+			horizdown = " ",
+			vert = " ",
+			vertleft = " ",
+			vertright = " ",
+			verthoriz = " ",
+		}
 
 		require("kanagawa").setup({
 			theme = "dragon",
@@ -19,8 +29,7 @@ return {
 			colors = {
 				theme = {
 					all = {
-						ui = {
-						},
+						ui = {},
 					},
 				},
 			},
@@ -55,7 +64,6 @@ return {
 					PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
 					PmenuSbar = { bg = theme.ui.bg_m1 },
 					PmenuThumb = { bg = theme.ui.bg_p2 },
-
 
 					NormalFloat = { bg = theme.ui.bg_gutter },
 					FloatBorder = { bg = theme.ui.bg_gutter, fg = theme.ui.bg_gutter },
@@ -192,7 +200,7 @@ return {
 					LightspeedLabel = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
 					LightspeedOneCharMatch = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
 
-					WinSeparator = { fg = theme.ui.bg_m1, bg = theme.ui.bg },
+					WinSeparator = { fg = theme.ui.bg, bg = theme.ui.bg },
 
 					FzfLuaNormal = { bg = theme.ui.bg_m1 },
 					FzfLuaBufName = { bg = theme.ui.bg_m1, fg = theme.ui.fg },
@@ -227,6 +235,8 @@ return {
 					GitSignsDelete = { fg = theme.syn.comment, bg = theme.ui.bg },
 					GitSignsDeleteNr = { fg = theme.syn.comment, bg = theme.ui.bg },
 					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+
+					ToggleTermNormal = { bg = theme.ui.bg_m2 },
 				}
 			end,
 		})
