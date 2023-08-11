@@ -169,10 +169,14 @@ case "$(read_input)" in
 
 	"Layouts: Main-Vertical")
 		tmux select-layout main-vertical
+		tmux swap-pane -s . -t 1
+		tmux select-pane -t 1
 		;;
 
 	"Layouts: Main-Horizontal")
 		tmux select-layout main-horizontal
+		tmux swap-pane -s . -t 1
+		tmux select-pane -t 1
 		;;
 
 	"Layouts: Tiled")
