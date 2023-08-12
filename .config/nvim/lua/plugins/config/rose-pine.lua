@@ -1,7 +1,7 @@
 return {
 	"rose-pine/neovim",
 	name = "rose-pine",
-	event = "VeryLazy",
+	lazy = true,
 	config = function()
 		require("rose-pine").setup({
 			disable_italics = true,

@@ -8,6 +8,7 @@ Yoru
 Rosé Pine
 Gruvbox
 Catppuccin
+Dracula
 Everforest
 EOF
 )"
@@ -240,6 +241,14 @@ case "$(read_input)" in
 				tmux set -g @components_active_background3 yellow
 				send_keys_to_nvim "yoru"
 				modify_nvim_and_alacritty yoru
+				;;
+
+			"Dracula")
+				tmux set -g @components_active_background1 red
+				tmux set -g @components_active_background2 blue
+				tmux set -g @components_active_background3 yellow
+				send_keys_to_nvim "dracula"
+				modify_nvim_and_alacritty dracula
 				;;
 		esac
 		;;

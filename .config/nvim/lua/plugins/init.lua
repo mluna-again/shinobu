@@ -14,6 +14,12 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 
 require("lazy").setup({
+	require("plugins.config.kanagawa"),
+	require("plugins.config.everforest"),
+	require("plugins.config.gruvbox"),
+	require("plugins.config.catppuccin"),
+	require("plugins.config.rose-pine"),
+	require("plugins.config.dracula"),
 	require("plugins.config.mason"),
 	require("plugins.config.lsp"),
 	require("plugins.config.nvim-cmp"),
@@ -45,11 +51,6 @@ require("lazy").setup({
 	require("plugins.config.comment"),
 	require("plugins.config.sleuth"),
 	require("plugins.config.colors"),
-	require("plugins.config.kanagawa"),
-	require("plugins.config.everforest"),
-	require("plugins.config.gruvbox"),
-	require("plugins.config.catppuccin"),
-	require("plugins.config.rose-pine"),
 	require("plugins.config.lualine"),
 	require("plugins.config.dap"),
 	require("plugins.config.neodev"),

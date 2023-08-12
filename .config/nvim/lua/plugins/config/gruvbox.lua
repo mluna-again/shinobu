@@ -1,6 +1,6 @@
 return {
 	"sainnhe/gruvbox-material",
-	event = "VeryLazy",
+	lazy = true,
 	config = function()
 		vim.cmd("let g:gruvbox_material_background = 'hard'")
 	end

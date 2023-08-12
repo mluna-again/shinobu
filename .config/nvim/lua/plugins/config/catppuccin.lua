@@ -1,7 +1,7 @@
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
-	event = "VeryLazy",
+  lazy = true,
 	config = function()
 		require("catppuccin").setup({
 			flavour = "mocha",
