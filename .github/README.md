@@ -38,6 +38,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 18. bat
 19. r*st
 20. yq
+21. sc-im
 
 ## Problems I've encountered that I don't want to forget
 

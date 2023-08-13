@@ -36,7 +36,7 @@ concat_path() {
 }
 
 list_notes() {
-	find "$NOTES_PATH" -type f -not -iname ".temp" | sed "s|$HOME/Notes/||"
+	find "$NOTES_PATH" -type f -not -iname ".temp" | sed "s|$HOME/Notes/||" | sed "s/\.sc$//"
 }
 
 delete() {
@@ -94,7 +94,7 @@ case "$1" in
 		fi
 
 		file_path=$(concat_path "$name")
-		[ ! -e "$file_path" ] && { echo "File doesn't exist."; exit 1; }
+		# [ ! -e "$file_path" ] && { echo "File doesn't exist."; exit 1; }
 		echo "$file_path" > "$OUTPUT_FILE"
 		;;
 esac

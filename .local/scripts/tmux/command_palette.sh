@@ -18,6 +18,8 @@ RESULTS_FILE="$HOME/.cache/.shift_command_result"
 SESSIONS_PATH="$HOME/.cache/shift_sessions"
 [ ! -d "$SESSIONS_PATH" ] && mkdir "$SESSIONS_PATH"
 
+BUDGET_FILE="$HOME/Notes/budget.sc"
+
 commands="$(cat - <<EOF
 Notes: fuzzy find
 Cleanup: clear panes
@@ -113,11 +115,18 @@ case "$(read_input)" in
 		;;
 
 	"Notes: fuzzy find")
+		[ ! -e "$BUDGET_FILE" ] && touch "$BUDGET_FILE"
+
 		tmux display-popup -w "65" -h "11" -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\"; $HOME/.local/scripts/notes/notes.sh \"$RESULTS_FILE\""
 		[ ! -e "$RESULTS_FILE" ] && exit
 		file="$(cat "$RESULTS_FILE")"
-		[ -z "$file" ] && exit
-		tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "nvim \"$file\""
+
+		if grep -i "budget" <<< "$file" &>/dev/null; then
+			tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
+		else
+			[ -z "$file" ] && exit
+			tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "nvim \"$file\""
+		fi
 		;;
 
 	"Cleanup: clear panes")
