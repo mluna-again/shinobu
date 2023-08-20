@@ -211,11 +211,11 @@ return {
 
 					CursorLine = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
 
-					StatusLineFolderIcon = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
+					StatusLineFolderIcon = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
 					StatusLineFileIcon = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
 					StatusLineModeIcon = { bg = theme.syn.regex, fg = theme.ui.bg_m1 },
 					StatusLineBranchIcon = { bg = theme.syn.keyword, fg = theme.ui.bg_m1 },
-					StatusLineProgressIcon = { bg = theme.syn.number, fg = theme.ui.bg_m1 },
+					StatusLineProgressIcon = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
 					StatusLineNormalNormal = { bg = theme.ui.bg, fg = theme.ui.fg },
 					StatusLineNormalMode = { bg = theme.syn.regex, fg = theme.ui.fg },
 					StatusLineInsertMode = { bg = theme.syn.identifier, fg = theme.ui.fg },

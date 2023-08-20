@@ -102,16 +102,19 @@ return {
 				},
 				lualine_y = {
 					{
-						'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")',
-						icon = { "  ", color = "StatusLineFolderIcon", align = "right" },
-						padding = { left = 1 },
+						"location",
+						padding = { left = 1, right = 1 },
+					},
+					{
+						"progress",
+						icon = { " 󰗈 ", color = "StatusLineProgressIcon", align = "right" },
 					},
 				},
 				lualine_z = {
 					{
-						"progress",
+						'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")',
+						icon = { "  ", color = "StatusLineFolderIcon", align = "right" },
 						padding = { left = 1 },
-						icon = { " 󰗈 ", color = "StatusLineProgressIcon", align = "right" },
 					},
 				},
 			},
