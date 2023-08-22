@@ -171,10 +171,14 @@ case "$(read_input)" in
 
 	"Layouts: Even-Vertical")
 		tmux select-layout even-vertical
+		tmux swap-pane -s . -t 1
+		tmux select-pane -t 1
 		;;
 
 	"Layouts: Even-Horizontal")
 		tmux select-layout even-horizontal
+		tmux swap-pane -s . -t 1
+		tmux select-pane -t 1
 		;;
 
 	"Layouts: Main-Vertical")
@@ -191,6 +195,8 @@ case "$(read_input)" in
 
 	"Layouts: Tiled")
 		tmux select-layout tiled
+		tmux swap-pane -s . -t 1
+		tmux select-pane -t 1
 		;;
 
 	"Theme: choose colorscheme")
