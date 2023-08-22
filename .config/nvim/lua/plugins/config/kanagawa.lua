@@ -20,6 +20,7 @@ return {
 			vertleft = " ",
 			vertright = " ",
 			verthoriz = " ",
+			eob = " "
 		}
 
 		require("kanagawa").setup({
