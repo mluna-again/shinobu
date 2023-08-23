@@ -1,4 +1,5 @@
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+command -v bat &>/dev/null && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 [ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^k' autosuggest-accept
