@@ -25,7 +25,7 @@ local function greetings()
 		"the cat ate my source code",
 		{
 			"programming is rather thankless. u see your works become replaced by superior",
-			"             ones in a year. unable to run at all in a few more."
+			"             ones in a year. unable to run at all in a few more.",
 		},
 		{
 			"debugging is twice as hard as writing the code in the first place. therefore, if you write the code",
@@ -52,7 +52,7 @@ local function greetings()
 		"explicit is better than implicit. clear code is better than concise code",
 		{
 			"        The only truly secure system is one that is powered off, cast in a block of",
-			"concrete and sealed in a lead-lined room with armed guards — and even then I have my doubts."
+			"concrete and sealed in a lead-lined room with armed guards — and even then I have my doubts.",
 		},
 		"there is no quote today",
 	}
@@ -86,10 +86,16 @@ return {
 			mkButton(" SPC c n ", "New file", ":enew<CR>"),
 			-- mkButton(" SPC f f ", "Find file", ":FzfLua files<CR>"),
 			mkButton(" SPC f f ", "Find file", ":Telescope find_files<CR>"),
-			mkButton(" SPC f o ", "Recent files",
-				":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>"),
-			mkButton(" SPC f w ", "Find word",
-				":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>"),
+			mkButton(
+				" SPC f o ",
+				"Recent files",
+				":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>"
+			),
+			mkButton(
+				" SPC f w ",
+				"Find word",
+				":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>"
+			),
 			mkButton(" SPC s l ", "Load last session", ":SessionLoad<CR>"),
 			mkButton("    q    ", "Quit Neovim", ":q<CR>"),
 		}
@@ -98,17 +104,32 @@ return {
 		local banner = {
 			type = "text",
 			val = {
-				"███████╗██╗  ██╗██╗███╗   ██╗ ██████╗ ██████╗ ██╗   ██╗",
-				"██╔════╝██║  ██║██║████╗  ██║██╔═══██╗██╔══██╗██║   ██║",
-				"███████╗███████║██║██╔██╗ ██║██║   ██║██████╔╝██║   ██║",
-				"╚════██║██╔══██║██║██║╚██╗██║██║   ██║██╔══██╗██║   ██║",
-				"███████║██║  ██║██║██║ ╚████║╚██████╔╝██████╔╝╚██████╔╝",
-				"╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═════╝  ╚═════╝ ",
+				"                                            ██████████                                  ",
+				"                                      ░░  ██░░░░░░░░░░██                                ",
+				"                                        ██░░░░░░░░░░░░░░██                              ",
+				"                                        ██░░░░░░░░████░░██████████                      ",
+				"                            ██          ██░░░░░░░░████░░██▒▒▒▒▒▒██                      ",
+				"                          ██░░██        ██░░░░░░░░░░░░░░██▒▒▒▒▒▒██                      ",
+				"                          ██░░░░██      ██░░░░░░░░░░░░░░████████                        ",
+				"                        ██░░░░░░░░██      ██░░░░░░░░░░░░██                              ",
+				"                        ██░░░░░░░░████████████░░░░░░░░██                                ",
+				"                        ██░░░░░░░░██░░░░░░░░░░░░░░░░░░░░██                              ",
+				"                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            ",
+				"                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            ",
+				"                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            ",
+				"                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            ",
+				"                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            ",
+				"                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                              ",
+				"                          ██░░░░░░░░░░░░░░░░░░░░░░░░░░██                                ",
+				"                            ██████░░░░░░░░░░░░░░░░████                                  ",
+				"                                  ████████████████                                      ",
+				"                                                                                        ",
+				"                                                                                        ",
 			},
 			opts = {
 				position = "center",
-				hl = "AlphaBanner"
-			}
+				hl = "AlphaBanner",
+			},
 		}
 
 		dashboard.section.footer.opts.position = "center"
@@ -118,31 +139,31 @@ return {
 		dashboard.config.layout = {
 			{
 				type = "padding",
-				val = 7
+				val = 3,
 			},
 			banner,
 			{
 				type = "padding",
-				val = 3
+				val = 3,
 			},
 			dashboard.section.buttons,
 			{
 				type = "padding",
-				val = 1
+				val = 1,
 			},
 			dashboard.section.footer,
 			{
 				type = "padding",
-				val = 1
+				val = 1,
 			},
 			{
 				type = "text",
 				val = "",
 				opts = {
 					position = "center",
-					hl = "AlphaPluginCount"
-				}
-			}
+					hl = "AlphaPluginCount",
+				},
+			},
 		}
 
 		alpha.setup(dashboard.config)
