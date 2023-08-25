@@ -53,6 +53,7 @@ wk.register({
 	-- },
 })
 
+nmap("<C-w><C-o>", ":wincmd r<CR>")
 nmap("Y", "v$hy")
 nmap("<C-Left>", ":vertical resize -2<CR>")
 nmap("<C-Right>", ":vertical resize +2<CR>")

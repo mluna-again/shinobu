@@ -11,3 +11,5 @@ Session.vim*
 /scratch-pad.clj
 
 /dev/
+
+/.tool-versions
