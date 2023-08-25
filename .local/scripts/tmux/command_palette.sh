@@ -27,6 +27,7 @@ Cleanup: terminate processes and clear panes
 Kill: processes
 Kill: window
 Kill: session
+Swap: pane
 Layouts: Even-Horizontal
 Layouts: Even-Vertical
 Layouts: Tiled
@@ -197,6 +198,14 @@ case "$(read_input)" in
 		tmux select-layout tiled
 		tmux swap-pane -s . -t 1
 		tmux select-pane -t 1
+		;;
+
+	"Swap: pane")
+		panes="$(tmux list-panes -F '#{pane_index} #{pane_title} #{pane_current_command}')"
+		input " Destination " "  " "$panes"
+		target="$(read_input | awk '{print $1}')"
+		tmux swap-pane -s . -t "$target"
+		tmux select-pane -t "$target"
 		;;
 
 	"Theme: choose colorscheme")
