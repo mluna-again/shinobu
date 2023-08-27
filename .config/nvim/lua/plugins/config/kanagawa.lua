@@ -238,6 +238,8 @@ return {
 					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
 
 					ToggleTermNormal = { bg = theme.ui.bg_m2 },
+
+					TroubleNormal = { bg = theme.ui.bg_m2 },
 				}
 			end,
 		})
