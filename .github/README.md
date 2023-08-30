@@ -1,4 +1,4 @@
-<h1 align="center">shinobu 🍙</h1>
+<h1 align="center">shinobu 🐥</h1>
 <img width="1440" alt="Screenshot 2023-08-30 at 1 33 06 p m" src="https://github.com/mluna-again/shinobu/assets/53100040/12753432-7ffd-49d9-acd2-2da8d0e6c499">
 <img width="1440" alt="Screenshot 2023-08-06 at 2 17 00 a m" src="https://github.com/mluna-again/shinobu/assets/53100040/ceaec878-59b8-4374-97e7-fcec73015f0b">
 <img width="1440" alt="Screenshot 2023-08-06 at 2 17 54 a m" src="https://github.com/mluna-again/shinobu/assets/53100040/acfce932-8da7-4b1f-b687-3577a2aebf61">
