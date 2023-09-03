@@ -404,4 +404,4 @@ export FZF_DEFAULT_OPTS='--layout=reverse --prompt=" " --pointer=" " --header
 
 export SHELLCHECK_OPTS="-e SC2001"
 
-eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
