@@ -34,6 +34,7 @@ Layouts: Tiled
 Layouts: Main-Horizontal
 Layouts: Main-Vertical
 Layouts: Make grid
+Panes: Close all but focused one
 Destroy: server
 Detach: client
 Load: session
@@ -224,6 +225,13 @@ case "$(read_input)" in
 			tmux select-layout tiled
 		done
 		tmux select-layout tiled
+		tmux list-panes -F "#{pane_id}" |\
+			xargs -I{} -n1 tmux send-keys -t {} C-l
+		;;
+
+	"Panes: Close all but focused one")
+		active=$(tmux list-panes -F '#{pane_id} #{pane_active}' | awk '$2 == 1 { print $1 }')
+		tmux kill-pane -a -t "$active"
 		;;
 
 	"Swap: pane")
