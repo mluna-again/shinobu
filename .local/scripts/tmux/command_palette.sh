@@ -33,6 +33,7 @@ Layouts: Even-Vertical
 Layouts: Tiled
 Layouts: Main-Horizontal
 Layouts: Main-Vertical
+Layouts: Make grid
 Destroy: server
 Detach: client
 Load: session
@@ -55,6 +56,17 @@ input() {
 	mode="${4:-switch}"
 
 	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input \"$input\" -output \"$RESULTS_FILE\" -width 65 -height 9 -mode \"$mode\""
+}
+
+free_input() {
+	local title
+	local icon
+	rm "$RESULTS_FILE"
+
+	title="$1"
+	icon="$2"
+
+	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input '\n' -output \"$RESULTS_FILE\" -width 65 -height 9 -mode rename"
 }
 
 alert() {
@@ -198,6 +210,20 @@ case "$(read_input)" in
 		tmux select-layout tiled
 		tmux swap-pane -s . -t 1
 		tmux select-pane -t 1
+		;;
+
+	"Layouts: Make grid")
+		free_input " Size " " 󱗼 " "hello"
+		size=$(read_input)
+		[ -z "$size" ] && exit
+		sequence="$(seq 1 "$size")"
+		[ -z "$sequence" ] && exit # not a number
+		sequence="$(seq 1 $(( size - 1 )))"
+		for _ in $sequence; do
+			tmux split-window
+			tmux select-layout tiled
+		done
+		tmux select-layout tiled
 		;;
 
 	"Swap: pane")
