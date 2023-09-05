@@ -227,6 +227,7 @@ case "$(read_input)" in
 		tmux select-layout tiled
 		tmux list-panes -F "#{pane_id}" |\
 			xargs -I{} -n1 tmux send-keys -t {} C-l
+		tmux select-pane -t 1
 		;;
 
 	"Panes: Close all but focused one")
