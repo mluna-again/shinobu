@@ -3,25 +3,26 @@ return {
 	"rebelot/kanagawa.nvim",
 	priority = 1000,
 	config = function()
-		-- vim.opt.fillchars = {
-		-- 	horiz = "━",
-		-- 	horizup = "┻",
-		-- 	horizdown = "┳",
-		-- 	vert = "┃",
-		-- 	vertleft = "┫",
-		-- 	vertright = "┣",
-		-- 	verthoriz = "╋",
-		-- }
 		vim.opt.fillchars = {
-			horiz = " ",
-			horizup = " ",
-			horizdown = " ",
-			vert = " ",
-			vertleft = " ",
-			vertright = " ",
-			verthoriz = " ",
+			horiz = "━",
+			horizup = "┻",
+			horizdown = "┳",
+			vert = "┃",
+			vertleft = "┫",
+			vertright = "┣",
+			verthoriz = "╋",
 			eob = " "
 		}
+		-- vim.opt.fillchars = {
+		-- 	horiz = " ",
+		-- 	horizup = " ",
+		-- 	horizdown = " ",
+		-- 	vert = " ",
+		-- 	vertleft = " ",
+		-- 	vertright = " ",
+		-- 	verthoriz = " ",
+		-- 	eob = " "
+		-- }
 
 		require("kanagawa").setup({
 			theme = "dragon",
@@ -225,17 +226,17 @@ return {
 					StatusLineCommandMode = { bg = theme.syn.keyword, fg = theme.ui.fg },
 					StatusLineInactiveMode = { bg = theme.syn.comment, fg = theme.ui.fg },
 
-					LineNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					SignColumn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsAdd = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsAddNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsAddLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsChange = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsChangeNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsChangeLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsDelete = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsDeleteNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
+					LineNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					SignColumn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAdd = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAddNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAddLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChange = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChangeNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChangeLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDelete = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDeleteNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg },
 
 					ToggleTermNormal = { bg = theme.ui.bg_m2 },
 
