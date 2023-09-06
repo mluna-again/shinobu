@@ -278,7 +278,8 @@ case "$(read_input)" in
 			alert "File is not executable!"
 			exit
 		}
-		tmux display-popup -w 65 -h 11 -y 15 -EE "$file"
+		tmux display-popup -w 65 -h 20 -y 23 -b heavy -S fg=yellow -EE "$file"
+		true
 		;;
 
 	"Theme: choose colorscheme")
