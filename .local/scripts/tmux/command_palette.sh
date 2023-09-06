@@ -267,10 +267,12 @@ case "$(read_input)" in
 		[ -d "$LOCAL_SCRIPTS_FOLDER" ] || mkdir "$LOCAL_SCRIPTS_FOLDER"
 		files=$(find "$LOCAL_SCRIPTS_FOLDER" -type f -iname "*.sh")
 		trimmed_files=$(sed "s|$LOCAL_SCRIPTS_FOLDER/||g" <<< "$files")
-		files_or_default="$trimmed_files"
-		[ -z "$files" ] && files_or_default='No scripts yet!'
+		[ -z "$files" ] && {
+			free_input " Script to run " "  " ""
+			exit
+		}
 
-		input " Script to run " "  " "$files_or_default"
+		input " Script to run " "  " "$trimmed_files"
 		[ -z "$files" ] && exit
 
 		file=$(read_input)
