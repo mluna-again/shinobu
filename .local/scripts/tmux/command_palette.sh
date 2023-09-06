@@ -20,6 +20,8 @@ SESSIONS_PATH="$HOME/.cache/shift_sessions"
 
 BUDGET_FILE="$HOME/Notes/budget.sc"
 
+LOCAL_SCRIPTS_FOLDER="$HOME/.local/custom_scripts"
+
 commands="$(cat - <<EOF
 Notes: fuzzy find
 Cleanup: clear panes
@@ -42,6 +44,7 @@ Load: session
 Send: command to panes
 Time: clock
 Theme: choose colorscheme
+Run: Local script
 EOF
 )"
 
@@ -258,6 +261,24 @@ case "$(read_input)" in
 			counter=$((counter + 1))
 		done
 		tmux select-pane -t 1
+		;;
+
+	"Run: Local script")
+		[ -d "$LOCAL_SCRIPTS_FOLDER" ] || mkdir "$LOCAL_SCRIPTS_FOLDER"
+		files=$(find "$LOCAL_SCRIPTS_FOLDER" -type f -iname "*.sh")
+		files_or_default="$files"
+		[ -z "$files" ] && files_or_default='No scripts yet!'
+
+		input " Script to run " "  " "$files_or_default"
+		[ -z "$files" ] && exit
+
+		file=$(read_input)
+		[ -z "$file" ] && exit
+		[ -x "$file" ] || {
+			alert "File is not executable!"
+			exit
+		}
+		tmux display-popup -w 65 -h 11 -y 15 -EE "$file"
 		;;
 
 	"Theme: choose colorscheme")
