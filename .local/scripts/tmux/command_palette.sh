@@ -34,6 +34,7 @@ Layouts: Tiled
 Layouts: Main-Horizontal
 Layouts: Main-Vertical
 Layouts: Make grid
+Reorder: Running programs first
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -241,6 +242,22 @@ case "$(read_input)" in
 		target="$(read_input | awk '{print $1}')"
 		tmux swap-pane -s . -t "$target"
 		tmux select-pane -t "$target"
+		;;
+
+	"Reorder: Running programs first")
+		panes=$(
+		tmux list-panes -F "#{pane_current_command} #{pane_id}" | \
+			grep -iv "^zsh$" | \
+			grep -iv "^fish$" | \
+			grep -iv "^bash$" | \
+			awk '{print $2}'
+		)
+		counter=1
+		for _ in $panes; do
+			tmux swap-pane -t "$counter"
+			counter=$((counter + 1))
+		done
+		tmux select-pane -t 1
 		;;
 
 	"Theme: choose colorscheme")
