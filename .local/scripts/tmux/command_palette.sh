@@ -266,7 +266,8 @@ case "$(read_input)" in
 	"Run: Local script")
 		[ -d "$LOCAL_SCRIPTS_FOLDER" ] || mkdir "$LOCAL_SCRIPTS_FOLDER"
 		files=$(find "$LOCAL_SCRIPTS_FOLDER" -type f -iname "*.sh")
-		files_or_default="$files"
+		trimmed_files=$(sed "s|$LOCAL_SCRIPTS_FOLDER/||g" <<< "$files")
+		files_or_default="$trimmed_files"
 		[ -z "$files" ] && files_or_default='No scripts yet!'
 
 		input " Script to run " "  " "$files_or_default"
@@ -274,6 +275,8 @@ case "$(read_input)" in
 
 		file=$(read_input)
 		[ -z "$file" ] && exit
+
+		file="$LOCAL_SCRIPTS_FOLDER/$file"
 		[ -x "$file" ] || {
 			alert "File is not executable!"
 			exit
