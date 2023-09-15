@@ -55,3 +55,7 @@ func (m $1Model) View() string {
 	return ""
 }
 endsnippet
+
+snippet logerr "log error to stderr" b
+fmt.Fprintf(os.Stderr, "$1: \n%v", err)
+endsnippet

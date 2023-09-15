@@ -158,6 +158,8 @@ case "$(read_input)" in
 
 	"Send: command to panes")
 		input " Command to send " " 󰘳 " " " "rename"
+		cmd=$(read_input)
+		[ -z "$cmd" ] && exit
 		tmux list-panes -F "#{pane_index}" | xargs -I{} -n1 tmux send-keys -t {} "$(read_input)" Enter
 		;;
 

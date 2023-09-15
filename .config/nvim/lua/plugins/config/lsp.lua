@@ -27,6 +27,7 @@ return {
 			"volar",
 			"zls",
 			"gleam",
+			"csharp_ls"
 			-- "lua_ls",
 		}
 
