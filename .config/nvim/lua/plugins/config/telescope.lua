@@ -33,7 +33,7 @@ return {
 				path_display = { "truncate" },
 				winblend = 0,
 				borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
-				color_devicons = false,
+				color_devicons = true,
 				use_less = true,
 				prompt_prefix = "  ",
 				selection_caret = "  ",

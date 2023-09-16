@@ -74,9 +74,9 @@ return {
 					expander_highlight = "NeoTreeExpander",
 				},
 				icon = {
-					folder_closed = "",
-					folder_open = "",
-					folder_empty = "ﰊ",
+					folder_closed = "",
+					folder_open = "",
+					folder_empty = "󰷏",
 					-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
 					-- then these will never be used.
 					default = "*",
@@ -88,7 +88,7 @@ return {
 				},
 				name = {
 					trailing_slash = false,
-					use_git_status_colors = true,
+					use_git_status_colors = false,
 					highlight = "NeoTreeFileName",
 				},
 				git_status = {
@@ -97,11 +97,11 @@ return {
 						added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
 						modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
 						deleted = "✖", -- this can only be used in the git_status source
-						renamed = "", -- this can only be used in the git_status source
+						renamed = "", -- this can only be used in the git_status source
 						-- Status type
 						untracked = "",
 						ignored = "",
-						unstaged = "",
+						unstaged = "󰄗",
 						staged = "",
 						conflict = "",
 					},
@@ -139,7 +139,7 @@ return {
 					--["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
 					["C"] = "close_node",
 					-- ['C'] = 'close_all_subnodes',
-					["z"] = "close_all_nodes",
+					["z"] = "noop",
 					--["Z"] = "expand_all_nodes",
 					["a"] = {
 						"add",
