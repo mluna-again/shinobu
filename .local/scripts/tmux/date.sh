@@ -1,9 +1,7 @@
 #! /bin/sh
 
-date "+ %I:%M %p "
+icon_color="$2"
 
-# if [ "$1" -lt 120 ]; then
-# 	date "+ %I:%M %p "
-# else
-# 	date "+ %I:%M %p • %a %d, %b %y "
-# fi
+time=$(date "+ %I:%M %p • %a %d")
+
+printf "#[fg=white,bg=terminal]%s #[fg=black,bg=%s] 󰥔 #[fg=white,bg=terminal]" "$time" "$icon_color"
