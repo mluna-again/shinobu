@@ -7,6 +7,7 @@ wk.register({
 		j = { ":wincmd j<CR>", "Up", noremap = true, silent = true },
 		h = { ":wincmd h<CR>", "Left", noremap = true, silent = true },
 		l = { ":wincmd l<CR>", "Right", noremap = true, silent = true },
+		o = { "<C-w><C-r>", "Rotate window in current split", noremap = true, silent = true },
 		w = { "<C-w><C-w>", "Next", noremap = true, silent = true },
 		s = { "<C-w>s", "Open vertical window", noremap = true, silent = true },
 		v = { "<C-w>v", "Open horizontal window", noremap = true, silent = true },
