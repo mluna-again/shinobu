@@ -185,7 +185,7 @@ case "$(read_input)" in
 		tmux kill-window
 		;;
 
-	"Time: now")
+	"Time: clock")
 		tmux clock-mode
 		;;
 
