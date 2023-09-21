@@ -45,6 +45,7 @@ Send: command to panes
 Time: clock
 Theme: choose colorscheme
 Run: Local script
+Borders: Toggle for current window
 EOF
 )"
 
@@ -287,6 +288,35 @@ case "$(read_input)" in
 		}
 		tmux display-popup -w "80%" -h "80%" -y 23 -b heavy -S fg=yellow -EE "$file"
 		true
+		;;
+
+	"Borders: Toggle for current window")
+		current_ignored=$(
+	grep '^ignored_windows' "$HOME/.local/scripts/tmux/toggle_pane_borders.sh" | \
+		sed 's/^ignored_windows=//' | \
+		sed "s/^'//" | \
+		sed "s/'$//" | \
+		jq .
+		)
+		current_window=$(tmux list-windows -F "#{window_active} #{window_name}" | awk '$1 == 1' | awk '{print $2}')
+
+		arg=$(printf '. += ["%s"]' "$current_window")
+		new_ignored=$(jq -c "$arg" <<< "$current_ignored")
+
+		arg=$(printf '. as $f | "%s" | IN($f[])' "$current_window")
+		res=$(jq "$arg" <<< "$current_ignored")
+		if [ "$res" = true ]; then
+			arg=$(printf '. - map(select(. | contains("%s")))' "$current_window")
+			new_ignored=$(jq -c "$arg" <<< "$current_ignored")
+		fi
+
+		if uname | grep -i darwin &>/dev/null; then
+			sed -i '' "s/^ignored_windows=.*\$/ignored_windows='$new_ignored'/" "$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
+		else
+			sed -i "s/^ignored_windows=.*\$/ignored_windows='$new_ignored'/" "$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
+		fi
+
+		"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
 		;;
 
 	"Theme: choose colorscheme")
