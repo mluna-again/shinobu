@@ -1,6 +1,6 @@
 local function shouldShowFilename()
 	local badFiletypes =
-		{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel" }
+		{ "toggleterm", "dashboard", "NvimTree", "neo-tree", "neo-tree-popup", "Trouble", "DiffviewFilePanel", "oil", "oil_preview" }
 	local ft = vim.bo.filetype
 	for _, filetype in pairs(badFiletypes) do
 		if ft == filetype then

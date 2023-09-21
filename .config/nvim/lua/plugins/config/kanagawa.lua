@@ -157,9 +157,11 @@ return {
 					NoiceCmdlinePopup = { bg = theme.ui.bg_gutter },
 					NoiceCmdlinePopupBorder = { fg = theme.ui.bg_gutter },
 					NoiceCmdlinePopupTitle = { fg = theme.ui.bg_gutter, bg = theme.syn.identifier },
-					NoiceCmdlinePopupIcon = { fg = theme.ui.fg },
+					NoiceCmdlinePopupIcon = { fg = theme.ui.fg, bg = theme.ui.bg_gutter },
 					NoiceMissingMenu = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
 					NoiceMissingMenuBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+					NoiceCmdlineIconLua = { fg = theme.ui.fg, bg = theme.ui.bg_gutter },
+					NoiceCmdlineIconHelp = { fg = theme.ui.fg, bg = theme.ui.bg_gutter },
 					NoiceScrollbar = { fg = theme.ui.bg, bg = theme.ui.bg },
 
 					DiagnosticError = { fg = theme.syn.special2, bg = theme.ui.bg },

@@ -28,7 +28,7 @@ return {
 				show_hidden = true
 			},
 			float = {
-				border = "none",
+				border = "rounded",
 				win_options = {
 					winblend = 0,
 					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder",
