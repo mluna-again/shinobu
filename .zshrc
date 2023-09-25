@@ -155,6 +155,7 @@ alias vh="vagrant halt"
 
 # git
 alias gd="git diff"
+alias gdd="git diff --cached"
 alias gl="git log"
 gR() {
   echo -n "are you sure? [yN] "
