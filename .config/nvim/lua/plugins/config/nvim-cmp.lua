@@ -154,6 +154,10 @@ return {
 					name = "nvim_lsp",
 					priority = 5,
 				},
+				{
+					name = "vim-dadbod-completion",
+					priority = 6
+				}
 			}),
 			formatting = {
 				format = function(entry, item)
