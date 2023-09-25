@@ -213,7 +213,7 @@ return {
 					FzfLuaPreviewBorder = { bg = theme.ui.bg_m1, fg = theme.ui.bg_m1 },
 					FzfLuaPreviewTitle = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
 
-					CursorLine = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
+					CursorLine = { bg = theme.syn.bg, fg = theme.ui.fg },
 
 					StatusLineFolderIcon = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
 					StatusLineFileIcon = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },

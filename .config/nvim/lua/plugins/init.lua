@@ -74,4 +74,5 @@ require("lazy").setup({
 	require("plugins.config.fzf-native"),
 	require("plugins.config.goto"),
 	require("plugins.config.persisted"),
+	require("plugins.config.dadbob"),
 })
