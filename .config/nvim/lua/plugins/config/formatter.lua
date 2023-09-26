@@ -1,3 +1,12 @@
+local customformatters = {}
+customformatters.csharpier = {
+	exe = "dotnet",
+	args = {
+		"csharpier",
+	},
+	stdin = true,
+}
+
 return {
 	"mhartington/formatter.nvim",
 	event = "VeryLazy",
@@ -6,7 +15,7 @@ return {
 		local formatters = require("formatter.filetypes")
 
 		-- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
-		require("formatter").setup {
+		require("formatter").setup({
 			-- Enable or disable logging
 			logging = true,
 			-- Set the log level
@@ -59,16 +68,19 @@ return {
 					formatters.sql.pgformat,
 				},
 				rust = {
-					formatters.rust.rustfmt
+					formatters.rust.rustfmt,
 				},
-			}
-		}
+				cs = {
+					customformatters.csharpier,
+				},
+			},
+		})
 
 		vim.api.nvim_create_autocmd("BufWritePost", {
 			pattern = "*.go",
 			callback = function()
 				vim.cmd("FormatWriteLock")
-			end
+			end,
 		})
-	end
+	end,
 }
