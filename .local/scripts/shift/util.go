@@ -18,7 +18,8 @@ func shouldGoToTop(msg string) bool {
 
 func (app *app) cleanUpModeParams(params string) string {
 	for _, mode := range app.modes {
-		if mode.prefix != "" && strings.HasPrefix(params, mode.prefix) {
+		prefix := fmt.Sprintf("%s ", mode.prefix)
+		if mode.prefix != "" && strings.HasPrefix(params, prefix) {
 			return strings.TrimPrefix(params, mode.prefix)
 		}
 	}
