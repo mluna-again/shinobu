@@ -33,7 +33,8 @@ endsnippet
 
 snippet file "displays a comment with a file post example" b
 POST https://www.example.org
-file,data.csv;
+[MultipartFormData]
+file: file,data.csv;
 endsnippet
 
 snippet options "displays options available" b

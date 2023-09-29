@@ -27,6 +27,10 @@ return {
 					color = "#bef5b2",
 					name = "lisp",
 				},
+				cs = {
+					icon = "",
+					name = "csharp"
+				},
 				cshtml = {
 					icon = "",
 					color = "#953dab",
