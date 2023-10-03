@@ -64,6 +64,7 @@ alias lisp_repl="ros run --eval '(ql:quickload :swank)'  --eval '(swank:create-s
 alias jqp="jqp --config ~/.config/jqp/config.yaml"
 alias http="xh"
 alias https="xhs"
+alias phurl="$HOME/.local/scripts/pretty_hurl.sh"
 
 load() {
   local session_cache
