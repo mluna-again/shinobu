@@ -1,5 +1,19 @@
 #! /usr/bin/env bash
 
+debug() {
+	printf "\033[0;33m"
+	printf "%s" "$1"
+	printf "\033[0m"
+	printf "\n"
+}
+
+error() {
+	printf "\033[0;31m"
+	printf "%s" "$1"
+	printf "\033[0m"
+	printf "\n"
+}
+
 file="$1"
 query="${2:-.}"
 
@@ -9,6 +23,11 @@ body=$(awk '{ if (NF == 0) over = 1 } { if (over > 0) { print $0 } }' <<< "$outp
 
 printf "%s\n\n" "$headers"
 
-[ -n "$query" ] && printf "Query: %s\n\n" "$query"
+debug "Running: jq '$query'"
 
-jq "$query" <<< "$body" 2>/dev/null || printf "Query failed.\nRaw output:\n%s\n" "$body"
+jq "$query" <<< "$body" 2>/dev/null || {
+	error "Query failed."
+	debug "Raw output:"
+	printf "%s\n" "$body"
+	exit 1
+}
