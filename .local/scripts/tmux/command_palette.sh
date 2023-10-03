@@ -333,7 +333,7 @@ case "$(read_input)" in
 		tmux select-pane -U
 		tmux resize-pane -D 10
 		tmux send-keys -t . ihurl
-		if printf "%s" "$program" | grep -vi nvim &>/dev/null; then
+		if grep -vi nvim <<< "$program" &>/dev/null; then
 			tmux select-pane -R
 			tmux send-keys -t . nvim Enter
 		fi
