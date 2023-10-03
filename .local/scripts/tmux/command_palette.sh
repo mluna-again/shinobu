@@ -46,6 +46,7 @@ Time: clock
 Theme: choose colorscheme
 Run: Local script
 Borders: Toggle for current window
+Helper: Open HTTP session
 EOF
 )"
 
@@ -104,6 +105,10 @@ modify_nvim_and_alacritty() {
 
 	[ ! -d "$HOME/.config/shift" ] && mkdir "$HOME/.config/shift"
 	echo "$1" > "$HOME/.config/shift/theme"
+}
+
+current_program() {
+	tmux list-panes -F "#{pane_current_command} #{pane_id} #{pane_current_path} #{pane_active}" | awk '$4 == 1' | head -1
 }
 
 input " Command Palette " " 󰘳 " "$commands"
@@ -317,6 +322,21 @@ case "$(read_input)" in
 		fi
 
 		"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
+		;;
+
+	"Helper: Open HTTP session")
+		program=$(current_program | awk '{ print $1 }')
+		cwd=$(current_program | awk '{ print $3 }')
+		tmux rename-window api
+		tmux split-window -h -c "$cwd"
+		tmux split-window -v -c "$cwd"
+		tmux select-pane -U
+		tmux resize-pane -D 10
+		tmux send-keys -t . ihurl
+		if printf "%s" "$program" | grep -vi nvim &>/dev/null; then
+			tmux select-pane -R
+			tmux send-keys -t . nvim Enter
+		fi
 		;;
 
 	"Theme: choose colorscheme")
