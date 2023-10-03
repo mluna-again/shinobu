@@ -65,6 +65,9 @@ alias jqp="jqp --config ~/.config/jqp/config.yaml"
 alias http="xh"
 alias https="xhs"
 alias phurl="$HOME/.local/scripts/pretty_hurl.sh"
+ihurl() {
+  watchexec -c clear -r "$HOME/.local/scripts/pretty_hurl.sh "$@""
+}
 
 load() {
   local session_cache
