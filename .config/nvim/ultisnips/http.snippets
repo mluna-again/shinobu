@@ -167,3 +167,27 @@ snippet assert_includes "asserts json includes" b
 jsonpath "$.cats[0].pets" includes "Mary"
 jsonpath "$.cats[*].name" includes "Lucy"
 endsnippet
+
+snippet GET "GET request" b
+GET http://localhost:${3000:$1}
+endsnippet
+
+snippet POST "POST request" b
+POST http://localhost:${3000:$1}
+endsnippet
+
+snippet PUT "PUT request" b
+PUT http://localhost:${3000:$1}
+endsnippet
+
+snippet DELETE "DELETE request" b
+DELETE http://localhost:${3000:$1}
+endsnippet
+
+snippet PATCH "PATCH request" b
+PATCH http://localhost:${3000:$1}
+endsnippet
+
+snippet INFO "INFO request" b
+INFO http://localhost:${3000:$1}
+endsnippet
