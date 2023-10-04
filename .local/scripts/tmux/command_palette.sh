@@ -53,6 +53,7 @@ Theme: choose colorscheme
 Run: Local script
 Borders: Toggle for current window
 Helper: Open HTTP session
+Helper: Open Database session
 EOF
 )"
 
@@ -115,6 +116,11 @@ modify_nvim_and_alacritty() {
 
 current_program() {
 	tmux list-panes -F "#{pane_current_command} #{pane_id} #{pane_current_path} #{pane_active}" | awk '$4 == 1' | head -1
+}
+
+is_nvim_open() {
+	program=$(current_program | awk '{ print $1 }')
+	grep -i nvim <<< "$program" &>/dev/null
 }
 
 input " Command Palette " " 󰘳 " "$commands"
@@ -361,6 +367,16 @@ case "$(read_input)" in
 			tmux select-pane -t 1
 			tmux select-layout even-vertical
 		fi
+		;;
+
+	"Helper: Open Database session")
+		is_nvim_open || {
+			tmux rename-window db
+			tmux send-keys -t . nvim Enter : DBUI Enter
+			exit
+		}
+
+		true
 		;;
 
 	"Theme: choose colorscheme")
