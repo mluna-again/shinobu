@@ -355,10 +355,11 @@ case "$(read_input)" in
 				tmux send-keys -t . nvim Enter
 			fi
 			tmux split-window -v -c "$cwd"
-			tmux split-window -h -c "$cwd"
+			tmux split-window -v -c "$cwd"
 			tmux select-pane -t 2
 			tmux send-keys -t . ihurl
 			tmux select-pane -t 1
+			tmux select-layout even-vertical
 		fi
 		;;
 
