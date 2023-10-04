@@ -65,3 +65,105 @@ POST https://www.example.org/login
 X-CSRF-TOKEN: {{csrf_token}}
 HTTP 302
 endsnippet
+
+snippet assert_code "asserts a status code" b
+HTTP 200
+endsnippet
+
+snippet assert_status "asserts a status code" b
+[Asserts]
+status > 400
+endsnippet
+
+snippet assert_header "asserts a header" b
+[Asserts]
+header "Content-Type" contains "utf-8"
+endsnippet
+
+snippet assert_cookie "asserts a cookie" b
+[Asserts]
+cookie "LSID" == "DQAAAKEaem_vYg"
+endsnippet
+
+snippet assert_body "asserts body" b
+[Asserts]
+body contains "你好世界"
+endsnippet
+
+snippet assert_count "asserts json count" b
+[Asserts]
+jsonpath "$.cats" count == 49
+endsnippet
+
+snippet assert_equal "asserts json equal" b
+[Asserts]
+jsonpath "$.cats[0].name" == "Felix"
+jsonpath "$.cats[0].lives" == 9
+endsnippet
+
+snippet assert_empty "asserts json empty" b
+[Asserts]
+jsonpath "$.cats[0].pet" isEmpty
+endsnippet
+
+snippet assert_collection "asserts json collection" b
+[Asserts]
+jsonpath "$.cats[0].pet" isCollection
+endsnippet
+
+snippet assert_boolean "asserts json boolean" b
+[Asserts]
+jsonpath "$.cats[0].pet" isBoolean
+jsonpath "$.cats[0].pet" == true
+endsnippet
+
+snippet assert_date "asserts json date" b
+[Asserts]
+jsonpath "$.cats[0].pet" isDate
+endsnippet
+
+snippet assert_float "asserts json float" b
+[Asserts]
+jsonpath "$.cats[0].pet" isFloat
+endsnippet
+
+snippet assert_integer "asserts json integer" b
+[Asserts]
+jsonpath "$.cats[0].pet" isInteger
+endsnippet
+
+snippet assert_string "asserts json string" b
+[Asserts]
+jsonpath "$.cats[0].pet" isString
+endsnippet
+
+snippet assert_exists "asserts json exists" b
+[Asserts]
+jsonpath "$.cats[0].pet" exists
+endsnippet
+
+snippet assert_matches "asserts json matches" b
+[Asserts]
+jsonpath "$.cats[0].pet" matches /.{4}/
+endsnippet
+
+snippet assert_contains "asserts json contains" b
+[Asserts]
+jsonpath "$.cats[0].pet" contains "mary"
+endsnippet
+
+snippet assert_endsWith "asserts json endsWith" b
+[Asserts]
+jsonpath "$.cats[0].pet" endsWith "ry"
+endsnippet
+
+snippet assert_startsWith "asserts json startsWith" b
+[Asserts]
+jsonpath "$.cats[0].pet" startsWith "ma"
+endsnippet
+
+snippet assert_includes "asserts json includes" b
+[Asserts]
+jsonpath "$.cats[0].pets" includes "Mary"
+jsonpath "$.cats[*].name" includes "Lucy"
+endsnippet
