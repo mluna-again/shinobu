@@ -22,6 +22,12 @@ BUDGET_FILE="$HOME/Notes/budget.sc"
 
 LOCAL_SCRIPTS_FOLDER="$HOME/.local/custom_scripts"
 
+orientations="$(cat - <<EOF
+Horizontal
+Vertical
+EOF
+)"
+
 commands="$(cat - <<EOF
 Notes: fuzzy find
 Cleanup: clear panes
@@ -325,17 +331,34 @@ case "$(read_input)" in
 		;;
 
 	"Helper: Open HTTP session")
+		input " Orientation " " 󰞁 " "$orientations"
+		orientation=$(read_input)
+		[ -z "$orientation" ] && exit
+
 		program=$(current_program | awk '{ print $1 }')
 		cwd=$(current_program | awk '{ print $3 }')
-		tmux rename-window api
-		tmux split-window -h -c "$cwd"
-		tmux split-window -v -c "$cwd"
-		tmux select-pane -U
-		tmux resize-pane -D 10
-		tmux send-keys -t . ihurl
-		if grep -vi nvim <<< "$program" &>/dev/null; then
-			tmux select-pane -R
-			tmux send-keys -t . nvim Enter
+		if [ "$orientation" = Horizontal ]; then
+			tmux rename-window api
+			tmux split-window -h -c "$cwd"
+			tmux split-window -v -c "$cwd"
+			tmux select-pane -U
+			tmux resize-pane -D 10
+			tmux send-keys -t . ihurl
+			if grep -vi nvim <<< "$program" &>/dev/null; then
+				tmux select-pane -R
+				tmux send-keys -t . nvim Enter
+			fi
+		else
+			tmux rename-window api
+			if grep -vi nvim <<< "$program" &>/dev/null; then
+				tmux select-pane -t 1
+				tmux send-keys -t . nvim Enter
+			fi
+			tmux split-window -v -c "$cwd"
+			tmux split-window -h -c "$cwd"
+			tmux select-pane -t 2
+			tmux send-keys -t . ihurl
+			tmux select-pane -t 1
 		fi
 		;;
 
