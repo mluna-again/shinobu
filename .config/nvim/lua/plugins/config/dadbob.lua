@@ -1,6 +1,7 @@
 return {
 	"kristijanhusak/vim-dadbod-ui",
 	dependencies = {
+		"folke/which-key.nvim",
 		{ "tpope/vim-dadbod", lazy = false },
 		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = false },
 	},
