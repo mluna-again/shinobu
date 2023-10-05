@@ -37,5 +37,10 @@ return {
 		}, {
 			prefix = "<Leader>",
 		})
+
+		vim.cmd([[
+			autocmd FileType dbout setlocal nofoldenable
+			autocmd FileType sql setlocal nofoldenable
+		]])
 	end,
 }
