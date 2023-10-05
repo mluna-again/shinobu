@@ -10,5 +10,12 @@ return {
 				MiniTrailspace.trim()
 			end
 		})
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "dbout" },
+			callback = function (data)
+				vim.b[data.buf].minitrailspace_disable = true
+				vim.api.nvim_buf_call(data.buf, MiniTrailspace.unhighlight)
+			end
+		})
 	end
 }
