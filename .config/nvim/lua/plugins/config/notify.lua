@@ -8,7 +8,7 @@ return {
 			stages = "slide",
 			timeout = 2500,
 			render = "compact",
-			-- level = vim.log.levels.INFO,
+			level = vim.log.levels.WARN,
 			max_width = 80,
 			min_width = 80
 		})
