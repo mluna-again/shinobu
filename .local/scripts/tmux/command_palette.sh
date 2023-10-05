@@ -53,7 +53,7 @@ Theme: choose colorscheme
 Run: Local script
 Borders: Toggle for current window
 Helper: Open HTTP session
-Helper: Open Database session
+Helper: Open Database session (SQL)
 EOF
 )"
 
@@ -369,10 +369,10 @@ case "$(read_input)" in
 		fi
 		;;
 
-	"Helper: Open Database session")
+	"Helper: Open Database session (SQL)")
 		is_nvim_open || {
 			tmux rename-window db
-			tmux send-keys -t . nvim Enter : DBUI Enter
+			tmux send-keys -t . nvim Space -c Space "DBUI" Enter
 			exit
 		}
 
