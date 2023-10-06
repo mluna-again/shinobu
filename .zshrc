@@ -1,4 +1,5 @@
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+export HOMEBREW_NO_AUTO_UPDATE=1
 command -v bat &>/dev/null && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 bindkey -v
