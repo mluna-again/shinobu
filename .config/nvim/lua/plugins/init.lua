@@ -22,7 +22,6 @@ require("lazy").setup({
 	require("plugins.config.dracula"),
 	require("plugins.config.mason"),
 	require("plugins.config.lsp"),
-	require("plugins.config.nvim-cmp"),
 	require("plugins.config.dashboard"),
 	require("plugins.config.conjure"),
 	require("plugins.config.telescope"),
@@ -75,4 +74,5 @@ require("lazy").setup({
 	require("plugins.config.goto"),
 	require("plugins.config.persisted"),
 	require("plugins.config.dadbob"),
+	"neovim/nvim-lspconfig",
 })

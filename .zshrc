@@ -1,16 +1,18 @@
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 command -v bat &>/dev/null && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
-[ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^k' autosuggest-accept
+bindkey -v
+bindkey -M viins 'jj' vi-cmd-mode
+[ -e ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && {
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+  bindkey '^k' autosuggest-accept
+}
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 autoload run-help
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-bindkey -v
-bindkey -M viins 'jj' vi-cmd-mode
 export VI_MODE_SET_CURSOR=true
 export MODE_INDICATOR="%F{yellow}[NORMAL]%f"
 bindkey "^P" up-line-or-search
