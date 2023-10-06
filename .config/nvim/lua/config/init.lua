@@ -32,14 +32,6 @@ vim.cmd([[highlight EndOfBuffer guifg=bg]])
 vim.cmd("colorscheme kanagawa-dragon")
 vim.cmd("set laststatus=3")
 
--- hurl files
-vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = { "*.hurl" },
-	callback = function ()
-		vim.bo.filetype = "http"
-	end
-})
-
 -- LSP TWEAKS
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single", title = " Docs " })
 
