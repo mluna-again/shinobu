@@ -54,6 +54,7 @@ Run: Local script
 Borders: Toggle for current window
 Helper: Open HTTP session
 Helper: Open Database session (SQL)
+Reload: configuration
 EOF
 )"
 
@@ -377,6 +378,11 @@ case "$(read_input)" in
 		}
 
 		true
+		;;
+
+	"Reload: configuration")
+		tmux source-file "$HOME/.tmux.conf"
+		tmux display-message "Reloaded!"
 		;;
 
 	"Theme: choose colorscheme")
