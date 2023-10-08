@@ -257,7 +257,7 @@ function yt
 end
 
 function t
-    tmux attach
+    tmux attach; or tmux
 end
 
 function gofmt
