@@ -185,7 +185,7 @@ function gCC
 end
 
 function gC
-    git checkout
+    git checkout $argv
 end
 
 function gP
