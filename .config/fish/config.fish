@@ -6,6 +6,7 @@ end
 # GENERAL
 set -U fish_greeting
 set -g fish_key_bindings fish_vi_key_bindings
+set -g fish_color_valid_path
 
 # PATH
 set -U fish_user_paths /usr/local/bin $fish_user_paths
