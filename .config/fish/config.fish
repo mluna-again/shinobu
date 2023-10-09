@@ -13,6 +13,7 @@ set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 set -U fish_user_paths "$HOME/.local/go/bin" $fish_user_paths
 set -U fish_user_paths "$HOME/.local/bin" $fish_user_paths
 set -U fish_user_paths "$HOME/.dotnet/tools" $fish_user_paths
+set -U fish_user_paths "$HOME/.cargo/bin" $fish_user_paths
 
 # BINDINGS
 bind -M insert \ce end-of-line
