@@ -30,7 +30,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 11. jq
 12. jqp
 13. xh
-14. exa
+14. eza
 15. delta
 16. direnv
 17. watchexec

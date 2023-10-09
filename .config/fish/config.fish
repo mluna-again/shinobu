@@ -41,12 +41,12 @@ command -v z &>/dev/null; and function cd
     z $argv
 end
 
-command -v exa &>/dev/null; and function ls
-    exa --icons -1 $argv
+command -v eza &>/dev/null; and function ls
+    eza --icons -1 $argv
 end
 
-command -v exa &>/dev/null; and function ll
-    exa --icons -1 -lh $argv
+command -v eza &>/dev/null; and function ll
+    eza --icons -1 -lh $argv
 end
 
 command -v bat &>/dev/null; and function cat
