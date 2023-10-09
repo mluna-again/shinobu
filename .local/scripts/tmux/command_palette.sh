@@ -55,6 +55,7 @@ Borders: Toggle for current window
 Helper: Open HTTP session
 Helper: Open Database session (SQL)
 Reload: configuration
+Alert: print message
 EOF
 )"
 
@@ -85,7 +86,9 @@ free_input() {
 }
 
 alert() {
-	tmux display-popup -w 65 -h 11 -y 15 echo "$@"
+	message=$(printf "[figlet not installed]\n%s\n" "$@")
+	command -v figlet &>/dev/null && message="$(figlet -w 125 -c -f ~/.local/fonts/ansi.flf $@)"
+	tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w 130 -h 25 -y 30 printf "%s\n" "$message"
 }
 
 read_input() {
@@ -129,7 +132,7 @@ input " Command Palette " " 󰘳 " "$commands"
 case "$(read_input)" in
 	"Load: session")
 		command -v tmuxp &>/dev/null || {
-			tmux display-popup -w "65" -h "11" -y 15 echo "tmuxp is not installed!"
+			alert "tmuxp is not installed!"
 			exit
 		}
 		sessions=$(find "$SESSIONS_PATH" -type f -or -type l | sed "s|^$SESSIONS_PATH/||")
@@ -304,7 +307,10 @@ case "$(read_input)" in
 			alert "File is not executable!"
 			exit
 		}
-		tmux display-popup -w "80%" -h "80%" -y 23 -b heavy -S fg=yellow -EE "$file"
+		tmux display-popup -w "80%" -h "70%" -y 35 -b heavy -S fg=black,bg=black -s bg=black -EE "$file"
+
+		[ "$?" -eq 0 ] && alert "Script ran successfully" ":)"
+
 		true
 		;;
 
@@ -383,6 +389,11 @@ case "$(read_input)" in
 	"Reload: configuration")
 		tmux source-file "$HOME/.tmux.conf"
 		tmux display-message "Reloaded!"
+		;;
+
+	"Alert: print message")
+		free_input " Message " " 󰭺 " "hello"
+		alert "$(read_input)"
 		;;
 
 	"Theme: choose colorscheme")
