@@ -86,9 +86,7 @@ free_input() {
 }
 
 alert() {
-	message=$(printf "[figlet not installed]\n%s\n" "$@")
-	command -v figlet &>/dev/null && message="$(figlet -w 125 -c -f ~/.local/fonts/ansi.flf $@)"
-	tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w 130 -h 25 -y 30 printf "%s\n" "$message"
+	tmux display-message -d 0 " 󰭺 Message: $1"
 }
 
 read_input() {
@@ -309,7 +307,7 @@ case "$(read_input)" in
 		}
 		tmux display-popup -w "80%" -h "70%" -y 35 -b heavy -S fg=black,bg=black -s bg=black -EE "$file"
 
-		[ "$?" -eq 0 ] && alert "Script ran successfully" ":)"
+		[ "$?" -eq 0 ] && alert "Script ran successfully :)"
 
 		true
 		;;
@@ -388,7 +386,7 @@ case "$(read_input)" in
 
 	"Reload: configuration")
 		tmux source-file "$HOME/.tmux.conf"
-		tmux display-message "Reloaded!"
+		alert "Reloaded!"
 		;;
 
 	"Alert: print message")
