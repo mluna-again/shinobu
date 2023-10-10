@@ -36,7 +36,30 @@ set -gx ERL_AFLAGS "-kernel shell_history enabled -kernel shell_history_file_byt
 set -gx GOPATH "$HOME/.local/go"
 set -gx SHELLCHECK_OPTS "-e SC2001"
 
+direnv hook fish | source
+zoxide init fish | source
+starship init fish | source
+
+if uname | grep -i darwin &>/dev/null
+    source (brew --prefix asdf)/libexec/asdf.fish
+else
+    source ~/.asdf/asdf.fish
+end
+
 # FUNCTIONS
+
+function _ask_for_confirmation_before_commit_in_noicons
+    set -l current_branch (yadm branch | awk '$1 ~ /^*/ { print $2 }')
+    if test "$current_branch" = noicons
+        read -l -P "You are currently in the noicons branch, are you sure you want to continue? [Ny] " response
+        set -l response (echo "$response" | tr '[:upper:]' '[:lower:]')
+
+        test "$response" != y; and return 1
+    end
+
+    return 0
+end
+
 command -v z &>/dev/null; and function cd
     z $argv
 end
@@ -117,10 +140,12 @@ function dotss
 end
 
 function dotsa
+    _ask_for_confirmation_before_commit_in_noicons; or return
     yadm add -u
 end
 
 function dotsA
+    _ask_for_confirmation_before_commit_in_noicons; or return
     yadm add -u
 end
 
@@ -153,6 +178,7 @@ function dotsdd
 end
 
 function dotsc
+    _ask_for_confirmation_before_commit_in_noicons; or return
     yadm commit -m "$argv"
 end
 
@@ -267,12 +293,3 @@ function gofmt
     go fmt ./...
 end
 
-direnv hook fish | source
-zoxide init fish | source
-starship init fish | source
-
-if uname | grep -i darwin &>/dev/null
-    source (brew --prefix asdf)/libexec/asdf.fish
-else
-    source ~/.asdf/asdf.fish
-end
