@@ -43,6 +43,10 @@ case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 		icon="󰈺"
 		;;
 
+	dotnet)
+		icon="󰌛"
+		;;
+
 	*)
 		icon=""
 esac
