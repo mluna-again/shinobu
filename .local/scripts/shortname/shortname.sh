@@ -24,5 +24,6 @@ else
 	output=$(linux "$@")
 fi
 
-printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"
+# printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"
+printf "#[fg=black,bg=%s] DIR #[bg=terminal,fg=terminal] %s " "$background" "$output"
 [ -n "$session_name" ] && printf ":: %s " "$session_name"

@@ -11,4 +11,5 @@ else
 	output=$(free -b | awk 'NR == 2 {print $3}' | numfmt --to=iec --from=si)
 fi
 
-printf "#[fg=black,bg=%s] 󰍛 #[bg=terminal,fg=terminal] %s" "$background" "$output"
+# printf "#[fg=black,bg=%s] 󰍛 #[bg=terminal,fg=terminal] %s" "$background" "$output"
+printf "#[fg=black,bg=%s] RAM #[bg=terminal,fg=terminal] %s" "$background" "$output"

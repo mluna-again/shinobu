@@ -51,4 +51,5 @@ case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 		icon=""
 esac
 
-echo "$icon $1"
+# echo "$icon $1"
+echo "$1"
