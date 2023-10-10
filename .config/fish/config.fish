@@ -132,6 +132,10 @@ function v
 end
 
 function dots
+    if test "$argv[1]" = add
+        _ask_for_confirmation_before_commit_in_noicons; or return
+    end
+
     yadm $argv
 end
 
