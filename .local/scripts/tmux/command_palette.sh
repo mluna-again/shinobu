@@ -55,7 +55,9 @@ Borders: Toggle for current window
 Helper: Open HTTP session
 Helper: Open Database session (SQL)
 Reload: configuration
-Alert: print message
+Alert: information
+Alert: success
+Alert: error
 EOF
 )"
 
@@ -86,7 +88,15 @@ free_input() {
 }
 
 alert() {
-	tmux display-message -d 0 " 󰭺 Message: $1"
+	tmux display-message -d 0 "#[bg=yellow,fill=yellow,fg=black] 󰭺 Message: $1"
+}
+
+success() {
+	tmux display-message -d 0 "#[bg=green,fill=green,fg=black]  Message: $1"
+}
+
+error() {
+	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Message: $1"
 }
 
 read_input() {
@@ -101,7 +111,7 @@ send_keys_to_nvim() {
 }
 
 modify_nvim_and_alacritty() {
-	command -v yq &>/dev/null || { alert "yq is required to run this action!"; exit 1; }
+	command -v yq &>/dev/null || { error "yq is required to run this action!"; exit 1; }
 
 	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml" || true
 
@@ -130,7 +140,7 @@ input " Command Palette " " 󰘳 " "$commands"
 case "$(read_input)" in
 	"Load: session")
 		command -v tmuxp &>/dev/null || {
-			alert "tmuxp is not installed!"
+			error "tmuxp is not installed!"
 			exit
 		}
 		sessions=$(find "$SESSIONS_PATH" -type f -or -type l | sed "s|^$SESSIONS_PATH/||")
@@ -302,12 +312,16 @@ case "$(read_input)" in
 
 		file="$LOCAL_SCRIPTS_FOLDER/$file"
 		[ -x "$file" ] || {
-			alert "File is not executable!"
+			error "File is not executable!"
 			exit
 		}
-		tmux display-popup -w "80%" -h "70%" -y 35 -b heavy -S fg=black,bg=black -s bg=black -EE "$file"
+		tmux display-popup -w "80%" -h "70%" -y 40 -b heavy -S fg=black,bg=black -s bg=black -EE "$file"
 
-		[ "$?" -eq 0 ] && alert "Script ran successfully :)"
+		if [ "$?" -eq 0 ]; then
+			success "Script ran successfully :)"
+		else
+			error "Something went wrong!"
+		fi
 
 		true
 		;;
@@ -386,12 +400,22 @@ case "$(read_input)" in
 
 	"Reload: configuration")
 		tmux source-file "$HOME/.tmux.conf"
-		alert "Reloaded!"
+		success "Reloaded!"
 		;;
 
-	"Alert: print message")
+	"Alert: success")
+		free_input " Message " " 󰭺 " "hello"
+		success "$(read_input)"
+		;;
+
+	"Alert: information")
 		free_input " Message " " 󰭺 " "hello"
 		alert "$(read_input)"
+		;;
+
+	"Alert: error")
+		free_input " Message " " 󰭺 " "hello"
+		error "$(read_input)"
 		;;
 
 	"Theme: choose colorscheme")
