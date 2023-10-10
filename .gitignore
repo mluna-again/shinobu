@@ -11,3 +11,5 @@ Session.vim*
 /scratch-pad.clj
 
 /dev/
+
+.config/fish/fish_variables
