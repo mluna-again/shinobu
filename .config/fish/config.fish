@@ -271,8 +271,8 @@ direnv hook fish | source
 zoxide init fish | source
 starship init fish | source
 
-if uname | grep -i darwin
-    source "(brew --prefix asdf)"/libexec/asdf.fish
+if uname | grep -i darwin &>/dev/null
+    source (brew --prefix asdf)/libexec/asdf.fish
 else
     source ~/.asdf/asdf.fish
 end
