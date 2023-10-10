@@ -66,7 +66,8 @@ return {
 					{
 						"mode",
 						color = { gui = "bold" },
-						icon = { "  ", color = "StatusLineModeIcon" },
+						-- icon = { "  ", color = "StatusLineModeIcon" },
+						icon = { " MODE ", color = "StatusLineModeIcon" },
 						padding = { right = 1 },
 					},
 				},
@@ -76,15 +77,18 @@ return {
 						cond = shouldShowFilename,
 						icons_enabled = true,
 						symbols = {
-							modified = "",
+							-- modified = "",
+							modified = "*",
 						},
 						color = { gui = "bold" },
-						icon = { "  ", color = "StatusLineFileIcon" },
+						-- icon = { "  ", color = "StatusLineFileIcon" },
+						icon = { " FILE ", color = "StatusLineFileIcon" },
 						padding = { right = 1 },
 					},
 				},
 				lualine_c = {
-					{ "branch", padding = { right = 1 }, icon = { "  ", color = "StatusLineBranchIcon" } },
+					-- { "branch", padding = { right = 1 }, icon = { "  ", color = "StatusLineBranchIcon" } },
+					{ "branch", padding = { right = 1 }, icon = { " GIT ", color = "StatusLineBranchIcon" } },
 				},
 				lualine_x = {
 					{
@@ -96,7 +100,8 @@ return {
 							info = "DiagnosticInfo", -- Changes diagnostics' info color.
 							hint = "DiagnosticHint", -- Changes diagnostics' hint color.
 						},
-						symbols = { error = " ", warn = " ", info = " ", hint = " " },
+						-- symbols = { error = " ", warn = " ", info = " ", hint = " " },
+						symbols = { error = "E ", warn = "W ", info = "I ", hint = "H " },
 						padding = { left = 1 },
 					},
 				},
@@ -107,13 +112,15 @@ return {
 					},
 					{
 						"progress",
-						icon = { " 󰗈 ", color = "StatusLineProgressIcon", align = "right" },
+						-- icon = { " 󰗈 ", color = "StatusLineProgressIcon", align = "right" },
+						icon = { " LOC ", color = "StatusLineProgressIcon", align = "right" },
 					},
 				},
 				lualine_z = {
 					{
 						'vim.fn.fnamemodify(vim.fn.getcwd(), ":t")',
-						icon = { "  ", color = "StatusLineFolderIcon", align = "right" },
+						-- icon = { "  ", color = "StatusLineFolderIcon", align = "right" },
+						icon = { " DIR ", color = "StatusLineFolderIcon", align = "right" },
 						padding = { left = 1 },
 					},
 				},
