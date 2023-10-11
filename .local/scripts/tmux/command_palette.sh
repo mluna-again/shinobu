@@ -58,8 +58,14 @@ Reload: configuration
 Alert: information
 Alert: success
 Alert: error
+Window: reset
 EOF
 )"
+
+close_all_but_focused() {
+	active=$(tmux list-panes -F '#{pane_id} #{pane_active}' | awk '$2 == 1 { print $1 }')
+	tmux kill-pane -a -t "$active"
+}
 
 input() {
 	local title
@@ -267,8 +273,7 @@ case "$(read_input)" in
 		;;
 
 	"Panes: Close all but focused one")
-		active=$(tmux list-panes -F '#{pane_id} #{pane_active}' | awk '$2 == 1 { print $1 }')
-		tmux kill-pane -a -t "$active"
+		close_all_but_focused
 		;;
 
 	"Swap: pane")
@@ -416,6 +421,11 @@ case "$(read_input)" in
 	"Alert: error")
 		free_input " Message " " 󰭺 " "hello"
 		error "$(read_input)"
+		;;
+
+	"Window: reset")
+		tmux select-layout tiled
+		close_all_but_focused
 		;;
 
 	"Theme: choose colorscheme")
