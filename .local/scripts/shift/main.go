@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"unicode/utf8"
 
@@ -311,7 +312,13 @@ func main() {
 		return
 	}
 
-	filePath := ".__SHIFT__"
+	executable, err := os.Executable()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "\n%v", err)
+		os.Exit(1)
+		return
+	}
+	filePath := fmt.Sprintf("%s/.__SHIFT__", filepath.Dir(executable))
 	if outputFile != "" {
 		filePath = outputFile
 	}

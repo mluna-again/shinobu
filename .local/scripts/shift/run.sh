@@ -6,7 +6,9 @@ mode="${3:-sessions}"
 
 path="$HOME/.local/scripts/shift"
 
-[ -e .__SHIFT__ ] && rm .__SHIFT__
+OUTPUT_PATH="$path/.__SHIFT__"
+
+[ -e "$OUTPUT_PATH" ] && rm "$OUTPUT_PATH"
 
 [ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
@@ -43,12 +45,8 @@ get_windows() {
 }
 
 handle_sessions() {
-	[ ! -e .__SHIFT__ ] && exit
-
-	mode="$(awk '{print $1}' .__SHIFT__)"
-	params="$(awk '{for(i=2; i<=NF;i++) printf "%s ", $i}' .__SHIFT__)"
-
-	rm .__SHIFT__
+	mode="$(awk '{print $1}' "$OUTPUT_PATH")"
+	params="$(awk '{for(i=2; i<=NF;i++) printf "%s ", $i}' "$OUTPUT_PATH")"
 
 	case "$mode" in
 		create)
@@ -84,10 +82,7 @@ handle_sessions() {
 }
 
 handle_windows() {
-	[ ! -e .__SHIFT__ ] && exit
-
-	window_name="$(awk '{print $2}' .__SHIFT__)"
-	rm .__SHIFT__
+	window_name="$(awk '{print $2}' "$OUTPUT_PATH")"
 
 	tmux select-window -t "$window_name"
 }
@@ -109,9 +104,7 @@ get_all() {
 }
 
 handle_all() {
-	[ ! -e .__SHIFT__ ] && exit
-
-	output=$(xargs sh -c 'printf "%s %s" $1 $2' < .__SHIFT__)
+	output=$(xargs sh -c 'printf "%s %s" $1 $2' < "$OUTPUT_PATH")
 	session=$(awk -F':' '{ print $1 }' <<< "$output")
 	session=$(awk '{ print $1 }' <<< "$session")
 	window=$(awk -F':' '{ print $2 }' <<< "$output")
@@ -126,21 +119,25 @@ handle_all() {
 case "$mode" in
 	sessions)
 		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
+		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_sessions
 		;;
 
 	windows)
 		get_windows | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
+		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_windows
 		;;
 
 	all)
 		get_all | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "$mode" || { echo "Something went wrong..."; exit 1; }
+		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_all
 		;;
 
 	*)
 		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
+		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_sessions
 		;;
 esac
