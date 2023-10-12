@@ -59,6 +59,10 @@ Alert: information
 Alert: success
 Alert: error
 Window: reset
+Resize: up
+Resize: down
+Resize: left
+Resize: right
 EOF
 )"
 
@@ -426,6 +430,22 @@ case "$(read_input)" in
 	"Window: reset")
 		tmux select-layout tiled
 		close_all_but_focused
+		;;
+
+	"Resize: up")
+		tmux resize-pane -t . -U 5
+		;;
+
+	"Resize: down")
+		tmux resize-pane -t . -D 5
+		;;
+
+	"Resize: left")
+		tmux resize-pane -t . -L 10
+		;;
+
+	"Resize: right")
+		tmux resize-pane -t . -R 10
 		;;
 
 	"Theme: choose colorscheme")
