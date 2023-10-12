@@ -91,7 +91,13 @@ handle_windows() {
 }
 
 get_all() {
-	tmux list-windows -a -F '#{session_name}: #{window_name}'
+	curr=$(tmux display -p "#{session_name}")
+	output=$(tmux list-windows -a -F '#{session_name}: #{window_name}')
+
+	# order windows from current session first
+	current_session_windows=$(grep "$curr" <<< "$output")
+	remaining_windows=$(grep -v "$curr" <<< "$output" | sort)
+	printf "%s\n%s" "$current_session_windows" "$remaining_windows"
 }
 
 handle_all() {
@@ -103,6 +109,8 @@ handle_all() {
 	window=$(awk -F':' '{ print $2 }' <<< "$output")
 	window=$(awk '{ print $1 }' <<< "$window")
 
+	[ -z "$session" ] && exit
+	[ -z "$window" ] && exit
 	tmux switch-client -t "$session"
 	tmux select-window -t "$window"
 }
