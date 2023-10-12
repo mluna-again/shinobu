@@ -90,6 +90,23 @@ handle_windows() {
 	tmux select-window -t "$window_name"
 }
 
+get_all() {
+	tmux list-windows -a -F '#{session_name}: #{window_name}'
+}
+
+handle_all() {
+	[ ! -e .__SHIFT__ ] && exit
+
+	output=$(xargs sh -c 'printf "%s %s" $1 $2' < .__SHIFT__)
+	session=$(awk -F':' '{ print $1 }' <<< "$output")
+	session=$(awk '{ print $1 }' <<< "$session")
+	window=$(awk -F':' '{ print $2 }' <<< "$output")
+	window=$(awk '{ print $1 }' <<< "$window")
+
+	tmux switch-client -t "$session"
+	tmux select-window -t "$window"
+}
+
 case "$mode" in
 	sessions)
 		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
@@ -99,6 +116,11 @@ case "$mode" in
 	windows)
 		get_windows | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
 		handle_windows
+		;;
+
+	all)
+		get_all | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "$mode" || { echo "Something went wrong..."; exit 1; }
+		handle_all
 		;;
 
 	*)
