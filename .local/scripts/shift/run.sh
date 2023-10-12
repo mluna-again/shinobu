@@ -6,6 +6,8 @@ mode="${3:-sessions}"
 
 path="$HOME/.local/scripts/shift"
 
+[ -e .__SHIFT__ ] && rm .__SHIFT__
+
 [ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
 _remove_trailing_slash() {
