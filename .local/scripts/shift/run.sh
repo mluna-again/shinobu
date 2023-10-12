@@ -100,7 +100,7 @@ get_all() {
 	# order windows from current session first
 	current_session_windows=$(grep "$curr_session" <<< "$output")
 	current_window_active=$(grep "$curr_window" <<< "$current_session_windows")
-	current_window_remaining=$(grep -v "$curr_window" <<< "$current_session_windows")
+	current_window_remaining=$(grep -v "$curr_window" <<< "$current_session_windows" | sort)
 
 
 	remaining_windows=$(grep -v "$curr_session" <<< "$output" | sort)
