@@ -1,4 +1,15 @@
+function _is_docker_running
+    docker info; or return 1
+
+    return 0
+end
+
 function docker_wrapper
+    _is_docker_running &>/dev/null; or begin
+        printf "Docker is not running.\n" 2>&1
+        return 1
+    end
+
     set -l cmd $argv[1]
     test -z "$cmd"; and begin
         printf "Available CMDs:\n"
