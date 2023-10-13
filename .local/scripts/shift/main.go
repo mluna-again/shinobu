@@ -318,7 +318,7 @@ func main() {
 		os.Exit(1)
 		return
 	}
-	filePath := fmt.Sprintf("%s/.__SHIFT__", filepath.Dir(executable))
+	filePath := filepath.Join(filepath.Dir(executable), ".__SHIFT__")
 	if outputFile != "" {
 		filePath = outputFile
 	}
