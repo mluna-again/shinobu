@@ -43,13 +43,14 @@ set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_color_valid_path
 
 # PATH
-set -U fish_user_paths /usr/local/bin $fish_user_paths
-set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
-set -U fish_user_paths "$HOME/.local/go/bin" $fish_user_paths
-set -U fish_user_paths "$HOME/.local/bin" $fish_user_paths
-set -U fish_user_paths "$HOME/.dotnet/tools" $fish_user_paths
-set -U fish_user_paths "$HOME/.cargo/bin" $fish_user_paths
-set -U fish_user_paths "/usr/local/go/bin" $fish_user_paths
+set -e fish_user_paths
+set -U fish_user_paths /usr/local/bin \
+    /opt/homebrew/bin \
+    "$HOME/.local/go/bin" \
+    "$HOME/.local/bin" \
+    "$HOME/.dotnet/tools" \
+    "$HOME/.cargo/bin" \
+    "/usr/local/go/bin"
 
 # BINDINGS
 bind -M insert \ce end-of-line
