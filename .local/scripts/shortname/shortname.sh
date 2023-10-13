@@ -24,5 +24,6 @@ else
 	output=$(linux "$@")
 fi
 
+output=$(sed 's|/$||' <<< "$output")
 printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"
 [ -n "$session_name" ] && printf ":: %s " "$session_name"
