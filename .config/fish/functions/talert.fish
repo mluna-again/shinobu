@@ -2,7 +2,7 @@ function talert
     if test (count $argv) -eq 0
         printf "Prints an alert message in tmux status line.\n"
         printf "Usage:\n"
-        printf "\tterror 'Something important!'\n"
+        printf "\ttalert 'Something important!'\n"
         return 1
     end
 
