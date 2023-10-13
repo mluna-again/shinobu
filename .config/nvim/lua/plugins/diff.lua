@@ -8,12 +8,6 @@ return {
 				diff_buf_read = function()
 					vim.opt_local.foldenable = false
 				end,
-				view_enter = function ()
-					require("tint").disable()
-				end,
-				view_leave = function ()
-					require("tint").enable()
-				end,
 			},
 			view = {
 				merge_tool = {

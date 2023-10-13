@@ -112,8 +112,7 @@ handle_all() {
 
 	[ -z "$session" ] && exit
 	[ -z "$window" ] && exit
-	tmux switch-client -t "$session"
-	tmux select-window -t "$window"
+	tmux switch-client -t "$session" \; select-window -t "$window"
 }
 
 case "$mode" in
