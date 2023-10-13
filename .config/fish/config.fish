@@ -305,7 +305,9 @@ zoxide init fish | source
 starship init fish | source
 
 if uname | grep -i darwin &>/dev/null
-    source (brew --prefix asdf)/libexec/asdf.fish
+    set -l p (brew --prefix asdf)/libexec/asdf.fish
+    test -e "$p"; and source "$p"
 else
-    source ~/.asdf/asdf.fish
+    set -l p ~/.asdf/asdf.fish
+    test -e "$p"; and source "$p"
 end
