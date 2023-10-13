@@ -63,6 +63,7 @@ Resize: up
 Resize: down
 Resize: left
 Resize: right
+Tmux: set current directory as default
 EOF
 )"
 
@@ -446,6 +447,11 @@ case "$(read_input)" in
 
 	"Resize: right")
 		tmux resize-pane -t . -R 10
+		;;
+
+	"Tmux: set current directory as default")
+		tmux attach-session -t . -c "#{pane_current_path}"
+		true
 		;;
 
 	"Theme: choose colorscheme")
