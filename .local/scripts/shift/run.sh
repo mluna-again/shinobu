@@ -104,15 +104,39 @@ get_all() {
 }
 
 handle_all() {
-	output=$(xargs sh -c 'printf "%s %s" $1 $2' < "$OUTPUT_PATH")
+	output=$(xargs sh -c 'printf "%s %s %s" $1 $2 $0 $3' < "$OUTPUT_PATH")
 	session=$(awk -F':' '{ print $1 }' <<< "$output")
 	session=$(awk '{ print $1 }' <<< "$session")
 	window=$(awk -F':' '{ print $2 }' <<< "$output")
 	window=$(awk '{ print $1 }' <<< "$window")
+	mode=$(awk '{ print $3 }' <<< "$output")
+	[ -z "$mode" ] && mode=$(awk '{ print $2 }' <<< "$output")
 
-	[ -z "$session" ] && exit
-	[ -z "$window" ] && exit
-	tmux switch-client -t "$session" \; select-window -t "$window"
+	case "$mode" in
+		create)
+			session_path="$(awk '{print $2}' <<< "$output")"
+
+			current=$(tmux display -p "#{session_name}")
+			[ "$session" = "$current" ] && {
+				tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Message: Duplicate session" ; exit
+			}
+			[ -n "$session_path" ] && tmux new-session -d -s "$session" -c "$(eval echo "$session_path")" && tmux switch-client -t "$session" && exit
+
+			tmux new-session -d -s "$session" -c "$HOME" && tmux switch-client -t "$session"
+			;;
+
+		rename)
+			[ -z "$session" ] && return
+
+			tmux rename-session "$session"
+			;;
+
+		*)
+			[ -z "$session" ] && exit
+			[ -z "$window" ] && exit
+			tmux switch-client -t "$session" \; select-window -t "$window"
+			;;
+	esac
 }
 
 case "$mode" in
@@ -129,7 +153,7 @@ case "$mode" in
 		;;
 
 	all)
-		get_all | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "$mode" || { echo "Something went wrong..."; exit 1; }
+		get_all | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "sessions" || { echo "Something went wrong..."; exit 1; }
 		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_all
 		;;
