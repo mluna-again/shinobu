@@ -64,6 +64,7 @@ Resize: down
 Resize: left
 Resize: right
 Tmux: set current directory as default
+Monitor: open dashboard
 EOF
 )"
 
@@ -452,6 +453,12 @@ case "$(read_input)" in
 	"Tmux: set current directory as default")
 		tmux attach-session -t . -c "#{pane_current_path}"
 		true
+		;;
+
+
+	"Monitor: open dashboard")
+		command -v btm &>/dev/null || { error "btm is not installed!" ; exit ; }
+		tmux display-popup -w "90%" -h "95%" -b heavy -S fg=black,bg=black -s bg=black -EE btm
 		;;
 
 	"Theme: choose colorscheme")
