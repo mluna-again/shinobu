@@ -65,6 +65,7 @@ Resize: left
 Resize: right
 Tmux: set current directory as default
 Monitor: open dashboard
+Dumb: screen-saver
 EOF
 )"
 
@@ -145,6 +146,14 @@ current_program() {
 is_nvim_open() {
 	program=$(current_program | awk '{ print $1 }')
 	grep -i nvim <<< "$program" &>/dev/null
+}
+
+is_installed() {
+	command -v "$1" &>/dev/null || {
+		shift
+		error "$@"
+		exit
+	}
 }
 
 input " Command Palette " " 󰘳 " "$commands"
@@ -459,6 +468,12 @@ case "$(read_input)" in
 	"Monitor: open dashboard")
 		command -v btm &>/dev/null || { error "btm is not installed!" ; exit ; }
 		tmux display-popup -w "90%" -h "95%" -b heavy -S fg=black,bg=black -s bg=black -EE btm
+		;;
+
+	"Dumb: screen-saver")
+		is_installed rusty-rain "rusty-rain is not installed!"
+
+		tmux display-popup -w "100%" -h "99%" -y S -B -s bg=terminal -EE rusty-rain -C 230,195,132 -H 255,93,98 -s -c jap
 		;;
 
 	"Theme: choose colorscheme")
