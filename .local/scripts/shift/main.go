@@ -138,7 +138,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case " ":
 			for _, mode := range m.app.modes {
-				if m.input.Value() == mode.prefix {
+				current := m.input.Value()
+				if len(current) > 1 {
+					break
+				}
+
+				if current == mode.prefix {
 					m.mode = mode.mType
 					m.input.Prompt = mode.prompt
 				}
@@ -221,7 +226,8 @@ func (m model) View() string {
 
 	inputText := m.app.theme.header.Render(m.input.View())
 	if m.mode != switchSession {
-		v.WriteString(m.app.cleanUpModeParamsForView(inputText))
+		query := m.input.Value()
+		v.WriteString(m.app.cleanUpModeParamsForView(inputText, query))
 		v.WriteString(m.app.theme.header.Render("  "))
 	} else {
 		counter := m.counterText()

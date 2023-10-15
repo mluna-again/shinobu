@@ -26,10 +26,10 @@ func (app *app) cleanUpModeParams(params string) string {
 	return params
 }
 
-func (app *app) cleanUpModeParamsForView(params string) string {
+func (app *app) cleanUpModeParamsForView(params string, query string) string {
 	for _, mode := range app.modes {
 		realPrefix := fmt.Sprintf("%s ", mode.prefix)
-		if mode.prefix != "" && strings.Contains(params, realPrefix) {
+		if strings.HasPrefix(query, realPrefix) {
 			return strings.Replace(params, realPrefix, "", 1)
 		}
 	}

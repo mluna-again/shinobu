@@ -517,6 +517,8 @@ case "$(read_input)" in
 	"Spotify: search song")
 		free_input " Search by name " "  " "hello"
 		song=$(read_input)
+		[ -z "$song" ] && exit
+
 		error=$(spotify play "$song")
 		code=$?
 
