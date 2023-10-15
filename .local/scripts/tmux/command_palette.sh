@@ -49,6 +49,7 @@ Spotify: previous song
 Spotify: restart song
 Spotify: search song
 Spotify: search album
+Spotify: status
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -512,6 +513,27 @@ case "$(read_input)" in
 		spotify replay &>/dev/null
 		error=$(spotify replay >/dev/null)
 		[ -n "$error" ] && { error "$error" ; exit ; }
+		true
+		;;
+
+	"Spotify: status")
+		is_installed spotify "shpotify is not installed!"
+
+		output=$(spotify status)
+		[ "$?" -ne 0 ] && {
+			error "Something went wrong while getting information!"
+			exit
+		}
+
+		status=$(head -1 <<< "$output")
+		grep -iq paused <<< "$status" && status="Paused"
+		grep -iq playing <<< "$status" && status="Playing"
+
+		song=$(awk -F':' 'NR == 4 {print $2}' <<< "$output")
+		artist=$(awk -F':' 'NR == 2 {print $2}' <<< "$output")
+
+		success "$song by $artist ($status)"
+
 		true
 		;;
 
