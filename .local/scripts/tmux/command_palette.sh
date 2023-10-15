@@ -529,8 +529,8 @@ case "$(read_input)" in
 		grep -iq paused <<< "$status" && status="Paused"
 		grep -iq playing <<< "$status" && status="Playing"
 
-		song=$(awk -F':' 'NR == 4 {print $2}' <<< "$output")
-		artist=$(awk -F':' 'NR == 2 {print $2}' <<< "$output")
+		song=$(awk -F':' 'NR == 4 {print $2}' <<< "$output" | xargs)
+		artist=$(awk -F':' 'NR == 2 {print $2}' <<< "$output" | xargs)
 
 		success "$song by $artist ($status)"
 
