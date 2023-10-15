@@ -66,6 +66,11 @@ Resize: right
 Tmux: set current directory as default
 Monitor: open dashboard
 Dumb: screen-saver
+Spotify: play/pause
+Spotify: next song
+Spotify: previous song
+Spotify: restart song
+Spotify: search song
 EOF
 )"
 
@@ -474,6 +479,59 @@ case "$(read_input)" in
 		is_installed rusty-rain "rusty-rain is not installed!"
 
 		tmux display-popup -w "100%" -h "99%" -y S -B -s bg=terminal -EE rusty-rain -C 230,195,132 -H 255,93,98 -s -c jap
+		;;
+
+	"Spotify: play/pause")
+		is_installed spotify "shpotify is not installed!"
+
+		error=$(spotify play >/dev/null)
+		[ -n "$error" ] && { error "$error" ; exit ; }
+		true
+		;;
+
+	"Spotify: next song")
+		is_installed spotify "shpotify is not installed!"
+
+		error=$(spotify next >/dev/null)
+		[ -n "$error" ] && { error "$error" ; exit ; }
+		true
+		;;
+
+	"Spotify: previous song")
+		is_installed spotify "shpotify is not installed!"
+
+		error=$(spotify prev >/dev/null)
+		[ -n "$error" ] && { error "$error" ; exit ; }
+		true
+		;;
+
+	"Spotify: restart song")
+		is_installed spotify "shpotify is not installed!"
+
+		spotify replay &>/dev/null
+		error=$(spotify replay >/dev/null)
+		[ -n "$error" ] && { error "$error" ; exit ; }
+		true
+		;;
+
+	"Spotify: search song")
+		free_input " Search by name " "  " "hello"
+		song=$(read_input)
+		error=$(spotify play "$song")
+		code=$?
+
+		# for some reason this error is not redirected to stderr :/
+		[ "$code" -ne 0 ] && grep -i 'CLIENT_ID=""' < "$HOME/.shpotify.cfg" &>/dev/null && {
+			error "You need to configure your CLIENT_ID and CLIENT_SECRET."
+			exit
+		}
+
+		grep -i "no results" &>/dev/null <<< "$error" && {
+			alert "No songs found :("
+			exit
+		}
+
+		true
 		;;
 
 	"Theme: choose colorscheme")
