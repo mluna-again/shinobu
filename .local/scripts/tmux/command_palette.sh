@@ -43,6 +43,12 @@ Layouts: Main-Horizontal
 Layouts: Main-Vertical
 Layouts: Make grid
 Reorder: Running programs first
+Spotify: play/pause
+Spotify: next song
+Spotify: previous song
+Spotify: restart song
+Spotify: search song
+Spotify: search album
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -66,12 +72,6 @@ Resize: right
 Tmux: set current directory as default
 Monitor: open dashboard
 Dumb: screen-saver
-Spotify: play/pause
-Spotify: next song
-Spotify: previous song
-Spotify: restart song
-Spotify: search song
-Spotify: search album
 EOF
 )"
 
@@ -485,7 +485,7 @@ case "$(read_input)" in
 	"Spotify: play/pause")
 		is_installed spotify "shpotify is not installed!"
 
-		error=$(spotify play >/dev/null)
+		error=$(spotify pause >/dev/null)
 		[ -n "$error" ] && { error "$error" ; exit ; }
 		true
 		;;
