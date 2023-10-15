@@ -71,6 +71,7 @@ Spotify: next song
 Spotify: previous song
 Spotify: restart song
 Spotify: search song
+Spotify: search album
 EOF
 )"
 
@@ -530,6 +531,28 @@ case "$(read_input)" in
 
 		grep -i "no results" &>/dev/null <<< "$error" && {
 			alert "No songs found :("
+			exit
+		}
+
+		true
+		;;
+
+	"Spotify: search album")
+		free_input " Search by name " "  " "hello"
+		song=$(read_input)
+		[ -z "$song" ] && exit
+
+		error=$(spotify play album "$song")
+		code=$?
+
+		# for some reason this error is not redirected to stderr :/
+		[ "$code" -ne 0 ] && grep -i 'CLIENT_ID=""' < "$HOME/.shpotify.cfg" &>/dev/null && {
+			error "You need to configure your CLIENT_ID and CLIENT_SECRET."
+			exit
+		}
+
+		grep -i "no results" &>/dev/null <<< "$error" && {
+			alert "No album found :("
 			exit
 		}
 
