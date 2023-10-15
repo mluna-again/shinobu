@@ -153,6 +153,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "/":
 			m.autocompleting = false
+
+		case "ctrl+p":
+			index := m.table.Cursor()
+			if index == 0 {
+				m.table.GotoBottom()
+				return m, nil
+			}
+
+		case "ctrl+n":
+			index := m.table.Cursor()
+			if index == len(m.table.Rows())-1 {
+				m.table.GotoTop()
+				return m, nil
+			}
 		}
 	}
 	m.fuzzyFind()
