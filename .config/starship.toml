@@ -1,7 +1,7 @@
 add_newline = false
 
 format = """$username$hostname :: $directory$git_branch$git_commit$git_state$git_metrics$git_status$time$memory_usage$jobs
-$status$character"""
+${custom.goldfish}$status$character"""
 # right_format = "$cmd_duration$localip"
 palette = "kanagawa"
 
@@ -18,6 +18,10 @@ background = "#1D1C19"
 [custom.hack]
 symbol = "[%](fg:background)"
 when = true
+
+[custom.goldfish]
+symbol = "🥷 "
+when = ''' test "$fish_private_mode" = 1 '''
 
 [directory]
 truncation_length = 3
