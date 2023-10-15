@@ -49,7 +49,7 @@ Spotify: previous song
 Spotify: restart song
 Spotify: search song
 Spotify: search album
-Spotify: status
+Spotify: get song
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -516,7 +516,7 @@ case "$(read_input)" in
 		true
 		;;
 
-	"Spotify: status")
+	"Spotify: get song")
 		is_installed spotify "shpotify is not installed!"
 
 		output=$(spotify status)
