@@ -27,7 +27,6 @@ cursor:
     blinking: Always
 env:
   TERM: xterm-256color
-
 mouse:
   hide_when_typing: true
 key_bindings:
