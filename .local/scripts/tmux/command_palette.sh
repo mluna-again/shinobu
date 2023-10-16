@@ -71,6 +71,8 @@ Resize: down
 Resize: left
 Resize: right
 Tmux: set current directory as default
+Tmux: move window to the left
+Tmux: move window to the right
 Monitor: open dashboard
 Dumb: screen-saver
 EOF
@@ -579,6 +581,16 @@ case "$(read_input)" in
 		}
 
 		true
+		;;
+
+	"Tmux: move window to the left")
+		tmux swap-window -t -1
+		tmux select-window -t -1
+		;;
+
+	"Tmux: move window to the right")
+		tmux swap-window -t +1
+		tmux select-window -t +1
 		;;
 
 	"Theme: choose colorscheme")
