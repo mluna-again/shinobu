@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strings"
 
 	"github.com/zmb3/spotify/v2"
 )
@@ -16,6 +15,7 @@ var (
 
 type playParams struct {
 	Item string `json:"item"`
+	Type string `json:"type"`
 }
 
 func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
@@ -54,17 +54,17 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 
 	var somethingDone bool
 	var errorWhileAddingItem error
-	if strings.Contains(string(id), "track") {
+	if params.Type == "track" {
 		errorWhileAddingItem = app.addSongToQueue(r.Context(), id)
 		somethingDone = true
 	}
 
-	if strings.Contains(string(id), "album") {
+	if params.Type == "album" {
 		errorWhileAddingItem = app.addAlbumToQueue(r.Context(), id)
 		somethingDone = true
 	}
 
-	if strings.Contains(string(id), "playlist") {
+	if params.Type == "playlist" {
 		errorWhileAddingItem = app.addPlaylistToQueue(r.Context(), id)
 		somethingDone = true
 	}
@@ -75,6 +75,7 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !somethingDone {
+		sendOk(w)
 		return
 	}
 	err = app.client.Next(r.Context())

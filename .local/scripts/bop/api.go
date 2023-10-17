@@ -96,6 +96,11 @@ func (app *app) status(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *app) restart(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	err := app.client.Seek(r.Context(), 0)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
 	sendOk(w)
 }
