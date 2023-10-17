@@ -47,8 +47,7 @@ Spotify: play/pause
 Spotify: next song
 Spotify: previous song
 Spotify: restart song
-Spotify: search song
-Spotify: search album
+Spotify: search
 Spotify: get song
 Panes: Close all but focused one
 Destroy: server
@@ -496,60 +495,65 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: play/pause")
-		is_installed spotify "shpotify is not installed!"
+		is_installed http "httpie is not installed!"
 
-		error=$(spotify pause >/dev/null)
-		[ -n "$error" ] && { error "$error" ; exit ; }
+		output=$(http -Ib --check-status GET "http://localhost:8888/pause")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+		}
+
 		true
 		;;
 
 	"Spotify: next song")
-		is_installed spotify "shpotify is not installed!"
+		is_installed http "httpie is not installed!"
 
-		error=$(spotify next >/dev/null)
-		[ -n "$error" ] && { error "$error" ; exit ; }
+		output=$(http -Ib --check-status GET "http://localhost:8888/next")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+		}
+
 		true
 		;;
 
 	"Spotify: previous song")
-		is_installed spotify "shpotify is not installed!"
+		is_installed http "httpie is not installed!"
 
-		error=$(spotify prev >/dev/null)
-		[ -n "$error" ] && { error "$error" ; exit ; }
+		output=$(http -Ib --check-status GET "http://localhost:8888/prev")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+		}
+
 		true
 		;;
 
 	"Spotify: restart song")
-		is_installed spotify "shpotify is not installed!"
+		is_installed http "httpie is not installed!"
 
-		spotify replay &>/dev/null
-		error=$(spotify replay >/dev/null)
-		[ -n "$error" ] && { error "$error" ; exit ; }
+		output=$(http -Ib --check-status GET "http://localhost:8888/restart")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+		}
+
 		true
 		;;
 
 	"Spotify: get song")
-		is_installed spotify "shpotify is not installed!"
+		is_installed http "httpie is not installed!"
 
-		output=$(spotify status)
+		output=$(http -Ib --check-status GET "http://localhost:8888/status")
 		[ "$?" -ne 0 ] && {
-			error "Something went wrong while getting information!"
-			exit
+			handle_no_device_spotify "$output"
 		}
 
-		status=$(head -1 <<< "$output")
-		grep -iq paused <<< "$status" && status="Paused"
-		grep -iq playing <<< "$status" && status="Playing"
-
-		song=$(awk -F':' 'NR == 4 {print $2}' <<< "$output" | xargs)
-		artist=$(awk -F':' 'NR == 2 {print $2}' <<< "$output" | xargs)
-
-		success "$song by $artist ($status)"
+		song=$(jq -r '.display_name' <<< "$output")
+		artist=$(jq -r '.artist' <<< "$output")
+		success "$song by $artist"
 
 		true
 		;;
 
-	"Spotify: search song")
+	"Spotify: search")
 		is_installed http "httpie is not installed!"
 
 		free_input " Search by name " " 󰓇 " "hello"
@@ -565,37 +569,22 @@ case "$(read_input)" in
 		songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
 		songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | xargs -I{} printf "%s\n" {})
 
-		input " Choose song " " 󰓇 " "$songs_without_ids"
+		input " Which one? " " 󰓇 " "$songs_without_ids"
 
-		song=$(read_input)
-		song_id=$(grep -i "$song" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
+		response=$(read_input)
+		[ -z "$response" ] && exit
+
+		song_id=$(grep -Fi "$response" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
 		[ -z "$song_id" ] && exit
+
+		grep -iq album <<< "$response" && {
+			error "Albums are not supported yet :("
+			emit
+		}
 
 		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
-		}
-
-		true
-		;;
-
-	"Spotify: search album")
-		free_input " Search by name " "  " "hello"
-		song=$(read_input)
-		[ -z "$song" ] && exit
-
-		error=$(spotify play album "$song")
-		code=$?
-
-		# for some reason this error is not redirected to stderr :/
-		[ "$code" -ne 0 ] && grep -i 'CLIENT_ID=""' < "$HOME/.shpotify.cfg" &>/dev/null && {
-			error "You need to configure your CLIENT_ID and CLIENT_SECRET."
-			exit
-		}
-
-		grep -i "no results" &>/dev/null <<< "$error" && {
-			alert "No album found :("
-			exit
 		}
 
 		true

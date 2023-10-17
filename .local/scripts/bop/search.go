@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -83,7 +84,7 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 			}
 			item := item{
 				ID:          string(song.ID),
-				DisplayName: song.Name,
+				DisplayName: fmt.Sprintf("[SONG] %s", song.Name),
 				Artist:      song.Artists[0].Name,
 			}
 			response = append(response, item)
@@ -97,7 +98,7 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 			}
 			item := item{
 				ID:          string(album.ID),
-				DisplayName: album.Name,
+				DisplayName: fmt.Sprintf("[ALBUM] %s", album.Name),
 				Artist:      album.Artists[0].Name,
 			}
 			response = append(response, item)
@@ -111,7 +112,7 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 			}
 			item := item{
 				ID:          string(playlist.ID),
-				DisplayName: playlist.Name,
+				DisplayName: fmt.Sprintf("[PLAYLIST] %s", playlist.Name),
 			}
 			response = append(response, item)
 		}
