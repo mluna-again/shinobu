@@ -577,11 +577,6 @@ case "$(read_input)" in
 		song_id=$(grep -Fi "$response" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
 		[ -z "$song_id" ] && exit
 
-		grep -iq album <<< "$response" && {
-			error "Albums are not supported yet :("
-			emit
-		}
-
 		type=track
 		grep -iq album <<< "$response" && type=album
 		grep -iq playlist <<< "$response" && type=playlist
