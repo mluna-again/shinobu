@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -14,6 +13,12 @@ import (
 var (
 	noSearchQueryError = errors.New("No query provided")
 )
+
+type item struct {
+	ID          string `json:"id"`
+	DisplayName string `json:"display_name"`
+	Artist      string `json:"artist"`
+}
 
 type searchParams struct {
 	Query string `json:"query"`
@@ -70,15 +75,18 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 }
 
 func printResults(w io.Writer, results *spotify.SearchResult) error {
+	response := []item{}
 	if results.Tracks != nil {
 		for i, song := range results.Tracks.Tracks {
 			if i >= 5 {
 				break
 			}
-			_, err := fmt.Fprintf(w, "%s %s by %s\n", song.URI, song.Name, song.Artists[0].Name)
-			if err != nil {
-				return err
+			item := item{
+				ID:          string(song.ID),
+				DisplayName: song.Name,
+				Artist:      song.Artists[0].Name,
 			}
+			response = append(response, item)
 		}
 	}
 
@@ -87,10 +95,12 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 			if i >= 5 {
 				break
 			}
-			_, err := fmt.Fprintf(w, "%s %s by %s\n", album.URI, album.Name, album.Artists[0].Name)
-			if err != nil {
-				return err
+			item := item{
+				ID:          string(album.ID),
+				DisplayName: album.Name,
+				Artist:      album.Artists[0].Name,
 			}
+			response = append(response, item)
 		}
 	}
 
@@ -99,12 +109,19 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 			if i >= 5 {
 				break
 			}
-			_, err := fmt.Fprintf(w, "%s %s by %s\n", playlist.URI, playlist.Name, playlist.Owner.DisplayName)
-			if err != nil {
-				return err
+			item := item{
+				ID:          string(playlist.ID),
+				DisplayName: playlist.Name,
 			}
+			response = append(response, item)
 		}
 	}
 
-	return nil
+	output, err := json.Marshal(response)
+	if err != nil {
+		return err
+	}
+
+	_, err = w.Write(output)
+	return err
 }

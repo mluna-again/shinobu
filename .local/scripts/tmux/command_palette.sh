@@ -540,21 +540,30 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: search song")
-		free_input " Search by name " "  " "hello"
+		is_installed http "httpie is not installed!"
+
+		free_input " Search by name " " 󰓇 " "hello"
 		song=$(read_input)
 		[ -z "$song" ] && exit
 
-		error=$(spotify play "$song")
+		output=$(http -Ib POST "http://localhost:8888/search" query=\""$song"\" 2>/dev/null)
 		code=$?
-
-		# for some reason this error is not redirected to stderr :/
-		[ "$code" -ne 0 ] && grep -i 'CLIENT_ID=""' < "$HOME/.shpotify.cfg" &>/dev/null && {
-			error "You need to configure your CLIENT_ID and CLIENT_SECRET."
+		[ "$code" -ne 0 ] && {
+			error "error while trying to connect to bop, is it running?"
 			exit
 		}
 
-		grep -i "no results" &>/dev/null <<< "$error" && {
-			alert "No songs found :("
+		songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
+		songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | xargs -I{} printf "%s\n" {})
+
+		input " Choose song " " 󰓇 " "$songs_without_ids"
+
+		song=$(read_input)
+		song_id=$(grep -i "$song" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
+		[ -z "$song_id" ] && exit
+
+		http -Ib POST "http://localhost:8888/play" item="$song_id" &>/dev/null || {
+			error "error while trying to connect to bop, is it running?"
 			exit
 		}
 

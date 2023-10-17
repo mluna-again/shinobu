@@ -78,6 +78,11 @@ func main() {
 
 	router.HandleFunc("/search", app.search)
 	router.HandleFunc("/play", app.playSong)
+	// router.HandleFunc("/pause", app.pause)
+	// router.HandleFunc("/status", app.status)
+	// router.HandleFunc("/next", app.next)
+	// router.HandleFunc("/prev", app.prev)
+	// router.HandleFunc("/restart", app.restart)
 
 	fmt.Println("Waiting for requests")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
