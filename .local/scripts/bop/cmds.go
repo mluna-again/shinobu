@@ -1,15 +1,12 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"os"
 
 	"errors"
 
 	"github.com/zmb3/spotify/v2"
-	spotifyauth "github.com/zmb3/spotify/v2/auth"
-	"golang.org/x/oauth2/clientcredentials"
 )
 
 type app struct {
@@ -18,6 +15,8 @@ type app struct {
 	client        *spotify.Client
 	helpRequested bool
 	query         string
+	clientId      string
+	secret        string
 }
 
 var (
@@ -49,30 +48,9 @@ func initializeApp() (*app, error) {
 		command:       cmdFlag,
 		query:         queryFlag,
 		helpRequested: helpFlag,
-	}
-
-	err := a.newClient(clientId, secret)
-	if err != nil {
-		return nil, err
+		clientId:      clientId,
+		secret:        secret,
 	}
 
 	return a, nil
-}
-
-func (app *app) newClient(client, secret string) error {
-	config := &clientcredentials.Config{
-		ClientID:     client,
-		ClientSecret: secret,
-		TokenURL:     spotifyauth.TokenURL,
-		Scopes:       []string{spotifyauth.ScopeUserReadPrivate, spotifyauth.ScopeUserModifyPlaybackState, spotifyauth.ScopeStreaming},
-	}
-	token, err := config.Token(context.Background())
-	if err != nil {
-		return err
-	}
-
-	httpClient := spotifyauth.New().Client(context.Background(), token)
-	app.client = spotify.New(httpClient)
-
-	return nil
 }
