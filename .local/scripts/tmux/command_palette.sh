@@ -560,16 +560,21 @@ case "$(read_input)" in
 		song=$(read_input)
 		[ -z "$song" ] && exit
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/search" query=\""$song"\")
+		output=$(http -Ib --check-status POST "http://localhost:8888/search" query="$song")
 		code=$?
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
 
 		songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
-		songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | xargs -I{} printf "%s\n" {})
+		songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | sed 's/^ //')
 
-		input " Which one? " " 󰓇 " "$songs_without_ids"
+		[ -z "$songs_without_ids" ] && {
+			alert "No matches found."
+			exit
+		}
+
+		input " WHICH/ONE " " 󰓇 " "$songs_without_ids"
 
 		response=$(read_input)
 		[ -z "$response" ] && exit
