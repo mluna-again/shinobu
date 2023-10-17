@@ -78,10 +78,7 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 func printResults(w io.Writer, results *spotify.SearchResult) error {
 	response := []item{}
 	if results.Tracks != nil {
-		for i, song := range results.Tracks.Tracks {
-			if i >= 5 {
-				break
-			}
+		for _, song := range results.Tracks.Tracks {
 			item := item{
 				ID:          string(song.ID),
 				DisplayName: fmt.Sprintf("[SONG] %s", song.Name),
