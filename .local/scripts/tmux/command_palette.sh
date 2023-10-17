@@ -582,7 +582,11 @@ case "$(read_input)" in
 			emit
 		}
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id")
+		type=track
+		grep -iq album <<< "$response" && type=album
+		grep -iq playlist <<< "$response" && type=playlist
+
+		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id" type="$type")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
