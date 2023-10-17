@@ -40,37 +40,25 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 	d := json.NewDecoder(r.Body)
 	err := d.Decode(&params)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		_, err := w.Write([]byte("error parsing request"))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
 	query := params.Query
 	if query == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		_, err := w.Write([]byte(noSearchQueryError.Error()))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		sendBadRequestWithMessage(w, noSearchQueryError.Error())
 		return
 	}
 
 	results, err := app.client.Search(context.Background(), query, spotify.SearchTypeTrack|spotify.SearchTypeAlbum)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		_, err := w.Write([]byte(err.Error()))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
 	err = printResults(w, results)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 }

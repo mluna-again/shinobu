@@ -21,7 +21,7 @@ Available commands:
   - search
 `
 
-func newStateHash() string {
+func randomString() string {
 	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 	b := make([]rune, 10)
@@ -44,7 +44,7 @@ func main() {
 	redirectComps := strings.Split(redirectURL, "/")
 	redirectPath := fmt.Sprintf("/%s", redirectComps[len(redirectComps)-1])
 
-	state := newStateHash()
+	state := randomString()
 	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(spotifyauth.ScopeUserReadPrivate, spotifyauth.ScopeUserModifyPlaybackState, spotifyauth.ScopeUserReadCurrentlyPlaying), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
 	fmt.Printf("Authenticate using the following link: \n%s\n\n", url)
@@ -77,13 +77,13 @@ func main() {
 		}
 	})
 
-	router.HandleFunc("/search", app.search)
-	router.HandleFunc("/play", app.playSong)
-	router.HandleFunc("/pause", app.pause)
-	router.HandleFunc("/next", app.next)
-	router.HandleFunc("/prev", app.prev)
-	router.HandleFunc("/status", app.status)
-	router.HandleFunc("/restart", app.restart)
+	router.HandleFunc("/search", logging(app.search))
+	router.HandleFunc("/play", logging(app.playSong))
+	router.HandleFunc("/pause", logging(app.pause))
+	router.HandleFunc("/next", logging(app.next))
+	router.HandleFunc("/prev", logging(app.prev))
+	router.HandleFunc("/status", logging(app.status))
+	router.HandleFunc("/restart", logging(app.restart))
 
 	fmt.Println("Waiting for requests")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))

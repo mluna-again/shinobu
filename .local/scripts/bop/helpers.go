@@ -1,6 +1,8 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
 func sendInternalServerError(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusInternalServerError)
@@ -32,4 +34,9 @@ func sendContent(w http.ResponseWriter, content []byte) error {
 	_, err := w.Write([]byte(content))
 
 	return err
+}
+
+func sendBadRequestWithMessage(w http.ResponseWriter, content string) {
+	w.WriteHeader(http.StatusBadRequest)
+	_, _ = w.Write([]byte(content))
 }
