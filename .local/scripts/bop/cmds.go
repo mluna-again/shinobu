@@ -10,11 +10,9 @@ import (
 )
 
 type app struct {
-	command       string
 	results       *spotify.SearchResult
 	client        *spotify.Client
 	helpRequested bool
-	query         string
 	clientId      string
 	secret        string
 }
@@ -45,8 +43,6 @@ func initializeApp() (*app, error) {
 	flag.Parse()
 
 	a := &app{
-		command:       cmdFlag,
-		query:         queryFlag,
 		helpRequested: helpFlag,
 		clientId:      clientId,
 		secret:        secret,

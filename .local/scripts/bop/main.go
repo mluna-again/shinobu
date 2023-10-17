@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"math/rand"
@@ -51,6 +50,15 @@ func main() {
 
 	router := http.NewServeMux()
 	router.HandleFunc(redirectPath, func(w http.ResponseWriter, r *http.Request) {
+		if app.client != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			_, err := w.Write([]byte("already authenticated"))
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+			}
+			return
+		}
+
 		token, err := auth.Token(r.Context(), state, r)
 		if err != nil {
 			http.Error(w, "Couldn't get token", http.StatusNotFound)
@@ -58,12 +66,18 @@ func main() {
 		}
 		// create a client using the specified token
 		client := spotify.New(auth.Client(r.Context(), token))
-		err = client.Next(context.Background())
+		app.client = client
+
+		w.WriteHeader(http.StatusOK)
+		_, err = w.Write([]byte("user authenticated"))
+		log.Println("user authenticated")
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error: \n%v", err)
-			return
+			w.WriteHeader(http.StatusInternalServerError)
 		}
 	})
+
+	router.HandleFunc("/search", app.search)
+	router.HandleFunc("/play", app.playSong)
 
 	fmt.Println("Waiting for requests")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
