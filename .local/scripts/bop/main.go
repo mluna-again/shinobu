@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"math/rand"
@@ -59,13 +60,13 @@ func main() {
 			return
 		}
 
-		token, err := auth.Token(r.Context(), state, r)
+		token, err := auth.Token(context.Background(), state, r)
 		if err != nil {
 			http.Error(w, "Couldn't get token", http.StatusNotFound)
 			return
 		}
 		// create a client using the specified token
-		client := spotify.New(auth.Client(r.Context(), token))
+		client := spotify.New(auth.Client(context.Background(), token))
 		app.client = client
 
 		w.WriteHeader(http.StatusOK)

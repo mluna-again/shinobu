@@ -165,6 +165,16 @@ is_installed() {
 	}
 }
 
+handle_no_device_spotify() {
+	if grep -iq "no active device" <<< "$1"; then
+		error "No device active."
+	else
+		error "Error while trying to connect to bop, is it running?"
+	fi
+
+	exit
+}
+
 input " Command Palette " " 󰘳 " "$commands"
 
 case "$(read_input)" in
@@ -546,11 +556,10 @@ case "$(read_input)" in
 		song=$(read_input)
 		[ -z "$song" ] && exit
 
-		output=$(http -Ib POST "http://localhost:8888/search" query=\""$song"\" 2>/dev/null)
+		output=$(http -Ib --check-status POST "http://localhost:8888/search" query=\""$song"\")
 		code=$?
 		[ "$code" -ne 0 ] && {
-			error "error while trying to connect to bop, is it running?"
-			exit
+			handle_no_device_spotify "$output"
 		}
 
 		songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
@@ -562,9 +571,9 @@ case "$(read_input)" in
 		song_id=$(grep -i "$song" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
 		[ -z "$song_id" ] && exit
 
-		http -Ib POST "http://localhost:8888/play" item="$song_id" &>/dev/null || {
-			error "error while trying to connect to bop, is it running?"
-			exit
+		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
 		}
 
 		true
