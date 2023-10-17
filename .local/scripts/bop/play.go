@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -51,7 +50,7 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 	}
 	id := spotify.ID(query)
 
-	err = app.client.QueueSong(context.Background(), id)
+	err = app.client.QueueSong(r.Context(), id)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		_, err := w.Write([]byte(err.Error()))
@@ -61,7 +60,7 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = app.client.Next(context.Background())
+	err = app.client.Next(r.Context())
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		_, err := w.Write([]byte(err.Error()))
