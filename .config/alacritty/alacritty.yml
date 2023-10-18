@@ -9,17 +9,17 @@ window:
 # Font
 font:
   normal:
-    family: JetBrainsMono Nerd Font Mono
-    style: Regular
+    family: FiraCode Nerd Font
+    style: Retina
   bold:
-    family: JetBrainsMono Nerd Font Mono
-    style: Regular
+    family: FiraCode Nerd Font
+    style: Retina
   italic:
-    family: JetBrainsMono Nerd Font Mono
-    style: Regular
+    family: FiraCode Nerd Font
+    style: Retina
   bold_italic:
-    family: JetBrainsMono Nerd Font Mono
-    style: Regular
+    family: FiraCode Nerd Font
+    style: Retina
   size: 15
 cursor:
   style:
