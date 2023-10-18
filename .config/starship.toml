@@ -20,8 +20,8 @@ symbol = "[%](fg:background)"
 when = true
 
 [custom.goldfish]
-symbol = "🥷 "
-when = ''' test "$fish_private_mode" = 1 '''
+command = ''' test "$fish_private_mode" = 1 && echo '🥷' '''
+when = true
 
 [directory]
 truncation_length = 3
