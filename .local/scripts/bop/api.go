@@ -104,3 +104,31 @@ func (app *app) restart(w http.ResponseWriter, r *http.Request) {
 
 	sendOk(w)
 }
+
+func (app *app) queue(w http.ResponseWriter, r *http.Request) {
+	q, err := app.client.GetQueue(r.Context())
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	items := []item{}
+
+	for index, i := range q.Items {
+		if index > 20 {
+			break
+		}
+		items = append(items, item{
+			ID:          string(i.ID),
+			DisplayName: i.Name,
+			Artist:      i.Artists[0].Name,
+		})
+	}
+
+	output, err := json.Marshal(items)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+	_ = sendContent(w, output)
+}

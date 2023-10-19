@@ -45,7 +45,7 @@ func main() {
 	redirectPath := fmt.Sprintf("/%s", redirectComps[len(redirectComps)-1])
 
 	state := randomString()
-	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(spotifyauth.ScopeUserReadPrivate, spotifyauth.ScopeUserModifyPlaybackState, spotifyauth.ScopeUserReadCurrentlyPlaying), spotifyauth.WithClientID(app.clientId))
+	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(spotifyauth.ScopeUserReadPrivate, spotifyauth.ScopeUserModifyPlaybackState, spotifyauth.ScopeUserReadCurrentlyPlaying, spotifyauth.ScopeUserReadPlaybackState), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
 	fmt.Printf("Authenticate using the following link: \n%s\n\n", url)
 
@@ -84,6 +84,7 @@ func main() {
 	router.HandleFunc("/prev", logging(app.prev))
 	router.HandleFunc("/status", logging(app.status))
 	router.HandleFunc("/restart", logging(app.restart))
+	router.HandleFunc("/queue", logging(app.queue))
 
 	fmt.Println("Waiting for requests")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
