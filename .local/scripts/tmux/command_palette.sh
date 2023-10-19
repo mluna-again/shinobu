@@ -654,13 +654,13 @@ case "$action" in
 		is_installed http "httpie is not installed!"
 
 		# we delete it first so if the song its already liked it will appear at the top after liking it again
-		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked")
+		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked" ID="")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 			exit
 		}
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/addToLiked")
+		output=$(http -Ib --check-status POST "http://localhost:8888/addToLiked" ID="")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 			exit
@@ -672,7 +672,7 @@ case "$action" in
 	"Spotify: delete song")
 		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked")
+		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked" ID="")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
