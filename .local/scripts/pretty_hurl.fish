@@ -21,7 +21,9 @@ function ihurl
 
     _print_ihurl_output
 
-    while read -g -P "New query: " query
+    while read -g -P "query> " query
+        test -z "$query"; and set -g query "."
+
         clear
         _print_ihurl_output
         printf "Waiting for new query: "
