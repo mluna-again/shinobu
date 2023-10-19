@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"unicode/utf8"
 
 	"github.com/zmb3/spotify/v2"
 )
@@ -50,7 +51,25 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results, err := app.client.Search(context.Background(), query, spotify.SearchTypeTrack|spotify.SearchTypeAlbum)
+	var queryPrefix string
+	queryBody := query
+	if utf8.RuneCount([]byte(query)) > 2 {
+		queryPrefix = string([]rune(query)[0:2])
+		queryBody = string([]rune(query)[2:])
+	}
+
+	var results *spotify.SearchResult
+	switch queryPrefix {
+	case "a:":
+		results, err = app.searchAlbum(r.Context(), queryBody)
+	case "s:":
+		results, err = app.searchTrack(r.Context(), queryBody)
+	case "l:":
+		results, err = app.searchPlaylist(r.Context(), queryBody)
+	default:
+		results, err = app.client.Search(r.Context(), query, spotify.SearchTypeTrack|spotify.SearchTypeAlbum|spotify.SearchTypePlaylist)
+	}
+
 	if err != nil {
 		sendInternalServerErrorWithMessage(w, err.Error())
 		return
@@ -61,6 +80,18 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 		sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
+}
+
+func (app *app) searchAlbum(c context.Context, query string) (*spotify.SearchResult, error) {
+	return app.client.Search(c, query, spotify.SearchTypeAlbum)
+}
+
+func (app *app) searchTrack(c context.Context, query string) (*spotify.SearchResult, error) {
+	return app.client.Search(c, query, spotify.SearchTypeTrack)
+}
+
+func (app *app) searchPlaylist(c context.Context, query string) (*spotify.SearchResult, error) {
+	return app.client.Search(c, query, spotify.SearchTypePlaylist)
 }
 
 func printResults(w io.Writer, results *spotify.SearchResult) error {

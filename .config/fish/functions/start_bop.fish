@@ -27,8 +27,13 @@ function start_bop
         printf "bop is already running.\n"
     end
 
-    test -e "$bop_path/bop"; or begin
+    if test "$argv[1]" = dev
+        printf "dev mode\n"
         _compile_bop_binary "$bop_path"; or return $status
+    else
+        test -e "$bop_path/bop"; or begin
+            _compile_bop_binary "$bop_path"; or return $status
+        end
     end
 
     printf "waking bop up...\n"
