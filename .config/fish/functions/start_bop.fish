@@ -23,8 +23,9 @@ end
 function start_bop
     set -l bop_path "$HOME/.local/scripts/bop"
 
-    pgrep bop; and begin
+    pgrep bop &>/dev/null; and begin
         printf "bop is already running.\n"
+        return 1
     end
 
     if test "$argv[1]" = dev
