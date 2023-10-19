@@ -13,6 +13,8 @@ Everforest
 EOF
 )"
 
+NOTES_PATH="$HOME/Notes"
+
 RESULTS_FILE="$HOME/.cache/.shift_command_result"
 
 SESSIONS_PATH="$HOME/.cache/shift_sessions"
@@ -30,6 +32,7 @@ EOF
 
 commands="$(cat - <<EOF
 Notes: fuzzy find
+TODO: open
 Cleanup: clear panes
 Cleanup: terminate processes and clear panes
 Kill: processes
@@ -301,11 +304,19 @@ case "$action" in
 		file="$(cat "$RESULTS_FILE")"
 
 		if grep -i "budget" <<< "$file" &>/dev/null; then
-			tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
+			tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
 		else
 			[ -z "$file" ] && exit
-			tmux display-popup -b heavy -S fg=yellow -w "80%" -h "80%" -E "nvim \"$file\""
+			tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim \"$file\""
 		fi
+		;;
+
+	"TODO: open")
+		[ -e "$NOTES_PATH/todo" ] || touch "$NOTES_PATH/todo"
+
+		tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim \"$NOTES_PATH/todo\""
+
+		true
 		;;
 
 	"Cleanup: clear panes")
