@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func logging(next http.HandlerFunc) http.HandlerFunc {
+func loggingMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		requestId := randomString()
 
@@ -26,6 +26,17 @@ func logging(next http.HandlerFunc) http.HandlerFunc {
 		log.Printf("[%s] %s : %s", requestId, r.URL, string(body))
 
 		r.Body = io.NopCloser(bytes.NewBuffer(body))
+		next(w, r)
+	}
+}
+
+func (app *app) checkTokenMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if app.client == nil {
+			sendInternalServerErrorWithMessage(w, "server says no (it's not ready)")
+			return
+		}
+
 		next(w, r)
 	}
 }
