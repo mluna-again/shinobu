@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+
+	"github.com/zmb3/spotify/v2"
 )
 
 // i just got lazy and didn't want to split this "small" functions in different files ok
@@ -131,4 +133,48 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	_ = sendContent(w, output)
+}
+
+type addToLikedParams struct {
+	ID string `json:"id"`
+}
+
+func (app *app) addToLiked(w http.ResponseWriter, r *http.Request) {
+	var params addToLikedParams
+	d := json.NewDecoder(r.Body)
+	err := d.Decode(&params)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	err = app.client.AddTracksToLibrary(r.Context(), spotify.ID(params.ID))
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	sendOk(w)
+}
+
+type removeFromLikedParams struct {
+	ID string `json:"id"`
+}
+
+func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
+	var params addToLikedParams
+	d := json.NewDecoder(r.Body)
+	err := d.Decode(&params)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	err = app.client.RemoveTracksFromLibrary(r.Context(), spotify.ID(params.ID))
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	sendOk(w)
 }

@@ -85,6 +85,8 @@ func main() {
 	router.HandleFunc("/status", logging(app.status))
 	router.HandleFunc("/restart", logging(app.restart))
 	router.HandleFunc("/queue", logging(app.queue))
+	router.HandleFunc("/addToLiked", logging(app.addToLiked))
+	router.HandleFunc("/removeFromLiked", logging(app.removeFromLiked))
 
 	fmt.Println("Waiting for requests")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
