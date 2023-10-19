@@ -125,7 +125,7 @@ function phurl
 end
 
 function ihurl
-    watchexec -c clear -r "~/.local/scripts/pretty_hurl.sh $argv"
+    watchexec -e hurl -c clear -r "~/.local/scripts/pretty_hurl.fish $argv"
 end
 
 function vid
