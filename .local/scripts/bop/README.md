@@ -17,12 +17,15 @@ Search for songs, albums and playlists.
 > "a:" will find only albums, "s:" will find only tracks and "l:" will find only playlists.
 > No prefix means search for all three of them.
 
-`json
+Request:
+`
 {
     "query": "newjeans"
 }
 `
-`json
+
+Response:
+`
 [
     {
         "artist": "NewJeans",
@@ -35,17 +38,19 @@ Search for songs, albums and playlists.
 
 2. POST /play
 Plays a song, album or playlist.
-`json
+
+Request:
+`
 {
     "item": "<id>",
     "type": "track|album|playlist"
 }
 `
 
-3. POST /pause
+4. POST /pause
 Play/pause current song.
 
-4. POST /next
+5. POST /next
 Skip current song.
 
 4. POST /prev
