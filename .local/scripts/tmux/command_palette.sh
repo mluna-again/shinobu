@@ -165,8 +165,10 @@ is_installed() {
 }
 
 handle_no_device_spotify() {
-	if grep -iq "no active device" <<< "$1"; then
+	if grep -Fiq "no active device" <<< "$1"; then
 		error "No device active."
+	elif grep -Fiq "server says no (it's not ready)" <<< "$1"; then
+		error "You haven't authenticated in bop yet."
 	else
 		error "Error while trying to connect to bop, is it running?"
 	fi
