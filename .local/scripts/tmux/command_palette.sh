@@ -655,13 +655,15 @@ case "$action" in
 			handle_no_device_spotify "$output"
 		}
 
-		next_item=$(jq -r '.[0] | "\(.display_name) by \(.artist)"' <<< "$output")
-		[ -z "$next_item" ] && {
+		items=$(jq -r '. | to_entries | .[] | "\(.key + 1). \(.value.display_name) by \(.value.artist)"' <<< "$output")
+		items=$(awk '{ printf substr($0, 1, 37); if (length($0) > 37) { printf "..."; }; printf "\n"; }' <<< "$items")
+		[ -z "$items" ] && {
 			alert "No next item in queue."
 			exit
 		}
 
-		success "Next item in queue -> $next_item"
+		message=$(printf "\n                  Queue                 \n\n%s" "$items")
+		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
 
 		true
 		;;
