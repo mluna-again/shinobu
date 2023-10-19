@@ -49,6 +49,7 @@ Spotify: next song
 Spotify: previous song
 Spotify: restart song
 Spotify: get song
+Spotify: queue
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -647,6 +648,24 @@ case "$action" in
 		true
 		;;
 
+	"Spotify: queue")
+		is_installed http "httpie is not installed!"
+		output=$(http -Ib --check-status GET "http://localhost:8888/queue")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+		}
+
+		next_item=$(jq -r '.[0] | "\(.display_name) by \(.artist)"' <<< "$output")
+		[ -z "$next_item" ] && {
+			alert "No next item in queue."
+			exit
+		}
+
+		success "Next item in queue -> $next_item"
+
+		true
+		;;
+
 	"Spotify: search")
 		is_installed http "httpie is not installed!"
 
@@ -684,6 +703,11 @@ case "$action" in
 		grep -iq playlist <<< "$response" && type=playlist
 
 		try_shpotify play "$type" "${response:-$song}" "$song_id" && exit
+
+		[ "$type" = playlist ] && {
+			error "Playing playlists is a macOS-only feature for now :("
+			exit
+		}
 
 		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id" type="$type")
 		[ "$?" -ne 0 ] && {
