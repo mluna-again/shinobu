@@ -58,14 +58,18 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 		queryBody = string([]rune(query)[2:])
 	}
 
+	queryType := "all"
 	var results *spotify.SearchResult
 	switch queryPrefix {
 	case "a:":
 		results, err = app.searchAlbum(r.Context(), queryBody)
+		queryType = "album"
 	case "s:":
 		results, err = app.searchTrack(r.Context(), queryBody)
+		queryType = "track"
 	case "l:":
 		results, err = app.searchPlaylist(r.Context(), queryBody)
+		queryType = "playlist"
 	default:
 		results, err = app.client.Search(r.Context(), query, spotify.SearchTypeTrack|spotify.SearchTypeAlbum|spotify.SearchTypePlaylist)
 	}
@@ -75,7 +79,7 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = printResults(w, results)
+	err = printResults(w, results, queryType)
 	if err != nil {
 		sendInternalServerErrorWithMessage(w, err.Error())
 		return
@@ -94,7 +98,7 @@ func (app *app) searchPlaylist(c context.Context, query string) (*spotify.Search
 	return app.client.Search(c, query, spotify.SearchTypePlaylist)
 }
 
-func printResults(w io.Writer, results *spotify.SearchResult) error {
+func printResults(w io.Writer, results *spotify.SearchResult, qType string) error {
 	response := []item{}
 	if results.Tracks != nil {
 		for _, song := range results.Tracks.Tracks {
@@ -109,7 +113,7 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 
 	if results.Albums != nil {
 		for i, album := range results.Albums.Albums {
-			if i >= 5 {
+			if i >= 5 && qType != "album" {
 				break
 			}
 			item := item{
@@ -123,12 +127,13 @@ func printResults(w io.Writer, results *spotify.SearchResult) error {
 
 	if results.Playlists != nil {
 		for i, playlist := range results.Playlists.Playlists {
-			if i >= 5 {
+			if i >= 5 && qType != "playlist" {
 				break
 			}
 			item := item{
 				ID:          string(playlist.ID),
 				DisplayName: fmt.Sprintf("[PLAYLIST] %s", playlist.Name),
+				Artist:      playlist.Owner.DisplayName,
 			}
 			response = append(response, item)
 		}

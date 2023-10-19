@@ -218,9 +218,15 @@ try_shpotify() {
 			item="$3"
 			id="$4"
 
+			item=$(sed 's/\[.*\] //' <<< "$item")
+
 			case "$type" in
 				album)
-					spotify play album "$item" &>/dev/null || return 1
+					if [ -n "$id" ]; then
+						spotify play uri "spotify:album:$id" &>/dev/null || return 1
+					else
+						spotify play album "$item" &>/dev/null || return 1
+					fi
 					;;
 
 				track)
@@ -232,7 +238,11 @@ try_shpotify() {
 					;;
 
 				playlist)
-					spotify play list "$item" &>/dev/null || return 1
+					if [ -n "$id" ]; then
+						spotify play uri "spotify:playlist:$id" &>/dev/null || return 1
+					else
+						spotify play list "$item" &>/dev/null || return 1
+					fi
 					;;
 
 				*)
