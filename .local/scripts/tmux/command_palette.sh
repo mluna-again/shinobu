@@ -109,7 +109,7 @@ free_input() {
 }
 
 alert() {
-	tmux display-message -d 0 "#[bg=yellow,fill=yellow,fg=black] 󰭺 Message: $1"
+	tmux display-message -d 0 "#[bg=yellow,fill=yellow,fg=black] 󰭺 Warning: $1"
 }
 
 success() {
@@ -117,7 +117,7 @@ success() {
 }
 
 error() {
-	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Message: $1"
+	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Error: $1"
 }
 
 read_input() {
@@ -178,6 +178,10 @@ handle_no_device_spotify() {
 # rich, if not then i'll fallback to bop
 try_shpotify() {
 	command -v spotify &>/dev/null || return 1
+	[ -e "$HOME/.shpotify.cfg" ] || {
+		alert "It looks like you don't have shpotify credentials set up."
+		return 1
+	}
 
 	cmd="$1"
 
