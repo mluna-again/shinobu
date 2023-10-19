@@ -174,6 +174,75 @@ handle_no_device_spotify() {
 	exit
 }
 
+# in macos let's try to use the native client because it's more feature
+# rich, if not then i'll fallback to bop
+try_shpotify() {
+	command -v spotify &>/dev/null || return 1
+
+	cmd="$1"
+
+	case "$cmd" in
+		pause)
+			spotify pause &>/dev/null || return 1
+			;;
+
+		next)
+			spotify next &>/dev/null || return 1
+			;;
+
+		prev)
+			spotify prev &>/dev/null || return 1
+			;;
+
+		restart)
+			spotify replay &>/dev/null || return 1
+			;;
+
+		status)
+			output=$(spotify status)
+			[ $? -ne 0 ] && return 1
+
+			song=$(awk -F':' 'NR == 4 {print $2}' <<< "$output" | xargs)
+			artist=$(awk -F':' 'NR == 2 {print $2}' <<< "$output" | xargs)
+			success "$song by $artist"
+			;;
+
+		play)
+			type="$2"
+			item="$3"
+			id="$4"
+
+			case "$type" in
+				album)
+					spotify play album "$item" &>/dev/null || return 1
+					;;
+
+				track)
+					if [ -n "$id" ]; then
+						spotify play uri "spotify:track:$id" &>/dev/null || return 1
+					else
+						spotify play "$item" &>/dev/null || return 1
+					fi
+					;;
+
+				playlist)
+					spotify play list "$item" &>/dev/null || return 1
+					;;
+
+				*)
+					error "Invalid item type."
+					exit
+					;;
+			esac
+			;;
+
+		*)
+			error "Invalid command."
+			exit
+			;;
+	esac
+}
+
 input " Command Palette " " 󰘳 " "$commands"
 
 case "$(read_input)" in
@@ -495,6 +564,7 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: play/pause")
+		try_shpotify pause && exit
 		is_installed http "httpie is not installed!"
 
 		output=$(http -Ib --check-status GET "http://localhost:8888/pause")
@@ -506,6 +576,7 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: next song")
+		try_shpotify next && exit
 		is_installed http "httpie is not installed!"
 
 		output=$(http -Ib --check-status GET "http://localhost:8888/next")
@@ -517,6 +588,7 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: previous song")
+		try_shpotify prev && exit
 		is_installed http "httpie is not installed!"
 
 		output=$(http -Ib --check-status GET "http://localhost:8888/prev")
@@ -528,6 +600,7 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: restart song")
+		try_shpotify restart && exit
 		is_installed http "httpie is not installed!"
 
 		output=$(http -Ib --check-status GET "http://localhost:8888/restart")
@@ -539,6 +612,7 @@ case "$(read_input)" in
 		;;
 
 	"Spotify: get song")
+		try_shpotify status && exit
 		is_installed http "httpie is not installed!"
 
 		output=$(http -Ib --check-status GET "http://localhost:8888/status")
@@ -560,31 +634,36 @@ case "$(read_input)" in
 		song=$(read_input)
 		[ -z "$song" ] && exit
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/search" query="$song")
-		code=$?
-		[ "$code" -ne 0 ] && {
-			handle_no_device_spotify "$output"
-		}
+		# if bop is not running then try without selection menu
+		if pgrep bop &>/dev/null; then
+			output=$(http -Ib --check-status POST "http://localhost:8888/search" query="$song")
+			code=$?
+			[ "$code" -ne 0 ] && {
+				handle_no_device_spotify "$output"
+			}
 
-		songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
-		songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | sed 's/^ //')
+			songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
+			songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | sed 's/^ //')
 
-		[ -z "$songs_without_ids" ] && {
-			alert "No matches found."
-			exit
-		}
+			[ -z "$songs_without_ids" ] && {
+				alert "No matches found."
+				exit
+			}
 
-		input " WHICH/ONE " " 󰓇 " "$songs_without_ids"
+			input " WHICH/ONE " " 󰓇 " "$songs_without_ids"
 
-		response=$(read_input)
-		[ -z "$response" ] && exit
+			response=$(read_input)
+			[ -z "$response" ] && exit
 
-		song_id=$(grep -Fi "$response" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
-		[ -z "$song_id" ] && exit
+			song_id=$(grep -Fi "$response" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
+			[ -z "$song_id" ] && exit
+		fi
 
 		type=track
 		grep -iq album <<< "$response" && type=album
 		grep -iq playlist <<< "$response" && type=playlist
+
+		try_shpotify play "$type" "${response:-$song}" "$song_id" && exit
 
 		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id" type="$type")
 		[ "$?" -ne 0 ] && {
