@@ -43,11 +43,11 @@ Layouts: Main-Horizontal
 Layouts: Main-Vertical
 Layouts: Make grid
 Reorder: Running programs first
+Spotify: search
 Spotify: play/pause
 Spotify: next song
 Spotify: previous song
 Spotify: restart song
-Spotify: search
 Spotify: get song
 Panes: Close all but focused one
 Destroy: server
@@ -259,9 +259,13 @@ try_shpotify() {
 	esac
 }
 
-input " Command Palette " " 󰘳 " "$commands"
+action="$1"
+[ -z "$action" ] && {
+	input " Command Palette " " 󰘳 " "$commands"
+	action=$(read_input)
+}
 
-case "$(read_input)" in
+case "$action" in
 	"Load: session")
 		command -v tmuxp &>/dev/null || {
 			error "tmuxp is not installed!"
