@@ -148,7 +148,17 @@ func (app *app) addToLiked(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = app.client.AddTracksToLibrary(r.Context(), spotify.ID(params.ID))
+	id := params.ID
+	if id == "" {
+		info, err := app.client.PlayerCurrentlyPlaying(r.Context())
+		if err != nil {
+			sendInternalServerErrorWithMessage(w, err.Error())
+			return
+		}
+
+		id = string(info.Item.ID)
+	}
+	err = app.client.AddTracksToLibrary(r.Context(), spotify.ID(id))
 	if err != nil {
 		sendInternalServerErrorWithMessage(w, err.Error())
 		return
@@ -162,7 +172,7 @@ type removeFromLikedParams struct {
 }
 
 func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
-	var params addToLikedParams
+	var params removeFromLikedParams
 	d := json.NewDecoder(r.Body)
 	err := d.Decode(&params)
 	if err != nil {
@@ -170,7 +180,18 @@ func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = app.client.RemoveTracksFromLibrary(r.Context(), spotify.ID(params.ID))
+	id := params.ID
+	if id == "" {
+		info, err := app.client.PlayerCurrentlyPlaying(r.Context())
+		if err != nil {
+			sendInternalServerErrorWithMessage(w, err.Error())
+			return
+		}
+
+		id = string(info.Item.ID)
+	}
+
+	err = app.client.RemoveTracksFromLibrary(r.Context(), spotify.ID(id))
 	if err != nil {
 		sendInternalServerErrorWithMessage(w, err.Error())
 		return

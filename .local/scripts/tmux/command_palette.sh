@@ -50,6 +50,8 @@ Spotify: previous song
 Spotify: restart song
 Spotify: get song
 Spotify: queue
+Spotify: save song
+Spotify: delete song
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -646,6 +648,36 @@ case "$action" in
 		success "$song by $artist"
 
 		true
+		;;
+
+	"Spotify: save song")
+		is_installed http "httpie is not installed!"
+
+		# we delete it first so if the song its already liked it will appear at the top after liking it again
+		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+			exit
+		}
+
+		output=$(http -Ib --check-status POST "http://localhost:8888/addToLiked")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+			exit
+		}
+
+		success "Song saved."
+		;;
+
+	"Spotify: delete song")
+		is_installed http "httpie is not installed!"
+
+		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked")
+		[ "$?" -ne 0 ] && {
+			handle_no_device_spotify "$output"
+		}
+
+		success "Song deleted."
 		;;
 
 	"Spotify: queue")

@@ -33,6 +33,15 @@ func randomString() string {
 
 const PORT = 8888
 
+var scopes = []string{
+	spotifyauth.ScopeUserReadPrivate,
+	spotifyauth.ScopeUserModifyPlaybackState,
+	spotifyauth.ScopeUserReadCurrentlyPlaying,
+	spotifyauth.ScopeUserReadPlaybackState,
+	spotifyauth.ScopeUserLibraryRead,
+	spotifyauth.ScopeUserLibraryModify,
+}
+
 func main() {
 	app, err := initializeApp()
 	if err != nil {
@@ -45,7 +54,7 @@ func main() {
 	redirectPath := fmt.Sprintf("/%s", redirectComps[len(redirectComps)-1])
 
 	state := randomString()
-	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(spotifyauth.ScopeUserReadPrivate, spotifyauth.ScopeUserModifyPlaybackState, spotifyauth.ScopeUserReadCurrentlyPlaying, spotifyauth.ScopeUserReadPlaybackState), spotifyauth.WithClientID(app.clientId))
+	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(scopes...), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
 	fmt.Printf("Authenticate using the following link: \n%s\n\n", url)
 

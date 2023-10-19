@@ -66,3 +66,24 @@ Restarts the current song.
 7. GET /queue
 Get user queue. Max items returned is 20.
 Response format is the same as with the search.
+
+8. POST /addToLiked
+Add a song to user's liked songs.
+If body is empty, it uses the current song.
+If song is already liked this endpoint does nothing.
+Request:
+`
+{
+    "ID": "<id>"
+}
+`
+
+8. POST /removeFromLiked
+Remove a song from user's liked songs.
+If body is empty, it uses the current song.
+Request:
+`
+{
+    "ID": "<id>"
+}
+`
