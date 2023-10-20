@@ -19,7 +19,7 @@ date() {
 	if uname | grep -iq darwin; then
 		gdate "$@"
 	else
-		date "$@"
+		/usr/bin/date "$@"
 	fi
 }
 
