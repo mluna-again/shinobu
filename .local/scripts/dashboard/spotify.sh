@@ -3,10 +3,7 @@
 CURRENT_PATH="$HOME/.local/scripts/dashboard"
 BOP_URL="http://localhost:8888"
 
-command -v http &>/dev/null || {
-	printf "http is not installed.\n"
-	exit 1
-}
+[ -d "$CURRENT_PATH/downloads" ] || mkdir "$CURRENT_PATH/downloads"
 
 command -v chafa &>/dev/null || {
 	printf "chafa is not installed.\n"
@@ -18,6 +15,14 @@ command -v jq &>/dev/null || {
 	exit 1
 }
 
+date() {
+	if uname | grep -iq darwin; then
+		gdate "$@"
+	else
+		date "$@"
+	fi
+}
+
 download_if_not_exists() {
 	url="$1"
 	[ -z "$url" ] && return
@@ -25,12 +30,9 @@ download_if_not_exists() {
 	hash=$(sha256sum <<< "$url" | awk '{print $1}')
 	image_path="$CURRENT_PATH/downloads/$hash"
 	printf "%s\n" "$image_path"
-
 	find "$CURRENT_PATH/downloads" -type f -iname "$hash\.*" | grep -q . && return
 
-	[ -d "$CURRENT_PATH/downloads" ] || mkdir "$CURRENT_PATH/downloads"
-
-	http --download -o "${image_path}.jpg" "$url" &>/dev/null
+	curl -s --output "${image_path}.jpg" "$url"
 }
 
 chafa_if_not_yet() {
@@ -69,7 +71,7 @@ progress_bar() {
 	printf "%s " "$ending"
 }
 
-current_song=$(http -Ib --check-status GET "$BOP_URL/status")
+current_song=$(curl -s "$BOP_URL/status")
 song=$(jq -r '.display_name' <<< "$current_song")
 artist=$(jq -r '.artist' <<< "$current_song")
 image=$(jq -r '.image_url' <<< "$current_song")
@@ -77,9 +79,10 @@ current_time=$(jq -r '.current_second' <<< "$current_song")
 total_time=$(jq -r '.total_seconds' <<< "$current_song")
 
 image_path=$(download_if_not_exists "$image")
+chafa_if_not_yet "$image_path"
 
 refetch_data() {
-	current_song=$(http -Ib --check-status GET "$BOP_URL/status")
+	current_song=$(curl -s "$BOP_URL/status")
 	song=$(jq -r '.display_name' <<< "$current_song")
 	artist=$(jq -r '.artist' <<< "$current_song")
 	image=$(jq -r '.image_url' <<< "$current_song")
@@ -87,6 +90,7 @@ refetch_data() {
 	total_time=$(jq -r '.total_seconds' <<< "$current_song")
 
 	image_path=$(download_if_not_exists "$image")
+	chafa_if_not_yet "$image_path"
 }
 
 time_since_last_fetch=0
@@ -99,8 +103,6 @@ while true; do
 		time_since_last_fetch=0
 		refetch_data || break
 	}
-
-	chafa_if_not_yet "$image_path"
 
 	index=0
 	progress="$(progress_bar "$current_time" "$total_time")"
