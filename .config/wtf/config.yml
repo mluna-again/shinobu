@@ -9,22 +9,6 @@ wtf:
     rows: [10, 10, 10, 6, 6, 6, 90]
   refreshInterval: 1
   mods:
-    spotify:
-      type: cmdrunner
-      args: []
-      cmd: "/Users/mluna/.config/wtf/scripts/spotify.sh"
-      enabled: true
-      position:
-        top: 0
-        left: 3
-        height: 6
-        width: 2
-      refreshInterval: 5s
-      enabled: true
-      focusable: false
-      title: "Spotify"
-      border: true
-
     clocks:
       colors:
         rows:
@@ -41,7 +25,7 @@ wtf:
         top: 3
         left: 0
         height: 1
-        width: 1
+        width: 3
       refreshInterval: 15s
       # Valid options are: alphabetical, chronological, natural
       sort: "alphabetical"
@@ -76,22 +60,36 @@ wtf:
       language: "en"
       title: "CDMX"
 
-    digitalclock:
-      color: orange
-      border: true
+    alaska:
+      type: prettyweather
       enabled: true
-      font: digitalfont
-      hourFormat: 12
+      city: "alaska"
       position:
-        top: 3
-        left: 1
-        height: 1
-        width: 1
-      withDatePrefix: False
-      dateFormat: ""
+          top: 4
+          left: 2
+          height: 2
+          width: 1
+      refreshInterval: 10m
+      unit: "m"
+      view: 0
+      language: "en"
+      title: "Alaska"
+
+    clock:
+      type: cmdrunner
+      args: []
+      cmd: "/Users/mluna/.config/wtf/scripts/time.sh"
+      enabled: true
+      position:
+        top: 1
+        left: 0
+        height: 2
+        width: 3
       refreshInterval: 1s
+      enabled: true
+      focusable: false
       title: "Time"
-      type: "digitalclock"
+      border: true
 
     dotfiles:
       type: cmdrunner

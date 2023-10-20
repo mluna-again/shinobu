@@ -73,6 +73,11 @@ progress_bar() {
 }
 
 current_song=$(curl -s "$BOP_URL/status")
+grep -iq "Not found" <<< "$current_song" && {
+	printf "No song playing.\n"
+	exit
+}
+
 song=$(jq -r '.display_name' <<< "$current_song")
 artist=$(jq -r '.artist' <<< "$current_song")
 image=$(jq -r '.image_url' <<< "$current_song")
@@ -85,6 +90,10 @@ chafa_if_not_yet "$image_path"
 
 refetch_data() {
 	current_song=$(curl -s "$BOP_URL/status")
+	grep -iq "Not found" <<< "$current_song" && {
+		printf "No song playing.\n"
+		exit
+	}
 	song=$(jq -r '.display_name' <<< "$current_song")
 	artist=$(jq -r '.artist' <<< "$current_song")
 	image=$(jq -r '.image_url' <<< "$current_song")
