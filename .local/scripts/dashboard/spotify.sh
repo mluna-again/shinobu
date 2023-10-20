@@ -93,6 +93,9 @@ refetch_data() {
 	chafa_if_not_yet "$image_path"
 }
 
+lines=$(tput lines)
+lines=$(( (lines - 15) / 2 )) # 15 is the size of the album cover
+
 time_since_last_fetch=0
 while true; do
 	(( current_time >= total_time )) && {
@@ -106,9 +109,13 @@ while true; do
 
 	index=0
 	progress="$(progress_bar "$current_time" "$total_time")"
+
 	IFS=$'\n'
 	for line in $(cat "$image_path"); do
-		[ $index -eq 0 ] && clear
+		[ $index -eq 0 ] && {
+			clear
+			for (( i=0;i<lines;i++ )); do printf "\n"; done
+		}
 		printf "%s" "$line"
 
 		[ $index -eq 4 ] && printf "     %s" "$song"
