@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
 
+DELAY=7
 CURRENT_PATH="$HOME/.local/scripts/dashboard"
 BOP_URL="http://localhost:8888"
 
@@ -104,7 +105,7 @@ while true; do
 		time_since_last_fetch=0
 		refetch_data || break
 	}
-	(( time_since_last_fetch > 7 )) && {
+	(( time_since_last_fetch > "$DELAY" )) && {
 		time_since_last_fetch=0
 		refetch_data || break
 	}
@@ -133,8 +134,8 @@ while true; do
 	time_since_last_fetch=$(( time_since_last_fetch + 1 ))
 
 	[ "$is_playing" = false ] && {
-		sleep 7
-		time_since_last_fetch=$(( time_since_last_fetch + 7 ))
+		sleep "$DELAY"
+		time_since_last_fetch=$(( time_since_last_fetch + DELAY ))
 		continue
 	}
 
