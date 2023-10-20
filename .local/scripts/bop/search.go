@@ -20,6 +20,7 @@ type item struct {
 	ID          string `json:"id"`
 	DisplayName string `json:"display_name"`
 	Artist      string `json:"artist"`
+	ImageUrl    string `json:"image_url"`
 }
 
 type searchParams struct {
@@ -106,6 +107,7 @@ func printResults(w io.Writer, results *spotify.SearchResult, qType string) erro
 				ID:          string(song.ID),
 				DisplayName: fmt.Sprintf("[SONG] %s", song.Name),
 				Artist:      song.Artists[0].Name,
+				ImageUrl:    song.Album.Images[0].URL,
 			}
 			response = append(response, item)
 		}
@@ -120,6 +122,7 @@ func printResults(w io.Writer, results *spotify.SearchResult, qType string) erro
 				ID:          string(album.ID),
 				DisplayName: fmt.Sprintf("[ALBUM] %s", album.Name),
 				Artist:      album.Artists[0].Name,
+				ImageUrl:    album.Images[0].URL,
 			}
 			response = append(response, item)
 		}
@@ -134,6 +137,7 @@ func printResults(w io.Writer, results *spotify.SearchResult, qType string) erro
 				ID:          string(playlist.ID),
 				DisplayName: fmt.Sprintf("[PLAYLIST] %s", playlist.Name),
 				Artist:      playlist.Owner.DisplayName,
+				ImageUrl:    playlist.Images[0].URL,
 			}
 			response = append(response, item)
 		}
