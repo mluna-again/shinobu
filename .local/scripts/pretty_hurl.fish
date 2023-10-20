@@ -4,9 +4,9 @@ function _print_ihurl_output
     printf "%s\n\n" "$headers"
     printf "Running: jq '%s'\n" "$query"
 
-    echo "$body" | jq "$query" 2>/dev/null; or begin
+    echo "$body" | jq "$query"; or begin
         printf "Query failed.\n"
-        printf "Raw output:\n%s" "$body"
+        printf "Raw output:\n%s\n" "$body"
     end
 end
 
