@@ -89,6 +89,7 @@ func (app *app) status(w http.ResponseWriter, r *http.Request) {
 		ImageUrl:      info.Item.Album.Images[0].URL,
 		TotalSeconds:  info.Item.Duration / 1000,
 		CurrentSecond: info.Progress / 1000,
+		IsPlaying:     info.Playing,
 	}
 
 	output, err := json.Marshal(response)

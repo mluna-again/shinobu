@@ -23,6 +23,7 @@ type item struct {
 	ImageUrl      string `json:"image_url"`
 	CurrentSecond int    `json:"current_second"`
 	TotalSeconds  int    `json:"total_seconds"`
+	IsPlaying     bool   `json:"is_playing"`
 }
 
 type searchParams struct {

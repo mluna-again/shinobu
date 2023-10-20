@@ -75,6 +75,7 @@ current_song=$(curl -s "$BOP_URL/status")
 song=$(jq -r '.display_name' <<< "$current_song")
 artist=$(jq -r '.artist' <<< "$current_song")
 image=$(jq -r '.image_url' <<< "$current_song")
+is_playing=$(jq -r '.is_playing' <<< "$current_song")
 current_time=$(jq -r '.current_second' <<< "$current_song")
 total_time=$(jq -r '.total_seconds' <<< "$current_song")
 
@@ -88,6 +89,7 @@ refetch_data() {
 	image=$(jq -r '.image_url' <<< "$current_song")
 	current_time=$(jq -r '.current_second' <<< "$current_song")
 	total_time=$(jq -r '.total_seconds' <<< "$current_song")
+	is_playing=$(jq -r '.is_playing' <<< "$current_song")
 
 	image_path=$(download_if_not_exists "$image")
 	chafa_if_not_yet "$image_path"
@@ -129,5 +131,12 @@ while true; do
 
 	current_time=$(( current_time + 1 ))
 	time_since_last_fetch=$(( time_since_last_fetch + 1 ))
+
+	[ "$is_playing" = false ] && {
+		sleep 7
+		time_since_last_fetch=$(( time_since_last_fetch + 7 ))
+		continue
+	}
+
 	sleep 1
 done
