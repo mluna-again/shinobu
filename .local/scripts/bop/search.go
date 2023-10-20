@@ -17,10 +17,12 @@ var (
 )
 
 type item struct {
-	ID          string `json:"id"`
-	DisplayName string `json:"display_name"`
-	Artist      string `json:"artist"`
-	ImageUrl    string `json:"image_url"`
+	ID            string `json:"id"`
+	DisplayName   string `json:"display_name"`
+	Artist        string `json:"artist"`
+	ImageUrl      string `json:"image_url"`
+	CurrentSecond int    `json:"current_second"`
+	TotalSeconds  int    `json:"total_seconds"`
 }
 
 type searchParams struct {

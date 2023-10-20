@@ -1,4 +1,1 @@
-POST http://localhost:8888/search
-{
-  "query": "yeezus"
-}
+POST http://localhost:8888/status

@@ -83,9 +83,12 @@ func (app *app) status(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := item{
-		DisplayName: info.Item.Name,
-		ID:          string(info.Item.ID),
-		Artist:      info.Item.Artists[0].Name,
+		DisplayName:   info.Item.Name,
+		ID:            string(info.Item.ID),
+		Artist:        info.Item.Artists[0].Name,
+		ImageUrl:      info.Item.Album.Images[0].URL,
+		TotalSeconds:  info.Item.Duration / 1000,
+		CurrentSecond: info.Progress / 1000,
 	}
 
 	output, err := json.Marshal(response)
