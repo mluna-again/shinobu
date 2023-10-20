@@ -26,7 +26,6 @@ function ihurl
 
         clear
         _print_ihurl_output
-        printf "Waiting for new query: "
 
         if test -n "$TMUX"
             tmux send-keys -t . "$query"
