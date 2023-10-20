@@ -59,16 +59,16 @@ progress_bar() {
 	printf "%s " "$start"
 	for (( i=0; i<10; i++ )); do
 		(( i == 0 )) && {
-			printf '█'
+			printf '\e[33m█\033[0m'
 			continue
 		}
 		(( i <= steps )) && {
-			printf '██'
+			printf '\e[33m██\033[0m'
 			continue
 		}
-		printf "  "
+		printf '\e[38;5;238m██\033[0m'
 	done
-	printf "%s " "$ending"
+	printf " %s" "$ending"
 }
 
 current_song=$(curl -s "$BOP_URL/status")
@@ -106,18 +106,19 @@ while true; do
 
 	index=0
 	progress="$(progress_bar "$current_time" "$total_time")"
-	clear
-	while read -r line; do
+	IFS=$'\n'
+	for line in $(cat "$image_path"); do
+		[ $index -eq 0 ] && clear
 		printf "%s" "$line"
 
-		(( index == 4 )) && printf "     %s" "$song"
-		(( index == 5 )) && printf "     %s" "$artist"
-		(( index == 6 )) && printf "     %s" "$progress"
+		[ $index -eq 4 ] && printf "     %s" "$song"
+		[ $index -eq 5 ] && printf "     %s" "$artist"
+		[ $index -eq 6 ] && printf "     %s" "$progress"
 
 		printf "\n"
 
 		index=$((index + 1))
-	done < "$image_path"
+	done
 
 	current_time=$(( current_time + 1 ))
 	time_since_last_fetch=$(( time_since_last_fetch + 1 ))
