@@ -2,6 +2,10 @@
 
 NOTES_PATH="$HOME/Notes/todo"
 
+width="$2"
+
+[ "$width" -le 100 ] && exit
+
 [ -e "$NOTES_PATH" ] || exit
 
 count=$(grep -Ec '^\* ' "$NOTES_PATH")

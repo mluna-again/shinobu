@@ -22,6 +22,7 @@ when = true
 [custom.goldfish]
 command = ''' test "$fish_private_mode" = 1 && echo '🥷' '''
 when = true
+ignore_timeout = true
 
 [directory]
 truncation_length = 3
