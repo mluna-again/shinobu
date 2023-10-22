@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-ignored_windows='["cmd","api","pgsql","dashboard"]'
+ignored_windows='["cmd","api","pgsql","dashboard","code"]'
 current_window=$(
 	tmux list-windows -F "#{window_name} #{window_active}" | \
 		awk '$2 == 1' | \
