@@ -7,8 +7,19 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 	"golang.org/x/term"
 )
+
+var backgroundStyle = lipgloss.
+	NewStyle().
+	Background(lipgloss.Color("235")).
+	Foreground(lipgloss.Color("white"))
+
+var barStyle = lipgloss.
+	NewStyle().
+	Background(lipgloss.Color("236")).
+	Foreground(lipgloss.Color("yellow"))
 
 const VOLUME_STEP = 4
 
@@ -50,6 +61,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				break
 			}
 			m.currentValue -= VOLUME_STEP
+
+		case tea.MouseLeft:
+			return m, tea.Quit
+		case tea.MouseRight:
+			return m, tea.Quit
+		case tea.MouseMiddle:
+			return m, tea.Quit
 		}
 
 	case tea.KeyMsg:
@@ -66,17 +84,24 @@ func (m model) View() string {
 	if w < 1 {
 		w = 1
 	}
-	step := float64(w) / 100
+	padding := 6
+	b.WriteString(backgroundStyle.Width(w).Render(""))
+	b.WriteString("\n")
+	b.WriteString(backgroundStyle.Width(padding / 2).Render("  "))
+
+	step := float64(w-padding) / 100
 	fullSteps := math.Ceil(step * float64(m.currentValue))
 
 	for i := 0; i < int(fullSteps); i++ {
-		b.WriteRune('█')
+		b.WriteString(barStyle.Render("█"))
 	}
-	for i := 0; i < m.termWidth-int(fullSteps); i++ {
-		b.WriteRune(' ')
+	for i := 0; i < m.termWidth-int(fullSteps)-padding; i++ {
+		b.WriteString(barStyle.Render(" "))
 	}
 
-	b.WriteRune('\n')
+	b.WriteString(backgroundStyle.Width(padding / 2).Render("  "))
+	b.WriteString("\n")
+	b.WriteString(backgroundStyle.Width(w).Render(""))
 
 	return b.String()
 }
