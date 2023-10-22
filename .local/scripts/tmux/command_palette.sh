@@ -727,7 +727,7 @@ case "$action" in
 			}
 
 			songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
-			songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | sed 's/^ //')
+			songs_without_ids=$(awk '{ $1=""; print $0 }' <<< "$songs" | sed 's/^ //' | sed 's/"//g')
 
 			[ -z "$songs_without_ids" ] && {
 				alert "No matches found."
