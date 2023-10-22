@@ -1,41 +1,32 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"math"
 	"os"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"golang.org/x/term"
 )
 
+const VOLUME_STEP = 4
+
 type model struct {
 	currentValue int
 	termHeight   int
+	termWidth    int
 }
 
 func initializeModel() (model, error) {
-	_, h, err := term.GetSize(int(os.Stdin.Fd()))
+	w, h, err := term.GetSize(int(os.Stdin.Fd()))
 	if err != nil {
 		return model{}, err
 	}
 
-	m := model{termHeight: h}
+	m := model{termHeight: h, termWidth: w}
 
 	return m, nil
-}
-
-func (m *model) calculateLevel(value int) {
-	step := 100 / float64(m.termHeight)
-	level := step * float64(value)
-	m.currentValue = int(math.Ceil(level))
-	if m.currentValue >= 97 {
-		m.currentValue = 100
-	}
-	if m.currentValue < 4 {
-		m.currentValue = 0
-	}
 }
 
 func (m model) Init() tea.Cmd {
@@ -45,13 +36,49 @@ func (m model) Init() tea.Cmd {
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.MouseMsg:
-		m.calculateLevel(msg.Y)
+		switch msg.Type {
+		case tea.MouseWheelUp:
+			if m.currentValue+VOLUME_STEP > 100 {
+				m.currentValue = 100
+				break
+			}
+			m.currentValue += VOLUME_STEP
+
+		case tea.MouseWheelDown:
+			if m.currentValue-VOLUME_STEP < 0 {
+				m.currentValue = 0
+				break
+			}
+			m.currentValue -= VOLUME_STEP
+		}
+
+	case tea.KeyMsg:
+		if msg.String() == "ctrl+c" {
+			return m, tea.Quit
+		}
 	}
 	return m, nil
 }
 
 func (m model) View() string {
-	return fmt.Sprintf("%d", m.currentValue)
+	b := strings.Builder{}
+	w := m.termWidth
+	if w < 1 {
+		w = 1
+	}
+	step := float64(w) / 100
+	fullSteps := math.Ceil(step * float64(m.currentValue))
+
+	for i := 0; i < int(fullSteps); i++ {
+		b.WriteRune('█')
+	}
+	for i := 0; i < m.termWidth-int(fullSteps); i++ {
+		b.WriteRune(' ')
+	}
+
+	b.WriteRune('\n')
+
+	return b.String()
 }
 
 func main() {
