@@ -1,9 +1,12 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"math"
 	"os"
+	"os/exec"
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -23,21 +26,40 @@ var barStyle = lipgloss.
 
 const VOLUME_STEP = 4
 
+func newCmdVolume(level int) *exec.Cmd {
+	cmd := exec.Command("osascript", "-e", fmt.Sprintf("set volume output volume %d", level))
+
+	return cmd
+}
+
+type cmdMsg struct {
+	error error
+}
+
 type model struct {
 	currentValue int
 	termHeight   int
 	termWidth    int
+	cmd          *exec.Cmd
+	error        error
 }
 
-func initializeModel() (model, error) {
+func initializeModel(vol int) (model, error) {
 	w, h, err := term.GetSize(int(os.Stdin.Fd()))
 	if err != nil {
 		return model{}, err
 	}
 
-	m := model{termHeight: h, termWidth: w}
+	m := model{termHeight: h, termWidth: w, currentValue: vol}
 
 	return m, nil
+}
+
+func runCmd(currentValue int) tea.Cmd {
+	return func() tea.Msg {
+		err := newCmdVolume(currentValue).Run()
+		return cmdMsg{error: err}
+	}
 }
 
 func (m model) Init() tea.Cmd {
@@ -46,6 +68,9 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case cmdMsg:
+		m.error = msg.error
+
 	case tea.MouseMsg:
 		switch msg.Type {
 		case tea.MouseWheelUp:
@@ -54,6 +79,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				break
 			}
 			m.currentValue += VOLUME_STEP
+			if m.currentValue%5 == 0 || m.currentValue == 0 || m.currentValue == 100 {
+				return m, runCmd(m.currentValue)
+			}
 
 		case tea.MouseWheelDown:
 			if m.currentValue-VOLUME_STEP < 0 {
@@ -61,6 +89,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				break
 			}
 			m.currentValue -= VOLUME_STEP
+			if m.currentValue%5 == 0 || m.currentValue == 0 || m.currentValue == 100 {
+				return m, runCmd(m.currentValue)
+			}
 
 		case tea.MouseLeft:
 			return m, tea.Quit
@@ -103,11 +134,20 @@ func (m model) View() string {
 	b.WriteString("\n")
 	b.WriteString(backgroundStyle.Width(w).Render(""))
 
+	if m.error != nil {
+		return fmt.Sprintf("%s\nSomething went wrong: %v\n", b.String(), m.error.Error())
+	}
+
 	return b.String()
 }
 
+var startingVolume int
+
 func main() {
-	m, err := initializeModel()
+	flag.IntVar(&startingVolume, "volume", 0, "starting volume level")
+	flag.Parse()
+
+	m, err := initializeModel(startingVolume)
 	if err != nil {
 		log.Fatalln(err)
 	}

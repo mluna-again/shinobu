@@ -80,6 +80,7 @@ Tmux: move window to the left
 Tmux: move window to the right
 Monitor: open dashboard
 Dumb: screen-saver
+System: volume
 EOF
 )"
 
@@ -760,6 +761,16 @@ case "$action" in
 		}
 
 		true
+		;;
+
+	"System: volume")
+		uname | grep -iq darwin || {
+			error "This cmd only works on macOS."
+			exit
+		}
+
+		volume=$(osascript -e 'set ovol to output volume of (get volume settings)')
+		tmux display-popup -E -x "#{popup_pane_right}" -y "#{popup_pane_top}" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
 		;;
 
 	"Tmux: move window to the left")
