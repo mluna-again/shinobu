@@ -19,3 +19,5 @@ new_name=$(read_input)
 [ -z "$new_name" ] && exit
 
 tmux rename-window "$new_name"
+
+"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
