@@ -2,9 +2,27 @@
 
 set -g show_html_output false
 
+function _print_ihurl_help
+    printf "Help!\n"
+    printf "Available commands:\n"
+    printf "  show: toggle HTML output.\n"
+    printf "  reset: re-send HTTP request.\n"
+    printf "  exit: quit ihurl.\n"
+    printf "  quit: quit ihurl.\n"
+    printf "  q: quit ihurl.\n"
+    printf "  help: show this message.\n"
+    printf "\n"
+end
+
 function _print_ihurl_output
     set -g real_query "$query"
     printf "%s\n\n" "$headers"
+    if test "$query" = help
+        _print_ihurl_help
+        return
+    end
+
+    printf "Use `help` for help :)\n"
 
     if echo "$headers" | grep -iq ": text/html"
         if test $show_html_output = true
@@ -49,6 +67,7 @@ function ihurl
         test $status = 0; or set -l should_exit true
         test $query = q; and set -l should_exit true
         test $query = quit; and set -l should_exit true
+        test $query = exit; and set -l should_exit true
         if test $query = show
             if test $show_html_output = true
                 set -g show_html_output false
@@ -79,7 +98,7 @@ function ihurl
         clear
         _print_ihurl_output
 
-        if test -n "$TMUX"; and test $query != show
+        if test -n "$TMUX"; and test $query != show; and test $query != help
             tmux send-keys -t . "$query"
         end
     end
