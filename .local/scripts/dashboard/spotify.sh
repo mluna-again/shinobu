@@ -3,6 +3,9 @@
 DELAY=7
 CURRENT_PATH="$HOME/.local/scripts/dashboard"
 BOP_URL="http://localhost:8888"
+CENTER=true
+[ "$1" = "--no-center" ] && CENTER=false
+[ "$1" = "-nc" ] && CENTER=false
 
 [ -d "$CURRENT_PATH/downloads" ] || mkdir "$CURRENT_PATH/downloads"
 
@@ -126,7 +129,7 @@ while true; do
 	for line in $(cat "$image_path"); do
 		[ $index -eq 0 ] && {
 			clear
-			for (( i=0;i<lines;i++ )); do printf "\n"; done
+			[ "$CENTER" = true ] && for (( i=0;i<lines;i++ )); do printf "\n"; done
 		}
 		printf "%s" "$line"
 
