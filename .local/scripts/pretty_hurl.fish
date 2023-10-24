@@ -29,7 +29,6 @@ function _print_ihurl_output
     end
 
     printf "Use `help` for help :)\n"
-    printf "Inside: %s (%s)\n\n" (pwd) "$file"
 
     if echo "$headers" | grep -iq ": text/html"
         if test $show_html_output = true
@@ -110,6 +109,11 @@ function ihurl
         end
         test "$query" = ls; and begin
             ls
+            continue
+        end
+        test "$query" = pwd; and begin
+            set -l current (builtin pwd)
+            printf "%s (%s)\n" "$current" "$file"
             continue
         end
 
