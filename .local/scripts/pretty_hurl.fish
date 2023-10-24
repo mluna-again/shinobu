@@ -3,6 +3,7 @@
 set -g show_html_output false
 
 function _print_ihurl_output
+    set -g real_query "$query"
     printf "%s\n\n" "$headers"
 
     if echo "$headers" | grep -iq ": text/html"
@@ -12,11 +13,23 @@ function _print_ihurl_output
             printf "HTML output hidden.\nRun `show` to enable it.\n"
         end
     else
-        printf "Running: jq '%s'\n" "$query"
+        if echo "$query" | grep -iq '| *save *$'
+            set -g real_query (echo "$query" | sed 's/| *save *$//')
+        end
 
-        echo "$body" | jq "$query"; or begin
+        printf "Running: jq '%s'\n" "$real_query"
+
+        echo "$body" | jq "$real_query"; or begin
             printf "Query failed.\n"
             printf "Raw output:\n%s\n" "$body"
+        end
+
+        if test "$real_query" != "$query"
+            if uname | grep -iq darwin
+                echo "$body" | jq -r "$real_query" | pbcopy; and printf "Copied.\n"
+            else
+               echo "$body" | jq -r "$real_query" | xclip -sel clip; and printf "Copied.\n"
+            end
         end
     end
 end
