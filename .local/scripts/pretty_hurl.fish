@@ -82,11 +82,16 @@ function ihurl
         test $query = exit; and set -l should_exit true
         echo "$query" | grep -iq '^cd'; and begin
             set -l dir (echo "$query" | awk '{$1=""; print $0}' | xargs)
-            builtin cd "$dir"
-            clear
-            set -g query "."
-            _print_ihurl_output
-            continue
+            if test -d "$dir"
+                builtin cd "$dir"
+                clear
+                set -g query "."
+                _print_ihurl_output
+                continue
+            else
+                printf "Directory doesn't exist.\n"
+                continue
+            end
         end
         echo "$query" | grep -iq '^use'; and begin
             set -l new_file (echo "$query" | awk '{$1=""; print $0}' | xargs)
