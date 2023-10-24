@@ -87,7 +87,15 @@ function ihurl
         test "$query" = q; and set -l should_exit true
         test "$query" = quit; and set -l should_exit true
         test "$query" = exit; and set -l should_exit true
-        echo "$query" | grep -iq '^cd'; and begin
+
+        echo "$query" | grep -iq '^cd\.\.'; and begin
+            builtin cd ..
+            clear
+            set -g query "."
+            _print_ihurl_output
+            continue
+        end
+        echo "$query" | grep -iq '^cd '; and begin
             set -l dir (echo "$query" | awk '{$1=""; print $0}' | xargs)
             if test -d "$dir"
                 builtin cd "$dir"
