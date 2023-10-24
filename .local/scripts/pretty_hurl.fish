@@ -83,10 +83,10 @@ function ihurl
     _print_ihurl_output
 
     while read -g -S -P "query> " query
-        test $status = 0; or set -l should_exit true
-        test $query = q; and set -l should_exit true
-        test $query = quit; and set -l should_exit true
-        test $query = exit; and set -l should_exit true
+        test "$status" = 0; or set -l should_exit true
+        test "$query" = q; and set -l should_exit true
+        test "$query" = quit; and set -l should_exit true
+        test "$query" = exit; and set -l should_exit true
         echo "$query" | grep -iq '^cd'; and begin
             set -l dir (echo "$query" | awk '{$1=""; print $0}' | xargs)
             if test -d "$dir"
@@ -125,14 +125,14 @@ function ihurl
             continue
         end
 
-        if test $query = show
+        if test "$query" = show
             if test $show_html_output = true
                 set -g show_html_output false
             else
                 set -g show_html_output true
             end
         end
-        test $query = reset; and begin
+        test "$query" = reset; and begin
              clear
              _fetch_ihurl_output
              set -g query "."
@@ -140,7 +140,7 @@ function ihurl
              continue
         end
 
-        if test $should_exit = true
+        if test "$should_exit" = true
             if test -n "$TMUX"
                 tmux send-keys -t . C-c
                 break
