@@ -21,6 +21,11 @@ function _print_ihurl_help
 end
 
 function _print_ihurl_output
+    test -z "$file"; and begin
+        printf "Select Hurl file.\n"
+        return
+    end
+
     set -g real_query "$query"
     printf "%s\n\n" "$headers"
     if test "$query" = help
@@ -62,6 +67,10 @@ function _print_ihurl_output
 end
 
 function _fetch_ihurl_output
+    test -z "$file"; and begin
+        return
+    end
+
     set -g output (hurl --color -iL "$file" | string collect)
     set -g headers (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over == 0) { print $0 } }' | string collect)
     set -g body (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over > 0) { print $0 } }' | string collect)
@@ -96,8 +105,8 @@ function ihurl
 
             if test -e "./$new_file"
                 set -g file "$new_file"
-                _fetch_ihurl_output
                 clear
+                _fetch_ihurl_output
                 set -g query "."
                 _print_ihurl_output
                 continue
@@ -124,8 +133,8 @@ function ihurl
             end
         end
         test $query = reset; and begin
-             _fetch_ihurl_output
              clear
+             _fetch_ihurl_output
              set -g query "."
              _print_ihurl_output
              continue

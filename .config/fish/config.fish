@@ -127,7 +127,12 @@ end
 
 function ihurl
     set -l file $argv[1]
-    watchexec -f "$file" -c clear -r "~/.local/scripts/pretty_hurl.fish $argv"
+
+    if test -n "$file"
+        watchexec -f "$file" -c clear -r "~/.local/scripts/pretty_hurl.fish $argv"
+    else
+        ~/.local/scripts/pretty_hurl.fish
+    end
 end
 
 function vid
