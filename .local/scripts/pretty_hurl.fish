@@ -35,6 +35,11 @@ function _print_ihurl_output
             set -g real_query (echo "$query" | sed 's/| *save *$//')
         end
 
+        if test -z "$real_query"
+            printf "Body output hidden.\n"
+            return
+        end
+
         printf "Running: jq '%s'\n" "$real_query"
 
         echo "$body" | jq "$real_query"; or begin
@@ -92,8 +97,6 @@ function ihurl
             printf "Without tmux you need to manually press Ctrl-c.\n"
             break
         end
-
-        test -z "$query"; and set -g query "."
 
         clear
         _print_ihurl_output
