@@ -6,6 +6,7 @@ function _print_ihurl_help
     printf "Help!\n"
     printf "Available commands:\n"
     printf "  save: copy jq output to clipboard.\n"
+    printf "  echo <var>: print env var.\n"
     printf "  ls: show files in current directory.\n"
     printf "  cd: change directory.\n"
     printf "  use: change Hurl file and run it.\n"
@@ -87,6 +88,13 @@ function ihurl
         test "$query" = q; and set -l should_exit true
         test "$query" = quit; and set -l should_exit true
         test "$query" = exit; and set -l should_exit true
+
+        echo "$query" | grep -iq '^echo '; and begin
+            set -l v (echo "$query" | awk '{$1=""; print $0}' | xargs | sed 's/^\$//')
+            set -l value (env | grep -i "$v" | head -1 | awk -F'=' '{print $2}')
+            printf "%s\n" "$value"
+            continue
+        end
 
         echo "$query" | grep -iq '^cd\.\.'; and begin
             builtin cd ..
