@@ -34,14 +34,14 @@ function _print_ihurl_output
     end
 end
 
-function ihurl
-    set -g file $argv[1]
-    set -g query $argv[2]
-    test -z "$query"; and set -g query "."
-
+function _fetch_ihurl_output
     set -g output (hurl --color -iL "$file" | string collect)
     set -g headers (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over == 0) { print $0 } }' | string collect)
     set -g body (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over > 0) { print $0 } }' | string collect)
+end
+
+function ihurl
+    test -z "$query"; and set -g query "."
 
     _print_ihurl_output
 
@@ -55,6 +55,13 @@ function ihurl
             else
                 set -g show_html_output true
             end
+        end
+        test $query = reset; and begin
+             _fetch_ihurl_output
+             clear
+             set -g query "."
+             _print_ihurl_output
+             continue
         end
 
         if test $should_exit = true
@@ -85,4 +92,7 @@ function ihurl
     printf "Without tmux you need to manually press Ctrl-c.\n"
 end
 
+set -g file $argv[1]
+set -g query $argv[2]
+_fetch_ihurl_output
 ihurl $argv
