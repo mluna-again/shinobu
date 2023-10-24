@@ -5,12 +5,18 @@ set -g show_html_output false
 function _print_ihurl_help
     printf "Help!\n"
     printf "Available commands:\n"
+    printf "  save: copy jq output to clipboard.\n"
+    printf "  ls: show files in current directory.\n"
+    printf "  cd: change directory.\n"
+    printf "  use: change Hurl file and run it.\n"
     printf "  show: toggle HTML output.\n"
     printf "  reset: re-send HTTP request.\n"
     printf "  exit: quit ihurl.\n"
     printf "  quit: quit ihurl.\n"
     printf "  q: quit ihurl.\n"
     printf "  help: show this message.\n"
+    printf "save is a special one, you use it at the end of your query like this:\n"
+    printf "query> .errors[0].title | save\n"
     printf "\n"
 end
 
@@ -23,6 +29,7 @@ function _print_ihurl_output
     end
 
     printf "Use `help` for help :)\n"
+    printf "Inside: %s (%s)\n\n" (pwd) "$file"
 
     if echo "$headers" | grep -iq ": text/html"
         if test $show_html_output = true
@@ -68,11 +75,39 @@ function ihurl
 
     _print_ihurl_output
 
-    while read -g -P "query> " query
+    while read -g -S -P "query> " query
         test $status = 0; or set -l should_exit true
         test $query = q; and set -l should_exit true
         test $query = quit; and set -l should_exit true
         test $query = exit; and set -l should_exit true
+        echo "$query" | grep -iq '^cd'; and begin
+            set -l dir (echo "$query" | awk '{$1=""; print $0}' | xargs)
+            builtin cd "$dir"
+            clear
+            set -g query "."
+            _print_ihurl_output
+            continue
+        end
+        echo "$query" | grep -iq '^use'; and begin
+            set -l new_file (echo "$query" | awk '{$1=""; print $0}' | xargs)
+
+            if test -e "./$new_file"
+                set -g file "$new_file"
+                _fetch_ihurl_output
+                clear
+                set -g query "."
+                _print_ihurl_output
+                continue
+            else
+                printf "File doesn't exist.\n"
+                continue
+            end
+        end
+        test "$query" = ls; and begin
+            ls
+            continue
+        end
+
         if test $query = show
             if test $show_html_output = true
                 set -g show_html_output false
