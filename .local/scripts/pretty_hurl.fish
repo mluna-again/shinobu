@@ -1,12 +1,23 @@
 #!/usr/bin/env fish
 
+set -g show_html_output false
+
 function _print_ihurl_output
     printf "%s\n\n" "$headers"
-    printf "Running: jq '%s'\n" "$query"
 
-    echo "$body" | jq "$query"; or begin
-        printf "Query failed.\n"
-        printf "Raw output:\n%s\n" "$body"
+    if echo "$headers" | grep -iq ": text/html"
+        if test $show_html_output = true
+            printf "Raw output:\n%s\n" "$body"
+        else
+            printf "HTML output hidden.\nRun `show` to enable it.\n"
+        end
+    else
+        printf "Running: jq '%s'\n" "$query"
+
+        echo "$body" | jq "$query"; or begin
+            printf "Query failed.\n"
+            printf "Raw output:\n%s\n" "$body"
+        end
     end
 end
 
@@ -25,6 +36,13 @@ function ihurl
         test $status = 0; or set -l should_exit true
         test $query = q; and set -l should_exit true
         test $query = quit; and set -l should_exit true
+        if test $query = show
+            if test $show_html_output = true
+                set -g show_html_output false
+            else
+                set -g show_html_output true
+            end
+        end
 
         if test $should_exit = true
             if test -n "$TMUX"
@@ -32,7 +50,7 @@ function ihurl
                 break
             end
 
-            talert "Without tmux you need to manually press Ctrl-c."
+            printf "Without tmux you need to manually press Ctrl-c.\n"
             break
         end
 
@@ -41,7 +59,7 @@ function ihurl
         clear
         _print_ihurl_output
 
-        if test -n "$TMUX"
+        if test -n "$TMUX"; and test $query != show
             tmux send-keys -t . "$query"
         end
     end
@@ -51,7 +69,7 @@ function ihurl
         tmux send-keys -t . C-c
         exit
     end
-    talert "Without tmux you need to manually press Ctrl-c."
+    printf "Without tmux you need to manually press Ctrl-c.\n"
 end
 
 ihurl $argv
