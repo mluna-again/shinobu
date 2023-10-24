@@ -28,8 +28,6 @@ function _print_ihurl_output
         return
     end
 
-    printf "Use `help` for help :)\n"
-
     if echo "$headers" | grep -iq ": text/html"
         if test $show_html_output = true
             printf "Raw output:\n%s\n" "$body"
@@ -72,6 +70,7 @@ end
 function ihurl
     test -z "$query"; and set -g query "."
 
+    printf "Use `help` for help :)\n"
     _print_ihurl_output
 
     while read -g -S -P "query> " query
