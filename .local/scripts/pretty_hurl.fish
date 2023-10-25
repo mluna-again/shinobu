@@ -111,9 +111,6 @@ function ihurl
 
         echo "$query" | grep -iq '^cd\.\.'; and begin
             builtin cd ..
-            clear
-            set -g query "."
-            _print_ihurl_output
             continue
         end
         echo "$query" | grep -iq '^cd '; and begin
@@ -201,6 +198,11 @@ function ihurl
         end
 
         test "$query" = unwatch; and begin
+            clear
+            continue
+        end
+
+        test "$query" = unwatch; and begin
             if test -z "$TMUX"
                 printf "This command is only available inside tmux.\n"
                 continue
@@ -245,7 +247,7 @@ function ihurl
         clear
         _print_ihurl_output
 
-        if test -n "$TMUX"; and test $query != show; and test $query != help
+        if test -n "$TMUX"; and test "$query" != show; and test "$query" != help; and test "$query" != clear
             tmux send-keys -t . "$query"
         end
     end
