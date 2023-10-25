@@ -81,6 +81,7 @@ Tmux: move window to the right
 Monitor: open dashboard
 Dumb: screen-saver
 System: volume
+Dotfiles: status
 EOF
 )"
 
@@ -772,6 +773,20 @@ case "$action" in
 		volume=$(osascript -e 'set ovol to output volume of (get volume settings)')
 		tmux display-popup -E -x "#{popup_pane_right}" -y "#{popup_pane_top}" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
 		;;
+
+	"Dotfiles: status")
+		yadm fetch origin
+		count=$(yadm rev-list --left-right --count master...origin/master | awk '{print $2}')
+
+		if [ "$count" -gt 0 ]; then
+			alert "You are $count commits behind master."
+		else
+			success "Everything is up to date :D"
+		fi
+
+		true
+		;;
+
 
 	"Tmux: move window to the left")
 		tmux swap-window -t -1

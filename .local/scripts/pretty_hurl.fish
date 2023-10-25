@@ -12,6 +12,7 @@ function _print_ihurl_help
     printf "  use: change Hurl file and run it.\n"
     printf "  show: toggle HTML output.\n"
     printf "  reset: re-send HTTP request.\n"
+    printf "  reparse: re-parse env variables (does not re-send request).\n"
     printf "  exit: quit ihurl.\n"
     printf "  quit: quit ihurl.\n"
     printf "  q: quit ihurl.\n"
@@ -138,6 +139,20 @@ function ihurl
         test "$query" = pwd; and begin
             set -l current (builtin pwd)
             printf "%s (%s)\n" "$current" "$file"
+            continue
+        end
+
+        test "$query" = reparse; and begin
+            test -e (pwd)/.env; or test -e (pwd)/.envrc; or begin
+                printf "No .env or .envrc file found.\n"
+                continue
+            end
+
+            set -l file (pwd)/.env
+            test -e "$file"; or set -l file (pwd).envrc
+
+            sed 's/^export //' "$file" | awk -F= '{print $1, $2}' | xargs -n2 set -x
+            printf "Env reloaded.\n"
             continue
         end
 
