@@ -7,6 +7,8 @@ function _print_ihurl_help
     printf "Available commands:\n"
     printf "  save: copy jq output to clipboard.\n"
     printf "  echo <var>: print env var.\n"
+    printf "  watch <file>: quits ihurl and restarts it in 'watch' mode (tmux only).\n"
+    printf "  unwatch: quits ihurl and restarts it in 'interactive' mode (tmux only).\n"
     printf "  ls: show files in current directory.\n"
     printf "  cd: change directory.\n"
     printf "  use: change Hurl file and run it.\n"
@@ -17,8 +19,8 @@ function _print_ihurl_help
     printf "  quit: quit ihurl.\n"
     printf "  q: quit ihurl.\n"
     printf "  help: show this message.\n"
-    printf "save is a special one, you use it at the end of your query like this:\n"
-    printf "query> .errors[0].title | save\n"
+    printf "  *** save is a special one, you use it at the end of your query like this:\n"
+    printf "  *** query> .errors[0].title | save\n"
     printf "\n"
 end
 
@@ -108,9 +110,6 @@ function ihurl
             set -l dir (echo "$query" | awk '{$1=""; print $0}' | xargs)
             if test -d "$dir"
                 builtin cd "$dir"
-                clear
-                set -g query "."
-                _print_ihurl_output
                 continue
             else
                 printf "Directory doesn't exist.\n"
@@ -177,6 +176,34 @@ function ihurl
              continue
         end
 
+        test "$query" = help; and begin
+            _print_ihurl_help
+            continue
+        end
+
+        echo "$query" | grep -iq '^watch'; and begin
+            set -l file (echo "$query" | awk '{$1=""; print $0}' | xargs)
+            set -l path (pwd)/"$file"
+
+            test -e "$path"; or begin
+                printf "File doesn't exist.\n"
+                continue
+            end
+
+            echo "$path" | grep -iqv '\.hurl$'; and begin
+                printf "Not a Hurl file (%s).\n" "$path"
+                continue
+            end
+
+            if test -z "$TMUX"
+                printf "This command is only available inside tmux.\n"
+                continue
+            end
+
+            set -l relative_path (echo "$path" | sed "s|^$original_dir/||")
+            tmux send-keys -t . C-c C-l ihurl Space "$relative_path" Enter
+        end
+
         if test "$should_exit" = true
             if test -n "$TMUX"
                 tmux send-keys -t . C-c
@@ -203,6 +230,7 @@ function ihurl
     printf "Without tmux you need to manually press Ctrl-c.\n"
 end
 
+set -g original_dir (pwd)
 set -g file $argv[1]
 set -g query $argv[2]
 _fetch_ihurl_output
