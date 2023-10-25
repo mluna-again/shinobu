@@ -192,7 +192,11 @@ function ihurl
         end
 
         test "$query" = env; and begin
-            env | grep --color=never '^HURL' | xargs -I{} printf "%s\n\n" {}
+            if uname | grep -iq darwin
+                env | grep --color=never '^HURL' | xargs -S 500 -I{} printf "%s\n\n" {}
+            else
+                env | grep --color=never '^HURL' | xargs -I{} printf "%s\n\n" {}
+            end
             continue
         end
 
