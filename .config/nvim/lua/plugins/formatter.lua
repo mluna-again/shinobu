@@ -9,7 +9,7 @@ customformatters.csharpier = {
 
 return {
 	"mhartington/formatter.nvim",
-	event = "VeryLazy",
+	event = "InsertEnter",
 	config = function()
 		local util = require("formatter.util")
 		local formatters = require("formatter.filetypes")

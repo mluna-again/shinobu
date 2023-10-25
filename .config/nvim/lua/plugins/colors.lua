@@ -1,6 +1,6 @@
 return {
 	"norcalli/nvim-colorizer.lua",
-	event = "VeryLazy",
+	event = "InsertEnter",
 	config = function()
 		vim.cmd("set termguicolors")
 		require("colorizer").setup({

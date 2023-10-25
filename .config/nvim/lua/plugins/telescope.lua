@@ -3,7 +3,6 @@ return {
 	dependencies = {
 		"nvim-telescope/telescope-fzf-native.nvim",
 	},
-	event = "VeryLazy",
 	config = function()
 		local action_state = require("telescope.actions.state")
 		local actions = require("telescope.actions")

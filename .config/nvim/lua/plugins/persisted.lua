@@ -1,5 +1,6 @@
 return {
 	"olimorris/persisted.nvim",
+	event = "VeryLazy",
 	dependencies = {
 		"goolord/alpha-nvim",
 	},

@@ -1,6 +1,14 @@
 return {
 	"sindrets/diffview.nvim",
-	event = "VeryLazy",
+	cmd = {
+		"DiffviewClose",
+		"DiffviewFileHistory",
+		"DiffviewFocusFiles",
+		"DiffviewLog",
+		"DiffviewOpen",
+		"DiffviewRefresh",
+		"DiffviewToggleFiles"
+	},
 	config = function()
 		vim.opt.fillchars:append { diff = "╱" }
 		require("diffview").setup({

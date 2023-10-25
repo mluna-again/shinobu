@@ -1,6 +1,10 @@
 return {
 	"simrat39/symbols-outline.nvim",
-	event = "VeryLazy",
+	cmd = {
+		"SymbolsOutline",
+		"SymbolsOutlineOpen",
+		"SymbolsOutlineClose"
+	},
 	config = function()
 		require("symbols-outline").setup({
 			highlight_hovered_item = true,

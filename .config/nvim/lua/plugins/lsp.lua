@@ -44,12 +44,10 @@ local normalized = {
 
 return {
 	"williamboman/mason-lspconfig.nvim",
-	event = "BufReadPre",
+	event = "InsertEnter",
 	dependencies = {
-		"folke/neodev.nvim",
 		"williamboman/mason.nvim",
 		"rmagatti/goto-preview",
-		"folke/which-key.nvim",
 		"hrsh7th/nvim-cmp",
 		"neovim/nvim-lspconfig",
 		"hrsh7th/cmp-nvim-lsp",

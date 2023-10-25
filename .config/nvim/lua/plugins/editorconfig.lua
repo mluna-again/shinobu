@@ -1,4 +1,4 @@
 return {
 	"editorconfig/editorconfig-vim",
-	event = "VeryLazy"
+	event = "InsertEnter"
 }

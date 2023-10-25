@@ -1,4 +1,4 @@
 return {
 	"junegunn/goyo.vim",
-	event = "VeryLazy"
+	event = "InsertEnter"
 }

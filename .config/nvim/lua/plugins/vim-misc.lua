@@ -1,4 +1,4 @@
 return {
 	"xolox/vim-misc",
-	event = "VeryLazy"
+	event = "InsertEnter"
 }
