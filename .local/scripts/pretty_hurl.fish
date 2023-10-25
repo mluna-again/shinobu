@@ -149,9 +149,15 @@ function ihurl
             end
 
             set -l file (pwd)/.env
-            test -e "$file"; or set -l file (pwd).envrc
+            test -e "$file"; or set -l file (pwd)/.envrc
 
-            sed 's/^export //' "$file" | awk -F= '{print $1, $2}' | xargs -n2 set -x
+            for args in (sed 's/^ *export //' "$file")
+                set -l key (printf "%s" "$args" | awk -F= '{print $1}')
+                set -l value (printf "%s" "$args" | awk -F= '{print $2}' | sed 's/^"//' | sed 's/"$//')
+
+                set -x "$key" "$value"
+            end
+
             printf "Env reloaded.\n"
             continue
         end
