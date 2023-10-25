@@ -31,6 +31,7 @@ function _print_ihurl_help
     printf "  help: show this message.\n"
     printf "  *** save is a special one, you use it at the end of your query like this:\n"
     printf "  *** query> .errors[0].title | save\n"
+    printf "Note: everything that is not in this list is considered a query to jq for JSON responses."
     printf "\n"
 end
 
