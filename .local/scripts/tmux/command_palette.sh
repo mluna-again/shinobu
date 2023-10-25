@@ -779,7 +779,7 @@ case "$action" in
 		count=$(yadm rev-list --left-right --count master...origin/master | awk '{print $2}')
 
 		if [ "$count" -gt 0 ]; then
-			alert "You are $count commits behind master."
+			alert "You are $count commit(s) behind master."
 		else
 			success "Everything is up to date :D"
 		fi
