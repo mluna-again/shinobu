@@ -18,6 +18,7 @@ function _print_ihurl_help
     printf "  echo <var>: print env var.\n"
     printf "  watch <file>: quits ihurl and restarts it in 'watch' mode (tmux only).\n"
     printf "  unwatch: quits ihurl and restarts it in 'interactive' mode (tmux only).\n"
+    printf "  env: prints env variables.\n"
     printf "  ls: show files in current directory.\n"
     printf "  cd: change directory.\n"
     printf "  use: change Hurl file and run it.\n"
@@ -187,6 +188,11 @@ function ihurl
 
         test "$query" = help; and begin
             _print_ihurl_help
+            continue
+        end
+
+        test "$query" = env; and begin
+            env | grep --color=never '^HURL' | xargs -I{} printf "%s\n\n" {}
             continue
         end
 
