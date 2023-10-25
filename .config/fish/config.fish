@@ -72,6 +72,34 @@ set -gx ERL_AFLAGS "-kernel shell_history enabled -kernel shell_history_file_byt
 set -gx GOPATH "$HOME/.local/go"
 set -gx SHELLCHECK_OPTS "-e SC2001"
 
+# ALIASES
+abbr --add p psql -U postgres
+abbr --add ph iex -S mix phx.server
+abbr --add dots yadm
+abbr --add dotss yadm status
+abbr --add dotsa yadm add -u
+abbr --add dotsA yadm add
+abbr --add dotsl yadm log
+abbr --add dotsC yadm checkout
+abbr --add dotsR yadm reset --hard
+abbr --add dotsp yadm push
+abbr --add dotsP yadm pull
+abbr --add dotsd yadm diff
+abbr --add dotsdd yadm diff --cached
+abbr --add dotsc yadm commit -m
+abbr --add gd git diff
+abbr --add gdd git diff --cached
+abbr --add gl git log
+abbr --add gCC git clean -fd
+abbr --add gC git checkout
+abbr --add gP git pull
+abbr --add gp git push
+abbr --add gs git status
+abbr --add ga git add .
+abbr --add gA git add
+abbr --add gc git commit -m
+abbr --add gofmt go fmt ./...
+
 # FUNCTIONS
 command -v z &>/dev/null; and function cd
     z $argv
@@ -91,10 +119,6 @@ end
 
 function q
     exit
-end
-
-function p
-    psql -U postgres $argv
 end
 
 function cd..
@@ -121,10 +145,6 @@ function jqp
     command jqp --config ~/.config/jqp/config.yaml $argv
 end
 
-function phurl
-    ~/.local/scripts/pretty_hurl.sh $argv
-end
-
 function ihurl
     set -l file $argv[1]
 
@@ -142,72 +162,8 @@ function vid
     mpv --no-video $file
 end
 
-function ph
-    iex -S mix phx.server
-end
-
 function v
     nvim $argv
-end
-
-function dots
-    yadm $argv
-end
-
-function dotss
-    yadm status
-end
-
-function dotsa
-    yadm add -u
-end
-
-function dotsA
-    yadm add -u
-end
-
-function dotsl
-    yadm log $argv
-end
-
-function dotsC
-    yadm checkout $argv
-end
-
-function dotsR
-    yadm reset --hard
-end
-
-function dotsp
-    yadm push $argv
-end
-
-function dotsP
-    yadm pull $argv
-end
-
-function dotsd
-    yadm diff $argv
-end
-
-function dotsdd
-    yadm diff --cached $argv
-end
-
-function dotsc
-    yadm commit -m "$argv"
-end
-
-function gd
-    git diff $argv
-end
-
-function gdd
-    git diff --cached $argv
-end
-
-function gl
-    git log $argv
 end
 
 function gR
@@ -220,38 +176,6 @@ function gR
 
     printf "ok...\n"
     git reset --hard
-end
-
-function gCC
-    git clean -fd
-end
-
-function gC
-    git checkout $argv
-end
-
-function gP
-    git pull $argv
-end
-
-function gp
-    git push $argv
-end
-
-function gs
-    git status $argv
-end
-
-function ga
-    git add .
-end
-
-function gA
-    git add $argv
-end
-
-function gc
-    git commit -m "$argv"
 end
 
 function gL
@@ -302,10 +226,6 @@ end
 
 function t
     tmux attach; or tmux
-end
-
-function gofmt
-    go fmt ./...
 end
 
 direnv hook fish | source
