@@ -1,5 +1,14 @@
 #!/usr/bin/env fish
 
+# make highlight work for cmds
+function watch; end
+function unwatch; end
+function use; end
+function reset; end
+function reparse; end
+function show; end
+function q; end
+
 set -g show_html_output false
 
 function _print_ihurl_help
@@ -179,6 +188,15 @@ function ihurl
         test "$query" = help; and begin
             _print_ihurl_help
             continue
+        end
+
+        test "$query" = unwatch; and begin
+            if test -z "$TMUX"
+                printf "This command is only available inside tmux.\n"
+                continue
+            end
+
+            tmux send-keys -t . C-c C-l ihurl Enter
         end
 
         echo "$query" | grep -iq '^watch'; and begin
