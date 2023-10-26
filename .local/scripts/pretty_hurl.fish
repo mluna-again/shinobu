@@ -63,9 +63,9 @@ function _pretty_print_html
     # why won't you check for empty strings bruh.
     # a panic in rust because an empty string is so funny.
     if test -n "$q"
-        echo $argv[1] | htmlq -p "$q" | cat -pP -l html
+        echo $argv[1] | htmlq -p "$q" | cat -pP -l html --theme kanagawa-dragon
     else
-        echo $argv[1] | htmlq -p | cat -pP -l html
+        echo $argv[1] | htmlq -p | cat -pP -l html --theme kanagawa-dragon
     end
 end
 
