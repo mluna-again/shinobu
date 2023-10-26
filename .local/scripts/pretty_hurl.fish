@@ -257,13 +257,6 @@ function ihurl
             tmux send-keys -t . "$query"
         end
     end
-
-    # user pressed Ctrl-d
-    if test -n "$TMUX"
-        tmux send-keys -t . C-c
-        exit
-    end
-    printf "Without tmux you need to manually press Ctrl-c.\n"
 end
 
 set -g original_dir (pwd)
