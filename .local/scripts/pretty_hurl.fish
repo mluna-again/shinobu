@@ -11,7 +11,7 @@ function quit; end
 function exit; end
 function q; end
 
-set -g show_html_output false
+set -g show_html_output true
 
 function _print_ihurl_help
     printf "Help!\n"
@@ -217,8 +217,9 @@ function ihurl
         end
 
         echo "$query" | grep -iq '^watch'; and begin
-            set -l file (echo "$query" | awk '{$1=""; print $0}' | xargs)
-            set -l path (pwd)/"$file"
+            set -l f (echo "$query" | awk '{$1=""; print $0}' | xargs)
+            test -z "$f"; and set -l f "$file"
+            set -l path (pwd)/"$f"
 
             test -e "$path"; or begin
                 printf "File doesn't exist.\n"
