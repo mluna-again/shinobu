@@ -87,6 +87,10 @@ function _print_ihurl_output
         return
     end
 
+    if echo "$headers" | head -1 | grep -q 204; or test -z "$body"
+        return
+    end
+
     if echo "$content_type" | grep -iq "text/html"
         if test $show_output = true
             printf "HTML output:\n"
@@ -287,7 +291,7 @@ function ihurl
                 continue
             end
 
-            set -l relative_path (echo "$path" | sed "s|^$original_dir||")
+            set -l relative_path (echo "$path" | sed "s|^$original_dir||" | sed 's|^/*||')
             tmux send-keys -t . C-c C-l ihurl Space "$relative_path" Enter
         end
 
