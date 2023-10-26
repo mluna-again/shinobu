@@ -99,7 +99,7 @@ function ihurl
     printf "Use `help` for help :)\n"
     _print_ihurl_output
 
-    while read -g -S -P "query> " query
+    while read -g -S -P "\$ " query
         set -l query (echo "$query" | sed 's/ *$//')
 
         test "$status" = 0; or set -l should_exit true
