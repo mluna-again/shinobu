@@ -83,6 +83,10 @@ function _print_ihurl_output
     end
 
     set -l content_type (echo "$headers" | grep -i "content-type" | awk -F':' '{print $2}' | xargs)
+    if echo "$headers" | head -1 | grep -q 204; and test -z "$body"
+        return
+    end
+
     if echo "$content_type" | grep -iq "text/html"
         if test $show_output = true
             printf "HTML output:\n"
