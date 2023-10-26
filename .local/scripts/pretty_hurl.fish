@@ -7,6 +7,8 @@ function use; end
 function reset; end
 function reparse; end
 function show; end
+function quit; end
+function exit; end
 function q; end
 
 set -g show_html_output false
@@ -98,6 +100,8 @@ function ihurl
     _print_ihurl_output
 
     while read -g -S -P "query> " query
+        set -l query (echo "$query" | sed 's/ *$//')
+
         test "$status" = 0; or set -l should_exit true
         test "$query" = q; and set -l should_exit true
         test "$query" = quit; and set -l should_exit true
@@ -198,7 +202,7 @@ function ihurl
             continue
         end
 
-        test "$query" = unwatch; and begin
+        test "$query" = clear; and begin
             clear
             continue
         end
@@ -231,7 +235,7 @@ function ihurl
                 continue
             end
 
-            set -l relative_path (echo "$path" | sed "s|^$original_dir/||")
+            set -l relative_path (echo "$path" | sed "s|^$original_dir||")
             tmux send-keys -t . C-c C-l ihurl Space "$relative_path" Enter
         end
 
