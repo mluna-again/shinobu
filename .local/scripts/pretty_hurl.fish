@@ -11,7 +11,18 @@ function quit; end
 function exit; end
 function q; end
 
-set -g show_html_output true
+set -g show_output true
+
+command -vq jq; or begin
+    printf "[ERROR] Requred dependency not installed: jq.\n"
+    exit 1
+end
+command -vq hurl; or begin
+    printf "[ERROR] Requred dependency not installed: hurl.\n"
+    exit 1
+end
+command -vq bat; or printf "[WARNING] Optional dependency not installed: bat.\n"
+command -vq htmlq; or printf "[WARNING] Optional dependency not installed: htmlq.\n"
 
 function _print_ihurl_help
     printf "Help!\n"
@@ -73,13 +84,18 @@ function _print_ihurl_output
 
     set -l content_type (echo "$headers" | grep -i "content-type" | awk -F':' '{print $2}' | xargs)
     if echo "$content_type" | grep -iq "text/html"
-        if test $show_html_output = true
+        if test $show_output = true
             printf "HTML output:\n"
             _pretty_print_html "$body" "$query"
         else
             printf "HTML output hidden.\nRun `show` to enable it.\n"
         end
     else if echo "$content_type" | grep -iq "application/json"
+        if test $show_output != true
+            printf "JSON output hidden.\nRun `show` to enable it.\n"
+            return
+        end
+
         if echo "$query" | grep -iq '| *save *$'
             set -g real_query (echo "$query" | sed 's/| *save *$//')
         end
@@ -104,6 +120,11 @@ function _print_ihurl_output
             end
         end
     else
+        if test $show_output != true
+            printf "Output hidden.\nRun `show` to enable it.\n"
+            return
+        end
+
         printf "Unknown content-type: %s.\n" "$content_type"
         printf "Raw output:\n%s\n" "$body"
     end
@@ -200,10 +221,10 @@ function ihurl
         end
 
         if test "$query" = show
-            if test $show_html_output = true
-                set -g show_html_output false
+            if test $show_output = true
+                set -g show_output false
             else
-                set -g show_html_output true
+                set -g show_output true
             end
         end
         test "$query" = reset; and begin
