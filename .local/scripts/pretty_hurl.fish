@@ -5,6 +5,7 @@ function watch; end
 function unwatch; end
 function use; end
 function reset; end
+function r; end
 function reparse; end
 function show; end
 function quit; end
@@ -235,7 +236,7 @@ function ihurl
                 set -g show_output true
             end
         end
-        test "$query" = reset; and begin
+        test "$query" = reset; or test "$query" = r; and begin
              clear
              _fetch_ihurl_output
              set -g query "."
