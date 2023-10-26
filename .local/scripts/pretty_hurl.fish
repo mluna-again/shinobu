@@ -37,6 +37,27 @@ function _print_ihurl_help
     printf "\n"
 end
 
+function _pretty_print_html
+    set -l q $argv[2]
+    # ignore original . query for jq
+    test "$q" = .; and set -l q ""
+
+    command -vq htmlq; or command -vq bat; or begin
+        echo $argv[1]
+
+        test -n "$q"; and printf "[WARNING] htmlq or bat not installed. Query ignored.\n"
+        return
+    end
+
+    # why won't you check for empty strings bruh.
+    # a panic in rust because an empty string is so funny.
+    if test -n "$q"
+        echo $argv[1] | htmlq -p "$q" | cat -pP -l html
+    else
+        echo $argv[1] | htmlq -p | cat -pP -l html
+    end
+end
+
 function _print_ihurl_output
     test -z "$file"; and begin
         printf "Select Hurl file.\n"
@@ -50,13 +71,15 @@ function _print_ihurl_output
         return
     end
 
-    if echo "$headers" | grep -iq ": text/html"
+    set -l content_type (echo "$headers" | grep -i "content-type" | awk -F':' '{print $2}' | xargs)
+    if echo "$content_type" | grep -iq "text/html"
         if test $show_html_output = true
-            printf "Raw output:\n%s\n" "$body"
+            printf "HTML output:\n"
+            _pretty_print_html "$body" "$query"
         else
             printf "HTML output hidden.\nRun `show` to enable it.\n"
         end
-    else
+    else if echo "$content_type" | grep -iq "application/json"
         if echo "$query" | grep -iq '| *save *$'
             set -g real_query (echo "$query" | sed 's/| *save *$//')
         end
@@ -80,6 +103,9 @@ function _print_ihurl_output
                echo "$body" | jq -r "$real_query" | xclip -sel clip; and printf "Copied.\n"
             end
         end
+    else
+        printf "Unknown content-type: %s.\n" "$content_type"
+        printf "Raw output:\n%s\n" "$body"
     end
 end
 
