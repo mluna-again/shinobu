@@ -42,11 +42,11 @@ function _print_ihurl_help
     printf "  exit: quit ihurl.\n"
     printf "  quit: quit ihurl.\n"
     printf "  q: quit ihurl.\n"
-    printf "  help: show this message.\n"
-    printf "  *** save is a special one, you use it at the end of your query like this:\n"
-    printf "  *** query> .errors[0].title | save\n"
-    printf "Note: everything that is not in this list is considered a query to jq for JSON responses."
-    printf "\n"
+    printf "  help: show this message.\n\n"
+    printf "  *** save is a special one, you use it at the end of your query like this (only works in jq or env):\n"
+    printf "  *** \$ .errors[0].title | save\n"
+    printf "  *** \$ env user | save\n\n"
+    printf "Note: everything that is not in this list is considered a query to jq for JSON responses.\n"
 end
 
 function _pretty_print_html
@@ -122,11 +122,8 @@ function _print_ihurl_output
         end
 
         if test "$real_query" != "$query"
-            if uname | grep -iq darwin
-                echo "$body" | jq -r "$real_query" | pbcopy; and printf "Copied.\n"
-            else
-               echo "$body" | jq -r "$real_query" | xclip -sel clip; and printf "Copied.\n"
-            end
+            echo "$body" | jq -r "$real_query" | fish_clipboard_copy
+            printf "Copied.\n"
         end
     else
         if test $show_output != true
@@ -281,8 +278,18 @@ function ihurl
 
         if echo "$query" | grep -iq '^env'
             set -l var (echo "$query" | awk '{print $2}')
+            test "$var" = '|'; and set -l var
+
             if test -n "$var"
-                env | grep -i --color=never "HURL_$var"
+                set -l value (env | grep -i --color=never "HURL_$var")
+
+                if echo "$query" | grep -iq '| *save *$'
+                    set -l v (echo "$value" | awk -F'=' '{print $2}')
+                    echo "$v" | fish_clipboard_copy
+                    printf "Copied %s.\n" "$v"
+                end
+
+                printf "%s\n" "$value"
                 continue
             end
 
