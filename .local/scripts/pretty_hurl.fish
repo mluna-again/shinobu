@@ -69,6 +69,9 @@ function _pretty_print_html
     else
         echo $argv[1] | htmlq -p | cat -pP -l html --theme kanagawa-dragon
     end
+
+    # without this the prompt swallows the last line
+    printf "\n"
 end
 
 function _print_ihurl_output
