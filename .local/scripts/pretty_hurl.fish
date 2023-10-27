@@ -1,5 +1,19 @@
 #!/usr/bin/env fish
 
+set -g original_arvg $argv
+set -g original_dir (pwd)
+set -g file $argv[1]
+set -g query $argv[2]
+function my_signal_handler --on-signal SIGINT
+    if test "$should_exit" = true
+        return
+    end
+
+    printf "Type `exit` to quit.\n"
+    _fetch_ihurl_output
+    ihurl $original_arvg
+end
+
 # make highlight work for cmds
 function watch; end
 function unwatch; end
@@ -160,10 +174,10 @@ function ihurl
     while read -g -S -P "\$ " query
         set -l query (echo "$query" | sed 's/ *$//')
 
-        test "$status" = 0; or set -l should_exit true
-        test "$query" = q; and set -l should_exit true
-        test "$query" = quit; and set -l should_exit true
-        test "$query" = exit; and set -l should_exit true
+        test "$status" = 0; or set -g should_exit true
+        test "$query" = q; and set -g should_exit true
+        test "$query" = quit; and set -g should_exit true
+        test "$query" = exit; and set -g should_exit true
 
         if echo "$query" | grep -Eq '^[a-zA-Z]+="?[a-zA-Z0-9_-]+"?$'
             set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
