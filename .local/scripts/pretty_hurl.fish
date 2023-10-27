@@ -163,6 +163,20 @@ function ihurl
         test "$query" = quit; and set -l should_exit true
         test "$query" = exit; and set -l should_exit true
 
+        if echo "$query" | grep -Eq '^[a-zA-Z]+=[a-zA-Z]+$'
+            set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
+            set -l value (echo "$query" | awk -F'=' '{print $2}')
+
+            set -x "$key" "$value"
+            printf "%s=%s\n" "$key" "$value"
+            continue
+        end
+
+        if echo "$query" | grep -q '='
+            printf "Invalid assignment. Usage: <name>=<value>.\n"
+            continue
+        end
+
         echo "$query" | grep -iq '^echo '; and begin
             set -l v (echo "$query" | awk '{$1=""; print $0}' | xargs | sed 's/^\$//')
             set -l value (env | grep -i "$v" | head -1 | awk -F'=' '{print $2}')
