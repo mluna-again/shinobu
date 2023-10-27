@@ -409,8 +409,5 @@ function ihurl
     end
 end
 
-set -g original_dir (pwd)
-set -g file $argv[1]
-set -g query $argv[2]
 _fetch_ihurl_output
 ihurl $argv
