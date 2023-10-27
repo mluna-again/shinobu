@@ -25,6 +25,7 @@ command -vq hurl; or begin
 end
 command -vq bat; or printf "[WARNING] Optional dependency not installed: bat.\n"
 command -vq htmlq; or printf "[WARNING] Optional dependency not installed: htmlq.\n"
+command -vq fzf; or printf "[WARNING] Optional dependency not installed: fzf.\n"
 
 function _print_ihurl_help
     printf "Help!\n"
@@ -193,7 +194,12 @@ function ihurl
         end
 
         if test "$query" = grep
-            set -l file (fzf)
+            if not command -vq fzf
+                printf "fzf is not installed.\n"
+                continue
+            end
+
+            set -l file (find . -type f -iname '*.hurl' | sed 's|^./||' | fzf)
 
             test -z "$file"; and continue
 
