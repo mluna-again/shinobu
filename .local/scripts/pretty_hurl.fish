@@ -192,6 +192,19 @@ function ihurl
             continue
         end
 
+        if test "$query" = grep
+            set -l file (fzf)
+
+            test -z "$file"; and continue
+
+            set -g file (pwd)/"$file"
+            clear
+            _fetch_ihurl_output
+            set -g query "."
+            _print_ihurl_output
+            continue
+        end
+
         if test "$query" = cd
             builtin cd "$original_dir"
             continue
