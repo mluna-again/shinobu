@@ -221,7 +221,7 @@ function ihurl
             end
         end
         test "$query" = ls; and begin
-            ls
+            ls -a
             continue
         end
         test "$query" = pwd; and begin
@@ -231,13 +231,21 @@ function ihurl
         end
 
         test "$query" = reparse; and begin
-            test -e (pwd)/.env; or test -e (pwd)/.envrc; or begin
+            set -l current_env (pwd)/.env
+            set -l current_envrc (pwd)/.envrc
+            set -l root_env "$original_dir/.env"
+            set -l root_envrc "$original_dir/.envrc"
+
+            test -e "$current_env"; or test -e "$current_envrc"; or test -e "$root_env"; or test -e "$root_envrc"; or begin
                 printf "No .env or .envrc file found.\n"
+                printf "Locations searched:\n1. %s\n2. %s\n3. %s\n4. %s\n" "$current_env" "$current_envrc" "$root_env" "$root_envrc"
                 continue
             end
 
             set -l file (pwd)/.env
             test -e "$file"; or set -l file (pwd)/.envrc
+            test -e "$file"; or set -l file "$original_dir/.env"
+            test -e "$file"; or set -l file "$original_dir/.envrc"
 
             for args in (sed 's/^ *export //' "$file")
                 set -l key (printf "%s" "$args" | awk -F= '{print $1}')
@@ -246,7 +254,7 @@ function ihurl
                 set -x "$key" "$value"
             end
 
-            printf "Env reloaded.\n"
+            printf "Env reloaded (%s).\n" "$file"
             continue
         end
 
