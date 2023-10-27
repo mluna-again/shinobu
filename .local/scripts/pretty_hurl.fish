@@ -226,6 +226,7 @@ function ihurl
         end
         test "$query" = pwd; and begin
             set -l current (builtin pwd)
+            test -z "$file"; and set -l file "<no request selected>"
             printf "%s (%s)\n" "$current" "$file"
             continue
         end
