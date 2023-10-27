@@ -109,7 +109,7 @@ function _print_ihurl_output
         printf "%s\n\n" "$headers"
     else
         # print status code
-        printf "%s\n\n" (echo "$headers" | head -1)
+        printf "%s\nHeaders hidden.\nRun `headers` to enable them.\n\n" (echo "$headers" | head -1)
     end
     # hurl first line is in green and if i only print that all output will be green
     set_color normal
@@ -197,6 +197,13 @@ function ihurl
 
     while read -g -S -P "\$ " query
         set -l query (echo "$query" | sed 's/ *$//')
+        if test -z "$query"
+            set -g show_output false
+            clear
+            _print_ihurl_output
+            continue
+        end
+
         set -l original_query "$query"
 
         test "$status" = 0; or set -g should_exit true
