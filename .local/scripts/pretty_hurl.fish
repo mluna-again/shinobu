@@ -192,6 +192,11 @@ function ihurl
             continue
         end
 
+        if test "$query" = cd
+            builtin cd "$original_dir"
+            continue
+        end
+
         echo "$query" | grep -iq '^cd\.\.'; and begin
             builtin cd ..
             continue
