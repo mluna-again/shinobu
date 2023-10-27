@@ -266,6 +266,9 @@ function ihurl
             else
                 set -g show_output true
             end
+            set -g query "."
+            _print_ihurl_output
+            continue
         end
         test "$query" = reset; or test "$query" = r; and begin
              clear
