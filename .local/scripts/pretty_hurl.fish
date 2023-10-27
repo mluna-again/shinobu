@@ -263,10 +263,11 @@ function ihurl
         if test "$query" = show
             if test $show_output = true
                 set -g show_output false
+                set -g query ""
             else
                 set -g show_output true
+                set -g query "."
             end
-            set -g query "."
             _print_ihurl_output
             continue
         end
