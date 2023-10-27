@@ -263,7 +263,13 @@ function ihurl
             continue
         end
 
-        test "$query" = env; and begin
+        if echo "$query" | grep -iq '^env'
+            set -l var (echo "$query" | awk '{print $2}')
+            if test -n "$var"
+                env | grep -i --color=never "HURL_$var"
+                continue
+            end
+
             if uname | grep -iq darwin
                 env | grep --color=never '^HURL' | xargs -S 500 -I{} printf "%s\n\n" {}
             else
