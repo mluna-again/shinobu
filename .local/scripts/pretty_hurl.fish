@@ -7,6 +7,7 @@ function use; end
 function reset; end
 function r; end
 function reparse; end
+function save; end
 function show; end
 function quit; end
 function exit; end
@@ -309,6 +310,11 @@ function ihurl
         test "$query" = unwatch; and begin
             if test -z "$TMUX"
                 printf "This command is only available inside tmux.\n"
+                continue
+            end
+
+            if test -z "$file"
+                printf "Not watching any file.\n"
                 continue
             end
 
