@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+set -g fish_color_error yellow
+
 set -g original_arvg $argv
 set -g original_dir (pwd)
 set -g file $argv[1]
@@ -407,6 +409,8 @@ function ihurl
             tmux send-keys -t . "$query"
         end
     end
+
+    set -g should_exit true
 end
 
 _fetch_ihurl_output
