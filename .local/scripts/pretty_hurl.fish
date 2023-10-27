@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+set -g IGNORED_CMDS show help clear headers
+
 set -g fish_color_error yellow
 
 set -g original_arvg $argv
@@ -30,6 +32,7 @@ function exit; end
 function q; end
 
 set -g show_output true
+set -g show_headers true
 
 command -vq jq; or begin
     printf "[ERROR] Requred dependency not installed: jq.\n"
@@ -46,6 +49,7 @@ command -vq fzf; or printf "[WARNING] Optional dependency not installed: fzf.\n"
 function _print_ihurl_help
     printf "Help!\n"
     printf "Available commands:\n"
+    printf "  grep: fuzzy find requests in current directory.\n"
     printf "  save: copy jq output to clipboard.\n"
     printf "  echo <var>: print env var.\n"
     printf "  watch <file>: quits ihurl and restarts it in 'watch' mode (tmux only).\n"
@@ -54,7 +58,8 @@ function _print_ihurl_help
     printf "  ls: show files in current directory.\n"
     printf "  cd: change directory.\n"
     printf "  use: change Hurl file and run it.\n"
-    printf "  show: toggle HTML output.\n"
+    printf "  show: toggle output.\n"
+    printf "  headers: toggle headers.\n"
     printf "  reset: re-send HTTP request.\n"
     printf "  reparse: re-parse env variables (does not re-send request).\n"
     printf "  exit: quit ihurl.\n"
@@ -65,6 +70,7 @@ function _print_ihurl_help
     printf "  *** \$ .errors[0].title | save\n"
     printf "  *** \$ env user | save\n\n"
     printf "Note: everything that is not in this list is considered a query to jq for JSON responses.\n"
+    printf "Note 2: You can set HURL_* env variables with <key>=<value>\n"
 end
 
 function _pretty_print_html
@@ -98,7 +104,16 @@ function _print_ihurl_output
     end
 
     set -g real_query "$query"
-    printf "%s\n\n" "$headers"
+
+    if test "$show_headers" = true
+        printf "%s\n\n" "$headers"
+    else
+        # print status code
+        printf "%s\n\n" (echo "$headers" | head -1)
+    end
+    # hurl first line is in green and if i only print that all output will be green
+    set_color normal
+
     if test "$query" = help
         _print_ihurl_help
         return
@@ -114,14 +129,21 @@ function _print_ihurl_output
     end
 
     if echo "$content_type" | grep -iq "text/html"
-        if test $show_output = true
+        if test "$show_output" = true
             printf "HTML output:\n"
             _pretty_print_html "$body" "$query"
         else
             printf "HTML output hidden.\nRun `show` to enable it.\n"
         end
+    else if echo "$content_type" | grep -iq "text/plain"
+        if test "$show_output" != true
+            printf "Plain Text output hidden.\nRun `show` to enable it.\n"
+            return
+        end
+        printf "Plain Text output:\n%s\n" "$body"
+
     else if echo "$content_type" | grep -iq "application/json"
-        if test $show_output != true
+        if test "$show_output" != true
             printf "JSON output hidden.\nRun `show` to enable it.\n"
             return
         end
@@ -147,7 +169,7 @@ function _print_ihurl_output
             printf "Copied.\n"
         end
     else
-        if test $show_output != true
+        if test "$show_output" != true
             printf "Output hidden.\nRun `show` to enable it.\n"
             return
         end
@@ -175,6 +197,7 @@ function ihurl
 
     while read -g -S -P "\$ " query
         set -l query (echo "$query" | sed 's/ *$//')
+        set -l original_query "$query"
 
         test "$status" = 0; or set -g should_exit true
         test "$query" = q; and set -g should_exit true
@@ -300,6 +323,22 @@ function ihurl
             continue
         end
 
+        if test "$query" = headers
+            if test "$show_headers" = true
+                set -g show_headers false
+            else
+                set -g show_headers true
+            end
+            if test "$show_output" = true
+                set -g query "."
+            else
+                set -g query ""
+            end
+            clear
+            _print_ihurl_output
+            continue
+        end
+
         if test "$query" = show
             if test $show_output = true
                 set -g show_output false
@@ -308,6 +347,7 @@ function ihurl
                 set -g show_output true
                 set -g query "."
             end
+            clear
             _print_ihurl_output
             continue
         end
@@ -405,7 +445,7 @@ function ihurl
         clear
         _print_ihurl_output
 
-        if test -n "$TMUX"; and test "$query" != show; and test "$query" != help; and test "$query" != clear
+        if test -n "$TMUX"; and not contains "$original_query" $IGNORED_CMDS
             tmux send-keys -t . "$query"
         end
     end
