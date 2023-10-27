@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+set -g already_traped false
+
 set -g IGNORED_CMDS show help clear headers
 
 set -g fish_color_error yellow
@@ -13,8 +15,12 @@ function my_signal_handler --on-signal SIGINT
         return
     end
 
-    printf "Type `exit` to quit.\n"
-    _fetch_ihurl_output
+    if test "$already_traped" = true
+        return
+    end
+
+    set -g already_traped true
+
     ihurl $original_arvg
 end
 
