@@ -163,12 +163,19 @@ function ihurl
         test "$query" = quit; and set -l should_exit true
         test "$query" = exit; and set -l should_exit true
 
-        if echo "$query" | grep -Eq '^[a-zA-Z]+=[a-zA-Z]+$'
+        if echo "$query" | grep -Eq '^[a-zA-Z]+=[a-zA-Z0-9_-]+$'
             set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
             set -l value (echo "$query" | awk -F'=' '{print $2}')
 
             set -x "$key" "$value"
             printf "%s=%s\n" "$key" "$value"
+            continue
+        end
+
+        if echo "$query" | grep -Eq '^[a-zA-Z]+='
+            set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
+            set -x "$key"
+            printf "%s=\n" "$key"
             continue
         end
 
