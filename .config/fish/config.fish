@@ -145,13 +145,13 @@ function jqp
     command jqp --config ~/.config/jqp/config.yaml $argv
 end
 
-function ihurl
+function koi
     set -l file $argv[1]
 
     if test -n "$file"
-        watchexec -f "$file" -c clear -r "~/.local/scripts/pretty_hurl.fish $argv"
+        watchexec -f "$file" -c clear -r "~/.local/scripts/koi.fish $argv"
     else
-        ~/.local/scripts/pretty_hurl.fish
+        ~/.local/scripts/koi.fish
     end
 end
 

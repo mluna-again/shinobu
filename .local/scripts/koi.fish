@@ -21,7 +21,7 @@ function my_signal_handler --on-signal SIGINT
 
     set -g already_traped true
 
-    ihurl $original_arvg
+    koi $original_arvg
 end
 
 # make highlight work for cmds
@@ -52,14 +52,14 @@ command -vq bat; or printf "[WARNING] Optional dependency not installed: bat.\n"
 command -vq htmlq; or printf "[WARNING] Optional dependency not installed: htmlq.\n"
 command -vq fzf; or printf "[WARNING] Optional dependency not installed: fzf.\n"
 
-function _print_ihurl_help
+function _print_koi_help
     printf "Help!\n"
     printf "Available commands:\n"
     printf "  grep: fuzzy find requests in current directory.\n"
     printf "  save: copy jq output to clipboard.\n"
     printf "  echo <var>: print env var.\n"
-    printf "  watch <file>: quits ihurl and restarts it in 'watch' mode (tmux only).\n"
-    printf "  unwatch: quits ihurl and restarts it in 'interactive' mode (tmux only).\n"
+    printf "  watch <file>: quits koi and restarts it in 'watch' mode (tmux only).\n"
+    printf "  unwatch: quits koi and restarts it in 'interactive' mode (tmux only).\n"
     printf "  env: prints env variables.\n"
     printf "  ls: show files in current directory.\n"
     printf "  cd: change directory.\n"
@@ -69,9 +69,9 @@ function _print_ihurl_help
     printf "  headers: toggle headers.\n"
     printf "  reset: re-send HTTP request.\n"
     printf "  reparse: re-parse env variables (does not re-send request).\n"
-    printf "  exit: quit ihurl.\n"
-    printf "  quit: quit ihurl.\n"
-    printf "  q: quit ihurl.\n"
+    printf "  exit: quit koi.\n"
+    printf "  quit: quit koi.\n"
+    printf "  q: quit koi.\n"
     printf "  help: show this message.\n\n"
     printf "  *** save is a special one, you use it at the end of your query like this (only works in jq or env):\n"
     printf "  *** \$ .errors[0].title | save\n"
@@ -104,7 +104,7 @@ function _pretty_print_html
     printf "\n"
 end
 
-function _print_ihurl_output
+function _print_koi_output
     test -z "$file"; and begin
         printf "Select Hurl file.\n"
         return
@@ -122,7 +122,7 @@ function _print_ihurl_output
     set_color normal
 
     if test "$query" = help
-        _print_ihurl_help
+        _print_koi_help
         return
     end
 
@@ -186,7 +186,7 @@ function _print_ihurl_output
     end
 end
 
-function _fetch_ihurl_output
+function _fetch_koi_output
     test -z "$file"; and begin
         return
     end
@@ -196,18 +196,23 @@ function _fetch_ihurl_output
     set -g body (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over > 0) { print $0 } }' | string collect)
 end
 
-function ihurl
+function _banner
+    printf "🌊 Welcome to Koi! 🐟\n"
+end
+
+function koi
     test -z "$query"; and set -g query "."
 
+    _banner
     printf "Use `help` for help :)\n"
-    _print_ihurl_output
+    _print_koi_output
 
     while read -g -S -P "\$ " query
         set -l query (echo "$query" | sed 's/ *$//')
         if test -z "$query"
             set -g show_output false
             clear
-            _print_ihurl_output
+            _print_koi_output
             continue
         end
 
@@ -275,9 +280,9 @@ function ihurl
 
             set -g file (pwd)/"$file"
             clear
-            _fetch_ihurl_output
+            _fetch_koi_output
             set -g query "."
-            _print_ihurl_output
+            _print_koi_output
             continue
         end
 
@@ -306,9 +311,9 @@ function ihurl
             if test -e "./$new_file"
                 set -g file "$new_file"
                 clear
-                _fetch_ihurl_output
+                _fetch_koi_output
                 set -g query "."
-                _print_ihurl_output
+                _print_koi_output
                 continue
             else
                 printf "File doesn't exist.\n"
@@ -366,7 +371,7 @@ function ihurl
                 set -g query ""
             end
             clear
-            _print_ihurl_output
+            _print_koi_output
             continue
         end
 
@@ -379,19 +384,19 @@ function ihurl
                 set -g query "."
             end
             clear
-            _print_ihurl_output
+            _print_koi_output
             continue
         end
         test "$query" = reset; or test "$query" = r; and begin
              clear
-             _fetch_ihurl_output
+             _fetch_koi_output
              set -g query "."
-             _print_ihurl_output
+             _print_koi_output
              continue
         end
 
         test "$query" = help; and begin
-            _print_ihurl_help
+            _print_koi_help
             continue
         end
 
@@ -436,7 +441,7 @@ function ihurl
                 continue
             end
 
-            tmux send-keys -t . C-c C-l ihurl Enter
+            tmux send-keys -t . C-c C-l koi Enter
         end
 
         echo "$query" | grep -iq '^watch'; and begin
@@ -460,7 +465,7 @@ function ihurl
             end
 
             set -l relative_path (echo "$path" | sed "s|^$original_dir||" | sed 's|^/*||')
-            tmux send-keys -t . C-c C-l ihurl Space "$relative_path" Enter
+            tmux send-keys -t . C-c C-l koi Space "$relative_path" Enter
         end
 
         if test "$should_exit" = true
@@ -474,7 +479,7 @@ function ihurl
         end
 
         clear
-        _print_ihurl_output
+        _print_koi_output
 
         if test -n "$TMUX"; and not contains "$original_query" $IGNORED_CMDS
             tmux send-keys -t . "$query"
@@ -484,5 +489,5 @@ function ihurl
     set -g should_exit true
 end
 
-_fetch_ihurl_output
-ihurl $argv
+_fetch_koi_output
+koi $argv
