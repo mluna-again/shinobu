@@ -18,7 +18,8 @@ set -g original_arvg $argv
 set -g original_dir (pwd)
 set -g file $argv[1]
 set -g query $argv[2]
-function my_signal_handler --on-signal SIGINT
+
+function handle_exit --on-signal SIGINT --on-signal SIGTERM
     if test "$should_exit" = true
         test -e "$temp_file"; and rm "$temp_file"
         return
