@@ -1,5 +1,13 @@
 #!/usr/bin/env fish
 
+set -g temp_file (mktemp /tmp/koi.XXXXX)
+function _rebuild_tmp_file
+    if test -s "$temp_file"
+        rm "$temp_file"
+        set -g temp_file (mktemp /tmp/koi.XXXXX)
+    end
+end
+
 set -g already_traped false
 
 set -g IGNORED_CMDS show help clear headers
@@ -12,10 +20,12 @@ set -g file $argv[1]
 set -g query $argv[2]
 function my_signal_handler --on-signal SIGINT
     if test "$should_exit" = true
+        test -e "$temp_file"; and rm "$temp_file"
         return
     end
 
     if test "$already_traped" = true
+        test -e "$temp_file"; and rm "$temp_file"
         return
     end
 
@@ -56,6 +66,7 @@ function _print_koi_help
     printf "Help!\n"
     printf "Available commands:\n"
     printf "  grep: fuzzy find requests in current directory.\n"
+    printf "  editor: open an editor to edit the in-memory request.\n"
     printf "  save: copy jq output to clipboard.\n"
     printf "  echo <var>: print env var.\n"
     printf "  watch <file>: quits koi and restarts it in 'watch' mode (tmux only).\n"
@@ -105,7 +116,10 @@ function _pretty_print_html
 end
 
 function _print_koi_output
-    test -z "$file"; and begin
+    set -l f "$file"
+    test -s "$temp_file"; and set f "$temp_file"
+
+    test -z "$f"; and begin
         printf "Select Hurl file.\n"
         return
     end
@@ -187,11 +201,14 @@ function _print_koi_output
 end
 
 function _fetch_koi_output
-    test -z "$file"; and begin
+    set -l f "$file"
+    test -s "$temp_file"; and set -l f "$temp_file"
+
+    test -z "$f"; and begin
         return
     end
 
-    set -g output (hurl --color -iL "$file" | string collect)
+    set -g output (hurl --color -iL "$f" | string collect)
     set -g headers (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over == 0) { print $0 } }' | string collect)
     set -g body (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over > 0) { print $0 } }' | string collect)
 end
@@ -223,8 +240,17 @@ function koi
         test "$query" = quit; and set -g should_exit true
         test "$query" = exit; and set -g should_exit true
 
-        if echo "$query" | grep -Eq '^vars '
+        if echo "$query" | grep -Eq '^editor *$'
+            printf "Entering editor mode.\n"
+            nvim -c 'set ft=hurl' "$temp_file"
+            printf "File loaded.\n"
+            continue
+        end
+
+        if echo "$query" | grep -Eq '^vars *'
             set -l f (echo "$query" | awk '{print $2}')
+            test -s "$temp_file"; and set -l f "$temp_file"
+
             if test -z "$f"
                 set -l f "$file"
             else
@@ -310,6 +336,7 @@ function koi
 
             if test -e "./$new_file"
                 set -g file "$new_file"
+                _rebuild_tmp_file
                 clear
                 _fetch_koi_output
                 set -g query "."
@@ -327,6 +354,7 @@ function koi
         test "$query" = pwd; and begin
             set -l current (builtin pwd)
             test -z "$file"; and set -l file "<no request selected>"
+            test -s "$temp_file"; and set -l file "$temp_file"
             printf "%s (%s)\n" "$current" "$file"
             continue
         end
@@ -491,3 +519,5 @@ end
 
 _fetch_koi_output
 koi $argv
+
+test -e "$temp_file"; and rm "$temp_file"
