@@ -744,6 +744,8 @@ case "$action" in
 
 			song_id=$(grep -Fi "$response" <<< "$songs" | head -1 | awk '{print $1}' | xargs)
 			[ -z "$song_id" ] && exit
+		else
+			alert "Bop is offline. Using shpotify only."
 		fi
 
 		type=track
