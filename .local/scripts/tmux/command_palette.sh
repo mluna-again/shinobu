@@ -78,6 +78,7 @@ Resize: right
 Tmux: set current directory as default
 Tmux: move window to the left
 Tmux: move window to the right
+Tmux: zen mode
 Monitor: open dashboard
 Dumb: screen-saver
 System: volume
@@ -798,6 +799,10 @@ case "$action" in
 		tmux select-window -t +1
 		;;
 
+	"Tmux: zen mode")
+		tmux set -g status
+		;;
+
 	"Theme: choose colorscheme")
 		input " Choose colorscheme " " 󰏘 " "$THEMES"
 		case "$(read_input)" in
@@ -867,3 +872,5 @@ case "$action" in
 		esac
 		;;
 esac
+
+"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"

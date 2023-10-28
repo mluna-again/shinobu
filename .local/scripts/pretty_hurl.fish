@@ -65,6 +65,7 @@ function _print_ihurl_help
     printf "  cd: change directory.\n"
     printf "  use: change Hurl file and run it.\n"
     printf "  show: toggle output.\n"
+    printf "  vars <file>: print Hurl variables used in a file.\n"
     printf "  headers: toggle headers.\n"
     printf "  reset: re-send HTTP request.\n"
     printf "  reparse: re-parse env variables (does not re-send request).\n"
@@ -216,6 +217,23 @@ function ihurl
         test "$query" = q; and set -g should_exit true
         test "$query" = quit; and set -g should_exit true
         test "$query" = exit; and set -g should_exit true
+
+        if echo "$query" | grep -Eq '^vars '
+            set -l f (echo "$query" | awk '{print $2}')
+            if test -z "$f"
+                set -l f "$file"
+            else
+                set -l f (pwd)/"$f"
+            end
+
+            if not test -e "$f"
+                printf "File doesn't exist.\n"
+                continue
+            end
+
+            grep -Eo '{{[a-zA-Z_0-9]+}}' "$f" | sed 's/{{//' | sed 's/}}//' | sort | uniq
+            continue
+        end
 
         if echo "$query" | grep -Eq '^[a-zA-Z]+="?[a-zA-Z0-9_-]+"?$'
             set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
