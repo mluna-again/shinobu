@@ -136,7 +136,7 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 		sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
-	_ = sendContent(w, output)
+	sendJSON(w, output)
 }
 
 type addToLikedParams struct {

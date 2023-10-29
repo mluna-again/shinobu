@@ -83,6 +83,7 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Add("content-type", "application/json")
 	err = printResults(w, results, queryType)
 	if err != nil {
 		sendInternalServerErrorWithMessage(w, err.Error())
