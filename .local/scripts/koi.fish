@@ -42,6 +42,7 @@ function use; end
 function reset; end
 function r; end
 function reparse; end
+function editor; end
 function save; end
 function show; end
 function quit; end
@@ -226,6 +227,10 @@ function koi
     _print_koi_output
 
     while read -g -S -P "\$ " query
+        if test "$should_exit" = true
+            return
+        end
+
         set -l query (echo "$query" | sed 's/ *$//')
         if test -z "$query"
             set -g show_output false
@@ -334,6 +339,22 @@ function koi
         end
         echo "$query" | grep -iq '^use'; and begin
             set -l new_file (echo "$query" | awk '{$1=""; print $0}' | xargs)
+            if test -z "$new_file"; and test -s "$temp_file"
+                _rebuild_tmp_file
+                printf "Request removed.\n"
+                continue
+            end
+
+            if test -z "$new_file"; and test -n "$file"
+                set -g file ""
+                printf "Request removed.\n"
+                continue
+            end
+
+            if test -z "$new_file"; and test -z "$file"
+                printf "No request selected.\n"
+                continue
+            end
 
             if test -e "./$new_file"
                 set -g file "$new_file"
