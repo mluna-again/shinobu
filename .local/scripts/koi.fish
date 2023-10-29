@@ -1,5 +1,8 @@
 #!/usr/bin/env fish
 
+# COMPONENTS
+set -g prettier_enabled true
+
 set -g temp_file (mktemp /tmp/koi.XXXXX)
 function _rebuild_tmp_file
     if test -s "$temp_file"
@@ -42,6 +45,7 @@ function use; end
 function reset; end
 function r; end
 function reparse; end
+function toggle; end
 function editor; end
 function save; end
 function show; end
@@ -82,6 +86,7 @@ function _print_koi_help
     printf "  headers: toggle headers.\n"
     printf "  reset: re-send HTTP request.\n"
     printf "  reparse: re-parse env variables (does not re-send request).\n"
+    prints "  toggle <function>: toggle components on demand. Available components: prettier\n"
     printf "  exit: quit koi.\n"
     printf "  quit: quit koi.\n"
     printf "  q: quit koi.\n"
@@ -101,7 +106,11 @@ function _pretty_print_html
         return
     end
 
-    echo $argv[1] | prettier --parser html | cat -pP -l html --theme kanagawa-dragon
+    if test "$prettier_enabled" = true
+        echo $argv[1] | prettier --parser html | cat -pP -l html --theme kanagawa-dragon
+    else
+        echo $argv[1] | cat -pP -l html --theme kanagawa-dragon
+    end
 
     # without this the prompt swallows the last line
     printf "\n"
@@ -287,6 +296,28 @@ function koi
             set -l v (echo "$query" | awk '{$1=""; print $0}' | xargs | sed 's/^\$//')
             set -l value (env | grep -i "$v" | head -1 | awk -F'=' '{print $2}')
             printf "%s\n" "$value"
+            continue
+        end
+
+        if echo "$query" | grep -iq '^toggle '
+            set -l cmp (echo "$query" | awk '{print $2}' | xargs)
+
+            switch "$cmp"
+                case prettier
+                    if test "$prettier_enabled" = true
+                        set -g prettier_enabled false
+                    else
+                        set -g prettier_enabled false
+                    end
+
+                case '*'
+                    printf "Invalid component: %s\n" "$cmp"
+            end
+            continue
+        end
+
+        if test "$query" = toggle
+            printf "Invalid component: use `help` to see available components.\n"
             continue
         end
 
