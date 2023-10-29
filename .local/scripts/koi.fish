@@ -86,7 +86,7 @@ function _print_koi_help
     printf "  headers: toggle headers.\n"
     printf "  reset: re-send HTTP request.\n"
     printf "  reparse: re-parse env variables (does not re-send request).\n"
-    prints "  toggle <function>: toggle components on demand. Available components: prettier\n"
+    printf "  toggle <function>: toggle components on demand. Available components: prettier\n"
     printf "  exit: quit koi.\n"
     printf "  quit: quit koi.\n"
     printf "  q: quit koi.\n"
