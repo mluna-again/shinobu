@@ -310,14 +310,14 @@ case "$action" in
 			tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
 		else
 			[ -z "$file" ] && exit
-			tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' \"$file\""
+			tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$file\""
 		fi
 		;;
 
 	"TODOS: open")
 		[ -e "$NOTES_PATH/todo" ] || touch "$NOTES_PATH/todo"
 
-		tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' \"$NOTES_PATH/todo\""
+		tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo\""
 
 		true
 		;;
