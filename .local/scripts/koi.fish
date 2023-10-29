@@ -97,7 +97,7 @@ function _pretty_print_html
     command -vq prettier; or command -vq bat; or begin
         echo $argv[1]
 
-        test -n "$q"; and printf "[WARNING] prettier or bat not installed.\n"
+        printf "[WARNING] prettier or bat not installed.\n"
         return
     end
 
