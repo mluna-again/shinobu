@@ -61,7 +61,7 @@ command -vq hurl; or begin
     exit 1
 end
 command -vq bat; or printf "[WARNING] Optional dependency not installed: bat.\n"
-command -vq htmlq; or printf "[WARNING] Optional dependency not installed: htmlq.\n"
+command -vq prettier; or printf "[WARNING] Optional dependency not installed: prettier.\n"
 command -vq fzf; or printf "[WARNING] Optional dependency not installed: fzf.\n"
 
 function _print_koi_help
@@ -94,24 +94,14 @@ function _print_koi_help
 end
 
 function _pretty_print_html
-    set -l q $argv[2]
-    # ignore original . query for jq
-    test "$q" = .; and set -l q ""
-
-    command -vq htmlq; or command -vq bat; or begin
+    command -vq prettier; or command -vq bat; or begin
         echo $argv[1]
 
-        test -n "$q"; and printf "[WARNING] htmlq or bat not installed. Query ignored.\n"
+        test -n "$q"; and printf "[WARNING] prettier or bat not installed.\n"
         return
     end
 
-    # why won't you check for empty strings bruh.
-    # a panic in rust because an empty string is so funny.
-    if test -n "$q"
-        echo $argv[1] | htmlq -p "$q" | cat -pP -l html --theme kanagawa-dragon
-    else
-        echo $argv[1] | htmlq -p | cat -pP -l html --theme kanagawa-dragon
-    end
+    echo $argv[1] | prettier --parser html | cat -pP -l html --theme kanagawa-dragon
 
     # without this the prompt swallows the last line
     printf "\n"
