@@ -238,6 +238,12 @@ function koi
             continue
         end
 
+        if test "$query" = "."
+            set -g show_output true
+            clear
+            _print_koi_output
+        end
+
         set -l original_query "$query"
 
         test "$status" = 0; or set -g should_exit true
@@ -306,8 +312,10 @@ function koi
                 case prettier
                     if test "$prettier_enabled" = true
                         set -g prettier_enabled false
+                        printf "prettier turned off.\n"
                     else
-                        set -g prettier_enabled false
+                        set -g prettier_enabled true
+                        printf "prettier turned on.\n"
                     end
 
                 case '*'

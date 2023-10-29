@@ -98,7 +98,7 @@ func (app *app) status(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_ = sendContent(w, output)
+	sendJSON(w, output)
 }
 
 func (app *app) restart(w http.ResponseWriter, r *http.Request) {
