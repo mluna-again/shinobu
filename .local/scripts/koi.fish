@@ -94,7 +94,7 @@ function _print_koi_help
 end
 
 function _pretty_print_html
-    command -vq prettier; or command -vq bat; or begin
+    if not command -vq prettier; or not command -vq bat
         echo $argv[1]
 
         printf "[WARNING] prettier or bat not installed.\n"

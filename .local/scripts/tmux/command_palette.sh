@@ -512,7 +512,6 @@ case "$action" in
 			tmux split-window -v -c "$cwd"
 			tmux select-pane -U
 			tmux resize-pane -D 10
-			tmux send-keys -t . ihurl
 			if grep -vi nvim <<< "$program" &>/dev/null; then
 				tmux select-pane -R
 				tmux send-keys -t . nvim Enter
@@ -525,8 +524,6 @@ case "$action" in
 			fi
 			tmux split-window -v -c "$cwd"
 			tmux split-window -v -c "$cwd"
-			tmux select-pane -t 2
-			tmux send-keys -t . ihurl
 			tmux select-pane -t 1
 			tmux select-layout even-vertical
 		fi
