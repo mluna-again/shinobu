@@ -71,6 +71,7 @@ command -vq fzf; or printf "[WARNING] Optional dependency not installed: fzf.\n"
 function _print_koi_help
     printf "Help!\n"
     printf "Available commands:\n"
+    printf "  set <key> <value>: sets HURL_* variable.\n"
     printf "  grep: fuzzy find requests in current directory.\n"
     printf "  editor: open an editor to edit the in-memory request.\n"
     printf "  save: copy jq output to clipboard.\n"
@@ -95,7 +96,6 @@ function _print_koi_help
     printf "  *** \$ .errors[0].title | save\n"
     printf "  *** \$ env user | save\n\n"
     printf "Note: everything that is not in this list is considered a query to jq for JSON responses.\n"
-    printf "Note 2: You can set HURL_* env variables with <key>=<value>\n"
 end
 
 function _pretty_print_html
@@ -258,14 +258,33 @@ function koi
             continue
         end
 
+        if echo "$query" | grep -Eq '^set '
+            set -l key (echo "$query" | awk '{print $2}')
+            set -l value (echo "$query" | awk '{print $3}')
+
+            if test -z "$key"
+                printf "No key provided.\n"
+                continue
+            end
+
+            if test -z "$value"
+                printf "No value provided.\n"
+                continue
+            end
+
+            set -x "HURL_$key" "$value"
+            printf "%s=%s\n" "$key" "$value"
+            continue
+        end
+
         if echo "$query" | grep -Eq '^vars *'
             set -l f (echo "$query" | awk '{print $2}')
             test -s "$temp_file"; and set -l f "$temp_file"
 
             if test -z "$f"
-                set -l f "$file"
+                set f "$file"
             else
-                set -l f (pwd)/"$f"
+                set f (pwd)/"$f"
             end
 
             if not test -e "$f"
