@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # COMPONENTS
-set -g prettier_enabled true
+set -g prettier_enabled false
 
 set -g temp_file (mktemp /tmp/koi.XXXXX)
 function _rebuild_tmp_file
