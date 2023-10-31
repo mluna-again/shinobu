@@ -97,6 +97,7 @@ abbr --add gp git push
 abbr --add gs git status
 abbr --add ga git add .
 abbr --add gA git add
+abbr --add gr git reset --soft
 abbr --add gc git commit -m
 abbr --add gofmt go fmt ./...
 
