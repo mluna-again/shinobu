@@ -244,6 +244,7 @@ function koi
             _print_koi_output
         end
 
+        set -g query (echo "$query" | sed 's/^"//' | sed 's/"$//')
         set -l original_query "$query"
 
         test "$status" = 0; or set -g should_exit true
