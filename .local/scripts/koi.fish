@@ -451,6 +451,16 @@ function koi
                 set -l key (printf "%s" "$args" | awk -F= '{print $1}')
                 set -l value (printf "%s" "$args" | awk -F= '{print $2}' | sed 's/^"//' | sed 's/"$//')
 
+                # empty line
+                if test -z "$key"; and test -z "$value"
+                    continue
+                end
+
+                if test -z "$value"
+                    printf "[WARNING] '%s' key has no value.\n" "$key"
+                    continue
+                end
+
                 set -x "$key" "$value"
             end
 
