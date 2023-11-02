@@ -1,0 +1,6 @@
+{
+  "Lowercase string (stdin)": "tr '[:upper:]' '[:lower:]'",
+  "Uppercase string (stdin)": "tr '[:lower:]' '[:upper:]'",
+  "Lowercase string (inline)": "tr '[:upper:]' '[:lower:]' <<< '<your text here>'",
+  "Uppercase string (inline)": "tr '[:lower:]' '[:upper:]' <<< '<your text here>'"
+}

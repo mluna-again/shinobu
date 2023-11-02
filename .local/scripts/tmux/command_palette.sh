@@ -83,6 +83,7 @@ Monitor: open dashboard
 Dumb: screen-saver
 System: volume
 Dotfiles: status
+Cheatsheet: select and copy
 EOF
 )"
 
@@ -800,6 +801,22 @@ case "$action" in
 
 	"Tmux: zen mode")
 		tmux set -g status
+		;;
+
+
+	"Cheatsheet: select and copy")
+		items=$(jq -r 'to_entries[].key' < "$HOME/.local/cheats/general.json")
+		input " Cheatsheet " "  " "$items"
+		key=$(read_input)
+		[ -z "$key" ] && exit
+		cheat=$(jq -r ".\"${key}\"" < "$HOME/.local/cheats/general.json")
+		if [ -z "$cheat" ]; then
+			error "'$cheat' doesn't exist."
+			exit
+		fi
+
+		tmux send-keys -t . "$cheat"
+
 		;;
 
 	"Theme: choose colorscheme")
