@@ -30,7 +30,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 10. tmuxp
 11. jq
 12. jqp
-13. xh
+13. httpie
 14. eza
 15. delta
 16. direnv
@@ -40,6 +40,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 20. yq
 21. sc-im
 22. atuin
+23. pgcli
 
 ## Problems I've encountered that I don't want to forget
 
