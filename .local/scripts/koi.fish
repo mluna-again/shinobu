@@ -260,7 +260,7 @@ function koi
         end
 
         if echo "$query" | grep -Eq '^set '
-            set -l key (echo "$query" | awk '{print $2}')
+            set -l key (echo "$query" | awk '{print $2}' | sed 's/^HURL_//')
             set -l value (echo "$query" | awk '{print $3}')
 
             if test -z "$key"
@@ -298,7 +298,7 @@ function koi
         end
 
         if echo "$query" | grep -Eq '^[a-zA-Z]+="?[a-zA-Z0-9_-]+"?$'
-            set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
+            set -l key HURL_(echo "$query" | awk -F'=' '{print $1}' | sed 's/^HURL_//')
             set -l value (echo "$query" | awk -F'=' '{print $2}' | sed 's/^"//' | sed 's/"$//')
 
             set -x "$key" "$value"
@@ -310,11 +310,6 @@ function koi
             set -l key HURL_(echo "$query" | awk -F'=' '{print $1}')
             set -x "$key"
             printf "%s=\n" "$key"
-            continue
-        end
-
-        if echo "$query" | grep -q '='
-            printf "Invalid assignment. Usage: <name>=<value>.\n"
             continue
         end
 
@@ -510,7 +505,7 @@ function koi
         end
 
         if echo "$query" | grep -iq '^env'
-            set -l var (echo "$query" | awk '{print $2}')
+            set -l var (echo "$query" | awk '{print $2}' | sed 's/^HURL_//' | sed 's/=$//')
             test "$var" = '|'; and set -l var
 
             if test -n "$var"
@@ -575,6 +570,11 @@ function koi
 
             set -l relative_path (echo "$path" | sed "s|^$original_dir||" | sed 's|^/*||')
             tmux send-keys -t . C-c C-l koi Space "$relative_path" Enter
+        end
+
+        if echo "$query" | grep -q '='
+            printf "Invalid assignment. Usage: <name>=<value>.\n"
+            continue
         end
 
         if test "$should_exit" = true
