@@ -314,7 +314,7 @@ function koi
             end
 
             if test -z "$value"
-                printf "No value provided.\n"
+                set -x "HURL_$key"
                 continue
             end
 
@@ -338,7 +338,12 @@ function koi
                 continue
             end
 
-            grep -Eo '{{[a-zA-Z_0-9]+}}' "$f" | sed 's/{{//' | sed 's/}}//' | sort | uniq
+            for line in (grep -Eo '{{[a-zA-Z_0-9]+}}' "$f" | sed 's/{{//' | sed 's/}}//' | sort | uniq)
+                set -l value (env | grep "HURL_$line" | head -1 | awk -F= '{print $2}')
+                test -z "$value"; and set value "<not set>"
+
+                printf "%s=%s\n" "$line" "$value"
+            end
             continue
         end
 
