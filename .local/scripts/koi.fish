@@ -22,6 +22,50 @@ set -g original_dir (pwd)
 set -g file $argv[1]
 set -g query $argv[2]
 
+# fish_clipboard_copy doesn't work sometime :/
+function _copy_to_clipboard
+    while read -lz line
+        set -a content $line
+    end
+    set -l os (uname | tr '[:upper:]' '[:lower:]')
+
+    switch "$os"
+        case linux
+            if set -q DISPLAY
+                if command -vq xclip
+                    printf "%s" "$content" | xclip -selection clipboard
+                    printf "Copied.\n"
+                    return
+                end
+                printf "[ERROR] xclip not installed.\n"
+                return
+            end
+
+            if set -q WAYLAND_DISPLAY
+                if command -vq wl-copy
+                    printf "%s" "$content" | wl-copy
+                    printf "Copied.\n"
+                    return
+                end
+                printf "[ERROR] wl-copy not installed.\n"
+                return
+            end
+
+            printf "[ERROR] Don't know how to copy in $os.\n"
+
+        case darwin
+            if command -vq pbcopy
+                printf "%s" "$content" | pbcopy
+                return
+            end
+            printf "[ERROR] pbcopy not installed.\n"
+
+
+        case '*'
+            printf "[ERROR] Unsupported OS: %s\n" "$os"
+    end
+end
+
 function handle_exit --on-signal SIGINT --on-signal SIGTERM
     if test "$should_exit" = true
         test -e "$temp_file"; and rm "$temp_file"
@@ -187,8 +231,7 @@ function _print_koi_output
         end
 
         if test "$real_query" != "$query"
-            echo "$body" | jq -r "$real_query" | fish_clipboard_copy
-            printf "Copied.\n"
+            echo "$body" | jq -r "$real_query" | _copy_to_clipboard
         end
     else
         if test "$show_output" != true
@@ -513,8 +556,7 @@ function koi
 
                 if echo "$query" | grep -iq '| *save *$'
                     set -l v (echo "$value" | awk -F'=' '{print $2}')
-                    echo "$v" | fish_clipboard_copy
-                    printf "Copied %s.\n" "$v"
+                    echo "$v" | _copy_to_clipboard
                 end
 
                 printf "%s\n" "$value"
