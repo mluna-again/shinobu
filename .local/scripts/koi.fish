@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+set -x fish_history koi
+
 # COMPONENTS
 set -g prettier_enabled false
 
@@ -268,7 +270,7 @@ function koi
     printf "Use `help` for help :)\n"
     _print_koi_output
 
-    while read -g -S -P "\$ " query
+    while read -g -p "set -x fish_history koi; echo '\$ '" -S query
         if test "$should_exit" = true
             return
         end
