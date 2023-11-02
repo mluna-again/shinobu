@@ -4,6 +4,10 @@ w="$1"
 h="$2"
 mode="${3:-sessions}"
 
+error() {
+	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Error: $1"
+}
+
 path="$HOME/.local/scripts/shift"
 
 OUTPUT_PATH="$path/.__SHIFT__"
@@ -65,7 +69,7 @@ handle_sessions() {
 			session_name="$(_remove_trailing_slash "$params")"
 			[ -z "$session_name" ] && return
 
-			tmux switch-client -t "$session_name"
+			tmux switch-client -t "$session_name" || error "Could not switch to $session_name. Maybe there are multiple with the same name?"
 			;;
 
 		rename)
@@ -84,7 +88,7 @@ handle_sessions() {
 handle_windows() {
 	window_name="$(awk '{print $2}' "$OUTPUT_PATH")"
 
-	tmux select-window -t "$window_name"
+	tmux select-window -t "$window_name" || error "Could not switch to $window_name. Maybe there are multiple with the same name?"
 }
 
 get_all() {
@@ -134,7 +138,14 @@ handle_all() {
 		*)
 			[ -z "$session" ] && exit
 			[ -z "$window" ] && exit
-			tmux switch-client -t "$session" \; select-window -t "$window"
+			tmux switch-client -t "$session" || {
+				error "Could not switch to $session. Maybe there are multiple with the same name?"
+				exit
+			}
+			tmux select-window -t "$window" || {
+				error "Could not switch to $window. Maybe there are multiple with the same name?"
+				exit
+			}
 			;;
 	esac
 }
