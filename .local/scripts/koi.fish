@@ -58,6 +58,7 @@ function _copy_to_clipboard
         case darwin
             if command -vq pbcopy
                 printf "%s" "$content" | pbcopy
+                printf "Copied.\n"
                 return
             end
             printf "[ERROR] pbcopy not installed.\n"
