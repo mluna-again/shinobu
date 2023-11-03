@@ -84,7 +84,6 @@ abbr --add dotsl yadm log
 abbr --add dotsC yadm checkout
 abbr --add dotsR yadm reset --hard
 abbr --add dotsp yadm push
-abbr --add dotsP yadm pull
 abbr --add dotsd yadm diff
 abbr --add dotsdd yadm diff --cached
 abbr --add dotsc yadm commit -m
@@ -186,6 +185,11 @@ function gL
     test -z "$log"; and return
 
     git log -1 (echo "$log" | awk '{ print $1 }')
+end
+
+function dotsP
+    yadm pull
+    $HOME/.local/scripts/tmux/dots_state.sh red 100 force
 end
 
 function dotsL

@@ -2,10 +2,11 @@
 
 bg="$1"
 width="$2"
+force="$3"
 
 [ "$width" -lt 100 ] && exit
 
-FIVE_MINUTES_IN_SECONDS=$(( 60 * 5 ))
+MINUTES_IN_SECONDS=$(( 60 * 15 ))
 
 CACHE_FILE="$HOME/.cache/.dots_state_last_check"
 if [ ! -e "$CACHE_FILE" ]; then
@@ -16,7 +17,7 @@ last_time_in_seconds=$(awk 'NR == 1' "$CACHE_FILE")
 now_in_seconds=$(date +"%s")
 diff=$(( now_in_seconds - last_time_in_seconds ))
 
-if [ "$diff" -ge "$FIVE_MINUTES_IN_SECONDS" ]; then
+if [ "$diff" -ge "$MINUTES_IN_SECONDS" ] || [ -n "$force" ]; then
 	yadm fetch origin
 	count=$(yadm rev-list --left-right --count master...origin/master | awk '{print $2}')
 
