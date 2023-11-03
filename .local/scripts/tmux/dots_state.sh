@@ -23,7 +23,7 @@ if [ "$diff" -ge "$FIVE_MINUTES_IN_SECONDS" ]; then
 	if [ "$count" -gt 0 ]; then
 		text="#[bg=terminal,fg=yellow]$count #[bg=$bg,fg=black]  "
 	else
-		text="#[bg=terminal,fg=yellow]0 #[bg=$bg,fg=black]  "
+		text=""
 	fi
 
 	date +"%s" > "$CACHE_FILE"
