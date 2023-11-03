@@ -208,7 +208,7 @@ return {
 					LightspeedLabel = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
 					LightspeedOneCharMatch = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
 
-					WinSeparator = { fg = theme.ui.bg_gutter, bg = theme.ui.bg_gutter },
+					WinSeparator = { fg = theme.ui.bg, bg = theme.ui.bg },
 
 					FzfLuaNormal = { bg = theme.ui.bg_m1 },
 					FzfLuaBufName = { bg = theme.ui.bg_m1, fg = theme.ui.fg },
