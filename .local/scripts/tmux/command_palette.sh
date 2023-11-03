@@ -79,6 +79,7 @@ Tmux: set current directory as default
 Tmux: move window to the left
 Tmux: move window to the right
 Tmux: zen mode
+Tmux: floating terminal
 Monitor: open dashboard
 Dumb: screen-saver
 System: volume
@@ -801,6 +802,10 @@ case "$action" in
 
 	"Tmux: zen mode")
 		tmux set -g status
+		;;
+
+	"Tmux: floating terminal")
+		tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -EE
 		;;
 
 
