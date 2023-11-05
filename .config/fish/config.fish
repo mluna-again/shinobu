@@ -59,7 +59,7 @@ bind -M insert \ca beginning-of-line
 bind -M insert \ck accept-autosuggestion
 bind -M insert \cp history-search-backward
 bind -M insert \cn history-search-forward
-bind --mode insert --sets-mode default jj repaint backward-char
+bind --mode insert --sets-mode default jj backward-char repaint
 
 # ENV
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
