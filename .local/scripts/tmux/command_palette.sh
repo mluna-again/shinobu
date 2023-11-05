@@ -222,6 +222,9 @@ try_shpotify() {
 
 			song=$(awk -F':' 'NR == 4 {print $2}' <<< "$output" | xargs)
 			artist=$(awk -F':' 'NR == 2 {print $2}' <<< "$output" | xargs)
+
+			[ -z "$song" ] && [ -z "$artist" ] && return 1
+
 			success "$song by $artist"
 			;;
 
