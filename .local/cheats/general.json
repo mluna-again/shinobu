@@ -6,5 +6,9 @@
   "Terminal height": "tput lines",
   "Terminal width": "tput cols",
   "Hide cursor": "printf '\\033[?25l'",
-  "Show cursor": "printf '\\033[?25h'"
+  "Show cursor": "printf '\\033[?25h'",
+  "Print error": "printf '\\033[0;30m\\033[41m %s \\n' \"\"",
+  "Print success": "printf '\\033[0;30m\\033[42m %s \\n' \"\"",
+  "Print warning": "printf '\\033[0;30m\\033[43m %s \\n' \"\"",
+  "Reset colors": "printf '\\033[0m'"
 }
