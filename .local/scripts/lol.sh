@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+command -v lolcat &>/dev/null || { printf "lolcat not installed." ; exit 1 ; }
+command -v figlet &>/dev/null || { printf "figlet not installed." ; exit 1 ; }
+
 height=$(tput lines)
 width=$(tput cols)
 vert_padding=$(( (height-8) / 2 ))

@@ -828,7 +828,7 @@ case "$action" in
 
 	"Lol: wake up")
 		tmux display-popup -T "#[bg=#{@components_active_background1},fg=black] 󰂞 Message " \
-			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -E "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
+			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -EE "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
 		;;
 
 	"Theme: choose colorscheme")
