@@ -814,11 +814,11 @@ case "$action" in
 
 
 	"Cheatsheet: select and copy")
-		items=$(jq -r 'to_entries[].key' < "$HOME/.local/cheats/general.json")
+		items=$(jq -r 'to_entries[].key' < "$HOME/.local/cheats/bash.json")
 		input " Cheatsheet " "  " "$items"
 		key=$(read_input)
 		[ -z "$key" ] && exit
-		cheat=$(jq -r ".\"${key}\"" < "$HOME/.local/cheats/general.json")
+		cheat=$(jq -r ".\"${key}\"" < "$HOME/.local/cheats/bash.json")
 		if [ -z "$cheat" ]; then
 			error "'$cheat' doesn't exist."
 			exit
