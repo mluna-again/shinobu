@@ -80,6 +80,7 @@ Tmux: move window to the left
 Tmux: move window to the right
 Tmux: zen mode
 Tmux: floating terminal
+Lol: wake up
 Monitor: open dashboard
 Dumb: screen-saver
 System: volume
@@ -822,6 +823,12 @@ case "$action" in
 
 		tmux send-keys -t . "$cheat"
 
+		;;
+
+
+	"Lol: wake up")
+		tmux display-popup -T "#[bg=#{@components_active_background1},fg=black] 󰂞 Message " \
+			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -E "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
 		;;
 
 	"Theme: choose colorscheme")
