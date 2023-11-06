@@ -48,3 +48,8 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 	opts.max_width = opts.max_width or 80
 	return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
+
+vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
