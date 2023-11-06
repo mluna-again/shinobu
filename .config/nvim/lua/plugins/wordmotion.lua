@@ -1,4 +1,4 @@
 return {
 	"chaoren/vim-wordmotion",
-	event = "InsertEnter",
+	event = "BufEnter",
 }

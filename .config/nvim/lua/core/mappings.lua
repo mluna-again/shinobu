@@ -81,6 +81,9 @@ wk.register({
 	},
 }, { prefix = "<Leader>" })
 
+
+nmap("gr", ":tabprevious<CR>")
+nmap("gt", ":tabnext<CR>")
 nmap("<C-w><C-o>", ":wincmd r<CR>")
 nmap("Y", "v$hy")
 nmap("<C-Left>", ":vertical resize -2<CR>")
