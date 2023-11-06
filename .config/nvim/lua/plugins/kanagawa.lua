@@ -69,6 +69,7 @@ return {
 					Search = { fg = theme.ui.bg, bg = theme.syn.identifier },
 					CurSearch = { fg = theme.ui.bg, bg = theme.syn.constant },
 					Substitute = { fg = theme.ui.bg, bg = theme.syn.identifier },
+					Visual = { fg = theme.ui.bg, bg = theme.syn.regex },
 
 					NormalFloat = { bg = theme.ui.bg_gutter },
 					FloatBorder = { bg = theme.ui.bg_gutter, fg = theme.ui.bg_gutter },

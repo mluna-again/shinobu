@@ -307,7 +307,10 @@ function koi
 
         if echo "$query" | grep -Eq '^set '
             set -l key (echo "$query" | awk '{print $2}' | sed 's/^HURL_//')
-            set -l value (echo "$query" | awk '{print $3}')
+            # try to match a value with double quotes, then with single and default to unquoted string
+            set -l value (echo "$query" | awk -F\" '{print $2}')
+            test -z "$value"; and set -l value (echo "$query" | awk -F\' '{print $2}')
+            test -z "$value"; and set -l value (echo "$query" | awk '{print $3}')
 
             if test -z "$key"
                 printf "No key provided.\n"
