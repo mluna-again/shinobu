@@ -110,6 +110,7 @@ return {
 					BufferLineTabSelected = { fg = theme.ui.bg, bg = theme.syn.identifier },
 					BufferLineTabSeparator = { fg = theme.ui.bg, bg = theme.ui.bg },
 					BufferLineTabSeparatorSelected = { fg = theme.syn.identifier, bg = theme.syn.identifier },
+					BufferLineFill = { fg = theme.ui.fg, bg = theme.ui.bg },
 
 					NeotestFile = { fg = theme.syn.parameter },
 					NeotestDir = { fg = theme.ui.fg },

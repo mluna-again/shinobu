@@ -1,6 +1,6 @@
 return {
 	"akinsho/bufferline.nvim",
-	event = "VeryLazy",
+	event = "TabEnter",
 	dependencies = "kanagawa.nvim",
 	config = function()
 		require("bufferline").setup({
