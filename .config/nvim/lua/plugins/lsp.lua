@@ -191,7 +191,8 @@ return {
 			"volar",
 			"zls",
 			"gleam",
-			"csharp_ls"
+			"csharp_ls",
+			"svelte"
 			-- "lua_ls",
 		}
 

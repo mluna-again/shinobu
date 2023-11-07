@@ -1,7 +1,12 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	lazy = true,
+	cmd = {
+		"Telescope"
+	},
 	dependencies = {
 		"nvim-telescope/telescope-fzf-native.nvim",
+		"LukasPietzschmann/telescope-tabs",
 	},
 	config = function()
 		local action_state = require("telescope.actions.state")
