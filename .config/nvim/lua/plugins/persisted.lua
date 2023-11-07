@@ -1,6 +1,10 @@
 return {
 	"olimorris/persisted.nvim",
-	event = "VeryLazy",
+	lazy = true,
+	cmd = {
+		"SessionLoad",
+		"SessionSave"
+	},
 	dependencies = {
 		"goolord/alpha-nvim",
 	},

@@ -96,7 +96,7 @@ return {
 				"Find word",
 				":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>"
 			),
-			mkButton(" SPC s l ", "Load last session", ":SessionLoad<CR>"),
+			mkButton(" SPC s l ", "Load last session", ":silent SessionLoad<CR>"),
 			mkButton("    q    ", "Quit Neovim", ":q<CR>"),
 		}
 
