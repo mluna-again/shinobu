@@ -66,7 +66,7 @@ handle_sessions() {
 			}
 
 			session_path="${session_path/#\~/$HOME}"
-			[ -n "$session_path" ] && tmux new-session -d -s "$session_name" -c "$session_path" && tmux switch-client -t "$session_name" && exit
+			[ -d "$session_path" ] && tmux new-session -d -s "$session_name" -c "$session_path" && tmux switch-client -t "$session_name" && exit
 
 			tmux new-session -d -s "$session_name" -c "$HOME" && tmux switch-client -t "$session_name"
 			;;
@@ -132,7 +132,7 @@ handle_all() {
 			}
 
 			session_path="${session_path/#\~/$HOME}"
-			[ -n "$session_path" ] && tmux new-session -d -s "$session" -c "$session_path" && tmux switch-client -t "$session" && exit
+			[ -d "$session_path" ] && tmux new-session -d -s "$session" -c "$session_path" && tmux switch-client -t "$session" && exit
 
 			tmux new-session -d -s "$session" -c "$HOME" && tmux switch-client -t "$session"
 			;;
