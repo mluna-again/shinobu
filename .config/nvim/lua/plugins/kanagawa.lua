@@ -106,9 +106,9 @@ return {
 					BufferLineIndicatorSelected = { fg = theme.ui.bg_gutter, bg = theme.syn.identifier },
 					BufferLineIndicatorVisible = { fg = theme.syn.parameter, bg = theme.ui.bg_gutter },
 					BufferLineTruncMarker = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
-					BufferLineTab = { fg = theme.syn.identifier },
+					BufferLineTab = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
 					BufferLineTabSelected = { fg = theme.ui.bg, bg = theme.syn.identifier },
-					BufferLineTabSeparator = { fg = theme.ui.bg, bg = theme.ui.bg },
+					BufferLineTabSeparator = { fg = theme.ui.bg_gutter, bg = theme.ui.bg_gutter },
 					BufferLineTabSeparatorSelected = { fg = theme.syn.identifier, bg = theme.syn.identifier },
 					BufferLineFill = { fg = theme.ui.fg, bg = theme.ui.bg },
 
