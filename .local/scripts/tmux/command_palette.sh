@@ -767,7 +767,7 @@ case "$action" in
 		}
 
 		volume=$(osascript -e 'set ovol to output volume of (get volume settings)')
-		tmux display-popup -E -x "#{popup_pane_right}" -y "#{popup_pane_top}" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
+		tmux display-popup -E -x "#{popup_pane_right}" -y "0" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
 		;;
 
 	"Dotfiles: status")
