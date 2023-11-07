@@ -1,5 +1,6 @@
 return {
 	"LukasPietzschmann/telescope-tabs",
+	lazy = true,
 	config = function()
 		require("telescope-tabs").setup({})
 
