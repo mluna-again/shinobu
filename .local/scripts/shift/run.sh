@@ -60,7 +60,13 @@ handle_sessions() {
 
 			[ -z "$session_name" ] && return
 
-			[ -n "$session_path" ] && tmux new-session -d -s "$session_name" -c "$(eval echo "$session_path")" && tmux switch-client -t "$session_name" && exit
+			current=$(tmux display -p "#{session_name}")
+			[ "$session_name" = "$current" ] && {
+				tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Message: Duplicate session" ; exit
+			}
+
+			session_path="${session_path/#\~/$HOME}"
+			[ -n "$session_path" ] && tmux new-session -d -s "$session_name" -c "$session_path" && tmux switch-client -t "$session_name" && exit
 
 			tmux new-session -d -s "$session_name" -c "$HOME" && tmux switch-client -t "$session_name"
 			;;
@@ -124,7 +130,9 @@ handle_all() {
 			[ "$session" = "$current" ] && {
 				tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Message: Duplicate session" ; exit
 			}
-			[ -n "$session_path" ] && tmux new-session -d -s "$session" -c "$(eval echo "$session_path")" && tmux switch-client -t "$session" && exit
+
+			session_path="${session_path/#\~/$HOME}"
+			[ -n "$session_path" ] && tmux new-session -d -s "$session" -c "$session_path" && tmux switch-client -t "$session" && exit
 
 			tmux new-session -d -s "$session" -c "$HOME" && tmux switch-client -t "$session"
 			;;
