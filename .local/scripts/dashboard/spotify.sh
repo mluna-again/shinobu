@@ -19,6 +19,11 @@ command -v jq &>/dev/null || {
 	exit 1
 }
 
+_ellipsis() {
+	read -r text
+	awk '{printf substr($0, 0, 29); if (length($0) > 29) { printf "..."; } printf "\n"}' <<< "$text"
+}
+
 _display_bop_dead_message() {
 	tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: bop is asleep!"
 }
@@ -92,8 +97,8 @@ grep -iq "Not found" <<< "$current_song" && {
 	exit
 }
 
-song=$(jq -r '.display_name' <<< "$current_song")
-artist=$(jq -r '.artist' <<< "$current_song")
+song=$(jq -r '.display_name' <<< "$current_song" | _ellipsis)
+artist=$(jq -r '.artist' <<< "$current_song" | _ellipsis)
 image=$(jq -r '.image_url' <<< "$current_song")
 is_playing=$(jq -r '.is_playing' <<< "$current_song")
 current_time=$(jq -r '.current_second' <<< "$current_song")
@@ -108,8 +113,8 @@ refetch_data() {
 		printf "No song playing.\n"
 		exit
 	}
-	song=$(jq -r '.display_name' <<< "$current_song")
-	artist=$(jq -r '.artist' <<< "$current_song")
+	song=$(jq -r '.display_name' <<< "$current_song" | _ellipsis)
+	artist=$(jq -r '.artist' <<< "$current_song" | _ellipsis)
 	image=$(jq -r '.image_url' <<< "$current_song")
 	current_time=$(jq -r '.current_second' <<< "$current_song")
 	total_time=$(jq -r '.total_seconds' <<< "$current_song")

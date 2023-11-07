@@ -654,7 +654,7 @@ case "$action" in
 	"Spotify: get song")
 		is_installed http "httpie is not installed!"
 
-		tmux display-popup -s bg=black -w "45%" -h "40%" -y "0" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
+		tmux display-popup -s bg=black -w "50%" -h "40%" -y "0" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
