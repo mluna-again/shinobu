@@ -654,7 +654,7 @@ case "$action" in
 	"Spotify: get song")
 		is_installed http "httpie is not installed!"
 
-		tmux display-popup -s bg=black -w "50%" -h "40%" -y "0" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
+		tmux display-popup -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
@@ -702,7 +702,7 @@ case "$action" in
 		}
 
 		message=$(printf "\n                  Queue                 \n\n%s" "$items")
-		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "0" -s bg=black echo "$message"
+		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
 
 		true
 		;;
@@ -767,7 +767,7 @@ case "$action" in
 		}
 
 		volume=$(osascript -e 'set ovol to output volume of (get volume settings)')
-		tmux display-popup -E -x "#{popup_pane_right}" -y "0" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
+		tmux display-popup -E -x "#{popup_pane_right}" -y "#{popup_pane_top}" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
 		;;
 
 	"Dotfiles: status")
