@@ -44,7 +44,8 @@ local normalized = {
 
 return {
 	"williamboman/mason-lspconfig.nvim",
-	event = "BufWritePost",
+	name = "lsp-stuff",
+	cmd = "Lsp",
 	dependencies = {
 		"williamboman/mason.nvim",
 		"rmagatti/goto-preview",
