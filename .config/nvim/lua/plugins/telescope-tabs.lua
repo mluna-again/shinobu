@@ -1,10 +1,11 @@
 return {
 	"LukasPietzschmann/telescope-tabs",
 	lazy = true,
-	config = function()
-		require("telescope-tabs").setup({})
-
+	init = function()
 		nmap("Ñ", ":lua require('telescope-tabs').go_to_previous()<CR>")
 		nmap("ñ", ":lua require('telescope-tabs').list_tabs()<CR>")
+	end,
+	config = function()
+		require("telescope-tabs").setup({})
 	end,
 }
