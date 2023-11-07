@@ -115,7 +115,7 @@ horizontal_padd=$(( ($(tput cols) - 60) / 2 ))
 time_since_last_fetch=0
 
 printf '\033[?25l'
-trap "printf '\033[?25h' ; trap - SIGTERM SIGINT" SIGTERM SIGINT
+trap "printf '\033[?25h' ; trap - SIGTERM SIGINT ; exit" SIGTERM SIGINT
 
 while true; do
 	(( current_time >= total_time )) && {

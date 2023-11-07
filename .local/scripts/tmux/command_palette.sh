@@ -652,19 +652,9 @@ case "$action" in
 		;;
 
 	"Spotify: get song")
-		try_shpotify status && exit
 		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status GET "http://localhost:8888/status")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
-		}
-
-		song=$(jq -r '.display_name' <<< "$output")
-		artist=$(jq -r '.artist' <<< "$output")
-		success "$song by $artist"
-
-		true
+		tmux display-popup -s bg=black -w "45%" -h "40%" -y "0" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
@@ -712,7 +702,7 @@ case "$action" in
 		}
 
 		message=$(printf "\n                  Queue                 \n\n%s" "$items")
-		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
+		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "0" -s bg=black echo "$message"
 
 		true
 		;;
