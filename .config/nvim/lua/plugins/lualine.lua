@@ -102,6 +102,12 @@ return {
 				},
 				lualine_y = {
 					{
+						"selectioncount"
+					},
+					{
+						"searchcount"
+					},
+					{
 						"location",
 						padding = { left = 1, right = 1 },
 					},
