@@ -19,6 +19,10 @@ command -v jq &>/dev/null || {
 	exit 1
 }
 
+_display_bop_dead_message() {
+	tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: bop is asleep!"
+}
+
 date() {
 	if uname | grep -iq darwin; then
 		gdate "$@"
@@ -36,7 +40,10 @@ download_if_not_exists() {
 	printf "%s\n" "$image_path"
 	find "$CURRENT_PATH/downloads" -type f -iname "$hash\.*" | grep -q . && return
 
-	curl -s --output "${image_path}.jpg" "$url"
+	curl -fs --output "${image_path}.jpg" "$url" || {
+		_display_bop_dead_message
+		exit 1
+	}
 }
 
 chafa_if_not_yet() {
@@ -75,7 +82,11 @@ progress_bar() {
 	printf " %s" "$ending"
 }
 
-current_song=$(curl -s "$BOP_URL/status")
+current_song=$(curl -fs "$BOP_URL/status")
+[ "$?" -ne 0 ] && {
+	_display_bop_dead_message
+	exit 1
+}
 grep -iq "Not found" <<< "$current_song" && {
 	printf "No song playing.\n"
 	exit
@@ -92,7 +103,7 @@ image_path=$(download_if_not_exists "$image")
 chafa_if_not_yet "$image_path"
 
 refetch_data() {
-	current_song=$(curl -s "$BOP_URL/status")
+	current_song=$(curl -fs "$BOP_URL/status")
 	grep -iq "Not found" <<< "$current_song" && {
 		printf "No song playing.\n"
 		exit
