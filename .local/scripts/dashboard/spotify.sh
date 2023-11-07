@@ -110,8 +110,13 @@ refetch_data() {
 
 lines=$(tput lines)
 lines=$(( (lines - 15) / 2 )) # 15 is the size of the album cover
+horizontal_padd=$(( ($(tput cols) - 60) / 2 ))
 
 time_since_last_fetch=0
+
+printf '\033[?25l'
+trap "printf '\033[?25h' ; trap - SIGTERM SIGINT" SIGTERM SIGINT
+
 while true; do
 	(( current_time >= total_time )) && {
 		time_since_last_fetch=0
@@ -131,6 +136,9 @@ while true; do
 			clear
 			[ "$CENTER" = true ] && for (( i=0;i<lines;i++ )); do printf "\n"; done
 		}
+
+		for (( i=0; i<horizontal_padd; i++ )); do printf " "; done
+
 		printf "%s" "$line"
 
 		[ $index -eq 4 ] && printf "     %s" "$song"
