@@ -1,6 +1,8 @@
 return {
 	"mfussenegger/nvim-lint",
-	event = "InsertEnter",
+	event = {
+		"BufWritePost"
+	},
 	config = function()
 		require("lint").linters_by_ft = {
 			sh = {
@@ -11,6 +13,7 @@ return {
 			}
 		}
 
+		require("lint").try_lint()
 		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			callback = function()
 				require("lint").try_lint()

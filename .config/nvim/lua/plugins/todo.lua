@@ -1,6 +1,6 @@
 return {
 	"folke/todo-comments.nvim",
-	event = "InsertEnter",
+	event = "BufEnter",
 	config = function()
 		require("todo-comments").setup({
 			signs = false, -- show icons in the signs column

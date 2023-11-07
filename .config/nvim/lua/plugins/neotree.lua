@@ -7,9 +7,7 @@ return {
 		"MunifTanjim/nui.nvim",
 		"folke/which-key.nvim",
 	},
-	config = function()
-		vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
+	init = function()
 		local wk = require("which-key")
 		wk.register({
 			["<C-l>"] = {
@@ -19,6 +17,9 @@ return {
 				silent = true,
 			},
 		})
+	end,
+	config = function()
+		vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 		require("neo-tree").setup({
 			source_selector = {

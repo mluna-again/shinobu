@@ -6,7 +6,7 @@ map SX <Plug>Lightspeed_S
 
 return {
 	"ggandor/lightspeed.nvim",
-	event = "InsertEnter",
+	event = "BufEnter",
 	config = function()
 		require("lightspeed").setup({})
 	end,

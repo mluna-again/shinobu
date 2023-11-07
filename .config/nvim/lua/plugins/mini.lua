@@ -1,7 +1,7 @@
 return {
 	"echasnovski/mini.nvim",
 	version = false,
-	event = "InsertEnter",
+	event = "BufEnter",
 	config = function ()
 		require("mini.trailspace").setup()
 		vim.api.nvim_create_autocmd("BufWritePre", {

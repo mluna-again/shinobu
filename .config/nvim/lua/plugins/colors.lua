@@ -1,6 +1,10 @@
 return {
 	"norcalli/nvim-colorizer.lua",
-	event = "InsertEnter",
+	ft = {
+		"css",
+		"scss"
+	},
+	lazy = true,
 	config = function()
 		vim.cmd("set termguicolors")
 		require("colorizer").setup({
