@@ -57,6 +57,7 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-cmdline",
 		"quangnguyen30192/cmp-nvim-ultisnips",
+		"SirVer/ultisnips",
 	},
 	config = function()
 		require("mason-lspconfig").setup({
