@@ -10,6 +10,9 @@ return {
 			},
 			sql = {
 				"sqlfluff"
+			},
+			python = {
+				"flake8"
 			}
 		}
 

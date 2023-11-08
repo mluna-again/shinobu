@@ -78,6 +78,9 @@ return {
 				cs = {
 					customformatters.csharpier,
 				},
+				python = {
+					formatters.python.black,
+				},
 			},
 		})
 

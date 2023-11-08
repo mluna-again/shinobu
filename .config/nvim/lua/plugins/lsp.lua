@@ -193,8 +193,8 @@ return {
 			"zls",
 			"gleam",
 			"csharp_ls",
-			"svelte"
-			-- "lua_ls",
+			"svelte",
+			"pylsp"
 		}
 
 		for _, server in pairs(servers) do
