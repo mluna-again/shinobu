@@ -90,3 +90,6 @@ empty_symbol = "󰂎 "
 symbol = " "
 number_threshold = 1
 style = "yellow"
+
+[python]
+symbol = " "
