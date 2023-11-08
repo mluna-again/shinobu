@@ -1,6 +1,6 @@
 add_newline = false
 
-format = """$username$hostname :: $directory$git_branch$git_commit$git_state$git_metrics$git_status$time$memory_usage$jobs
+format = """$username$hostname :: $directory$python$git_branch$git_commit$git_state$git_metrics$git_status$time$memory_usage$jobs
 ${custom.goldfish}$status$character"""
 # right_format = "$cmd_duration$localip"
 palette = "kanagawa"
