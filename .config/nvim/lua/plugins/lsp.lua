@@ -195,7 +195,7 @@ return {
 			"gleam",
 			"csharp_ls",
 			"svelte",
-			"pylsp"
+			"pyright"
 		}
 
 		for _, server in pairs(servers) do

@@ -7,7 +7,7 @@ vim.g.UltiSnipsJumpBackwardTrigger = "<nop>"
 return {
 	"SirVer/ultisnips",
 	lazy = true,
-	config = function()
+	init = function()
 		vim.cmd([[
 		if exists("$VIRTUAL_ENV")
 			let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
