@@ -58,3 +58,13 @@ vim.api.nvim_create_user_command("Lsp", function()
 	vim.cmd("Lazy load lsp-stuff")
 	vim.cmd("LspStart")
 end, {})
+
+-- php stuff :/
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = { "*.php" },
+	callback = function()
+		vim.bo.indentexpr = ""
+		vim.bo.smartindent = true
+		vim.bo.autoindent = true
+	end
+})
