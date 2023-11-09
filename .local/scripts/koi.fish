@@ -86,8 +86,6 @@ function handle_exit --on-signal SIGINT --on-signal SIGTERM
 end
 
 # make highlight work for cmds
-function watch; end
-function unwatch; end
 function use; end
 function reset; end
 function r; end
@@ -123,8 +121,6 @@ function _print_koi_help
     printf "  editor: open an editor to edit the in-memory request.\n"
     printf "  save: copy jq output to clipboard.\n"
     printf "  echo <var>: print env var.\n"
-    printf "  watch <file>: quits koi and restarts it in 'watch' mode (tmux only).\n"
-    printf "  unwatch: quits koi and restarts it in 'interactive' mode (tmux only).\n"
     printf "  env: prints env variables.\n"
     printf "  ls: show files in current directory.\n"
     printf "  cd: change directory.\n"
@@ -585,44 +581,6 @@ function koi
         test "$query" = clear; and begin
             clear
             continue
-        end
-
-        test "$query" = unwatch; and begin
-            if test -z "$TMUX"
-                printf "This command is only available inside tmux.\n"
-                continue
-            end
-
-            if test -z "$file"
-                printf "Not watching any file.\n"
-                continue
-            end
-
-            tmux send-keys -t . C-c C-l koi Enter
-        end
-
-        echo "$query" | grep -iq '^watch'; and begin
-            set -l f (echo "$query" | awk '{$1=""; print $0}' | xargs)
-            test -z "$f"; and set -l f "$file"
-            set -l path (pwd)/"$f"
-
-            test -e "$path"; or begin
-                printf "File doesn't exist.\n"
-                continue
-            end
-
-            echo "$path" | grep -iqv '\.hurl$'; and begin
-                printf "Not a Hurl file (%s).\n" "$path"
-                continue
-            end
-
-            if test -z "$TMUX"
-                printf "This command is only available inside tmux.\n"
-                continue
-            end
-
-            set -l relative_path (echo "$path" | sed "s|^$original_dir||" | sed 's|^/*||')
-            tmux send-keys -t . C-c C-l koi Space "$relative_path" Enter
         end
 
         if echo "$query" | grep -q '='
