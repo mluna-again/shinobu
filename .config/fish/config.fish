@@ -150,7 +150,7 @@ function koi
     set -l file $argv[1]
 
     if test -n "$file"
-        watchexec -f "$file" -c clear -r "~/.local/scripts/koi.fish $argv"
+        watchexec -f "$file" -c clear -r hurl --color -iL $argv
     else
         ~/.local/scripts/koi.fish
     end
