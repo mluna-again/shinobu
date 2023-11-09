@@ -195,7 +195,8 @@ return {
 			"gleam",
 			"csharp_ls",
 			"svelte",
-			"pyright"
+			"pyright",
+			"intelephense"
 		}
 
 		for _, server in pairs(servers) do
