@@ -51,7 +51,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.local/bin" \
     "$HOME/.dotnet/tools" \
     "$HOME/.cargo/bin" \
-    "/usr/local/go/bin"
+    "/usr/local/go/bin" \
+    "$HOME/.composer/vendor/bin"
 
 # BINDINGS
 bind -M insert \ce end-of-line
