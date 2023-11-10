@@ -102,6 +102,7 @@ abbr --add gA git add
 abbr --add gr git reset --soft
 abbr --add gc git commit -m
 abbr --add gofmt go fmt ./...
+abbr --add artisan php artisan
 
 # FUNCTIONS
 command -v z &>/dev/null; and function cd
