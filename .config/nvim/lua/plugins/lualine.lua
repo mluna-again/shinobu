@@ -97,7 +97,7 @@ return {
 							hint = "DiagnosticHint", -- Changes diagnostics' hint color.
 						},
 						symbols = { error = " ", warn = " ", info = " ", hint = " " },
-						padding = { left = 1 },
+						padding = { left = 1, right = 1 },
 					},
 				},
 				lualine_y = {
