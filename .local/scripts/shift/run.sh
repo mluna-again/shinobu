@@ -16,26 +16,29 @@ OUTPUT_PATH="$path/.__SHIFT__"
 
 [ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
+_filter_running_programs() {
+	grep -v tmux | grep -v fish
+}
+
 _remove_trailing_slash() {
 	awk '{print $1}' <<< "$1" |\
 		awk '{sub(/\/$/, "", $1); print $1}'
 }
 
 get_sessions() {
-	sessions="$(tmux list-sessions)"
+	sessions="$(tmux list-sessions -F '#{session_name} #{session_attached}')"
 
-	current="$(grep -i attached <<< "$sessions")"
-	without_current="$(grep -iv attached <<< "$sessions")"
-
-	# clean up lines
-	current="$(awk '{ print $1 }' <<< "$current" |\
-						 awk '{ gsub(/:/, "", $1); print $1 }')"
-	without_current="$(awk '{ print $1 }' <<< "$without_current" |\
-						 awk '{ gsub(/:/, "", $1); print $1 }')"
+	current="$(awk '$2 > 0 {print $1}' <<< "$sessions")"
+	without_current="$(awk '$2 == 0 {print $1}' <<< "$sessions")"
 
 	# print current session always first
-	echo "$current"
-	echo "$without_current"
+	running_programs="$(tmux list-panes -s -t "$current" -F "#{pane_current_command}" | _filter_running_programs | wc -l)"
+	printf "%s (running %d programs)\n" "$current" "$running_programs"
+
+	while read -r line; do
+		running_programs="$(tmux list-panes -s -t "$line" -F "#{pane_current_command}" | _filter_running_programs | wc -l)"
+		printf "%s (running %d programs)\n" "$line" "$running_programs"
+	done <<< "$without_current"
 }
 
 get_windows() {
