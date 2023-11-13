@@ -1,5 +1,10 @@
 #!/usr/bin/env fish
 
+function _regenerate_random_vars
+    set -x HURL_KOI_RANDOM (random)
+end
+_regenerate_random_vars
+
 set -x fish_history koi
 
 # COMPONENTS
@@ -268,6 +273,8 @@ function koi
     _print_koi_output
 
     while read -g -p "set -x fish_history koi; echo '\$ '" -S query
+        _regenerate_random_vars
+
         if test "$should_exit" = true
             return
         end
