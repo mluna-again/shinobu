@@ -58,6 +58,7 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"quangnguyen30192/cmp-nvim-ultisnips",
 		"SirVer/ultisnips",
+		"jackMort/ChatGPT.nvim",
 	},
 	config = function()
 		require("mason-lspconfig").setup({
@@ -196,7 +197,8 @@ return {
 			"csharp_ls",
 			"svelte",
 			"pyright",
-			"intelephense"
+			"intelephense",
+			"gdscript"
 		}
 
 		for _, server in pairs(servers) do
