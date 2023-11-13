@@ -58,7 +58,7 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"quangnguyen30192/cmp-nvim-ultisnips",
 		"SirVer/ultisnips",
-		"jackMort/ChatGPT.nvim",
+		-- "jackMort/ChatGPT.nvim",
 	},
 	config = function()
 		require("mason-lspconfig").setup({
