@@ -1,9 +1,8 @@
 #!/usr/bin/env fish
 
 function _regenerate_random_vars
-    set -x HURL_KOI_RANDOM (random)
+    set -xg HURL_KOI_RANDOM (random)
 end
-_regenerate_random_vars
 
 set -x fish_history koi
 
@@ -246,6 +245,8 @@ function _print_koi_output
         printf "Unknown content-type: %s.\n" "$content_type"
         printf "Raw output:\n%s\n" "$body"
     end
+
+    test -n "$hurl_error"; and printf "%s\n" "$hurl_error"
 end
 
 function _fetch_koi_output
@@ -256,9 +257,10 @@ function _fetch_koi_output
         return
     end
 
-    set -g output (hurl --color -iL "$f" | string collect)
-    set -g headers (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over == 0) { print $0 } }' | string collect)
-    set -g body (echo "$output" | awk '{ if (NF == 0) over = 1 } { if (over > 0) { print $0 } }' | string collect)
+    set -g output (hurl --error-format=long --color -iL "$f" &| string collect)
+    set -g headers (echo "$output" | awk '{ if (NF == 0) over += 1 } { if (over == 0) { print $0 } }' | string collect)
+    set -g body (echo "$output" | awk '{ if (NF == 0) over += 1 } { if (over == 1) { print $0 } }' | string collect)
+    set -g hurl_error (echo "$output" | awk '{ if (NF == 0) over += 1 } { if (over > 1) { print $0 } }' | string collect)
 end
 
 function _banner
@@ -616,6 +618,7 @@ function koi
     set -g should_exit true
 end
 
+_regenerate_random_vars
 _fetch_koi_output
 koi $argv
 
