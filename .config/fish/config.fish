@@ -122,6 +122,7 @@ abbr --add gdd git diff --cached
 abbr --add gl git log
 abbr --add gCC git clean -fd
 abbr --add gC git checkout
+abbr --add gb "git checkout (git branch | fzf | xargs)"
 abbr --add gP git pull
 abbr --add gp git push
 abbr --add gs git status
