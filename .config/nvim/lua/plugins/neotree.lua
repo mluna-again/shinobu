@@ -7,17 +7,6 @@ return {
 		"MunifTanjim/nui.nvim",
 		"folke/which-key.nvim",
 	},
-	init = function()
-		local wk = require("which-key")
-		wk.register({
-			["<C-l>"] = {
-				":Neotree reveal toggle=true<CR>",
-				"Toggle Neotree",
-				noremap = true,
-				silent = true,
-			},
-		})
-	end,
 	config = function()
 		vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
