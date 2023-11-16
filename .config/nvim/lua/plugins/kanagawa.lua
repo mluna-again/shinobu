@@ -224,6 +224,7 @@ return {
 					FzfLuaPreviewTitle = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
 
 					CursorLine = { bg = theme.syn.bg, fg = theme.ui.fg },
+					CursorLineNr = { bg = theme.syn.bg, fg = theme.syn.comment },
 
 					StatusLineFolderIcon = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
 					StatusLineFileIcon = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
@@ -253,6 +254,14 @@ return {
 					ToggleTermNormal = { bg = theme.ui.bg_m2 },
 
 					TroubleNormal = { bg = theme.ui.bg_m2 },
+
+					BqfSign = { fg = theme.syn.identifier },
+					BqfPreviewBorder = { bg = theme.ui.bg, fg = theme.ui.bg },
+					BqfPreviewSbar = { bg = theme.ui.bg, fg = theme.ui.bg },
+					BqfPreviewTitle = { bg = theme.ui.bg, fg = theme.ui.bg },
+					BqfPreviewThumb = { fg = theme.ui.fg },
+					BqfPreviewBufLabel = { bg = theme.syn.identifier, fg = theme.ui.bg },
+					BqfPreviewCursorLine = { bg = theme.ui.bg },
 				}
 			end,
 		})
