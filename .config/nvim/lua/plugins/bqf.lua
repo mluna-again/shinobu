@@ -5,8 +5,7 @@ return {
 		require("bqf").setup({
 			preview = {
 				winblend = 0,
-				-- border = {'┏', '━', '┓', '┃', '┛', '━', '┗', '┃'},
-				border = {'', '', '', '', '', '', '', ''},
+				border = {'┏', '━', '┓', '┃', '┛', '━', '┗', '┃'},
 			}
 		})
 	end

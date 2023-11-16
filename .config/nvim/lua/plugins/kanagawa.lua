@@ -256,10 +256,10 @@ return {
 					TroubleNormal = { bg = theme.ui.bg_m2 },
 
 					BqfSign = { fg = theme.syn.identifier },
-					BqfPreviewBorder = { bg = theme.ui.bg, fg = theme.ui.bg },
-					BqfPreviewSbar = { bg = theme.ui.bg, fg = theme.ui.bg },
-					BqfPreviewTitle = { bg = theme.ui.bg, fg = theme.ui.bg },
-					BqfPreviewThumb = { fg = theme.ui.fg },
+					BqfPreviewBorder = { bg = theme.ui.bg, fg = theme.syn.identifier },
+					BqfPreviewSbar = { bg = theme.ui.bg, fg = theme.syn.identifier },
+					BqfPreviewTitle = { bg = theme.ui.bg, fg = theme.syn.identifier },
+					BqfPreviewThumb = { fg = theme.syn.identifier, bg = theme.syn.identifier },
 					BqfPreviewBufLabel = { bg = theme.syn.identifier, fg = theme.ui.bg },
 					BqfPreviewCursorLine = { bg = theme.ui.bg },
 				}
