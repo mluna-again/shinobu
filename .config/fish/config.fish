@@ -1,36 +1,3 @@
-set -g quotes "in the face of ambiguity,\nrefuse the temptation to guess." \
-    "don’t let your imagination be\ncrushed by life as a whole." \
-    "simple is better than clever." \
-    "a strange game. the only \nwinning move is not to play." \
-    "simplicity is prerequisite\nfor reliability."
-
-function catsays
-    set -l message $argv[1]
-    if test -z "$message"
-        set message (random choice $quotes)
-    end
-
-    set -l lines (echo $message | string split "\n")
-    set -l longest_line (echo $message | string unescape | awk '{ if ( length > x ) { x = length } }END{ print x }')
-    set -l border (string repeat -n (math $longest_line + 2) "-")
-
-    echo "$border"
-
-    for line in $lines
-        echo "|"(string pad -w $longest_line --right $line)"|"
-    end
-
-    echo "$border"
-
-    echo "\
-                           \\/
-                              ／l、
-                            （ﾟ､ ｡ ７
-                              l  ~ヽ
-                              じしf_,)ノ\
-  " | string pad -w $longest_line --right
-end
-
 # KANAGAWA
 set -l foreground DCD7BA normal
 set -l selection 2D4F67 brcyan
@@ -97,7 +64,7 @@ set -gx COLORTERM truecolor
 set -gx VISUAL nvim
 set -gx EDITOR "$VISUAL"
 set -gx FZF_DEFAULT_COMMAND 'ag -g ""'
-set -gx FZF_DEFAULT_OPTS '--layout=reverse --prompt=" " --pointer=" " --header-first --color="bg:#181616,bg+:#c4b28a,fg+:#1D1C19,gutter:#1D1C19,header:#c4b28a,prompt:#c4b28a,query:#c5c9c5" --height="95%" --bind ¿:preview-up,-:preview-down'
+set -gx FZF_DEFAULT_OPTS '--layout=reverse --prompt=" " --pointer=" " --header-first --color="bg:#181616,bg+:#c4b28a,fg+:#1D1C19,gutter:#1D1C19,header:#c4b28a,prompt:#c4b28a,query:#c5c9c5,hl:#c4746e,hl+:#c4746e" --height="95%" --bind ¿:preview-up,-:preview-down'
 set -gx ELIXIR_ERL_OPTIONS "-kernel shell_history enabled"
 set -gx ERL_AFLAGS "-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 set -gx GOPATH "$HOME/.local/go"
@@ -281,6 +248,4 @@ end
 if status is-interactive
     # Commands to run in interactive sessions can go here
     command -v atuin &>/dev/null; and atuin init fish --disable-up-arrow | source
-
-    catsays
 end
