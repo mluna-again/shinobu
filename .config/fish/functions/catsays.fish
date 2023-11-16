@@ -9,7 +9,7 @@ function catsays
     if test -z "$message"
         set message (random choice $quotes)
     end
-    if test $argv[1] = -
+    if test "$argv[1]" = -
         set message
         while read -lz line
             set -a message $line
@@ -17,7 +17,7 @@ function catsays
     end
 
     set -l lines (echo $message | string split "\n")
-    set -l longest_line (echo $message | awk '{ if ( length > x ) { x = length } }END{ print x }')
+    set -l longest_line (echo $message | string split "\n" | sed 's/\t/  /g' | awk '{ if ( length > x ) { x = length } }END{ print x }')
     set -l border (string repeat -n (math $longest_line + 2) "-")
 
     echo "$border"
@@ -30,11 +30,11 @@ function catsays
     echo "$border"
 
     echo "\
-                           \\/
-                              ／l、
-                            （ﾟ､ ｡ ７
-                              l  ~ヽ
-                              じしf_,)ノ\
+  \\/
+    ／l、
+  （ﾟ､ ｡ ７
+    l  ~ヽ
+    じしf_,)ノ\
   " | string pad -w $longest_line --right
 end
 
