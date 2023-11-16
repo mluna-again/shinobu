@@ -10,5 +10,7 @@
   "Print error": "printf '\\033[0;30m\\033[41m %s \\n' \"\"",
   "Print success": "printf '\\033[0;30m\\033[42m %s \\n' \"\"",
   "Print warning": "printf '\\033[0;30m\\033[43m %s \\n' \"\"",
-  "Reset colors": "printf '\\033[0m'"
+  "Reset colors": "printf '\\033[0m'",
+  "Longest line (count)": "awk '{ if ( length > x ) { x = length } } END { print x }'",
+  "Longest line (text)": "awk '{ if ( length > x ) { x = length; line = $0 } } END { print line }'"
 }

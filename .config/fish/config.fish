@@ -1,6 +1,34 @@
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    command -v atuin &>/dev/null; and atuin init fish --disable-up-arrow | source
+set -g quotes "in the face of ambiguity,\nrefuse the temptation to guess." \
+    "don’t let your imagination be\ncrushed by life as a whole." \
+    "simple is better than clever." \
+    "a strange game. the only \nwinning move is not to play." \
+    "simplicity is prerequisite\nfor reliability."
+
+function catsays
+    set -l message $argv[1]
+    if test -z "$message"
+        set message (random choice $quotes)
+    end
+
+    set -l lines (echo $message | string split "\n")
+    set -l longest_line (echo $message | string unescape | awk '{ if ( length > x ) { x = length } }END{ print x }')
+    set -l border (string repeat -n (math $longest_line + 2) "-")
+
+    echo "$border"
+
+    for line in $lines
+        echo "|"(string pad -w $longest_line --right $line)"|"
+    end
+
+    echo "$border"
+
+    echo "\
+                           \\/
+                              ／l、
+                            （ﾟ､ ｡ ７
+                              l  ~ヽ
+                              じしf_,)ノ\
+  " | string pad -w $longest_line --right
 end
 
 # KANAGAWA
@@ -247,4 +275,11 @@ if uname | grep -i darwin &>/dev/null
 else
     set -l p ~/.asdf/asdf.fish
     test -e "$p"; and source "$p"
+end
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+    command -v atuin &>/dev/null; and atuin init fish --disable-up-arrow | source
+
+    catsays
 end
