@@ -298,10 +298,12 @@ case "$action" in
 		session_name_without_extension=$(sed "s/.yml$//" <<< "$session_name")
 
 		if tmux list-sessions | grep -i "$session_name_without_extension" &>/dev/null; then
-			tmux switch-client -t "$session_name_without_extension"
+			tmux switch-client -t "$session_name_without_extension" && \
+			alert "Session already exists. Switching to it."
 		else
 			tmuxp load -s "$session_name_without_extension" -d "$session_path" >/dev/null && \
-				tmux switch-client -t "$session_name_without_extension"
+				tmux switch-client -t "$session_name_without_extension" && \
+				success "Session created."
 		fi
 		;;
 
