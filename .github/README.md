@@ -18,6 +18,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 7. make
 8. zoxide
 9. direnv (2.32+)
+10. jq
 
 ### Recommended
 1. fd
@@ -30,19 +31,18 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 8. shpotify
 9. hurl
 10. tmuxp
-11. jq
-12. jqp
-13. httpie
-14. eza
-15. delta
-16. direnv
-17. watchexec
-18. bat
-19. r*st
-20. yq
-21. sc-im
-22. atuin
-23. pgcli
+11. jqp
+12. httpie
+13. eza
+14. delta
+15. direnv
+16. watchexec
+17. bat
+18. r*st
+19. yq
+20. sc-im
+21. atuin
+22. pgcli
 
 ## Problems I've encountered that I don't want to forget
 
@@ -61,4 +61,10 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 ```sh
 $ cd ~/.local/scripts/shift
 $ go build
+```
+
+* Install tmp:
+```sh
+$ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Ctrl-I inside tmux
 ```
