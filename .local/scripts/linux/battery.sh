@@ -7,7 +7,8 @@ battery=$(upower -e 2>/dev/null | grep -i bat0)
 
 # something bad happened, for example, you tried to use wsl (windows 🤮) and
 # that is something very, very bad.
-[ -z "$battery" ] && { echo "???% #[bg=$2,fg=black] 󰂑 "; exit; }
+# or you don't have a battery.
+[ -z "$battery" ] && { echo " % #[bg=$2,fg=black] 󰂑 "; exit; }
 
 percentage=$(upower -i "$battery" | grep -i percentage | awk '{print $2}')
 percentage=$(echo "$percentage" | cut -c -3)
