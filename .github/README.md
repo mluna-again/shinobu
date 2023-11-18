@@ -16,6 +16,8 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 5. starship
 6. git
 7. make
+8. zoxide
+9. direnv
 
 ### Recommended
 1. fd
