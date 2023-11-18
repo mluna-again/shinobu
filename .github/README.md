@@ -9,15 +9,15 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 
 ## Dependencies
 ### Required
-1. nvim
-2. tmux
+1. nvim (0.9+)
+2. tmux (3.3a+)
 3. fish
 4. yadm
 5. starship
 6. git
 7. make
 8. zoxide
-9. direnv
+9. direnv (2.32+)
 
 ### Recommended
 1. fd
@@ -54,3 +54,11 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
     - defaults write -g InitialKeyRepeat -int 15
     - defaults write -g KeyRepeat -int 1
     - logout
+
+## Post-installation
+
+* Compile shift:
+```sh
+$ cd ~/.local/scripts/shift
+$ go build
+```
