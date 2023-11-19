@@ -11,6 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.o.guifont = "FiraCode Nerd Font Retina"
 vim.g.mapleader = " "
 require("lazy").setup("plugins")
 require('config')
