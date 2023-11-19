@@ -2,7 +2,7 @@ require("core.maps")
 
 return {
 	"akinsho/toggleterm.nvim",
-	event = "VeryLazy",
+	cmd = "ToggleTerm",
 	config = function()
 		require("toggleterm").setup({
 			-- size can be a number or function which is passed the current terminal
