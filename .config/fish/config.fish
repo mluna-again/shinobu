@@ -117,6 +117,12 @@ command -v bat &>/dev/null; and function cat
     bat $argv
 end
 
+function ssh
+    tmux set status-position bottom
+    command ssh $argv
+    tmux set status-position top
+end
+
 function q
     exit
 end
