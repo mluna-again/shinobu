@@ -241,7 +241,13 @@ function t
     set -l cmd "tmux set -g @force_ssh_indicator true"
 
     if test -n "$SSH_CONNECTION"
-        tmux attach -c "$cmd"; or tmux "$cmd"
+        if tmux info &>/dev/null
+            tmux set -g @force_ssh_indicator true
+            tmux attach
+            return
+        end
+
+        tmux "$cmd"
         return
     end
 
