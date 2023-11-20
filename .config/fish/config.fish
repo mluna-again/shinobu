@@ -239,7 +239,7 @@ end
 
 function t
     if test -n "$SSH_CONNECTION"
-        if tmux info &>/dev/null
+        if pgrep tmux &>/dev/null
             tmux set -g @force_ssh_indicator true
             tmux attach
             return
