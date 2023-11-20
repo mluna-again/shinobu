@@ -119,10 +119,10 @@ end
 
 function ssh
     tmux set status-position bottom
-    tmux set -g @force_ssh_indicator true
+    tmux set @force_ssh_indicator true
     command ssh $argv
     tmux set status-position top
-    tmux set -g @force_ssh_indicator false
+    tmux set @force_ssh_indicator false
 end
 
 function q
