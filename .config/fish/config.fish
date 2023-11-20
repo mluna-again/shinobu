@@ -238,6 +238,13 @@ function yt
 end
 
 function t
+    set -l cmd "tmux set -g @force_ssh_indicator true"
+
+    if test -n "$SSH_CONNECTION"
+        tmux attach -c "$cmd"; or tmux "$cmd"
+        return
+    end
+
     tmux attach; or tmux
 end
 
