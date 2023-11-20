@@ -238,8 +238,6 @@ function yt
 end
 
 function t
-    set -l cmd "tmux set -g @force_ssh_indicator true"
-
     if test -n "$SSH_CONNECTION"
         if tmux info &>/dev/null
             tmux set -g @force_ssh_indicator true
@@ -247,7 +245,7 @@ function t
             return
         end
 
-        tmux "$cmd"
+        tmux new-session \; set -g @force_ssh_indicator true
         return
     end
 
