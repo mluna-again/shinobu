@@ -144,7 +144,7 @@ send_keys_to_nvim() {
 }
 
 modify_nvim_and_alacritty() {
-	command -v yq &>/dev/null || { error "yq is required to run this action!"; exit 1; }
+	command -v yq &>/dev/null || { error "yq is required to run this action!"; exit; }
 
 	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml" || true
 
@@ -833,6 +833,7 @@ case "$action" in
 				tmux set -g @components_active_background1 yellow
 				tmux set -g @components_active_background2 red
 				tmux set -g @components_active_background3 blue
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "kanagawa-dragon"
 				modify_nvim_and_alacritty kanagawa-dragon
 				;;
@@ -841,6 +842,7 @@ case "$action" in
 				tmux set -g @components_active_background1 yellow
 				tmux set -g @components_active_background2 orange
 				tmux set -g @components_active_background3 blue
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "kanagawa-wave"
 				modify_nvim_and_alacritty kanagawa-wave
 				;;
@@ -849,6 +851,7 @@ case "$action" in
 				tmux set -g @components_active_background1 green
 				tmux set -g @components_active_background2 red
 				tmux set -g @components_active_background3 yellow
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "everforest"
 				modify_nvim_and_alacritty everforest
 				;;
@@ -857,6 +860,7 @@ case "$action" in
 				tmux set -g @components_active_background1 orange
 				tmux set -g @components_active_background2 red
 				tmux set -g @components_active_background3 blue
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "gruvbox-material"
 				modify_nvim_and_alacritty gruvbox-material
 				;;
@@ -865,6 +869,7 @@ case "$action" in
 				tmux set -g @components_active_background1 red
 				tmux set -g @components_active_background2 blue
 				tmux set -g @components_active_background3 yellow
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "catppuccin"
 				modify_nvim_and_alacritty catppuccin
 				;;
@@ -873,6 +878,7 @@ case "$action" in
 				tmux set -g @components_active_background1 red
 				tmux set -g @components_active_background2 blue
 				tmux set -g @components_active_background3 yellow
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "rose-pine"
 				modify_nvim_and_alacritty rose-pine
 				;;
@@ -881,6 +887,7 @@ case "$action" in
 				tmux set -g @components_active_background1 red
 				tmux set -g @components_active_background2 blue
 				tmux set -g @components_active_background3 yellow
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "yoru"
 				modify_nvim_and_alacritty yoru
 				;;
@@ -889,6 +896,7 @@ case "$action" in
 				tmux set -g @components_active_background1 red
 				tmux set -g @components_active_background2 blue
 				tmux set -g @components_active_background3 yellow
+				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "dracula"
 				modify_nvim_and_alacritty dracula
 				;;
