@@ -262,6 +262,8 @@ return {
 					BqfPreviewThumb = { fg = theme.syn.identifier, bg = theme.syn.identifier },
 					BqfPreviewBufLabel = { bg = theme.syn.identifier, fg = theme.ui.bg },
 					BqfPreviewCursorLine = { bg = theme.ui.bg },
+
+					Folded = { bg = theme.ui.bg },
 				}
 			end,
 		})
