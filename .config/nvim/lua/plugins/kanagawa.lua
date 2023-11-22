@@ -264,6 +264,7 @@ return {
 					BqfPreviewCursorLine = { bg = theme.ui.bg },
 
 					Folded = { bg = theme.ui.bg },
+					UfoFoldedEllipsis = { bg = theme.ui.bg_gutter },
 				}
 			end,
 		})
