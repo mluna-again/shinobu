@@ -60,7 +60,7 @@ Destroy: server
 Detach: client
 Load: session
 Send: command to panes
-Time: clock
+Time: show
 Theme: choose colorscheme
 Run: Local script
 Borders: Toggle for current window
@@ -80,6 +80,7 @@ Tmux: move window to the left
 Tmux: move window to the right
 Tmux: zen mode
 Tmux: floating terminal
+Tmux: block outer session
 Lol: wake up
 Monitor: open dashboard
 Dumb: screen-saver
@@ -369,7 +370,7 @@ case "$action" in
 		tmux kill-window
 		;;
 
-	"Time: clock")
+	"Time: show")
 		tmux clock-mode
 		;;
 
@@ -803,6 +804,24 @@ case "$action" in
 
 	"Tmux: floating terminal")
 		tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -EE
+		;;
+
+	"Tmux: block outer session")
+		locked=$(tmux display-message -p "#{@lock_outer_session}")
+
+		if [ "$locked" = "true" ]; then
+			tmux set -g prefix C-x
+			tmux bind C-x send-prefix
+
+			tmux set -g @lock_outer_session false
+		else
+			tmux set -g prefix None
+			tmux unbind -n C-x
+			tmux unbind C-x
+
+			tmux set -g @lock_outer_session true
+		fi
+
 		;;
 
 
