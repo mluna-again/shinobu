@@ -31,6 +31,7 @@ mouse:
   hide_when_typing: true
 key_bindings:
   - {key: F, action: ToggleFullscreen, mods: Command}
+  - {key: F, action: ToggleFullscreen, mods: Control}
   - {key: W, action: None, mods: Command}
 import:
   - ~/.config/alacritty/themes/kanagawa-dragon.yml
