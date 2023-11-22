@@ -8,7 +8,7 @@ width="$2"
 
 [ -e "$NOTES_PATH" ] || exit
 
-count=$(grep -Ec '^\* ' "$NOTES_PATH")
+count=$(grep -Ec '^ *\* ' "$NOTES_PATH")
 
 (( count > 0 )) && {
 	(( count > 99 )) && count="+"
