@@ -18,17 +18,22 @@ function catsays
 
     set -l lines (echo $message | string split "\n" | awk 'NF > 0')
     set -l longest_line (echo $message | string split "\n" | sed 's/\t/  /g' | awk '{ if ( length > x ) { x = length } }END{ print x }')
-    set -l border (string repeat -n (math $longest_line + 2) "-")
+    set -l border (string repeat -n (math $longest_line + 2) "━")
+    set -l rborder "┏"
+    set -l lborder "┓"
 
-    echo "$border"
+    echo "$rborder"(string repeat -n (math (string length "$border") - 2) "━")"$lborder"
+
 
     for line in $lines
         set line (echo $line | sed 's/\t/  /g')
         test -z "$line"; and break
-        echo "|"(string pad -w "$longest_line" --right -- "$line")"|"
+        echo "┃"(string pad -w "$longest_line" --right -- "$line")"┃"
     end
 
-    echo "$border"
+    set rborder "┗"
+    set lborder "┛"
+    echo "$rborder"(string repeat -n (math (string length "$border") - 2) "━")"$lborder"
 
     echo "\
   \\/
