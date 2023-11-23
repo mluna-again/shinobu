@@ -31,7 +31,7 @@ return {
 				border = "rounded",
 				win_options = {
 					winblend = 0,
-					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder",
+					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder,LineNr:OilBackground",
 				},
 				padding = 6
 			},
@@ -42,11 +42,11 @@ return {
 			preview = {
 				win_options = {
 					winblend = 0,
-					winhighlight = "Normal:OilPreviewBackground,FloatBorder:OilPreviewBorder,FloatTitle:OilBorder"
+					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder,LineNr:OilBackground",
 				}
 			},
 			win_options = {
-				winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder"
+				winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder,LineNr:OilBackground",
 			},
       skip_confirm_for_simple_edits = true,
 		})
