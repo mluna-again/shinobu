@@ -16,7 +16,7 @@ function catsays
         end
     end
 
-    set -l lines (echo $message | string split "\n" | awk 'NR > 0')
+    set -l lines (echo $message | string split "\n" | awk 'NF > 0')
     set -l longest_line (echo $message | string split "\n" | sed 's/\t/  /g' | awk '{ if ( length > x ) { x = length } }END{ print x }')
     set -l border (string repeat -n (math $longest_line + 2) "-")
 
