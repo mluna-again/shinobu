@@ -24,6 +24,7 @@ function catsays
 
     for line in $lines
         set line (echo $line | sed 's/\t/  /g')
+        test -z "$line"; and break
         echo "|"(string pad -w "$longest_line" --right -- "$line")"|"
     end
 
