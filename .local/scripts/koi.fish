@@ -2,6 +2,7 @@
 
 function _regenerate_random_vars
     set -xg HURL_KOI_RANDOM (random)
+    set -xg HURL_KOI_UUID (uuidgen)
 end
 
 set -x fish_history koi
