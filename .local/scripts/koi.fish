@@ -31,7 +31,7 @@ set -g query $argv[2]
 
 # fish_clipboard_copy doesn't work sometime :/
 function _copy_to_clipboard
-    while read -lz line
+    while read -l line
         set -a content $line
     end
     set -l os (uname | tr '[:upper:]' '[:lower:]')
