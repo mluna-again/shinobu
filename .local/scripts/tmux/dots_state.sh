@@ -6,7 +6,7 @@ force="$3"
 
 [ "$width" -lt 100 ] && exit
 
-MINUTES_IN_SECONDS=$(( 60 * 15 ))
+MINUTES_IN_SECONDS=$(( 60 * 60 ))
 
 CACHE_FILE="$HOME/.cache/.dots_state_last_check"
 if [ ! -e "$CACHE_FILE" ]; then
