@@ -564,11 +564,12 @@ case "$action" in
 		;;
 
 	"Pomodoro: stop")
-		pomo stop &>/dev/null
 		tmux set -g status-interval 5
+		pomo stop &>/dev/null
 		;;
 
 	"Pomodoro: pause")
+		tmux set -g status-interval 1
 		pomo pause &>/dev/null
 		;;
 
