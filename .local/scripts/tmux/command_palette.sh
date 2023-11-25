@@ -66,6 +66,9 @@ Run: Local script
 Borders: Toggle for current window
 Helper: Open HTTP session
 Helper: Open Database session (SQL)
+Pomodoro: start
+Pomodoro: stop
+Pomodoro: pause
 Reload: configuration
 Alert: information
 Alert: success
@@ -547,6 +550,26 @@ case "$action" in
 		}
 
 		true
+		;;
+
+	"Pomodoro: start")
+		free_input " Time " "  " "hello"
+		time=$(read_input)
+		if ! pomo start "$time" &>/dev/null; then
+			error "$(pomo start "$time")"
+		fi
+
+		tmux set -g status-interval 1
+		true
+		;;
+
+	"Pomodoro: stop")
+		pomo stop &>/dev/null
+		tmux set -g status-interval 5
+		;;
+
+	"Pomodoro: pause")
+		pomo pause &>/dev/null
 		;;
 
 	"Reload: configuration")

@@ -48,7 +48,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.cargo/bin" \
     "/usr/local/go/bin" \
     "$HOME/.composer/vendor/bin" \
-    "$HOME/.config/composer/vendor/bin"
+    "$HOME/.config/composer/vendor/bin" \
+    "$HOME/.local/scripts/bin"
 
 # BINDINGS
 bind -M insert \ce end-of-line

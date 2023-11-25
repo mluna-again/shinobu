@@ -1,0 +1,152 @@
+#! /usr/bin/env bash
+
+# Tmux pomodoro module.
+# This doesn't work on its own, it needs to be called in tmux's
+# status bar and set the refresh internal to 1s.
+
+bg="$2"
+
+INFO_FILE="$HOME/.cache/_pomo"
+[ -e "$INFO_FILE" ] || touch "$INFO_FILE"
+
+usage() {
+  cat - <<EOF
+# help
+pomo help
+
+# start new pomodoro
+# accepted formats:
+#   1. <int>m (minutes)
+#   2. <int>s (seconds)
+pomo start 25m
+
+# get status
+pomo
+
+# stop pomodoro
+pomo stop
+
+# pause pomodoro
+pomo pause
+EOF
+}
+
+_date() {
+  if uname | grep -iq darwin; then
+    gdate "$@"
+    return
+  fi
+
+  date "$@"
+}
+
+format_date() {
+  local time
+  time=$(_date -d@"$1" -u "+%M:%S ")
+  printf "#[bg=terminal,fg=terminal] %s#[bg=%s,fg=black]  " "$time" "$bg"
+}
+
+get_current_time() {
+  awk '{print $1}' "$INFO_FILE"
+}
+
+is_paused() {
+  info=$(awk '{print $2}' "$INFO_FILE")
+  [ "$info" != "[PAUSED]" ] && return 1
+
+  true
+}
+
+status() {
+  [ -s "$INFO_FILE" ] || { printf "No pomo running.\n" ; exit ; }
+
+  time=$(get_current_time)
+  format_date "$time"
+}
+
+start() {
+  if [[ ! "$1" =~ ^[0-9]+[ms]{1}$ ]]; then
+    printf "Invalid value: %s\n" "$1"
+    exit 1
+  fi
+
+  if [ -s "$INFO_FILE" ] && [ "$(get_current_time)" -ne 0 ]; then
+    time=$(get_current_time)
+    printf "Pomo is currently running: %s, do you want to stop it? [Ny] " "$time"
+    read -r resp
+    resp=$(tr '[:upper:]' '[:lower:]' <<< "$resp")
+    [ "$resp" != y ] && exit
+  fi
+
+  printf "%s" "$1" > "$INFO_FILE"
+}
+
+pause() {
+  if is_paused; then
+    time=$(get_current_time)
+    printf "%s" "$time" > "$INFO_FILE"
+    return
+  fi
+  time=$(get_current_time)
+  printf "%s [PAUSED]" "$time" > "$INFO_FILE"
+}
+
+stop() {
+  : > "$INFO_FILE"
+}
+
+tick() {
+  time=$(get_current_time)
+  last_char="${time: -1}"
+  quantity=1
+  [ "$last_char" = m ] && quantity=60
+  time=$(sed 's/[a-z]$//' <<< "$time")
+
+  [ ! -s "$INFO_FILE" ] && return
+  if is_paused; then
+    bg="gray"
+    format_date "$time"
+    return
+  fi
+
+  time=$(( time * quantity ))
+  time=$(( time - 1 ))
+
+  if [ "$time" -le 0 ]; then
+    printf "#[bg=terminal,fg=terminal] DONE #[bg=%s,fg=black]  " "$bg"
+    printf "0" > "$INFO_FILE"
+    exit
+  fi
+
+  format_date "$time"
+  printf "%s" "$time" > "$INFO_FILE"
+}
+
+case "$1" in
+  help)
+    usage
+    exit 1
+    ;;
+
+  pause)
+    pause
+    ;;
+
+  status)
+    tick
+    status
+    ;;
+
+  stop)
+    stop
+    ;;
+
+  start)
+    shift
+    start "$@"
+    ;;
+
+  *)
+    tick
+    ;;
+esac

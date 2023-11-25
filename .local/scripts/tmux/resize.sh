@@ -2,7 +2,7 @@
 
 big() {
   tmux set -g status-left "${base_path}${ram_usage}${todos_indicator}${ssh_indicator}${status_zoom}${status_prefix}"
-  tmux set -g status-right "${dots_indicator}${lock_indicator}${status_date_time}${status_battery}"
+  tmux set -g status-right "${pomodoro}${dots_indicator}${lock_indicator}${status_date_time}${status_battery}"
 }
 
 small() {
