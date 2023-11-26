@@ -59,3 +59,9 @@ endsnippet
 snippet logerr "log error to stderr" b
 fmt.Fprintf(os.Stderr, "$1: \n%v", err)
 endsnippet
+
+# ok but like, why?
+snippet pretty_date "pretty date" b
+t := time.Now()
+t.Format("Monday 02, January 2006 at 03:04 pm")
+endsnippet
