@@ -96,13 +96,13 @@ stop() {
 }
 
 tick() {
+  [ ! -s "$INFO_FILE" ] && return
   time=$(get_current_time)
   last_char="${time: -1}"
   quantity=1
   [ "$last_char" = m ] && quantity=60
   time=$(sed 's/[a-z]$//' <<< "$time")
 
-  [ ! -s "$INFO_FILE" ] && return
   if is_paused; then
     bg="gray"
     format_date "$time"
@@ -122,31 +122,38 @@ tick() {
   printf "%s" "$time" > "$INFO_FILE"
 }
 
-case "$1" in
-  help)
-    usage
-    exit 1
-    ;;
+main() {
+  case "$1" in
+    help)
+      usage
+      exit 1
+      ;;
 
-  pause)
-    pause
-    ;;
+    pause)
+      pause
+      ;;
 
-  status)
-    tick
-    status
-    ;;
+    status)
+      tick
+      status
+      ;;
 
-  stop)
-    stop
-    ;;
+    stop)
+      stop
+      ;;
 
-  start)
-    shift
-    start "$@"
-    ;;
+    start)
+      shift
+      start "$@"
+      ;;
 
-  *)
-    tick
-    ;;
-esac
+    *)
+      tick
+      ;;
+  esac
+}
+
+(
+  flock -x 42
+  main "$@"
+) 42>/tmp/pomo.lockfile
