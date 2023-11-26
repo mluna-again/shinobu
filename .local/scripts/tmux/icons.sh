@@ -47,6 +47,10 @@ case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 		icon="󰌛"
 		;;
 
+	w3m|lynx)
+		icon="󰖟"
+		;;
+
 	*)
 		icon=""
 esac
