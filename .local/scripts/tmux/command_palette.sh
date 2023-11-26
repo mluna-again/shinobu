@@ -555,8 +555,9 @@ case "$action" in
 	"Pomodoro: new")
 		free_input " Time " "  " "hello"
 		time=$(read_input)
-		if ! pomo start "$time" &>/dev/null; then
-			error "$(pomo start "$time")"
+		output=$(pomo start "$time")
+		if [ "$?" -ne 0 ]; then
+			error "$output"
 		fi
 
 		tmux set -g status-interval 1
@@ -565,7 +566,7 @@ case "$action" in
 
 	"Pomodoro: stop")
 		pomo stop &>/dev/null
-		( sleep 2; tmux set -g status-interval 5 ) &
+		( sleep 2; tmux set -g status-interval 5 ) &>/dev/null &
 		;;
 
 	"Pomodoro: pause")

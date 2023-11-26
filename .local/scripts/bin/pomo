@@ -71,11 +71,8 @@ start() {
   fi
 
   if [ -s "$INFO_FILE" ] && [ "$(get_current_time)" -ne 0 ]; then
-    time=$(get_current_time)
-    printf "Pomo is currently running: %s, do you want to stop it? [Ny] " "$time"
-    read -r resp
-    resp=$(tr '[:upper:]' '[:lower:]' <<< "$resp")
-    [ "$resp" != y ] && exit
+    printf "Already running.\n"
+    exit 1
   fi
 
   printf "%s" "$1" > "$INFO_FILE"
