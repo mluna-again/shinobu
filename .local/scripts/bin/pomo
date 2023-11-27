@@ -9,6 +9,7 @@ bg="$2"
 THREE_MINUTES=$(( 60 * 3 ))
 
 INFO_FILE="$HOME/.cache/_pomo"
+LAST_RUN_FILE="$HOME/.cache/_pomo_last_run"
 [ -e "$INFO_FILE" ] || touch "$INFO_FILE"
 
 usage() {
@@ -103,6 +104,7 @@ pause() {
 
 stop() {
   : > "$INFO_FILE"
+  : > "$LAST_RUN_FILE"
 }
 
 tick() {
@@ -119,10 +121,15 @@ tick() {
     return
   fi
 
+  last_time=$(cat "$LAST_RUN_FILE")
+  now=$(_date "+%s")
+  diff=$(( now - last_time ))
+  [ ! -s "$LAST_RUN_FILE" ] && diff=0
   time=$(( time * quantity ))
-  time=$(( time - 1 ))
+  time=$(( time - diff ))
 
   if [ "$time" -le 0 ]; then
+    bg="red"
     printf "#[bg=terminal,fg=terminal] DONE #[bg=%s,fg=black]  " "$bg"
     printf "0" > "$INFO_FILE"
     exit
@@ -130,6 +137,7 @@ tick() {
 
   format_date "$time"
   printf "%s" "$time" > "$INFO_FILE"
+  _date "+%s" > "$LAST_RUN_FILE"
 }
 
 main() {
