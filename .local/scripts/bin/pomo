@@ -6,6 +6,8 @@
 
 bg="$2"
 
+THREE_MINUTES=$(( 60 * 3 ))
+
 INFO_FILE="$HOME/.cache/_pomo"
 [ -e "$INFO_FILE" ] || touch "$INFO_FILE"
 
@@ -42,6 +44,17 @@ _date() {
 
 format_date() {
   local time
+  local original_bg
+
+  original_bg="$bg"
+  if ! is_paused && [ "$1" -le "$THREE_MINUTES" ]; then
+    if (( ("$1" % 2) == 0 )); then
+      bg="red"
+    else
+      bg="$original_bg"
+    fi
+  fi
+
   time=$(_date -d@"$1" -u "+%M:%S ")
   printf "#[bg=terminal,fg=terminal] %s#[bg=%s,fg=black]  " "$time" "$bg"
 }
