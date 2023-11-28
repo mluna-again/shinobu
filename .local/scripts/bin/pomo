@@ -118,6 +118,7 @@ tick() {
   if is_paused; then
     bg="gray"
     format_date "$time"
+    _date "+%s" > "$LAST_RUN_FILE"
     return
   fi
 
