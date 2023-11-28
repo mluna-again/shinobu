@@ -620,16 +620,19 @@ EOF
 
 	"Alert: success")
 		free_input " Message " " 󰭺 " "hello"
+		[ -z "$(read_input)" ] && exit
 		success "$(read_input)"
 		;;
 
 	"Alert: information")
 		free_input " Message " " 󰭺 " "hello"
+		[ -z "$(read_input)" ] && exit
 		alert "$(read_input)"
 		;;
 
 	"Alert: error")
 		free_input " Message " " 󰭺 " "hello"
+		[ -z "$(read_input)" ] && exit
 		error "$(read_input)"
 		;;
 
