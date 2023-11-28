@@ -553,12 +553,51 @@ case "$action" in
 		;;
 
 	"Pomodoro: new")
-		free_input " Time " "  " "hello"
-		time=$(read_input)
-		output=$(pomo start "$time")
-		if [ "$?" -ne 0 ]; then
-			error "$output"
-		fi
+	lines=$(cat - <<EOF
+15 minutes
+25 minutes
+1 hour
+Custom timer
+EOF
+)
+		input " Time " "  " "$lines"
+		response=$(read_input)
+
+		case "$response" in
+			"Custom timer")
+				free_input " Time " "  " "hello"
+				time=$(read_input)
+				output=$(pomo start "$time")
+				if [ "$?" -ne 0 ]; then
+					error "$output"
+					exit
+				fi
+				;;
+
+			"15 minutes")
+				output=$(pomo start 15m)
+				if [ "$?" -ne 0 ]; then
+					error "$output"
+					exit
+				fi
+				;;
+
+			"25 minutes")
+				output=$(pomo start 25m)
+				if [ "$?" -ne 0 ]; then
+					error "$output"
+					exit
+				fi
+				;;
+
+			"1 hour")
+				output=$(pomo start 60m)
+				if [ "$?" -ne 0 ]; then
+					error "$output"
+					exit
+				fi
+				;;
+		esac
 
 		tmux set -g status-interval 1
 		true
