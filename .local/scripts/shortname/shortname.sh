@@ -4,8 +4,12 @@ _session_path="$1"
 width="$2"
 background="$3"
 session_name="$4"
-
 [ "$width" -lt 100 ] && exit
+
+if grep -vq '/' <<< "$_session_path"; then
+	printf "#[fg=black,bg=%s]  #[bg=terminal,fg=terminal] %s " "$background" "$_session_path"
+	exit
+fi
 
 pat="$HOME/.local/scripts/shortname"
 osx() {
@@ -27,3 +31,5 @@ fi
 output=$(sed 's|/$||' <<< "$output")
 printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"
 [ -n "$session_name" ] && printf ":: %s " "$session_name"
+
+true
