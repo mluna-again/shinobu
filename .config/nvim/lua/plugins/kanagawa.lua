@@ -226,6 +226,8 @@ return {
 					CursorLine = { bg = theme.syn.bg, fg = theme.ui.fg },
 					CursorLineNr = { bg = theme.syn.bg, fg = theme.syn.comment },
 
+					MatchParen = { fg = theme.syn.regex },
+
 					StatusLineFolderIcon = { bg = theme.syn.special2, fg = theme.ui.bg_m1 },
 					StatusLineFileIcon = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
 					StatusLineModeIcon = { bg = theme.syn.regex, fg = theme.ui.bg_m1 },
