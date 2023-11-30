@@ -15,10 +15,7 @@ return {
 				b = { ":lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint", noremap = true, silent = true },
 				B = { ":lua require'dap'.clear_breakpoints()<CR>", "Clear breakpoints", noremap = true, silent = true },
 				c = {
-					function()
-						dapui.open({ reset = true })
-						dap.continue()
-					end,
+					":lua require'dapui'.toggle()<CR>",
 					"Continue/Start debugging",
 					noremap = true,
 					silent = true,
@@ -40,5 +37,9 @@ return {
 		}, {
 			prefix = "<Leader>",
 		})
+
+		dap.listeners.after.event_initialized["dapui_config"] = function()
+			dapui.open()
+		end
 	end,
 }
