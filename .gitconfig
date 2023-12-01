@@ -12,6 +12,7 @@
 [core]
 	excludesFile = ~/.gitignore
 	pager = delta --side-by-side --line-numbers --syntax-theme kanagawa-dragon || less
+  hooksPath = ~/.local/githooks
 
 [interactive]
 	diffFilter = delta --color-only
