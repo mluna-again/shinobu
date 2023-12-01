@@ -31,29 +31,6 @@ wk.register({
 	},
 }, { prefix = "<Leader>" })
 
-wk.register({
-	s = {
-		s = { ":silent w<CR>", "Save buffer", noremap = true, silent = true },
-	},
-	S = {
-		S = {
-			function()
-				vim.cmd("FormatWriteLock")
-			end,
-			"Save buffer with formatting",
-			noremap = true,
-			silent = true,
-		},
-	},
-	-- g = {
-	-- 	name = "Buffer navigation",
-	-- 	t = { ":BufferLineCycleNext<CR>", "Next", noremap = true, silent = true },
-	-- 	r = { ":BufferLineCyclePrev<CR>", "Prev", noremap = true, silent = true },
-	-- 	T = { ":BufferLineMoveNext<CR>", "Move to right", noremap = true, silent = true },
-	-- 	R = { ":BufferLineMoveNext<CR>", "Move to left", noremap = true, silent = true },
-	-- },
-})
-
 -- vim-test
 local wk = require("which-key")
 

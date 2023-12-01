@@ -210,9 +210,10 @@ return {
 					CmpItemKindEnumMember = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
 					CmpItemKindProperty = { bg = theme.ui.bg_m1, fg = theme.syn.identifier },
 
-					LightspeedShortcut = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
-					LightspeedLabel = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
-					LightspeedOneCharMatch = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
+					LeapLabelPrimary = { bg = theme.syn.identifier, fg = theme.ui.bg },
+					LeapLabelSecondary = { bg = theme.syn.identifier, fg = theme.ui.bg },
+					LeapLabelSelected = { bg = theme.syn.regex, fg = theme.ui.bg },
+					LeapMatch = { bg = theme.syn.identifier, fg = theme.ui.bg },
 
 					WinSeparator = { fg = theme.ui.bg, bg = theme.ui.bg },
 
