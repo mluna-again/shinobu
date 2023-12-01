@@ -3,6 +3,10 @@
 remote="$1"
 url="$2"
 
+if [[  "$url" =~ "shinobu" ]]; then
+	exit
+fi
+
 exec < /dev/tty
 
 printf "You are pushing to %s (%s), are you sure? [Ny] " "$remote" "$url"
