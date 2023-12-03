@@ -29,6 +29,12 @@ set -g original_dir (pwd)
 set -g file $argv[1]
 set -g query $argv[2]
 
+if echo "$file" | grep -iq http
+    echo "GET $file" > "$temp_file"
+    set -g file
+    printf "Request loaded.\n"
+end
+
 # fish_clipboard_copy doesn't work sometime :/
 function _copy_to_clipboard
     while read -l line

@@ -157,10 +157,10 @@ end
 function koi
     set -l file $argv[1]
 
-    if test -n "$file"
+    if echo "$file" | grep -ivq http && test -n "$file"
         watchexec -f "$file" -c clear -r hurl --color -iL $argv
     else
-        ~/.local/scripts/koi.fish
+        ~/.local/scripts/koi.fish $argv
     end
 end
 
