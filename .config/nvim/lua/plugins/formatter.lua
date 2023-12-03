@@ -13,8 +13,13 @@ return {
 		"Format",
 		"FormatLock",
 		"FormatWrite",
-		"FormatWriteLock"
+		"FormatWriteLock",
 	},
+	init = function()
+		vim.api.nvim_create_user_command("W", function()
+			vim.cmd("FormatWriteLock")
+		end, {})
+	end,
 	config = function()
 		local util = require("formatter.util")
 		local formatters = require("formatter.filetypes")
@@ -82,13 +87,6 @@ return {
 					formatters.python.black,
 				},
 			},
-		})
-
-		vim.api.nvim_create_autocmd("BufWritePost", {
-			pattern = "*.go",
-			callback = function()
-				vim.cmd("FormatWriteLock")
-			end,
 		})
 	end,
 }
