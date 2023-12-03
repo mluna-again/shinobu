@@ -44,7 +44,9 @@ func (m *model) autocompletePath() {
 	if !isDir {
 		matches := []os.DirEntry{}
 		for _, entry := range entries {
-			if strings.HasPrefix(entry.Name(), queryLastElem) {
+			dirLowerCase := strings.ToLower(entry.Name())
+			queryLowerCase := strings.ToLower(queryLastElem)
+			if strings.HasPrefix(dirLowerCase, queryLowerCase) {
 				matches = append(matches, entry)
 			}
 		}
