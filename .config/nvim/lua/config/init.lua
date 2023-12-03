@@ -56,6 +56,7 @@ vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSig
 
 vim.api.nvim_create_user_command("Lsp", function()
 	vim.cmd("Lazy load lsp-stuff")
+	vim.cmd("Lazy load lsp_signature.nvim")
 	vim.cmd("LspStart")
 end, {})
 
