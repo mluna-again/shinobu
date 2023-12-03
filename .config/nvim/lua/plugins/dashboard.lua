@@ -7,7 +7,14 @@ local function get_nvim_version()
   local minor = ver["minor"]
   local patch = ver["patch"]
 
-  return string.format("v%s.%s.%s", major, minor, patch)
+  local formatted = string.format("v%s.%s.%s", major, minor, patch)
+	if ver["api_prerelease"] then
+		local type = ver["prerelease"]
+		local build = ver["build"]
+		formatted = string.format("%s-%s-%s", formatted, type, build)
+	end
+
+	return formatted
 end
 
 local function greetings()
@@ -173,6 +180,10 @@ return {
 					position = "center",
 					hl = "AlphaPluginCount",
 				},
+			},
+			{
+				type = "padding",
+				val = 1,
 			},
 			{
 				type = "text",
