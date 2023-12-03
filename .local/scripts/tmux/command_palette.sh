@@ -195,6 +195,7 @@ handle_no_device_spotify() {
 # in macos let's try to use the native client because it's more feature
 # rich, if not then i'll fallback to bop
 try_shpotify() {
+	uname | grep -iq darwin || return 1
 	command -v spotify &>/dev/null || return 1
 	[ -e "$HOME/.shpotify.cfg" ] || {
 		alert "It looks like you don't have shpotify credentials set up."
