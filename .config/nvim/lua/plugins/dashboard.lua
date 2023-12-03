@@ -1,5 +1,15 @@
 require("core.maps")
 
+local function get_nvim_version()
+  local ver = vim.version()
+
+  local major = ver["major"]
+  local minor = ver["minor"]
+  local patch = ver["patch"]
+
+  return string.format("v%s.%s.%s", major, minor, patch)
+end
+
 local function greetings()
 	local options = {
 		"do you like the way it sounds?",
@@ -162,6 +172,14 @@ return {
 				opts = {
 					position = "center",
 					hl = "AlphaPluginCount",
+				},
+			},
+			{
+				type = "text",
+				val = get_nvim_version(),
+				opts = {
+					position = "center",
+					hl = "AlphaNvimVersion",
 				},
 			},
 		}

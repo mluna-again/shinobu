@@ -184,7 +184,8 @@ return {
 					DiagnosticSignHint = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
 
 					AlphaPluginCount = { fg = theme.syn.identifier },
-					AlphaFooter = { fg = theme.diag.info },
+					AlphaNvimVersion = { fg = theme.syn.keyword },
+					AlphaFooter = { fg = theme.syn.keyword },
 					AlphaButton = { fg = theme.syn.identifier },
 					AlphaButtonKey = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
 					AlphaBanner = { fg = theme.syn.identifier },
