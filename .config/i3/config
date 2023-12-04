@@ -126,16 +126,16 @@ bindsym Mod1+9 workspace number $ws9
 bindsym Mod1+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym Mod1+Shift+1 move container to workspace number $ws1
-bindsym Mod1+Shift+2 move container to workspace number $ws2
-bindsym Mod1+Shift+3 move container to workspace number $ws3
-bindsym Mod1+Shift+4 move container to workspace number $ws4
-bindsym Mod1+Shift+5 move container to workspace number $ws5
-bindsym Mod1+Shift+6 move container to workspace number $ws6
-bindsym Mod1+Shift+7 move container to workspace number $ws7
-bindsym Mod1+Shift+8 move container to workspace number $ws8
-bindsym Mod1+Shift+9 move container to workspace number $ws9
-bindsym Mod1+Shift+0 move container to workspace number $ws10
+bindsym Mod1+Shift+1 move container to workspace number $ws1 ; workspace $ws1
+bindsym Mod1+Shift+2 move container to workspace number $ws2 ; workspace $ws2
+bindsym Mod1+Shift+3 move container to workspace number $ws3 ; workspace $ws3
+bindsym Mod1+Shift+4 move container to workspace number $ws4 ; workspace $ws4
+bindsym Mod1+Shift+5 move container to workspace number $ws5 ; workspace $ws5
+bindsym Mod1+Shift+6 move container to workspace number $ws6 ; workspace $ws6
+bindsym Mod1+Shift+7 move container to workspace number $ws7 ; workspace $ws7
+bindsym Mod1+Shift+8 move container to workspace number $ws8 ; workspace $ws8
+bindsym Mod1+Shift+9 move container to workspace number $ws9 ; workspace $ws9
+bindsym Mod1+Shift+0 move container to workspace number $ws10 ; workspace $ws10
 
 # reload the configuration file
 bindsym Mod1+Shift+c reload
@@ -187,3 +187,4 @@ bindsym Mod1+q kill
 bindsym Mod1+Return exec alacritty
 bindsym Mod1+k workspace next
 bindsym Mod1+j workspace prev
+bindsym Mod1+Shift+space layout toggle tabbed splitv splith stacking
