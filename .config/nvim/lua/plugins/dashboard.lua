@@ -72,6 +72,7 @@ local function greetings()
 			"concrete and sealed in a lead-lined room with armed guards — and even then I have my doubts.",
 		},
 		"there is no quote today",
+		"Happ33##n0T++-b$rthdy11"
 	}
 
 	math.randomseed(os.time())

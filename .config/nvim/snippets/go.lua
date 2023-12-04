@@ -63,7 +63,7 @@ return {
 		}),
 	}),
 
-	s("pretty_date", {
+	s("prettydate", {
 		t({
 			"t := time.Now()",
 			't.Format("Monday 02, January 2006 at 03:04 pm")',
