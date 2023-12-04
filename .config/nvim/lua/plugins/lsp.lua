@@ -56,9 +56,8 @@ return {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-cmdline",
-		"quangnguyen30192/cmp-nvim-ultisnips",
-		"SirVer/ultisnips",
-		-- "jackMort/ChatGPT.nvim",
+		"saadparwaiz1/cmp_luasnip",
+		"L3MON4D3/LuaSnip",
 	},
 	config = function()
 		require("mason-lspconfig").setup({
@@ -104,7 +103,7 @@ return {
 			snippet = {
 				-- REQUIRED - you must specify a snippet engine
 				expand = function(args)
-					vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+					require("luasnip").lsp_expand(args.body)
 				end,
 			},
 			view = {
@@ -154,7 +153,7 @@ return {
 					priority = 3,
 				},
 				{
-					name = "ultisnips",
+					name = "luasnip",
 					priority = 4,
 				},
 				{
