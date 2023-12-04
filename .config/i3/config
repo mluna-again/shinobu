@@ -188,3 +188,4 @@ bindsym Mod1+Return exec alacritty
 bindsym Mod1+k workspace next
 bindsym Mod1+j workspace prev
 bindsym Mod1+Shift+space layout toggle tabbed splitv splith stacking
+bindsym Mod1+l "exec i3lock -i ~/Pictures/wallpaper.png"
