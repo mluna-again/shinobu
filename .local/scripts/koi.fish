@@ -1,5 +1,10 @@
 #!/usr/bin/env fish
 
+# bat is called batcat in ubuntu/debian
+function bat_missing
+    not command -vq bat && not command -vq batcat
+end
+
 function _regenerate_random_vars
     set -xg HURL_KOI_RANDOM (random)
     set -xg HURL_KOI_UUID (uuidgen)
@@ -120,7 +125,8 @@ command -vq hurl; or begin
     printf "[ERROR] Requred dependency not installed: hurl.\n"
     exit 1
 end
-command -vq bat; or printf "[WARNING] Optional dependency not installed: bat.\n"
+
+bat_missing; and printf "[WARNING] Optional dependency not installed: bat.\n"
 command -vq prettier; or printf "[WARNING] Optional dependency not installed: prettier.\n"
 command -vq fzf; or printf "[WARNING] Optional dependency not installed: fzf.\n"
 
@@ -153,7 +159,7 @@ function _print_koi_help
 end
 
 function _pretty_print_html
-    if not command -vq prettier; or not command -vq bat
+    if not command -vq prettier; or bat_missing
         echo $argv[1]
 
         printf "[WARNING] prettier or bat not installed.\n"
