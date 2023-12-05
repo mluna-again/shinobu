@@ -265,7 +265,9 @@ else
     test -e "$p"; and source "$p"
 end
 
-if uname | grep -iq linux
+# i don't need this when sshing
+# and it won't work really, because DISPLAY is missing
+if uname | grep -iq linux && test -z "$SSH_CLIENT"
     setxkbmap -layout latam
 end
 
