@@ -1,6 +1,10 @@
 #!/usr/bin/env fish
 
 # bat is called batcat in ubuntu/debian
+if not command -vq bat
+    set -g bat batcat
+end
+
 function bat_missing
     not command -vq bat && not command -vq batcat
 end
@@ -167,9 +171,13 @@ function _pretty_print_html
     end
 
     if test "$prettier_enabled" = true
-        echo $argv[1] | prettier --parser html | cat -pP -l html --theme kanagawa-dragon
+        if bat_missing
+            echo $argv[1] | prettier --parser html
+        else
+            echo $argv[1] | prettier --parser html | "$bat" -pP -l html --theme kanagawa-dragon
+        end
     else
-        echo $argv[1] | cat -pP -l html --theme kanagawa-dragon
+        echo $argv[1] | "$bat" -pP -l html --theme kanagawa-dragon
     end
 
     # without this the prompt swallows the last line
@@ -259,7 +267,9 @@ function _print_koi_output
         printf "Raw output:\n%s\n" "$body"
     end
 
-    test -n "$hurl_error"; and printf "%s\n" "$hurl_error"
+    if test "$show_output" = true
+        test -n "$hurl_error"; and printf "%s\n" "$hurl_error"
+    end
 end
 
 function _fetch_koi_output
