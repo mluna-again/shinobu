@@ -26,19 +26,12 @@ _remove_trailing_slash() {
 }
 
 get_sessions() {
-	sessions="$(tmux list-sessions -F '#{session_name} #{session_attached}')"
-
-	current="$(awk '$2 > 0 {print $1}' <<< "$sessions")"
-	without_current="$(awk '$2 == 0 {print $1}' <<< "$sessions")"
-
-	# print current session always first
-	running_programs="$(tmux list-panes -s -t "$current" -F "#{pane_current_command}" | _filter_running_programs | wc -l)"
-	printf "%s (running %d programs)\n" "$current" "$running_programs"
+	sessions="$(tmux list-sessions -F '#{session_name}')"
 
 	while read -r line; do
 		running_programs="$(tmux list-panes -s -t "$line" -F "#{pane_current_command}" | _filter_running_programs | wc -l)"
 		printf "%s (running %d programs)\n" "$line" "$running_programs"
-	done <<< "$without_current"
+	done <<< "$sessions"
 }
 
 get_windows() {
