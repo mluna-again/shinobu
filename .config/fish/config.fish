@@ -154,16 +154,6 @@ function jqp
     command jqp --config ~/.config/jqp/config.yaml $argv
 end
 
-function koi
-    set -l file $argv[1]
-
-    if echo "$file" | grep -ivq http && test -n "$file"
-        watchexec -f "$file" -c clear -r hurl --color -iL $argv
-    else
-        ~/.local/scripts/koi.fish $argv
-    end
-end
-
 function vid
     set -l file (fzf)
     test -z $file; and return
