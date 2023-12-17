@@ -96,12 +96,11 @@ return {
 	"goolord/alpha-nvim",
 	config = function()
 		local alpha = require("alpha")
-		require("alpha.term")
 
 		local dashboard = require("alpha.themes.dashboard")
 
 		dashboard.section.buttons.val = {
-			mkButton(" SPC c n ", "New file", ":enew<CR>"),
+			mkButton("    i    ", "New file", ":enew|startinsert<CR>"),
 			-- mkButton(" SPC f f ", "Find file", ":FzfLua files<CR>"),
 			mkButton(" SPC f f ", "Find file", ":Telescope find_files<CR>"),
 			mkButton(
@@ -157,7 +156,7 @@ return {
 		dashboard.config.layout = {
 			{
 				type = "padding",
-				val = 3,
+				val = 2,
 			},
 			banner,
 			{
@@ -211,8 +210,7 @@ return {
 		vim.cmd([[
 		augroup DashboardTweaks
 		autocmd!
-		autocmd FileType dashboard set noruler
-		autocmd FileType dashboard nmap <buffer> q :quit<CR>
+		autocmd FileType alpha set noruler
 		augroup END
 		]])
 	end,
