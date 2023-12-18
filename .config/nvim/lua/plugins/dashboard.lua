@@ -211,6 +211,11 @@ return {
 		augroup DashboardTweaks
 		autocmd!
 		autocmd FileType alpha set noruler
+		autocmd FileType alpha nmap <buffer> o :enew\|startinsert<CR>
+		autocmd FileType alpha nmap <buffer> O :enew\|startinsert<CR>
+		autocmd FileType alpha nmap <buffer> a :enew\|startinsert<CR>
+		autocmd FileType alpha nmap <buffer> A :enew\|startinsert<CR>
+		autocmd FileType alpha nmap <buffer> I :enew\|startinsert<CR>
 		augroup END
 		]])
 	end,

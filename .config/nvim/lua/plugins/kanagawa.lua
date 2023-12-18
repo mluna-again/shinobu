@@ -23,6 +23,14 @@ return {
 		-- 	eob = " "
 		-- }
 
+		-- vim.cmd([[
+		-- 	augroup CursorLine
+		-- 	au!
+		-- 	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+		-- 	au WinLeave * setlocal nocursorline
+		-- 	augroup END
+		-- ]])
+
 		require("kanagawa").setup({
 			theme = "dragon",
 			keywordStyle = { italic = false },
@@ -178,10 +186,10 @@ return {
 					DiagnosticWarn = { fg = theme.syn.constant, bg = theme.ui.bg },
 					DiagnosticInfo = { fg = theme.diag.info, bg = theme.ui.bg },
 					DiagnosticHint = { fg = theme.syn.identifier, bg = theme.ui.bg },
-					DiagnosticSignWarn = { fg = theme.syn.constant, bg = theme.ui.bg_gutter },
-					DiagnosticSignError = { fg = theme.syn.special2, bg = theme.ui.bg_gutter },
-					DiagnosticSignInfo = { fg = theme.diag.info, bg = theme.ui.bg_gutter },
-					DiagnosticSignHint = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
+					DiagnosticSignWarn = { fg = theme.syn.constant, bg = theme.ui.bg },
+					DiagnosticSignError = { fg = theme.syn.special2, bg = theme.ui.bg },
+					DiagnosticSignInfo = { fg = theme.diag.info, bg = theme.ui.bg },
+					DiagnosticSignHint = { fg = theme.syn.identifier, bg = theme.ui.bg },
 
 					AlphaPluginCount = { fg = theme.syn.identifier },
 					AlphaNvimVersion = { fg = theme.syn.keyword },
@@ -191,32 +199,32 @@ return {
 					AlphaBanner = { fg = theme.syn.identifier },
 
 					CmpItemAbbrMatchFuzzy = { fg = theme.syn.identifier },
-					CmpItemKindText = { bg = theme.syn.parameter, fg = theme.ui.bg_gutter },
-					CmpItemKindMethod = { bg = theme.syn.constant, fg = theme.ui.bg_gutter },
-					CmpItemKindFunction = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
-					CmpItemKindConstructor = { bg = theme.syn.statement, fg = theme.ui.bg_gutter },
-					CmpItemKindField = { bg = theme.diag.info, fg = theme.ui.bg_gutter },
-					CmpItemKindModule = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
-					CmpItemKindVariable = { bg = theme.syn.string, fg = theme.ui.bg_gutter },
-					CmpItemKindConstant = { bg = theme.ui.fg, fg = theme.ui.bg_gutter },
-					CmpItemKindClass = { bg = theme.syn.statement, fg = theme.ui.bg_gutter },
-					CmpItemKindStruct = { bg = theme.syn.statement, fg = theme.ui.bg_gutter },
-					CmpItemKindInterface = { bg = theme.syn.special1, fg = theme.ui.bg_gutter },
-					CmpItemKindValue = { bg = theme.syn.string, fg = theme.ui.bg_gutter },
-					CmpItemKindKeyword = { bg = theme.syn.number, fg = theme.ui.bg_gutter },
-					CmpItemKindSnippet = { bg = theme.syn.type, fg = theme.ui.bg_gutter },
-					CmpItemKindFile = { bg = theme.syn.parameter, fg = theme.ui.bg_gutter },
-					CmpItemKindFolder = { bg = theme.syn.parameter, fg = theme.ui.bg_gutter },
-					CmpItemKindEnum = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
-					CmpItemKindEnumMember = { bg = theme.syn.identifier, fg = theme.ui.bg_gutter },
-					CmpItemKindProperty = { bg = theme.ui.bg_m1, fg = theme.syn.identifier },
+					CmpItemKindText = { fg = theme.syn.parameter, bg = theme.ui.bg_gutter },
+					CmpItemKindMethod = { fg = theme.syn.constant, bg = theme.ui.bg_gutter },
+					CmpItemKindFunction = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
+					CmpItemKindConstructor = { fg = theme.syn.statement, bg = theme.ui.bg_gutter },
+					CmpItemKindField = { fg = theme.diag.info, bg = theme.ui.bg_gutter },
+					CmpItemKindModule = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
+					CmpItemKindVariable = { fg = theme.syn.string, bg = theme.ui.bg_gutter },
+					CmpItemKindConstant = { fg = theme.ui.fg, bg = theme.ui.bg_gutter },
+					CmpItemKindClass = { fg = theme.syn.statement, bg = theme.ui.bg_gutter },
+					CmpItemKindStruct = { fg = theme.syn.statement, bg = theme.ui.bg_gutter },
+					CmpItemKindInterface = { fg = theme.syn.special1, bg = theme.ui.bg_gutter },
+					CmpItemKindValue = { fg = theme.syn.string, bg = theme.ui.bg_gutter },
+					CmpItemKindKeyword = { fg = theme.syn.number, bg = theme.ui.bg_gutter },
+					CmpItemKindSnippet = { fg = theme.syn.type, bg = theme.ui.bg_gutter },
+					CmpItemKindFile = { fg = theme.syn.parameter, bg = theme.ui.bg_gutter },
+					CmpItemKindFolder = { fg = theme.syn.parameter, bg = theme.ui.bg_gutter },
+					CmpItemKindEnum = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
+					CmpItemKindEnumMember = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
+					CmpItemKindProperty = { fg = theme.ui.bg_m1, bg = theme.syn.identifier },
 
 					LeapLabelPrimary = { bg = theme.syn.identifier, fg = theme.ui.bg },
 					LeapLabelSecondary = { bg = theme.syn.identifier, fg = theme.ui.bg },
 					LeapLabelSelected = { bg = theme.syn.regex, fg = theme.ui.bg },
 					LeapMatch = { bg = theme.syn.identifier, fg = theme.ui.bg },
 
-					WinSeparator = { fg = theme.ui.bg, bg = theme.ui.bg },
+					WinSeparator = { fg = theme.ui.bg_gutter, bg = theme.ui.bg },
 
 					FzfLuaNormal = { bg = theme.ui.bg_m1 },
 					FzfLuaBufName = { bg = theme.ui.bg_m1, fg = theme.ui.fg },
@@ -243,17 +251,17 @@ return {
 					StatusLineCommandMode = { bg = theme.syn.keyword, fg = theme.ui.fg },
 					StatusLineInactiveMode = { bg = theme.syn.comment, fg = theme.ui.fg },
 
-					LineNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					SignColumn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsAdd = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsAddNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsAddLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsChange = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsChangeNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsChangeLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsDelete = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsDeleteNr = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
-					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg_gutter },
+					LineNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					SignColumn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAdd = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAddNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsAddLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChange = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChangeNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsChangeLn = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDelete = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDeleteNr = { fg = theme.syn.comment, bg = theme.ui.bg },
+					GitSignsDeleteLn = { fg = theme.syn.comment, bg = theme.ui.bg },
 
 					ToggleTermNormal = { bg = theme.ui.bg_m2 },
 
