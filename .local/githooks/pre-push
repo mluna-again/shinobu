@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Disable it for now :)
+exit
+
 remote="$1"
 url="$2"
 
