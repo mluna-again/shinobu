@@ -257,7 +257,7 @@ end
 
 # i don't need this when sshing
 # and it won't work really, because DISPLAY is missing
-if uname | grep -iq linux && test -z "$SSH_CLIENT"
+if uname | grep -iq linux && test -z "$SSH_CLIENT" && command -vq setxkbmap
     setxkbmap -layout latam
 end
 
