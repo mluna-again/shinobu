@@ -1,5 +1,11 @@
 #! /usr/bin/env bash
 
+zoomed="$(tmux display-message -p '#{window_zoomed_flag}')"
+if [ "$zoomed" -eq 1 ]; then
+	tmux set -g pane-border-status off
+	exit
+fi
+
 ignored_windows='["cmd","pgsql","dashboard","code","api","koi"]'
 current_window=$(
 	tmux list-windows -F "#{window_name} #{window_active}" | \
