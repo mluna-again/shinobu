@@ -38,7 +38,9 @@ return {
 			colors = {
 				theme = {
 					all = {
-						ui = {},
+						ui = {
+							bg = "none"
+						},
 					},
 				},
 			},
