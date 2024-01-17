@@ -39,6 +39,10 @@ case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 		icon="󰌠"
 		;;
 
+	docker)
+		icon=""
+		;;
+
 	fish)
 		icon="󰻳"
 		;;
