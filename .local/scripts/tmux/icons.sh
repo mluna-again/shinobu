@@ -40,7 +40,7 @@ case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 		;;
 
 	fish)
-		icon="󱙳"
+		icon="󰻳"
 		;;
 
 	dotnet)
