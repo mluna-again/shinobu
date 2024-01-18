@@ -1,0 +1,52 @@
+import = ["/Users/mluna/.config/alacritty/themes/kanagawa-dragon.toml"]
+
+[cursor.style]
+blinking = "Always"
+shape = "Block"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 15
+
+[font.bold]
+family = "FiraCode Nerd Font"
+style = "Retina"
+
+[font.bold_italic]
+family = "FiraCode Nerd Font"
+style = "Retina"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Retina"
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Retina"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F10"
+mods = "None"
+
+[[keyboard.bindings]]
+action = "None"
+key = "W"
+mods = "Command"
+
+[mouse]
+hide_when_typing = true
+
+[window]
+opacity = 1
+
+[window.padding]
+x = 0
+y = 0
