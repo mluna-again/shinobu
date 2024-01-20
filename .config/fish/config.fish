@@ -251,12 +251,6 @@ else
     test -e "$p"; and source "$p"
 end
 
-# i don't need this when sshing
-# and it won't work really, because DISPLAY is missing
-if uname | grep -iq linux && test -n "$SSH_CLIENT" && command -vq setxkbmap
-    setxkbmap -layout latam
-end
-
 if status is-interactive
     # Commands to run in interactive sessions can go here
     command -v atuin &>/dev/null; and atuin init fish --disable-up-arrow | source
