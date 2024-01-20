@@ -243,10 +243,6 @@ function t
     tmux attach; or tmux
 end
 
-direnv hook fish | source
-zoxide init fish | source
-starship init fish | source
-
 if uname | grep -i darwin &>/dev/null
     set -l p (brew --prefix asdf)/libexec/asdf.fish
     test -e "$p"; and source "$p"
@@ -264,6 +260,8 @@ end
 if status is-interactive
     # Commands to run in interactive sessions can go here
     command -v atuin &>/dev/null; and atuin init fish --disable-up-arrow | source
-
-    fortune | catsays -
+    command -vq fortune; and fortune | catsays -
+    command -vq direnv; and direnv hook fish | source
+    command -vq zoxide; and zoxide init fish | source
+    command -vq starship; and starship init fish | source
 end

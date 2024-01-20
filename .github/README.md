@@ -23,26 +23,25 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 ### Recommended
 1. fd
 2. ripgrep
-3. zoxide
-4. fzf
-5. go
-6. spotify-player
-7. spotify (desktop)
-8. shpotify
-9. hurl
-10. tmuxp
-11. jqp
-12. httpie
-13. eza
-14. delta
-15. direnv
-16. watchexec
-17. bat
-18. r*st
-19. yq
-20. sc-im
-21. atuin
-22. pgcli
+3. fzf
+4. go
+5. spotify-player
+6. spotify (desktop)
+7. shpotify
+8. hurl
+9. tmuxp
+10. jqp
+11. httpie
+12. eza
+13. delta
+14. direnv
+15. watchexec
+16. bat
+17. r*st
+18. yq
+19. sc-im
+20. atuin
+21. pgcli
 
 ## Problems I've encountered that I don't want to forget
 
@@ -67,4 +66,9 @@ $ go build
 ```sh
 $ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Ctrl-I inside tmux
+```
+
+* Enable bat kanagawa theme:
+```sh
+$ bat cache --build
 ```
