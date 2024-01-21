@@ -104,7 +104,7 @@ try_to_wake_bop() {
 	fi
 
 	# no server running
-	if grep -i "connection refused" <<< "$error"; then
+	if grep -i "curl: (7)" <<< "$error"; then
 		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
 		alert "Waking bop up..."
 		sleep 3
@@ -116,6 +116,8 @@ try_to_wake_bop() {
 		error "Looks like something else besides bop is running on port $BOP_PORT."
 		return 1
 	fi
+
+	true
 }
 
 close_all_but_focused() {

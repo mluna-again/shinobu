@@ -8,7 +8,7 @@ _display_bop_dead_message() {
 	tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: $msg"
 }
 
-status=$(curl -sSf "$BOP_URL" 2>&1)
+status=$(curl -sSf "$BOP_URL/status" 2>&1)
 if grep -i "connection refused" <<< "$status"; then
   _display_bop_dead_message "bop is offline."
   exit
