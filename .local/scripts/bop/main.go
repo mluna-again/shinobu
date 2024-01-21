@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/zmb3/spotify/v2"
@@ -57,6 +58,8 @@ func main() {
 	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(scopes...), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
 	fmt.Printf("Authenticate using the following link: \n%s\n\n", url)
+	cmd := exec.Command("firefox", "-new-tab", url)
+	_ = cmd.Run()
 
 	router := http.NewServeMux()
 	router.HandleFunc(redirectPath, func(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +89,9 @@ func main() {
 		}
 	})
 
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
 	router.HandleFunc("/search", app.checkTokenMiddleware(loggingMiddleware(app.search)))
 	router.HandleFunc("/play", app.checkTokenMiddleware(loggingMiddleware(app.playSong)))
 	router.HandleFunc("/pause", app.checkTokenMiddleware(loggingMiddleware(app.pause)))

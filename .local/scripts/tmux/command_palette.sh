@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+BOP_PORT=8888
+
 THEMES="$(
 cat - <<EOF
 Kanagawa Dragon
@@ -92,6 +94,24 @@ Dotfiles: status
 Cheatsheet: select and copy
 EOF
 )"
+
+try_to_wake_bop() {
+	local error
+	error=$(curl -sSf "http://localhost:$BOP_PORT/health")
+
+	# something is running, but probably not bop
+	if [ -n "$error" ]; then
+		error "Looks like something else besides bop is running on port $BOP_PORT."
+		return 1
+	fi
+
+	# no server running
+	if grep -i "connection refused" <<< "$error"; then
+		alert "Waking bop up..."
+		sleep 1
+		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
+	fi
+}
 
 close_all_but_focused() {
 	active=$(tmux list-panes -F '#{pane_id} #{pane_active}' | awk '$2 == 1 { print $1 }')
@@ -676,6 +696,7 @@ EOF
 		;;
 
 	"Spotify: play/pause")
+		try_to_wake_bop
 		try_shpotify pause && exit
 		is_installed http "httpie is not installed!"
 
@@ -688,6 +709,7 @@ EOF
 		;;
 
 	"Spotify: next song")
+		try_to_wake_bop
 		try_shpotify next && exit
 		is_installed http "httpie is not installed!"
 
@@ -700,6 +722,7 @@ EOF
 		;;
 
 	"Spotify: previous song")
+		try_to_wake_bop
 		try_shpotify prev && exit
 		is_installed http "httpie is not installed!"
 
@@ -712,6 +735,7 @@ EOF
 		;;
 
 	"Spotify: restart song")
+		try_to_wake_bop
 		try_shpotify restart && exit
 		is_installed http "httpie is not installed!"
 
@@ -724,12 +748,14 @@ EOF
 		;;
 
 	"Spotify: get song")
+		try_to_wake_bop
 		is_installed http "httpie is not installed!"
 
 		tmux display-popup -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
+		try_to_wake_bop
 		is_installed http "httpie is not installed!"
 
 		# we delete it first so if the song its already liked it will appear at the top after liking it again
@@ -749,6 +775,7 @@ EOF
 		;;
 
 	"Spotify: delete song")
+		try_to_wake_bop
 		is_installed http "httpie is not installed!"
 
 		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked" ID="")
@@ -760,6 +787,7 @@ EOF
 		;;
 
 	"Spotify: queue")
+		try_to_wake_bop
 		is_installed http "httpie is not installed!"
 		output=$(http -Ib --check-status GET "http://localhost:8888/queue")
 		[ "$?" -ne 0 ] && {
@@ -780,6 +808,7 @@ EOF
 		;;
 
 	"Spotify: search")
+		try_to_wake_bop
 		is_installed http "httpie is not installed!"
 
 		free_input " Search by name " " 󰓇 " "hello"

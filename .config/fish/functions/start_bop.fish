@@ -22,6 +22,7 @@ end
 
 function start_bop
     set -l bop_path "$HOME/.local/scripts/bop"
+    cd "$bop_path"
 
     pgrep bop &>/dev/null; and begin
         printf "bop is already running.\n"
