@@ -1,8 +1,26 @@
 #! /usr/bin/env bash
 
+BOP_URL="http://localhost:8888"
+
+_display_bop_dead_message() {
+  local msg
+  msg=${1:-"bop is asleep!"}
+	tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: $msg"
+}
+
+status=$(curl -sSf "$BOP_URL" 2>&1)
+if grep -i "connection refused" <<< "$status"; then
+  _display_bop_dead_message "bop is offline."
+  exit
+fi
+
+if grep -i "404" <<< "$status"; then
+  _display_bop_dead_message "no music playing right now."
+  exit
+fi
+
 DELAY=7
 CURRENT_PATH="$HOME/.local/scripts/dashboard"
-BOP_URL="http://localhost:8888"
 CENTER=true
 [ "$1" = "--no-center" ] && CENTER=false
 [ "$1" = "-nc" ] && CENTER=false
@@ -22,10 +40,6 @@ command -v jq &>/dev/null || {
 _ellipsis() {
 	read -r text
 	awk '{printf substr($0, 0, 29); if (length($0) > 29) { printf "..."; } printf "\n"}' <<< "$text"
-}
-
-_display_bop_dead_message() {
-	tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: bop is asleep!"
 }
 
 date() {
