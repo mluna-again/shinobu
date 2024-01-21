@@ -3,10 +3,10 @@
 width="$1"
 icon_color="$2"
 
-format="+ %I:%M %p • %a %d"
+format="+ %I:%M %P • %a %d"
 
-[ "$width" -lt 100 ] && format="+ %I:%M %p"
+[ "$width" -lt 100 ] && format="+ %I:%M %P"
 
-time=$(date "$format")
+time=$(LC_TIME=en_US.UTF-8 date "$format")
 
 printf "#[fg=terminal,bg=terminal]%s #[fg=black,bg=%s] 󰥔 #[fg=white,bg=terminal]" "$time" "$icon_color"
