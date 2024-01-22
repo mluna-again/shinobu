@@ -76,11 +76,11 @@ return {
 					PmenuSbar = { bg = theme.ui.bg_m1 },
 					PmenuThumb = { bg = theme.ui.bg_p2 },
 
-					Search = { fg = theme.ui.fg, bg = theme.syn.identifier },
-					IncSearch = { fg = theme.ui.fg, bg = theme.syn.identifier },
-					CurSearch = { fg = theme.ui.fg, bg = theme.syn.constant },
-					Substitute = { fg = theme.ui.fg, bg = theme.syn.identifier },
-					Visual = { fg = theme.syn.identifier, bg = theme.syn.regex },
+					Search = { fg = theme.ui.bg_gutter, bg = theme.syn.identifier },
+					IncSearch = { fg = theme.ui.bg_gutter, bg = theme.syn.identifier },
+					CurSearch = { fg = theme.ui.bg_gutter, bg = theme.syn.constant },
+					Substitute = { fg = theme.ui.bg_gutter, bg = theme.syn.identifier },
+					Visual = { fg = theme.ui.bg_gutter, bg = theme.syn.identifier },
 
 					NormalFloat = { bg = theme.ui.bg_gutter },
 					FloatBorder = { bg = theme.ui.bg_gutter, fg = theme.ui.bg_gutter },
