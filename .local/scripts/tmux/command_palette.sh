@@ -152,15 +152,15 @@ free_input() {
 }
 
 alert() {
-	tmux display-message -d 0 "#[bg=yellow,fill=yellow,fg=black] 󰭺 Warning: $1"
+	tmux display-message -d 0 "#[bg=#{@color_info},fill=#{@color_info},fg=black] 󰭺 Warning: $1"
 }
 
 success() {
-	tmux display-message -d 0 "#[bg=green,fill=green,fg=black]  Message: $1"
+	tmux display-message -d 0 "#[bg=#{@color_success},fill=#{@color_success},fg=black]  Message: $1"
 }
 
 error() {
-	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Error: $1"
+	tmux display-message -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Error: $1"
 }
 
 read_input() {

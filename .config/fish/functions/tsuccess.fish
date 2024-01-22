@@ -6,5 +6,5 @@ function tsuccess
         return 1
     end
 
-    tmux display -d 0 "#[bg=green,fill=green,fg=black]  Message: $argv"
+    tmux display -d 0 "#[bg=#{@color_success},fill=#{@color_success},fg=black]  Message: $argv"
 end

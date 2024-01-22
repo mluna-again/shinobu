@@ -6,6 +6,6 @@ function talert
         return 1
     end
 
-    tmux display -d 0 "#[bg=yellow,fill=yellow,fg=black] 󰭺 Message: $argv"
+    tmux display -d 0 "#[bg=#{@color_info},fill=#{@color_info},fg=black] 󰭺 Message: $argv"
 end
 

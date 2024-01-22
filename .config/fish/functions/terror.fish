@@ -6,5 +6,5 @@ function terror
         return 1
     end
 
-    tmux display -d 0 "#[bg=red,fill=red,fg=black]  Message: $argv"
+    tmux display -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Message: $argv"
 end
