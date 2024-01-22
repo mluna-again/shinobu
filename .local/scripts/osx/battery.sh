@@ -2,6 +2,11 @@
 
 percentage=$(system_profiler SPPowerDataType | grep -i "state of charge" | awk '{print $(NF)}')
 
+if [ -z "$percentage" ]; then
+	echo "#[fg=terminal] % #[bg=$2,fg=black] 󰂑 "
+	exit
+fi
+
 low_battery=$([ "$percentage" -le 20 ] && echo yes || echo no)
 plugged=$(system_profiler SPPowerDataType | grep -i "connected: no" && echo no || echo yes)
 
