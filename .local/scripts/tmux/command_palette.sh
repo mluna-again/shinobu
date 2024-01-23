@@ -36,6 +36,7 @@ commands="$(cat - <<EOF
 Notes: fuzzy find
 TODOS: open
 Cleanup: clear panes
+Cleanup: clear ALL panes
 Cleanup: terminate processes and clear panes
 Kill: processes
 Kill: window
@@ -361,6 +362,17 @@ case "$action" in
 		tmux display-popup -b heavy -S fg=black,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo\""
 
 		true
+		;;
+
+	"Cleanup: clear ALL panes")
+		original_window=$(tmux display-message -p "#{window_id}")
+		for window in $(tmux list-windows -F "#{window_id}"); do
+			tmux switch-client -t "$window"
+			for pane in $(tmux list-panes -F "#{pane_index}" -t "$window"); do
+				tmux send-keys -t "$pane" C-l
+			done
+		done
+		tmux switch-client -t "$original_window"
 		;;
 
 	"Cleanup: clear panes")
