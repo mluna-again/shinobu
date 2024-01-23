@@ -204,7 +204,7 @@ function gH
         return
     end
 
-    set -l log (git log --follow --format="%h • %s • %an" -- "$argv[1]" | fzf --header="Search file history" --preview="git diff {+1}^ {+1} -- $argv[1] | delta")
+    set -l log (git log --follow --format="%h • %s • %an • %ah" -- "$argv[1]" | fzf --header="Search file history" --preview="git diff {+1}^ {+1} -- $argv[1] | delta")
 
     test -z "$log"; and return
 
@@ -217,7 +217,7 @@ function dotsH
         return
     end
 
-    set -l log (yadm log --follow --format="%h • %s • %an" -- "$argv[1]" | fzf --header="Search file history" --preview="yadm diff {+1}^ {+1} -- $argv[1] | delta")
+    set -l log (yadm log --follow --format="%h • %s • %an • %ah" -- "$argv[1]" | fzf --header="Search file history" --preview="yadm diff {+1}^ {+1} -- $argv[1] | delta")
 
     test -z "$log"; and return
 
