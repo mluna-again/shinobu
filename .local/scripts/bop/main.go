@@ -10,9 +10,15 @@ import (
 	"os/exec"
 	"strings"
 
+	"html/template"
+
 	"github.com/zmb3/spotify/v2"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
 )
+
+type loginSuccess struct {
+	Username string
+}
 
 var helpMessage = `
 Usage:
@@ -80,13 +86,27 @@ func main() {
 		// create a client using the specified token
 		client := spotify.New(auth.Client(context.Background(), token))
 		app.client = client
-
-		w.WriteHeader(http.StatusOK)
-		_, err = w.Write([]byte("user authenticated"))
-		log.Println("user authenticated")
+		tmpl, err := template.New("login_success.html").ParseFiles("login_success.html")
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			_, _ = w.Write([]byte("user authenticated"))
+		} else {
+			// nah
+			data := loginSuccess{}
+			user, err := app.client.CurrentUser(r.Context())
+			if err != nil {
+				data.Username = "<an error occurred while loading your username ok>"
+			} else {
+				data.Username = user.DisplayName
+			}
+			err = tmpl.Execute(w, data)
+			if err != nil {
+				_, _ = w.Write([]byte(err.Error()))
+				log.Println("user (maybe) authenticated")
+				return
+			}
 		}
+
+		log.Println("user authenticated")
 	})
 
 	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
