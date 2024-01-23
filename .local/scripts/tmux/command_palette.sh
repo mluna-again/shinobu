@@ -97,15 +97,10 @@ EOF
 )"
 
 try_to_wake_bop() {
-	local error
-	error=$(curl -sSf "http://localhost:$BOP_PORT/health" 2>&1)
-
-	if [ "$?" -eq 0 ]; then
-		return
-	fi
+	curl -sSf "http://localhost:$BOP_PORT/health" && return
 
 	# no server running
-	if grep -i "curl: (7)" <<< "$error"; then
+	if [ "$?" -eq 7 ]; then
 		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
 		alert "Waking bop up..."
 		sleep 3
@@ -113,12 +108,8 @@ try_to_wake_bop() {
 	fi
 
 	# something is running, but probably not bop
-	if [ -n "$error" ]; then
-		error "Looks like something else besides bop is running on port $BOP_PORT."
-		return 1
-	fi
-
-	true
+	error "Looks like something else besides bop is running on port $BOP_PORT."
+	return 1
 }
 
 close_all_but_focused() {
