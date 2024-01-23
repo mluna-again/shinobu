@@ -68,6 +68,10 @@ func main() {
 	_ = cmd.Run()
 
 	router := http.NewServeMux()
+
+	fs := http.FileServer(http.Dir("./static"))
+	router.Handle("/files/", http.StripPrefix("/files/", fs))
+
 	router.HandleFunc(redirectPath, func(w http.ResponseWriter, r *http.Request) {
 		if app.client != nil {
 			w.WriteHeader(http.StatusBadRequest)

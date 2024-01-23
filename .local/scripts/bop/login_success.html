@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Bop</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #282321;
+      color: #d4b591;
+    }
+
+    img {
+      width: 300px;
+    }
+  </style>
 </head>
 <body>
-  <h1>hey you {{.Username}}</h1>
+  <h1>Hey, {{.Username}}</h1>
+  <img src="/files/cat.png" alt="cat">
+  <h3>You are logged in</h3>
 </body>
 </html>
