@@ -4,7 +4,7 @@ function _is_docker_running
     return 0
 end
 
-function docker_wrapper
+function dock
     _is_docker_running &>/dev/null; or begin
         printf "Docker is not running.\n" 2>&1
         return 1
@@ -17,11 +17,28 @@ function docker_wrapper
         printf "\trestart\n"
         printf "\tstop\n"
         printf "Usage:\n"
-        printf "\tdocker_wrapper <cmd>\n"
+        printf "\tdock <cmd>\n"
         return 1
     end
 
     switch "$cmd"
+        case id
+            set -l id (
+                docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
+                    awk 'NR > 1' |\
+                    fzf --header="Search container" |\
+                    awk '{print $1}' |\
+                    xargs
+            )
+
+            test -z "$id"; and return
+            echo "$id"
+
+            if isatty 1
+                echo -n "$id" | fish_clipboard_copy
+                echo "Copied to clipboard."
+            end
+
         case restart
             set -l container (
                 docker container ls --filter status=running --format "table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.CreatedAt}}" |\
