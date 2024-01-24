@@ -6,7 +6,6 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	"os"
 	"os/exec"
 	"strings"
 
@@ -52,8 +51,7 @@ var scopes = []string{
 func main() {
 	app, err := initializeApp()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: \n%v", err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	redirectURL := fmt.Sprintf("http://localhost:%d/callback", PORT)
@@ -63,7 +61,7 @@ func main() {
 	state := randomString()
 	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(scopes...), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
-	fmt.Printf("Authenticate using the following link: \n%s\n\n", url)
+	log.Printf("Authenticate using the following link: \n%s\n\n", url)
 	cmd := exec.Command("firefox", "-new-tab", url)
 	err = cmd.Run()
 	if err != nil {
