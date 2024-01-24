@@ -65,7 +65,10 @@ func main() {
 	url := auth.AuthURL(state)
 	fmt.Printf("Authenticate using the following link: \n%s\n\n", url)
 	cmd := exec.Command("firefox", "-new-tab", url)
-	_ = cmd.Run()
+	err = cmd.Run()
+	if err != nil {
+		log.Print(err)
+	}
 
 	router := http.NewServeMux()
 
@@ -127,6 +130,6 @@ func main() {
 	router.HandleFunc("/addToLiked", app.checkTokenMiddleware(loggingMiddleware(app.addToLiked)))
 	router.HandleFunc("/removeFromLiked", app.checkTokenMiddleware(loggingMiddleware(app.removeFromLiked)))
 
-	fmt.Println("Waiting for requests")
+	log.Printf("Waiting for requests at port %d", PORT)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
 }
