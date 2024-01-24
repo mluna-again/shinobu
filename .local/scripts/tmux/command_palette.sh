@@ -48,7 +48,6 @@ Layouts: Tiled
 Layouts: Main-Horizontal
 Layouts: Main-Vertical
 Layouts: Make grid
-Reorder: Running programs first
 Spotify: search
 Spotify: play/pause
 Spotify: next song
@@ -66,10 +65,10 @@ Send: command to panes
 Time: show
 Theme: choose colorscheme
 Run: Local script
+Run: projects in current window
 Borders: Toggle for current window
 Helper: Open HTTP session
 Helper: Open Database session (SQL)
-Helper: run projects in current window
 Pomodoro: new
 Pomodoro: stop
 Pomodoro: pause
@@ -468,22 +467,6 @@ case "$action" in
 		tmux select-pane -t "$target"
 		;;
 
-	"Reorder: Running programs first")
-		panes=$(
-		tmux list-panes -F "#{pane_current_command} #{pane_id}" | \
-			grep -iv "^zsh$" | \
-			grep -iv "^fish$" | \
-			grep -iv "^bash$" | \
-			awk '{print $2}'
-		)
-		counter=1
-		for _ in $panes; do
-			tmux swap-pane -t "$counter"
-			counter=$((counter + 1))
-		done
-		tmux select-pane -t 1
-		;;
-
 	"Run: Local script")
 		[ -d "$LOCAL_SCRIPTS_FOLDER" ] || mkdir "$LOCAL_SCRIPTS_FOLDER"
 		files=$(find "$LOCAL_SCRIPTS_FOLDER" -type f -iname "*.sh")
@@ -544,7 +527,7 @@ case "$action" in
 		"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
 		;;
 
-	"Helper: run projects in current window")
+	"Run: projects in current window")
 		while read -r info; do
 			pane=$(awk '{print $1}' <<< "$info")
 			current_path=$(awk '{print $2}' <<< "$info")
