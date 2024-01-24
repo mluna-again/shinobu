@@ -69,6 +69,7 @@ Run: Local script
 Borders: Toggle for current window
 Helper: Open HTTP session
 Helper: Open Database session (SQL)
+Helper: run projects in current window
 Pomodoro: new
 Pomodoro: stop
 Pomodoro: pause
@@ -541,6 +542,21 @@ case "$action" in
 		fi
 
 		"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
+		;;
+
+	"Helper: run projects in current window")
+		while read -r info; do
+			pane=$(awk '{print $1}' <<< "$info")
+			current_path=$(awk '{print $2}' <<< "$info")
+			current_path=$(basename "$current_path")
+			script_name="${current_path}.sh"
+			if ! command -v "$script_name" &>/dev/null; then
+				error "No script found for $current_path."
+				exit
+			fi
+
+			tmux send-keys -t "$pane" "$script_name" Enter
+		done < <(tmux list-panes -F "#{pane_index} #{pane_current_path}")
 		;;
 
 	"Helper: Open HTTP session")
