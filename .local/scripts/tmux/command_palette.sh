@@ -96,6 +96,15 @@ Cheatsheet: select and copy
 EOF
 )"
 
+make_popup_border() {
+	local title
+	local icon
+	title="$1"
+	icon="${2:-󰂞}"
+
+	echo "#[bg=#{@components_active_background1},fg=black] $icon $title "
+}
+
 try_to_wake_bop() {
 	curl -sSf "http://localhost:$BOP_PORT/health" && return
 
@@ -339,10 +348,10 @@ case "$action" in
 		file="$(cat "$RESULTS_FILE")"
 
 		if grep -i "budget" <<< "$file" &>/dev/null; then
-			tmux display-popup -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
+			tmux display-popup -T "$(make_popup_border 'Budget' '')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
 		else
 			[ -z "$file" ] && exit
-			tmux display-popup -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$file\""
+			tmux display-popup -T "$(make_popup_border 'Notes' '󱞎')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$file\""
 		fi
 		;;
 
@@ -350,7 +359,7 @@ case "$action" in
 		[ -d "$NOTES_PATH" ] || mkdir "$NOTES_PATH"
 		[ -e "$NOTES_PATH/todo" ] || touch "$NOTES_PATH/todo.md"
 
-		tmux display-popup -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo.md\""
+		tmux display-popup -T "$(make_popup_border 'TODOS' '')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo.md\""
 
 		true
 		;;
@@ -487,7 +496,7 @@ case "$action" in
 			error "File is not executable!"
 			exit
 		}
-		tmux display-popup -w "80%" -h "70%" -y 40 -b heavy -S fg=white,bg=black -s bg=black -EE "$file"
+		tmux display-popup -T "$(make_popup_border 'Runner' '')" -w "80%" -h "70%" -y 40 -b heavy -S fg=white,bg=black -s bg=black -EE "$file"
 
 		if [ "$?" -eq 0 ]; then
 			success "Script ran successfully :)"
@@ -695,7 +704,7 @@ EOF
 
 	"Monitor: open dashboard")
 		command -v btm &>/dev/null || { error "btm is not installed!" ; exit ; }
-		tmux display-popup -w "90%" -h "95%" -b heavy -S fg=white,bg=black -s bg=black -EE btm
+		tmux display-popup -T "$(make_popup_border 'Monitor' '')" -w "90%" -h "95%" -b heavy -S fg=white,bg=black -s bg=black -EE btm
 		;;
 
 	"Dumb: screen-saver")
@@ -909,7 +918,7 @@ EOF
 		;;
 
 	"Tmux: floating terminal")
-		tmux display-popup -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -EE
+		tmux display-popup -T "$(make_popup_border 'Terminal' '')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -EE
 		;;
 
 	"Tmux: block outer session")
@@ -953,7 +962,7 @@ EOF
 			exit
 		fi
 
-		tmux display-popup -T "#[bg=#{@components_active_background1},fg=black] 󰂞 Message " \
+		tmux display-popup -T "$(make_popup_border 'Message')" \
 			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -E "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
 		;;
 
