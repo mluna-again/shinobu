@@ -13,5 +13,6 @@
   "Reset colors": "printf '\\033[0m'",
   "Longest line (count)": "awk '{ if ( length > x ) { x = length } } END { print x }'",
   "Longest line (text)": "awk '{ if ( length > x ) { x = length; line = $0 } } END { print line }'",
-  "Enter container": "docker container exec -it (dock id) bash"
+  "Enter container": "docker container exec -it (dock id) bash",
+  "Files older than": "find . -type f -mtime +<days>"
 }

@@ -259,3 +259,6 @@ if status is-interactive
     command -vq zoxide; and zoxide init fish | source
     command -vq starship; and starship init fish | source
 end
+
+# clean up undo nvim files older than 3 days
+find "$HOME/.local/state/nvim/undo" -type f -mtime +3 -delete
