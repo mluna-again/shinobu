@@ -261,4 +261,5 @@ if status is-interactive
 end
 
 # clean up undo nvim files older than 3 days
-find "$HOME/.local/state/nvim/undo" -type f -mtime +3 -delete
+set -l nvim_undo_dir "$HOME/.local/state/nvim/undo"
+test -d "$nvim_undo_dir"; and find "$nvim_undo_dir" -type f -mtime +3 -delete
