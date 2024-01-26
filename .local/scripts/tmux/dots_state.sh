@@ -22,7 +22,7 @@ if [ "$diff" -ge "$MINUTES_IN_SECONDS" ] || [ -n "$force" ]; then
 	count=$(yadm rev-list --left-right --count master...origin/master | awk '{print $2}')
 
 	if [ "$count" -gt 0 ]; then
-		text="#[bg=terminal,fg=yellow] $count #[bg=$bg,fg=black]  "
+		text="#[bg=terminal,fg=terminal] $count #[bg=$bg,fg=black]  "
 	else
 		text=""
 	fi
