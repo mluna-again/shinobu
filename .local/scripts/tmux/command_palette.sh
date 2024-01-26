@@ -348,9 +348,9 @@ case "$action" in
 
 	"TODOS: open")
 		[ -d "$NOTES_PATH" ] || mkdir "$NOTES_PATH"
-		[ -e "$NOTES_PATH/todo" ] || touch "$NOTES_PATH/todo"
+		[ -e "$NOTES_PATH/todo" ] || touch "$NOTES_PATH/todo.md"
 
-		tmux display-popup -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo\""
+		tmux display-popup -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo.md\""
 
 		true
 		;;

@@ -32,11 +32,11 @@ fuzzy() {
 }
 
 concat_path() {
-	echo "$NOTES_PATH/$1"
+	echo "$NOTES_PATH/$1.md"
 }
 
 list_notes() {
-	find "$NOTES_PATH" -type f -not -iname ".temp" | sed "s|$HOME/Notes/||" | sed "s/\.sc$//"
+	find "$NOTES_PATH" -type f -not -iname ".temp" | sed "s|$HOME/Notes/||" | sed "s/\.sc$//" | sed "s/.md$//"
 }
 
 delete() {
