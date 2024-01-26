@@ -39,6 +39,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+-- Jump to last edit position on opening file
+vim.cmd([[
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\""	| exe "normal zz" | endif
+]])
+
 -- LSP TWEAKS
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single", title = " Docs " })
 
