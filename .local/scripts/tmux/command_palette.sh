@@ -948,8 +948,13 @@ EOF
 
 
 	"Lol: wake up")
+		if ! figlet -c hey &>/dev/null; then
+			error "You have a weird version of figlet installed (no -c and -f support)."
+			exit
+		fi
+
 		tmux display-popup -T "#[bg=#{@components_active_background1},fg=black] 󰂞 Message " \
-			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -EE "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
+			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -E "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
 		;;
 
 	"Theme: choose colorscheme")
