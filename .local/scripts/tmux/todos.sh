@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-NOTES_PATH="$HOME/Notes/todo"
+NOTES_PATH="$HOME/Notes/todo.md"
 
 width="$2"
 
