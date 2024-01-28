@@ -1,5 +1,5 @@
 function ask
-  if test $argv[1] = "-"
+  if test "$argv[1]" = "-"
     gpg -d ~/.cache/gp.gpg
     return
   end
