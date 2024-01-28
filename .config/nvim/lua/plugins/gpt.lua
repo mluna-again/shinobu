@@ -28,6 +28,33 @@ return {
 
 		require("chatgpt").setup({
 			api_key_cmd = "gpg -d " .. file,
+			openai_params = {
+				model = "gpt-4-0125-preview"
+			},
+			settings_window = {
+				setting_sign = "  ",
+				border = {
+					style = "rounded",
+					text = {
+						top = " Settings ",
+					},
+				},
+				win_options = {
+					winhighlight = "Normal:Input1,FloatBorder:Input1Border",
+				},
+			},
+			help_window = {
+				setting_sign = "  ",
+				border = {
+					style = "rounded",
+					text = {
+						top = " Help ",
+					},
+				},
+				win_options = {
+					winhighlight = "Normal:Input1,FloatBorder:Input1Border",
+				},
+			},
 			popup_layout = {
 				default = "center",
 				center = {
@@ -76,7 +103,7 @@ return {
 			},
 			chat = {
 				welcome_message = "Howdy",
-				loading_text = "...",
+				loading_text = "",
 				question_sign = "󰭻 ",
 				answer_sign = "󱚣 ",
 				border_left_sign = "",
