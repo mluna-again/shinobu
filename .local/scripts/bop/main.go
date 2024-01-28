@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os/exec"
+	"runtime"
 	"strings"
 
 	"html/template"
@@ -62,8 +63,7 @@ func main() {
 	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(scopes...), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
 	log.Printf("Authenticate using the following link: \n%s\n\n", url)
-	cmd := exec.Command("firefox", "-new-tab", url)
-	err = cmd.Run()
+	err = tryToOpenLink(url)
 	if err != nil {
 		log.Print(err)
 	}
@@ -130,4 +130,14 @@ func main() {
 
 	log.Printf("Waiting for requests at port %d", PORT)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
+}
+
+func tryToOpenLink(url string) error {
+	args := []string{"firefox", "-new-tab", url}
+	if runtime.GOOS == "darwin" {
+		args = []string{"open", url}
+	}
+
+	cmd := exec.Command(args[0], args[1:]...)
+	return cmd.Run()
 }
