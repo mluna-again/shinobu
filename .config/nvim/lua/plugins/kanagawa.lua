@@ -50,8 +50,16 @@ return {
 					-- Save an hlgroup with dark background and dimmed foreground
 					-- so that you can use it where your still want darker windows.
 					-- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+
 					NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 					Normal = { fg = theme.ui.fg_dim, bg = theme.ui.bg },
+
+					Input1 = { bg = theme.ui.bg_p1 },
+					Input1Border = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+					Input2 = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+					Input2Border = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+					Input3 = { bg = theme.ui.bg_dim },
+					Input3Border = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
 
 					-- Popular plugins that open floats will link to NormalFloat by default;
 					-- set their background accordingly if you wish to keep them dark and borderless

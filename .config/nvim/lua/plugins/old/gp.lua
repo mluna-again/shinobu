@@ -9,9 +9,18 @@ return {
 
 		wk.register({
 			c = {
+				name = "GPT",
 				o = {
 					"<cmd>GPChatToggle<CR>",
-					"Toggle GPT chat"
+					"Toggle chat"
+				},
+				s = {
+					"<cmd>GPChatRespond<CR>",
+					"Send query"
+				},
+				d = {
+					"<cmd>GPChatDelete<CR>",
+					"Delete chat"
 				}
 			}
 		}, {
