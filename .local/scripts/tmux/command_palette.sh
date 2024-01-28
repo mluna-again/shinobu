@@ -543,7 +543,7 @@ case "$action" in
 			current_path=$(basename "$current_path")
 			script_name="${current_path}.sh"
 			if ! command -v "$script_name" &>/dev/null; then
-				error "No script found for $current_path."
+				error "No script found for $current_path (you can put your scripts in ~/.local/bin)."
 				exit
 			fi
 
