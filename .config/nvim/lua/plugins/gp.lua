@@ -2,7 +2,8 @@ return {
 	"robitx/gp.nvim",
 	lazy = true,
 	cmd = {
-		"GPChatToggle"
+		"GPChatToggle",
+		"GPChatNew"
 	},
 	init = function()
 		local wk = require("which-key")
