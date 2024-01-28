@@ -8,6 +8,24 @@ return {
 	dependencies = {
 		"goolord/alpha-nvim",
 	},
+	init = function()
+		local wk = require("which-key")
+		wk.register({
+			s = {
+				name = "Sessions",
+				s = {
+					"<cmd>SessionSave<CR>",
+					"Save current session"
+				},
+				l = {
+					"<cmd>SessionLoad<CR>",
+					"Load session"
+				}
+			}
+		}, {
+			prefix = "<Leader>"
+		})
+	end,
 	config = function()
 		require("persisted").setup({
 			save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- directory where session files are saved
