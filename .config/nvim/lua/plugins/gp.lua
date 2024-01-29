@@ -51,6 +51,7 @@ return {
 						.. "The user provided the additional info about how they would like you to respond:\n\n"
 						.. "- If you're unsure don't guess and say you don't know instead.\n"
 						.. "- Ask question if you need clarification to provide a better answer.\n"
+						.. "- Try to be concise."
 				},
 			},
 			cmd_prefix = "GP",
