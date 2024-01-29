@@ -7,7 +7,7 @@ if [ "$current_session" = "alice" ]; then
 fi
 
 if ! tmux has-session -t alice; then
-	tmux new-session -d -s alice -n chat
+	tmux new-session -d -s alice -n alice
 fi
 
 tmux switch-client -t alice

@@ -2,6 +2,12 @@
 
 icon=""
 
+if [ "$(tmux display -p '#{window_name}')" = "alice" ]; then
+	icon="󱩡"
+	echo "$icon $1"
+	exit
+fi
+
 case "$(printf "%s" "$2" | tr '[:upper:]' '[:lower:]')" in
 	nvim)
 		icon=""
