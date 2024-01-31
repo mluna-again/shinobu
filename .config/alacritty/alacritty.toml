@@ -45,7 +45,9 @@ mods = "Command"
 hide_when_typing = true
 
 [window]
-opacity = 0.97
+opacity = 0.80
+blur = true
+decorations = "Buttonless"
 
 [window.padding]
 x = 0
