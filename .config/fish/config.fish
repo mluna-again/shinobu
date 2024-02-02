@@ -72,7 +72,7 @@ set -gx GOPATH "$HOME/.local/go"
 set -gx SHELLCHECK_OPTS "-e SC2001"
 
 # ALIASES
-abbr --add p psql -U postgres
+abbr --add pg pgcli -h 127.0.0.1 -u postgres
 abbr --add ph iex -S mix phx.server
 abbr --add dots yadm
 abbr --add dotss yadm status
