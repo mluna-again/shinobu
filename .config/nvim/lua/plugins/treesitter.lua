@@ -8,7 +8,21 @@ return {
 				enable = true,
 			},
 			-- A list of parser names, or "all"
-			ensure_installed = {},
+			ensure_installed = {
+				"elixir",
+				"python",
+				"typescript",
+				"javascript",
+				"bash",
+				"go",
+				"css",
+				"html",
+				"markdown",
+				"markdown_inline",
+				"hurl",
+				"lua",
+				"sql"
+			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
 			sync_install = false,
