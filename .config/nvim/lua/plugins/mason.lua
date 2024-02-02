@@ -16,6 +16,7 @@ return {
 			"elixir-ls",
 			"goimports",
 			"golangci-lint-langserver",
+			"golangci-lint",
 			"gomodifytags",
 			"gopls",
 			"stylua",
