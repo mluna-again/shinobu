@@ -48,6 +48,7 @@ hide_when_typing = true
 opacity = 0.95
 blur = true
 decorations = "None"
+startup_mode = "Maximized"
 
 [window.padding]
 x = 0
