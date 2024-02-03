@@ -21,7 +21,8 @@ return {
 				"markdown_inline",
 				"hurl",
 				"lua",
-				"sql"
+				"sql",
+				"ruby"
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
