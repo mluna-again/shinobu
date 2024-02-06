@@ -144,6 +144,10 @@ return {
 					NeotestSkipped = { fg = theme.syn.type },
 					NeotestSummary = { bg = theme.ui.bg_m1 },
 
+					NotificationInfo = { bg = theme.ui.bg_gutter, fg = theme.ui.fg },
+					NotificationWarning = { bg = theme.syn.string, fg = theme.ui.bg_gutter },
+					NotificationError = { bg = theme.syn.special2, fg = theme.ui.fg },
+
 					NotifyINFOBody = { bg = theme.ui.bg_gutter, fg = theme.ui.fg },
 					NotifyINFOBorder = { bg = theme.ui.bg_gutter, fg = theme.ui.bg_gutter },
 					NotifyINFOTitle = { bg = theme.ui.bg_gutter, fg = theme.ui.fg },
