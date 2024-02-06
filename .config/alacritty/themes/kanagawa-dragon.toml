@@ -28,7 +28,6 @@ yellow = "#c4b28a"
 
 [colors.primary]
 background = "#181616"
-dim_foreground = "#c5c9c5"
 foreground = "#c5c9c5"
 
 [colors.selection]

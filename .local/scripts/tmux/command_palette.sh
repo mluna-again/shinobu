@@ -175,16 +175,21 @@ send_keys_to_nvim() {
 		xargs -I{} -n1 tmux send-keys -t {} Escape Escape : colorscheme Space "$1" Enter
 }
 
+_modify_nvim_and_alacritty_err() {
+	error "Something went wrong while uploading color scheme."
+	exit
+}
+
 modify_nvim_and_alacritty() {
-	command -v yq &>/dev/null || { error "yq is required to run this action!"; exit; }
-
-	yq -i ".import[0] = \"~/.config/alacritty/themes/$1.yml\"" "$HOME/.config/alacritty/alacritty.yml" || true
-
 	# -_-
 	if uname | grep -i darwin &>/dev/null; then
-		sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
+		sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || _modify_nvim_and_alacritty_err
+		sed -i '' "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty.toml" || _modify_nvim_and_alacritty_err
+		sed -i '' "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty_linux.toml" || _modify_nvim_and_alacritty_err
 	else
-		sed -i "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || true
+		sed -i "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || _modify_nvim_and_alacritty_err
+		sed -i "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty.toml" || _modify_nvim_and_alacritty_err
+		sed -i "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty_linux.toml" || _modify_nvim_and_alacritty_err
 	fi
 
 	[ ! -d "$HOME/.config/shift" ] && mkdir "$HOME/.config/shift"
