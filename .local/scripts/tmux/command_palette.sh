@@ -93,6 +93,7 @@ Dumb: screen-saver
 System: volume
 Dotfiles: status
 Cheatsheet: select and copy
+Alacritty: toggle opacity
 EOF
 )"
 
@@ -969,6 +970,26 @@ EOF
 
 		tmux display-popup -T "$(make_popup_border 'Message')" \
 			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -E "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
+		;;
+
+	"Alacritty: toggle opacity")
+		opacity=""
+		config_file="$HOME/.config/alacritty/alacritty.toml"
+		linux_config_file="$HOME/.config/alacritty/alacritty_linux.toml"
+
+		if grep -iq "opacity[[:space:]]*=[[:space:]]1" "$config_file"; then
+			opacity="0.93"
+		else
+			opacity="1"
+		fi
+
+		if uname | grep -iq darwin; then
+			sed -i '' "s/opacity.*$/opacity = $opacity/" "$config_file"
+			sed -i '' "s/opacity.*$/opacity = $opacity/" "$linux_config_file"
+		else
+			sed -i "s/opacity.*$/opacity = $opacity/" "$config_file"
+			sed -i "s/opacity.*$/opacity = $opacity/" "$linux_config_file"
+		fi
 		;;
 
 	"Theme: choose colorscheme")

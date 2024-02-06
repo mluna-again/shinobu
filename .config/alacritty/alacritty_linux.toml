@@ -45,7 +45,7 @@ mods = "Command"
 hide_when_typing = true
 
 [window]
-opacity = 0.95
+opacity = 1
 blur = true
 decorations = "None"
 startup_mode = "Maximized"
