@@ -28,16 +28,17 @@ type app struct {
 }
 
 type model struct {
-	input                textinput.Model
-	table                table.Model
-	termWidth            int
-	termHeight           int
-	filtered             []string
-	mode                 modeType
-	app                  *app
-	autocompleteElements []os.DirEntry
-	autocompleteErr      error
-	autocompleting       bool
+	input                        textinput.Model
+	table                        table.Model
+	termWidth                    int
+	termHeight                   int
+	filtered                     []string
+	mode                         modeType
+	app                          *app
+	autocompleteElements         []os.DirEntry
+	autocompleteErr              error
+	autocompleting               bool
+	backspacePressedOnEmptyQuery bool
 }
 
 func newModel(app *app, w int, h int) (model, error) {
@@ -125,6 +126,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "backspace":
+			if m.backspacePressedOnEmptyQuery && m.input.Value() == "" {
+				return m, tea.Quit
+			}
+			if m.input.Value() == "" {
+				m.backspacePressedOnEmptyQuery = true
+			} else {
+				m.backspacePressedOnEmptyQuery = false
+			}
 			m.autocompleting = false
 			for _, mode := range m.app.modes {
 				if m.mode == mode.mType && strings.TrimSpace(m.input.Value()) == mode.prefix {
