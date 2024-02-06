@@ -22,7 +22,8 @@ return {
 				"hurl",
 				"lua",
 				"sql",
-				"ruby"
+				"ruby",
+				"rust"
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)

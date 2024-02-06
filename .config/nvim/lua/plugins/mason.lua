@@ -24,7 +24,8 @@ return {
 			"typescript-language-server",
 			"css-lsp",
 			"shellcheck",
-			"solargraph"
+			"solargraph",
+			"rust-analyzer"
 		}
 
 		mason.setup({
