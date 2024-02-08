@@ -935,8 +935,10 @@ EOF
 		current=$(tmux display -p "#{@zen_mode}")
 		if [ -z "$current" ]; then
 			tmux set -g @zen_mode true
+			touch "$HOME/.cache/tmux_zen_mode"
 		else
 			tmux set -g @zen_mode ""
+			rm "$HOME/.cache/tmux_zen_mode" &>/dev/null || true
 		fi
 		;;
 
