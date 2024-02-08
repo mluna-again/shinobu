@@ -78,7 +78,7 @@ return {
 			Unit = "",
 			Value = "",
 			Enum = "",
-			Keyword = "",
+			Keyword = "󰌆",
 			Snippet = "",
 			Color = "",
 			File = "",
@@ -110,8 +110,14 @@ return {
 				entries = { name = "custom" },
 			},
 			window = {
-				completion = nil,
-				documentation = nil,
+				completion = cmp.config.window.bordered({
+          border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"},
+          scrollbar = false
+        }),
+				documentation = cmp.config.window.bordered({
+          border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"},
+          scrollbar = false
+        }),
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
