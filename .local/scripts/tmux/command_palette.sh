@@ -897,7 +897,7 @@ EOF
 		;;
 
 	"Dotfiles: pull")
-		err=$(yadm pull 1>/dev/null 2>&1)
+		err=$(yadm pull 2>&1 >/dev/null)
 		if [ "$?" -ne 0 ] || [ -n "$err" ]; then
 			error "${err:-"Something went wrong!"}"
 			exit
