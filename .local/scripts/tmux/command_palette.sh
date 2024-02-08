@@ -932,7 +932,12 @@ EOF
 		;;
 
 	"Tmux: zen mode")
-		tmux set -g status
+		current=$(tmux display -p "#{@zen_mode}")
+		if [ -z "$current" ]; then
+			tmux set -g @zen_mode true
+		else
+			tmux set -g @zen_mode ""
+		fi
 		;;
 
 	"Tmux: floating terminal")

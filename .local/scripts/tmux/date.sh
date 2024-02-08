@@ -1,9 +1,12 @@
 #! /bin/sh
 
+format="+ %I:%M %p • %a %d"
+if [ -z "$(tmux display -p '#{@zen_mode}')" ]; then
+	format="+ %I:%M %p"
+fi
+
 width="$1"
 icon_color="$2"
-
-format="+ %I:%M %p • %a %d"
 
 [ "$width" -lt 100 ] && format="+ %I:%M %p"
 

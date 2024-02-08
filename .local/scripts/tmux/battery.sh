@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -z "$(tmux display -p '#{@zen_mode}')" ]; then
+	exit
+fi
+
 width="$1"
 
 [ "$width" -lt 100 ] && exit

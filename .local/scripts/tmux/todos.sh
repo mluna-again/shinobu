@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+if [ -z "$(tmux display -p '#{@zen_mode}')" ]; then
+	exit
+fi
+
 NOTES_PATH="$HOME/Notes/todo.md"
 
 width="$2"
