@@ -1,7 +1,7 @@
 #! /bin/sh
 
 format="+ %I:%M %p • %a %d"
-if [ -z "$(tmux display -p '#{@zen_mode}')" ]; then
+if [ -n "$(tmux display -p '#{@zen_mode}')" ]; then
 	format="+ %I:%M %p"
 fi
 

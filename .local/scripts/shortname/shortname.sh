@@ -30,7 +30,7 @@ fi
 
 output=$(sed 's|/$||' <<< "$output")
 printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"
-if [ -n "$session_name" ] && [ -n "$(tmux display -p '#{@zen_mode}')" ]; then
+if [ -n "$session_name" ] && [ -z "$(tmux display -p '#{@zen_mode}')" ]; then
 	printf ":: %s " "$session_name"
 fi
 

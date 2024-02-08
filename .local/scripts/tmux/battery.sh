@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$(tmux display -p '#{@zen_mode}')" ]; then
+if [ -n "$(tmux display -p '#{@zen_mode}')" ]; then
 	exit
 fi
 

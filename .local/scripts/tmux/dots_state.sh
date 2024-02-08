@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+if [ -n "$(tmux display -p '#{@zen_mode}')" ]; then
+	exit
+fi
+
 bg="$1"
 width="$2"
 force="$3"
