@@ -92,6 +92,7 @@ Monitor: open dashboard
 Dumb: screen-saver
 System: volume
 Dotfiles: status
+Dotfiles: pull
 Cheatsheet: select and copy
 Alacritty: toggle opacity
 EOF
@@ -893,6 +894,17 @@ EOF
 
 		volume=$(osascript -e 'set ovol to output volume of (get volume settings)')
 		tmux display-popup -E -x "#{popup_pane_right}" -y "#{popup_pane_top}" -h 3 -w 50 "$HOME/.local/scripts/orfeo/orfeo" -volume "$volume"
+		;;
+
+	"Dotfiles: pull")
+		err=$(yadm pull 1>/dev/null 2>&1)
+		if [ "$?" -ne 0 ] || [ -n "$err" ]; then
+			error "${err:-"Something went wrong!"}"
+			exit
+		fi
+
+		tmux source-file "$HOME/.tmux.conf"
+		success "Reloaded!"
 		;;
 
 	"Dotfiles: status")
