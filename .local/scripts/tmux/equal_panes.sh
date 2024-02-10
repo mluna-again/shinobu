@@ -11,4 +11,10 @@ if [ "$panes_count" -ge 4 ]; then
 	exit
 fi
 
-tmux select-layout even-horizontal
+layout="even-horizontal"
+
+if [ "$1" = "horizontal" ]; then
+	layout="even-vertical"
+fi
+
+tmux select-layout "$layout"
