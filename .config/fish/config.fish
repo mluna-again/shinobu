@@ -189,7 +189,9 @@ end
 
 function dotsP
     yadm pull
-    $HOME/.local/scripts/tmux/dots_state.sh red 100 force
+    if pgrep tmux
+        "$HOME/.local/scripts/tmux/dots_state.sh" red 100 force
+    end
 end
 
 function dotsL
