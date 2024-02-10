@@ -7,6 +7,6 @@ hostname=$(hostname)
 
 [ "$width" -le 100 ] && exit
 
-{ [ -n "$SSH_CLIENT" ] || [ "$force" = true ] ; } && printf " #[fg=black,bg=%s] 󰒍 #[fg=terminal,bg=terminal] %s" "$bg" "$hostname"
+{ [ -n "$SSH_CLIENT" ] || [ "$force" = true ] ; } && printf "#[fg=black,bg=%s] 󰒍 #[fg=terminal,bg=terminal] %s " "$bg" "$hostname"
 
 true
