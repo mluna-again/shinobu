@@ -13,6 +13,9 @@ function dock
     set -l cmd $argv[1]
     test -z "$cmd"; and begin
         printf "Available CMDs:\n"
+        printf "\tid\n"
+        printf "\tlogs\n"
+        printf "\tdelete\n"
         printf "\tstart\n"
         printf "\trestart\n"
         printf "\tstop\n"
@@ -22,9 +25,33 @@ function dock
     end
 
     switch "$cmd"
+        case rm
+            set -l id (
+                docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
+                    awk 'NR > 1' |\
+                    fzf --header="Search container" |\
+                    awk '{print $1}' |\
+                    xargs
+            )
+            test -z "$id"; and return
+
+            docker container rm --force "$id"
+
+        case logs
+            set -l id (
+                docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
+                    awk 'NR > 1' |\
+                    fzf --header="Search container" |\
+                    awk '{print $1}' |\
+                    xargs
+            )
+            test -z "$id"; and return
+
+            docker container logs "$id"
+
         case id
             set -l id (
-                docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
+                docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
                     fzf --header="Search container" |\
                     awk '{print $1}' |\
