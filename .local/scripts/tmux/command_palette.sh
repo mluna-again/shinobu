@@ -355,6 +355,11 @@ case "$action" in
 		file="$(cat "$RESULTS_FILE")"
 
 		if grep -i "budget" <<< "$file" &>/dev/null; then
+			if ! command -v sc-im &>/dev/null; then
+				error "sc-im not installed."
+				exit
+			fi
+
 			tmux display-popup -T "$(make_popup_border 'Budget' '')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "sc-im \"$BUDGET_FILE\""
 		else
 			[ -z "$file" ] && exit
