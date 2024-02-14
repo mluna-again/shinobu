@@ -29,19 +29,18 @@ function dock
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Search container" |\
-                    awk '{print $1}' |\
-                    xargs
+                    fzf --header="Remove container(s)" --multi --bind ctrl-a:select-all |\
+                    awk '{print $1}'
             )
             test -z "$id"; and return
 
-            docker container rm --force "$id"
+            docker container rm --force $id
 
         case logs
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Search container" |\
+                    fzf --header="See container logs" |\
                     awk '{print $1}' |\
                     xargs
             )
@@ -53,7 +52,7 @@ function dock
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Search container" |\
+                    fzf --header="Copy container ID" |\
                     awk '{print $1}' |\
                     xargs
             )
