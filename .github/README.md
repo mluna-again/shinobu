@@ -42,6 +42,8 @@ https://github.com/mluna-again/shinobu/assets/53100040/9a53fa5a-ccb0-42a8-a283-6
 19. sc-im
 20. atuin
 21. pgcli
+22. json-server
+23. presenterm
 
 ## Problems I've encountered that I don't want to forget
 
