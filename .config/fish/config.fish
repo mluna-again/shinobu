@@ -50,7 +50,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.composer/vendor/bin" \
     "$HOME/.config/composer/vendor/bin" \
     "$HOME/.local/scripts/bin" \
-    "$HOME/.symfony5/bin"
+    "$HOME/.symfony5/bin" \
+    "$HOME/.nimble/bin"
 
 # BINDINGS
 bind -M insert \ce end-of-line
