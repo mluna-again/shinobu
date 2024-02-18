@@ -11,15 +11,11 @@
 
 [core]
   excludesFile = ~/.gitignore
-  pager = delta --side-by-side --line-numbers --syntax-theme kanagawa-dragon || less
+  pager = delta --side-by-side --syntax-theme kanagawa-dragon || less
   hooksPath = ~/.local/githooks
 
 [interactive]
   diffFilter = delta --color-only
-
-[delta]
-  navigate = true    # use n and N to move between diff sections
-  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 
 [merge]
   conflictstyle = diff3
@@ -27,3 +23,20 @@
 [diff]
   colorMoved = default
 
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  features = kanagawa
+  line-numbers = false
+
+[delta "kanagawa"]
+    syntax-theme = kanagawa-dragon
+    minus-style = reverse "#c4746e"
+    minus-emph-style = reverse "#c4746e"
+    minus-empty-line-marker-style = reverse "#c4746e"
+    minus-non-emph-style = reverse "#c4746e"
+
+    plus-style = reverse "#87a987"
+    plus-emph-style = reverse "#87a987"
+    plus-empty-line-marker-style = reverse "#87a987"
+    plus-non-emph-style = reverse "#87a987"

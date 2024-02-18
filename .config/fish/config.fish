@@ -117,7 +117,7 @@ command -v eza &>/dev/null; and function ll
 end
 
 command -v bat &>/dev/null; and function cat
-    bat $argv
+    bat --theme kanagawa-dragon $argv
 end
 
 if uname | grep -i darwin &>/dev/null
