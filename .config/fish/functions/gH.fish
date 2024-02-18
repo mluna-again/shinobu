@@ -1,0 +1,12 @@
+function gH
+    test -z "$argv[1]"; and begin
+        printf "No file specified.\n"
+        return
+    end
+
+    set -l log (git log --follow --format="%h • %s • %an • %ah" -- "$argv[1]" | fzf --header="Search file history" --preview="git diff {+1}^ {+1} -- $argv[1] | delta")
+
+    test -z "$log"; and return
+
+    git log -1 (echo "$log" | awk '{ print $1 }')
+end
