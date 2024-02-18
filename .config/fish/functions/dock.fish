@@ -13,7 +13,7 @@ function _try_start_docker_desktop_app
     printf "Trying to start docker...\n"
     if systemctl --user start docker-desktop
         printf "Docker started.\n"
-        set should_close_desktop true
+        return 0
     else
         printf "Docker could not be started.\n" 2>&1
         return 1
@@ -21,6 +21,7 @@ function _try_start_docker_desktop_app
 end
 
 function _try_hide_docker_desktop_app
+    set -l should_close_desktop $argv[1]
     if not test "$should_close_desktop" = true
         return 1
     end
@@ -39,13 +40,15 @@ function _try_hide_docker_desktop_app
     xdotool windowclose "$id"
 end
 
-set -g should_close_desktop false
 function dock
+    set -l should_close_desktop false
     # i try to close docker-desktop at the end because by
     # the time the function reaches its end docker-desktop
     # *should* already be running and xdotool will be able
     # to find it
-    _is_docker_running &>/dev/null; or _try_start_docker_desktop_app
+    _is_docker_running &>/dev/null; or begin
+        _try_start_docker_desktop_app; and set should_close_desktop true
+    end
 
     set -l cmd $argv[1]
     test -z "$cmd"; and begin
@@ -140,9 +143,9 @@ function dock
 
         case '*'
             printf "Invalid command.\n"
-            _try_hide_docker_desktop_app
+            _try_hide_docker_desktop_app "$should_close_desktop"
             return 1
     end
 
-    _try_hide_docker_desktop_app
+    _try_hide_docker_desktop_app "$should_close_desktop"; or true
 end
