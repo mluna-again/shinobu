@@ -67,7 +67,7 @@ set -gx COLORTERM truecolor
 set -gx VISUAL nvim
 set -gx EDITOR "$VISUAL"
 set -gx FZF_DEFAULT_COMMAND 'ag -g ""'
-set -gx FZF_DEFAULT_OPTS '--layout=reverse --prompt=" " --pointer=" " --header-first --color="bg+:#c4b28a,fg+:#1D1C19,gutter:#1D1C19,header:#c4b28a,prompt:#c4b28a,query:#c5c9c5,hl:#c4746e,hl+:#c4746e" --height="45%" --bind ¿:preview-up,-:preview-down'
+set -gx FZF_DEFAULT_OPTS '--layout=reverse --prompt=" " --pointer=" " --header-first --color="bg+:#c4b28a,fg+:#1D1C19,gutter:#1D1C19,header:#c4b28a,prompt:#c4b28a,query:#c5c9c5,hl:#c4746e,hl+:#c4746e" --height="-2" --bind ¿:preview-up,-:preview-down'
 set -gx ELIXIR_ERL_OPTIONS "-kernel shell_history enabled"
 set -gx ERL_AFLAGS "-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 set -gx GOPATH "$HOME/.local/go"

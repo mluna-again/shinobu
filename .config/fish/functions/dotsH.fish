@@ -4,7 +4,12 @@ function dotsH
         return
     end
 
-    set -l log (yadm log --follow --format="%h • %s • %an • %ah" -- "$argv[1]" | fzf --header="Search file history" --preview="yadm diff {+1}^ {+1} -- $argv[1] | delta")
+    set -l cols (tput cols)
+    set -l fsize (math \($cols - 10\) / 2)
+    set -l fsize (math floor $fsize)
+
+    set -l log (yadm log --follow --format="%h • %s • %an • %ah" -- "$argv[1]" | fzf --header="Search file history" --preview="echo {} | fold -w $fsize -s && yadm diff {+1}^ {+1} -- $argv[1] | delta")
+
 
     test -z "$log"; and return
 
