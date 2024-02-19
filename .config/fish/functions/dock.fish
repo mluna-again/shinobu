@@ -5,7 +5,7 @@ function _is_docker_running
 end
 
 function _try_start_docker_desktop_app
-    if not uname | grep -i linux
+    if not uname | grep -iq linux
         printf "Sorry osx user, you are on your own (can't auto-start docker desktop).\n"
         return 1
     end
@@ -18,6 +18,8 @@ function _try_start_docker_desktop_app
         printf "Docker could not be started.\n" 2>&1
         return 1
     end
+
+    sleep 2.5
 end
 
 function _try_hide_docker_desktop_app
