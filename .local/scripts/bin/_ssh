@@ -1,17 +1,17 @@
 #! /usr/bin/env bash
 
 workspace=$(cat - <<EOF | fzf --header="Select workspace"
-mluna@desktop
-mluna@dh
+mluna@desktop.local
+mluna@dh.local
 EOF
 )
 
 common_ports="3000 4000 9000 4008 4009 4010 4011 5173"
-ports=$(sed 's/ /\n/g' <<< "$common_ports" | awk '{ printf " -L %s:localhost:%s", $1, $1 }')
+ports=$(sed 's/ /\n/g' <<< "$common_ports" | awk '{ printf " -L %s:localhost:%s", $1, $1 }' | sed 's/^ //')
 
 [ -z "$workspace" ] && exit 1
 
-args="$ports $workspace.local"
+args="$ports $workspace"
 
 # shellcheck disable=SC2086
 /usr/bin/env ssh $args
