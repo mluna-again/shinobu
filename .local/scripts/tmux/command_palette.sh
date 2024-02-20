@@ -728,9 +728,8 @@ EOF
 	"Spotify: play/pause")
 		try_to_wake_bop || exit
 		try_shpotify pause && exit
-		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status GET "http://localhost:8888/pause")
+		output=$(curl -sSf "http://localhost:8888/pause")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
@@ -741,9 +740,8 @@ EOF
 	"Spotify: next song")
 		try_to_wake_bop || exit
 		try_shpotify next && exit
-		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status GET "http://localhost:8888/next")
+		output=$(curl -sSf "http://localhost:8888/next")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
@@ -754,9 +752,8 @@ EOF
 	"Spotify: previous song")
 		try_to_wake_bop || exit
 		try_shpotify prev && exit
-		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status GET "http://localhost:8888/prev")
+		output=$(curl -sSf "http://localhost:8888/prev")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
@@ -767,9 +764,8 @@ EOF
 	"Spotify: restart song")
 		try_to_wake_bop || exit
 		try_shpotify restart && exit
-		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status GET "http://localhost:8888/restart")
+		output=$(curl -sSf "http://localhost:8888/restart")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
@@ -779,23 +775,21 @@ EOF
 
 	"Spotify: get song")
 		try_to_wake_bop || exit
-		is_installed http "httpie is not installed!"
 
 		tmux display-popup -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
 		try_to_wake_bop || exit
-		is_installed http "httpie is not installed!"
 
 		# we delete it first so if the song its already liked it will appear at the top after liking it again
-		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked" ID="")
+		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 			exit
 		}
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/addToLiked" ID="")
+		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/addToLiked")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 			exit
@@ -806,9 +800,8 @@ EOF
 
 	"Spotify: delete song")
 		try_to_wake_bop || exit
-		is_installed http "httpie is not installed!"
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/removeFromLiked" ID="")
+		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
@@ -818,8 +811,7 @@ EOF
 
 	"Spotify: queue")
 		try_to_wake_bop || exit
-		is_installed http "httpie is not installed!"
-		output=$(http -Ib --check-status GET "http://localhost:8888/queue")
+		output=$(curl -sSf "http://localhost:8888/queue")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
@@ -839,7 +831,6 @@ EOF
 
 	"Spotify: search")
 		try_to_wake_bop || exit
-		is_installed http "httpie is not installed!"
 
 		free_input " Search by name " " 󰓇 " "hello"
 		song=$(read_input)
@@ -847,7 +838,7 @@ EOF
 
 		# if bop is not running then try without selection menu
 		if pgrep bop &>/dev/null; then
-			output=$(http -Ib --check-status POST "http://localhost:8888/search" query="$song")
+			output=$(curl -sSf -d "{\"query\": \"$song\"}" "http://localhost:8888/search")
 			code=$?
 			[ "$code" -ne 0 ] && {
 				handle_no_device_spotify "$output"
@@ -883,7 +874,7 @@ EOF
 			exit
 		}
 
-		output=$(http -Ib --check-status POST "http://localhost:8888/play" item="$song_id" type="$type")
+		output=$(curl -sSf -d "{\"item\": \"$song_id\", \"type\": \"$type\"}" "http://localhost:8888/play")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
 		}
