@@ -25,7 +25,8 @@ return {
 			"css-lsp",
 			"shellcheck",
 			"solargraph",
-			"rust-analyzer"
+			"rust-analyzer",
+			"tailwindcss-language-server"
 		}
 
 		mason.setup({

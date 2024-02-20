@@ -203,7 +203,8 @@ return {
 			"svelte",
 			"pyright",
 			"intelephense",
-			"gdscript"
+			"gdscript",
+			"tailwindcss"
 		}
 
 		for _, server in pairs(servers) do
