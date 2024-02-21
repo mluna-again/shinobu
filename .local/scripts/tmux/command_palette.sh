@@ -111,7 +111,7 @@ try_to_wake_bop() {
 	bop_response=$(curl -is http://localhost:8888/health )
 	# no server running
 	if [ "$?" -eq 7 ]; then
-		if [ -z "$DISPLAY" ]; then
+		if [ -z "$DISPLAY" ] && uname | grep -iq linux; then
 			error "No DISPLAY env variable, are you connected through SSH?"
 			return 1
 		fi
@@ -132,7 +132,11 @@ try_to_wake_bop() {
 			error "Something went wrong while waking bop up (check logs)."
 			return 1
 		fi
-		firefox -new-tab "$link"
+		if uname | grep -iq darwin; then
+			open "$link"
+		else
+			firefox -new-tab "$link"
+		fi
 		sleep 1.5
 		return
 	fi
