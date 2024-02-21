@@ -29,6 +29,8 @@ function start_bop
         set -l link (cat "$HOME/.cache/bop_logs" | grep -i "^https")
         if test -n "$link"
             firefox -new-tab "$link"
+        else
+            printf "no auth link found.\n"
         end
         return 1
     end
