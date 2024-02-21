@@ -108,7 +108,17 @@ make_popup_border() {
 }
 
 try_to_wake_bop() {
-	bop_status=$(curl -is http://localhost:8888/health | awk 'NR==1 { print $2 }')
+	bop_response=$(curl -is http://localhost:8888/health )
+	# no server running
+	if [ "$?" -eq 7 ]; then
+		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
+		alert "Waking bop up..."
+		sleep 3
+		return
+	fi
+
+	bop_status=$(awk 'NR==1 { print $2 }' <<< "$bop_response")
+
 	case "$bop_status" in
 		403)
 			alert "You haven't logged in yet."
@@ -123,14 +133,6 @@ try_to_wake_bop() {
 			return 1
 			;;
 	esac
-
-	# no server running
-	if [ "$?" -eq 7 ]; then
-		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
-		alert "Waking bop up..."
-		sleep 3
-		return
-	fi
 }
 
 close_all_but_focused() {
