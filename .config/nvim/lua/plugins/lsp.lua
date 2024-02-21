@@ -159,11 +159,11 @@ return {
 					priority = 3,
 				},
 				{
-					name = "luasnip",
+					name = "nvim_lsp",
 					priority = 4,
 				},
 				{
-					name = "nvim_lsp",
+					name = "luasnip",
 					priority = 5,
 				},
 				{
