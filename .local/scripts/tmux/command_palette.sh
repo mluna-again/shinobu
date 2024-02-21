@@ -111,14 +111,29 @@ try_to_wake_bop() {
 	bop_response=$(curl -is http://localhost:8888/health )
 	# no server running
 	if [ "$?" -eq 7 ]; then
-		if [ -n "$SSH_CLIENT" ]; then
-			error "You are not logged in and you can't login through SSH."
+		if [ -z "$DISPLAY" ]; then
+			error "No DISPLAY env variable, are you connected through SSH?"
 			return 1
 		fi
 
 		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
 		alert "Waking bop up..."
-		sleep 3
+		tries=0
+		while ! pgrep bop &>/dev/null; do
+			if [ "$tries" -ge 5 ]; then
+				break
+			fi
+
+			tries=$(( tries + 1 ))
+			sleep 1
+		done
+		link=$(cat "$HOME/.cache/bop_logs" | grep -i "^https" | head -1)
+		if [ -z "$link" ]; then
+			error "Something went wrong while waking bop up (check logs)."
+			return 1
+		fi
+		firefox -new-tab "$link"
+		sleep 1.5
 		return
 	fi
 
