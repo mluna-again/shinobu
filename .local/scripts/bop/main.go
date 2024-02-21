@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"runtime"
 	"strings"
+	"time"
 
 	"html/template"
 
@@ -63,10 +64,14 @@ func main() {
 	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(scopes...), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
 	log.Printf("Authenticate using the following link: \n%s\n\n", url)
-	err = tryToOpenLink(url)
-	if err != nil {
-		log.Print(err)
-	}
+	go func() {
+		// wait for server to start (ik hacky solution)
+		time.Sleep(time.Second * 3)
+		err = tryToOpenLink(url)
+		if err != nil {
+			log.Print(err)
+		}
+	}()
 
 	router := http.NewServeMux()
 
@@ -136,6 +141,10 @@ func tryToOpenLink(url string) error {
 		args = []string{"open", url}
 	}
 
-	cmd := exec.Command(args[0], args[1:]...)
-	return cmd.Run()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+	cmd := exec.CommandContext(ctx, args[0], args[1:]...)
+	err := cmd.Run()
+
+	return err
 }
