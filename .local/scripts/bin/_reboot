@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+boot_entry=$(
+  awk -F "[\"']" '/^menuentry/ { print $2 }' /boot/grub/grub.cfg | \
+  awk '{ print NR, $0 }' | \
+  fzf | \
+  awk '{ print $1 }'
+  )
+
+[ -z "$boot_entry" ] && exit 1
+
+sudo grub-reboot "$boot_entry"
+sudo shutdown -r now
