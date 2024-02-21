@@ -137,7 +137,7 @@ try_to_wake_bop() {
 		else
 			firefox -new-tab "$link"
 		fi
-		sleep 1.5
+		sleep 2
 		return
 	fi
 
