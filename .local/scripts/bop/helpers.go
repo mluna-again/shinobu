@@ -46,6 +46,16 @@ func sendJSON(w http.ResponseWriter, content []byte) {
 	}
 }
 
+func sendJSONWithStatus(w http.ResponseWriter, content []byte, code int) {
+	w.Header().Add("content-type", "application/json")
+	w.WriteHeader(code)
+	_, err := w.Write(content)
+
+	if err != nil {
+		sendInternalServerError(w)
+	}
+}
+
 func sendBadRequestWithMessage(w http.ResponseWriter, content string) {
 	w.WriteHeader(http.StatusBadRequest)
 	_, _ = w.Write([]byte(content))

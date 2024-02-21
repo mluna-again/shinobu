@@ -25,7 +25,9 @@ function start_bop
     cd "$bop_path"
 
     pgrep bop &>/dev/null; and begin
-        printf "bop is already running.\n"
+        printf "bop is already running (logging in...).\n"
+        set -l link (cat "$HOME/.cache/bop_logs" | grep -i "^https")
+        firefox -new-tab "$link"
         return 1
     end
 

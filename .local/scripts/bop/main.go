@@ -114,9 +114,7 @@ func main() {
 		log.Println("user authenticated")
 	})
 
-	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-	})
+	router.HandleFunc("/health", app.health)
 	router.HandleFunc("/search", app.checkTokenMiddleware(loggingMiddleware(app.search)))
 	router.HandleFunc("/play", app.checkTokenMiddleware(loggingMiddleware(app.playSong)))
 	router.HandleFunc("/pause", app.checkTokenMiddleware(loggingMiddleware(app.pause)))

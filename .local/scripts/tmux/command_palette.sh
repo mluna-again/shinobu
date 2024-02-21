@@ -108,7 +108,21 @@ make_popup_border() {
 }
 
 try_to_wake_bop() {
-	curl -sSf "http://localhost:$BOP_PORT/health" && return
+	bop_status=$(curl -is http://localhost:8888/health | awk 'NR==1 { print $2 }')
+	case "$bop_status" in
+		403)
+			alert "You haven't logged in yet."
+			return 1
+			;;
+
+		200)
+			;;
+
+		*)
+			error "Looks like something else besides bop is running on port $BOP_PORT."
+			return 1
+			;;
+	esac
 
 	# no server running
 	if [ "$?" -eq 7 ]; then
@@ -117,10 +131,6 @@ try_to_wake_bop() {
 		sleep 3
 		return
 	fi
-
-	# something is running, but probably not bop
-	error "Looks like something else besides bop is running on port $BOP_PORT."
-	return 1
 }
 
 close_all_but_focused() {
@@ -726,7 +736,7 @@ EOF
 		;;
 
 	"Spotify: play/pause")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 		try_shpotify pause && exit
 
 		output=$(curl -sSf "http://localhost:8888/pause")
@@ -738,7 +748,7 @@ EOF
 		;;
 
 	"Spotify: next song")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 		try_shpotify next && exit
 
 		output=$(curl -sSf "http://localhost:8888/next")
@@ -750,7 +760,7 @@ EOF
 		;;
 
 	"Spotify: previous song")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 		try_shpotify prev && exit
 
 		output=$(curl -sSf "http://localhost:8888/prev")
@@ -762,7 +772,7 @@ EOF
 		;;
 
 	"Spotify: restart song")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 		try_shpotify restart && exit
 
 		output=$(curl -sSf "http://localhost:8888/restart")
@@ -774,13 +784,13 @@ EOF
 		;;
 
 	"Spotify: get song")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 
 		tmux display-popup -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 
 		# we delete it first so if the song its already liked it will appear at the top after liking it again
 		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
@@ -799,7 +809,7 @@ EOF
 		;;
 
 	"Spotify: delete song")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 
 		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
 		[ "$?" -ne 0 ] && {
@@ -810,7 +820,7 @@ EOF
 		;;
 
 	"Spotify: queue")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 		output=$(curl -sSf "http://localhost:8888/queue")
 		[ "$?" -ne 0 ] && {
 			handle_no_device_spotify "$output"
@@ -830,7 +840,7 @@ EOF
 		;;
 
 	"Spotify: search")
-		try_to_wake_bop || exit
+		try_to_wake_bop || exit 0
 
 		free_input " Search by name " " 󰓇 " "hello"
 		song=$(read_input)
