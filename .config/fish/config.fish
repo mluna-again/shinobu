@@ -62,6 +62,7 @@ bind -M insert \cn history-search-forward
 bind --mode insert --sets-mode default jj backward-char repaint
 
 # ENV
+set -gx CURL_HOME "$HOME/.config/curl"
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx COLORTERM truecolor
 set -gx VISUAL nvim
