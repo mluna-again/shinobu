@@ -1,0 +1,27 @@
+#! /usr/bin/env bash
+
+_setup() {
+	[ -d "$HOME/Code" ] || mkdir "$HOME/Code"
+}
+
+program="$1"
+
+_setup
+
+case "$program" in
+	koi)
+		git clone git@github.com:mluna-again/koi.git ~/Code/koi || exit
+		cd "$HOME/Code/koi" || exit
+		make
+		;;
+
+	"")
+		printf "missing argument.\n" >&2
+		exit 1
+		;;
+
+	*)
+		printf "invalid program: %s\n" "$program" >&2
+		exit 1
+		;;
+esac
