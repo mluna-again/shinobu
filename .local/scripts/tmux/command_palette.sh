@@ -135,7 +135,8 @@ try_to_wake_bop() {
 		if uname | grep -iq darwin; then
 			open "$link"
 		else
-			firefox -new-tab "$link"
+			nohup firefox --new-tab --url "$link" &>/dev/null &
+			disown
 		fi
 		sleep 2
 		return

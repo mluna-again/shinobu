@@ -5,18 +5,19 @@ BOP_URL="http://localhost:8888"
 _display_bop_dead_message() {
   local msg
   msg=${1:-"bop is asleep!"}
-	tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: $msg"
+  tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: $msg"
+  exit 1
 }
 
 status=$(curl -sSf "$BOP_URL/status" 2>&1)
 if grep -i "connection refused" <<< "$status"; then
   _display_bop_dead_message "bop is offline."
-  exit
+  exit 1
 fi
 
 if grep -i "404" <<< "$status"; then
   _display_bop_dead_message "no music playing right now."
-  exit
+  exit 1
 fi
 
 DELAY=7
