@@ -111,6 +111,11 @@ try_to_wake_bop() {
 	bop_response=$(curl -is http://localhost:8888/health )
 	# no server running
 	if [ "$?" -eq 7 ]; then
+		if [ -n "$SSH_CLIENT" ]; then
+			error "You are not logged in and you can't login through SSH."
+			return 1
+		fi
+
 		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
 		alert "Waking bop up..."
 		sleep 3
