@@ -21,11 +21,8 @@ return {
 	s("helpers", {
 		t({
 			[[try() { local o; { o=$("$@" 2>&1) && echo "$o"; } || die "$o"; }]],
-			[[die() { tostderr "$*"; exit 1; }]],
-			[[tostderr() { awk "BEGIN { print \"@ $0:\" } { printf \"\t%s\n\", \$0 }" <<< "$*" >&2; }]],
-			-- "try() { \"$@\" || die \"cannot '$*'\"; }",
-			-- "die() { tostderr \"$*\"; exit 1; }",
-			-- "tostderr() { echo \"@ $0 -> $*\" >&2; }",
+			[[die() { awk "BEGIN { print \"@ $0:\" } { printf \"\t%s\n\", \$0 }" <<< "$*" >&2; exit 1; }]],
+			[[tostderr() { echo "$*" >&2; }]],
 		})
 	})
 }, {}
