@@ -20,9 +20,9 @@ return {
 
 	s("helpers", {
 		t({
-			[[try() { local o; { o=$("$@" 2>&1) && echo "$o"; } || die "$o"; }]],
-			[[die() { awk "BEGIN { print \"@ $0:\" } { printf \"\t%s\n\", \$0 }" <<< "$*" >&2; exit 1; }]],
-			[[tostderr() { echo "$*" >&2; }]],
+			[[# shellcheck disable=SC2120]],
+			[[die() { [ -n "$*" ] && tostderr "$*"; exit 1; }]],
+			[[tostderr() { printf "%s\n" "$*" >&2; }]],
 		})
 	})
 }, {}
