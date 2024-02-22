@@ -23,6 +23,7 @@ return {
 			[[# shellcheck disable=SC2120]],
 			[[die() { [ -n "$*" ] && tostderr "$*"; exit 1; }]],
 			[[tostderr() { printf "%s\n" "$*" >&2; }]],
+			[[info() { printf "%s\n" "$*"; }]]
 		})
 	})
 }, {}
