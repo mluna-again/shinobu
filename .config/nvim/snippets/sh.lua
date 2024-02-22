@@ -5,16 +5,27 @@ return {
 	}),
 
 	s("bash", {
-		t("#! /usr/bin/env bash")
+		t("#! /usr/bin/env bash"),
 	}),
 
 	s("ignore_question_mark", {
-		t("# shellcheck disable=SC2181")
+		t("# shellcheck disable=SC2181"),
 	}),
 
 	s("debug", {
 		t('printf "%s" "$'),
 		i(1),
-		t('"')
+		t('"'),
+	}),
+
+	s("helpers", {
+		t({
+			[[try() { local o; { o=$("$@" 2>&1) && echo "$o"; } || die "$o"; }]],
+			[[die() { tostderr "$*"; exit 1; }]],
+			[[tostderr() { awk "BEGIN { print \"@ $0:\" } { printf \"\t%s\n\", \$0 }" <<< "$*" >&2; }]],
+			-- "try() { \"$@\" || die \"cannot '$*'\"; }",
+			-- "die() { tostderr \"$*\"; exit 1; }",
+			-- "tostderr() { echo \"@ $0 -> $*\" >&2; }",
+		})
 	})
 }, {}
