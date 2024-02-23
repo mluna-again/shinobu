@@ -295,6 +295,7 @@ var height int
 var input string
 var outputFile string
 var startingMode string
+var startingInput string
 var theme string
 
 func main() {
@@ -303,6 +304,7 @@ func main() {
 	flag.StringVar(&input, "input", "", "Options, by default reads them from stdin")
 	flag.StringVar(&outputFile, "output", "", "Output file")
 	flag.StringVar(&startingMode, "mode", "switch", "Starting mode, defaults to switch")
+	flag.StringVar(&startingInput, "initial", "", "Initial input")
 	flag.StringVar(&theme, "theme", "", "Shift's theme, default to the value of ~/.config/shift/theme or 'kanagawa-dragon' if no config file")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
@@ -324,6 +326,10 @@ func main() {
 	app.loadModes()
 
 	model, err := newModel(&app, width, height)
+	if startingInput != "" {
+		model.input.SetValue(startingInput)
+	}
+
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
