@@ -1008,11 +1008,11 @@ EOF
 		mode=$(awk -F ':' '{ print $2 }' <<< "$target" | xargs)
 		case "$mode" in
 			horizontal)
-				mode="-v"
+				mode="-h"
 				;;
 
 			vertical)
-				mode="-h"
+				mode="-v"
 				;;
 
 			*)
