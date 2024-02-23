@@ -88,6 +88,7 @@ Tmux: zen mode
 Tmux: floating terminal
 Tmux: block outer session
 Tmux: join panes
+Tmux: split panes
 Lol: wake up
 Monitor: open dashboard
 Dumb: screen-saver
@@ -996,6 +997,20 @@ EOF
 			tmux set -g @lock_outer_session true
 		fi
 
+		;;
+
+	"Tmux: split panes")
+		pane_count=$(tmux list-panes | wc -l)
+		if [ "$pane_count" -le 1 ]; then
+			error "Not enough panes."
+			exit
+		fi
+
+		free_input " New window name " "  " ""
+		name=$(read_input)
+		[ -z "$name" ] && exit
+
+		tmux break-pane -ad -n "$name"
 		;;
 
 	"Tmux: join panes")
