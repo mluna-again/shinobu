@@ -5,6 +5,12 @@ if ! uname | grep -iq linux; then
   exit 1
 fi
 
+if [ -n "$1" ]; then
+  sudo grub-reboot "$1"
+  sudo shutdown -r now
+  exit
+fi
+
 boot_entry=$(
   awk -F "[\"']" '/^menuentry/ { print $2 }' /boot/grub/grub.cfg | \
   awk '{ print NR, $0 }' | \
