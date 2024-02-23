@@ -87,6 +87,7 @@ Tmux: move window to the right
 Tmux: zen mode
 Tmux: floating terminal
 Tmux: block outer session
+Tmux: join panes
 Lol: wake up
 Monitor: open dashboard
 Dumb: screen-saver
@@ -995,6 +996,32 @@ EOF
 			tmux set -g @lock_outer_session true
 		fi
 
+		;;
+
+	"Tmux: join panes")
+		items=$(awk '{ printf "%s: vertical\n%s: horizontal\n", $1, $1 }' <<< "$(tmux list-windows -F '#{window_name}')")
+		input " Target " " 󰓾 " "$items"
+		target=$(read_input)
+		[ -z "$target" ] && exit
+
+		window_name=$(awk -F ':' '{ print $1 }' <<< "$target" | xargs)
+		mode=$(awk -F ':' '{ print $2 }' <<< "$target" | xargs)
+		case "$mode" in
+			horizontal)
+				mode="-v"
+				;;
+
+			vertical)
+				mode="-h"
+				;;
+
+			*)
+				error "Invalid mode: $mode"
+				exit
+				;;
+		esac
+
+		tmux join-pane -t "$window_name" "$mode"
 		;;
 
 
