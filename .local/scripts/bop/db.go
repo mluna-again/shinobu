@@ -7,14 +7,18 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5"
-	"golang.org/x/oauth2"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
+	"golang.org/x/oauth2"
 )
 
 var dbNotInitializedErr = errors.New("Database connection is nil")
 
 func newDb() (*pgx.Conn, error) {
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	connString := os.Getenv("DATABASE_URL")
+	if connString == "" {
+		connString = "postgresql://postgres:postgres@localhost:5432/bop"
+	}
+	conn, err := pgx.Connect(context.Background(), connString)
 	if err != nil {
 		return nil, err
 	}
