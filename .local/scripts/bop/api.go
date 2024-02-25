@@ -90,6 +90,7 @@ func (app *app) status(w http.ResponseWriter, r *http.Request) {
 		TotalSeconds:  info.Item.Duration / 1000,
 		CurrentSecond: info.Progress / 1000,
 		IsPlaying:     info.Playing,
+		Album:         info.Item.Album.Name,
 	}
 
 	output, err := json.Marshal(response)

@@ -24,6 +24,7 @@ type item struct {
 	CurrentSecond int    `json:"current_second"`
 	TotalSeconds  int    `json:"total_seconds"`
 	IsPlaying     bool   `json:"is_playing"`
+	Album         string `json:"album"`
 }
 
 type searchParams struct {

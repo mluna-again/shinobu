@@ -113,6 +113,7 @@ grep -iq "Not found" <<< "$current_song" && {
 }
 
 song=$(jq -r '.display_name' <<< "$current_song" | _ellipsis)
+album=$(jq -r '.album' <<< "$current_song" | _ellipsis)
 artist=$(jq -r '.artist' <<< "$current_song" | _ellipsis)
 image=$(jq -r '.image_url' <<< "$current_song")
 is_playing=$(jq -r '.is_playing' <<< "$current_song")
@@ -129,6 +130,7 @@ refetch_data() {
 		exit
 	}
 	song=$(jq -r '.display_name' <<< "$current_song" | _ellipsis)
+	album=$(jq -r '.album' <<< "$current_song" | _ellipsis)
 	artist=$(jq -r '.artist' <<< "$current_song" | _ellipsis)
 	image=$(jq -r '.image_url' <<< "$current_song")
 	current_time=$(jq -r '.current_second' <<< "$current_song")
@@ -173,8 +175,9 @@ while true; do
 		printf "%s" "$line"
 
 		[ $index -eq 4 ] && printf "     %s" "$song"
-		[ $index -eq 5 ] && printf "     %s" "$artist"
-		[ $index -eq 6 ] && printf "     %s" "$progress"
+		[ $index -eq 5 ] && printf "     %s" "$album"
+		[ $index -eq 6 ] && printf "     %s" "$artist"
+		[ $index -eq 7 ] && printf "     %s" "$progress"
 
 		printf "\n"
 
