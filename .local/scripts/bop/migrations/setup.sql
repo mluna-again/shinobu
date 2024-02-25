@@ -1,0 +1,8 @@
+CREATE DATABASE bop;
+\c bop
+
+CREATE TABLE IF NOT EXISTS tokens (
+  value TEXT NOT NULL,
+  expiration TIMESTAMPTZ NOT NULL,
+  refresh TEXT NOT NULL
+);
