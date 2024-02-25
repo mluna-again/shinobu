@@ -814,7 +814,11 @@ EOF
 	"Spotify: get song")
 		try_to_wake_bop || exit 0
 
-		tmux display-popup -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
+		top_right_pane=$(
+			tmux list-panes -F "#{pane_index} #{pane_at_top} #{pane_at_right}" | \
+				awk '$2 == 1 && $3 == 1 { print $1 }'
+		)
+		tmux display-popup -t "$top_right_pane" -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
