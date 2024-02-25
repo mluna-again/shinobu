@@ -113,13 +113,7 @@ try_to_wake_bop() {
 	bop_response=$(curl -is http://localhost:8888/health )
 	# no server running
 	if [ "$?" -eq 7 ]; then
-		if [ -z "$DISPLAY" ] && uname | grep -iq linux; then
-			error "No DISPLAY env variable, are you connected through SSH?"
-			return 1
-		fi
-
 		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
-		alert "Waking bop up..."
 		tries=0
 		while ! pgrep bop &>/dev/null; do
 			if [ "$tries" -ge 5 ]; then
@@ -129,18 +123,23 @@ try_to_wake_bop() {
 			tries=$(( tries + 1 ))
 			sleep 1
 		done
+
 		link=$(cat "$HOME/.cache/bop_logs" | grep -i "^https" | head -1)
-		if [ -z "$link" ]; then
-			error "Something went wrong while waking bop up (check logs)."
-			return 1
+		if [ -n "$link" ]; then
+			if [ -z "$DISPLAY" ] && uname | grep -iq linux; then
+				error "No DISPLAY env variable, are you connected through SSH? Login manually please :)"
+				return 1
+			fi
+
+			if uname | grep -iq darwin; then
+				open "$link"
+			else
+				nohup firefox --new-tab --url "$link" &>/dev/null &
+				disown
+			fi
+			sleep 2
 		fi
-		if uname | grep -iq darwin; then
-			open "$link"
-		else
-			nohup firefox --new-tab --url "$link" &>/dev/null &
-			disown
-		fi
-		sleep 2
+
 		return
 	fi
 
