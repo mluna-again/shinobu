@@ -52,7 +52,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	redirectURL := fmt.Sprintf("http://localhost:%d/callback", PORT)
 	redirectComps := strings.Split(redirectURL, "/")
 	redirectPath := fmt.Sprintf("/%s", redirectComps[len(redirectComps)-1])
@@ -60,7 +59,15 @@ func main() {
 	state := randomString()
 	auth := spotifyauth.New(spotifyauth.WithRedirectURL(redirectURL), spotifyauth.WithScopes(scopes...), spotifyauth.WithClientID(app.clientId))
 	url := auth.AuthURL(state)
-	log.Printf("Authenticate using the following link: \n%s\n\n", url)
+
+	t, err := app.retrieveToken(auth)
+	if err == nil {
+		app.client = spotify.New(auth.Client(context.Background(), t))
+		log.Println("Authenticated")
+	} else {
+		log.Printf("Could not retrieve token: %s", err.Error())
+		log.Printf("Authenticate using the following link: \n%s\n\n", url)
+	}
 
 	router := http.NewServeMux()
 
@@ -106,6 +113,10 @@ func main() {
 		}
 
 		log.Println("user authenticated")
+		err = app.saveToken(token)
+		if err != nil {
+			log.Println(err)
+		}
 	})
 
 	router.HandleFunc("/health", app.health)

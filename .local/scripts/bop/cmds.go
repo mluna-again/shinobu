@@ -2,10 +2,12 @@ package main
 
 import (
 	"flag"
+	"log"
 	"os"
 
 	"errors"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/zmb3/spotify/v2"
 )
 
@@ -15,6 +17,7 @@ type app struct {
 	helpRequested bool
 	clientId      string
 	secret        string
+	db            *pgx.Conn
 }
 
 var (
@@ -42,10 +45,16 @@ func initializeApp() (*app, error) {
 	flag.StringVar(&queryFlag, "query", "", "query")
 	flag.Parse()
 
+	conn, err := newDb()
+	if err != nil {
+		log.Printf("Could not connect to database: %s\n", err.Error())
+	}
+
 	a := &app{
 		helpRequested: helpFlag,
 		clientId:      clientId,
 		secret:        secret,
+		db:            conn,
 	}
 
 	return a, nil
