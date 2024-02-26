@@ -20,10 +20,11 @@ return {
 
 	s("helpers", {
 		t({
+			[[info() { printf "%s\n" "$*"; }]],
+			[[tostderr() { printf "%s\n" "$*" >&2; }]],
 			[[# shellcheck disable=SC2120]],
 			[[die() { [ -n "$*" ] && tostderr "$*"; exit 1; }]],
-			[[tostderr() { printf "%s\n" "$*" >&2; }]],
-			[[info() { printf "%s\n" "$*"; }]]
+			[[assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }]],
 		})
 	}),
 
