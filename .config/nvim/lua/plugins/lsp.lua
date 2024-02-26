@@ -204,7 +204,8 @@ return {
 			"pyright",
 			"intelephense",
 			"gdscript",
-			"tailwindcss"
+			"tailwindcss",
+			"bashls"
 		}
 
 		for _, server in pairs(servers) do
