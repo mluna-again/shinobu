@@ -110,6 +110,11 @@ make_popup_border() {
 }
 
 try_to_wake_bop() {
+	if [ ! -f "$HOME/.cache/bop"  ] || [ "$(cat "$HOME/.cache/bop" | wc -l)" -lt 2 ]; then
+		error "Missing credentials. Read bop's README."
+		return 1
+	fi
+
 	bop_response=$(curl -is http://localhost:8888/health )
 	# no server running
 	if [ "$?" -eq 7 ]; then

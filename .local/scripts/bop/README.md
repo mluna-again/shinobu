@@ -9,6 +9,8 @@
 5. Follow the printed instructions to authenticated.
 6. Start making requests :)
 
+> NOTE: If you are using start_bop you can also place your credentials (in the same order) in ~/.cache/bop
+
 # Available endpoints:
 
 1. POST /search
