@@ -263,6 +263,13 @@ is_installed() {
 }
 
 handle_no_device_spotify() {
+	local code
+	code="$2"
+	if [ "$code" = 28 ]; then
+		error "Timeout."
+		exit
+	fi
+
 	if grep -Fiq "no active device" <<< "$1"; then
 		error "No device active."
 	elif grep -Fiq "server says no (it's not ready)" <<< "$1"; then
@@ -777,8 +784,9 @@ EOF
 		try_shpotify pause && exit
 
 		output=$(curl -sSf "http://localhost:8888/pause")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		true
@@ -789,8 +797,9 @@ EOF
 		try_shpotify next && exit
 
 		output=$(curl -sSf "http://localhost:8888/next")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		true
@@ -801,8 +810,9 @@ EOF
 		try_shpotify prev && exit
 
 		output=$(curl -sSf "http://localhost:8888/prev")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		true
@@ -813,8 +823,9 @@ EOF
 		try_shpotify restart && exit
 
 		output=$(curl -sSf "http://localhost:8888/restart")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		true
@@ -835,14 +846,16 @@ EOF
 
 		# we delete it first so if the song its already liked it will appear at the top after liking it again
 		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 			exit
 		}
 
 		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/addToLiked")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 			exit
 		}
 
@@ -853,8 +866,9 @@ EOF
 		try_to_wake_bop || exit 0
 
 		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		success "Song deleted."
@@ -863,8 +877,9 @@ EOF
 	"Spotify: queue")
 		try_to_wake_bop || exit 0
 		output=$(curl -sSf "http://localhost:8888/queue")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		items=$(jq -r '. | to_entries | .[] | "\(.key + 1). \(.value.display_name) by \(.value.artist)"' <<< "$output")
@@ -890,9 +905,9 @@ EOF
 		# if bop is not running then try without selection menu
 		if pgrep bop &>/dev/null; then
 			output=$(curl -sSf -d "{\"query\": \"$song\"}" "http://localhost:8888/search")
-			code=$?
+			code="$?"
 			[ "$code" -ne 0 ] && {
-				handle_no_device_spotify "$output"
+				handle_no_device_spotify "$output" "$code"
 			}
 
 			songs=$(jq -r '.[] | "\(.id) \(.display_name) by \(.artist)"' <<< "$output")
@@ -926,8 +941,9 @@ EOF
 		}
 
 		output=$(curl -sSf -d "{\"item\": \"$song_id\", \"type\": \"$type\"}" "http://localhost:8888/play")
-		[ "$?" -ne 0 ] && {
-			handle_no_device_spotify "$output"
+		code="$?"
+		[ "$code" -ne 0 ] && {
+			handle_no_device_spotify "$output" "$code"
 		}
 
 		true
