@@ -903,7 +903,7 @@ EOF
 				exit
 			}
 
-			input " WHICH/ONE " " 󰓇 " "$songs_without_ids" "spotify"
+			input " WHICH/ONE " " 󰓇 " "$songs_without_ids"
 
 			response=$(read_input)
 			[ -z "$response" ] && exit
