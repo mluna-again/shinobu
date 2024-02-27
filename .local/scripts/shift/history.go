@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+const MAX_HISTORY_SIZE = 50
 var HISTORY_DIR = path.Join(os.Getenv("HOME"), ".cache", "shift_history")
 
 func maybeCreateHistoryDir() {
@@ -85,8 +86,8 @@ func (a *app) saveHistory() {
 	p := path.Join(HISTORY_DIR, a.historyID)
 
 	history := a.history
-	if len(history) > 10 {
-		history = history[0:10]
+	if len(history) > MAX_HISTORY_SIZE {
+		history = history[0:MAX_HISTORY_SIZE]
 	}
 	slices.Reverse(history)
 	history = removeDuplicateStr(history)
