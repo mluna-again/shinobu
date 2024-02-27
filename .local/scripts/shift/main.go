@@ -25,6 +25,9 @@ type app struct {
 	startingMode      string
 	themeName         string
 	theme             Styles
+	historyID         string
+	history           []string
+	historyIndex      int
 }
 
 type model struct {
@@ -122,6 +125,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 				m.app.selectedMode.params = m.app.cleanUpModeParams(m.input.Value())
 			}
+			m.app.history = append(m.app.history, m.app.finalQuery)
+			m.app.saveHistory()
 
 			return m, tea.Quit
 
@@ -167,6 +172,30 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "/":
 			m.autocompleting = false
+
+		case "ctrl+k":
+			if len(m.app.history) > m.app.historyIndex {
+				val := m.app.history[m.app.historyIndex]
+				m.input.SetValue(val)
+				m.input.SetCursor(utf8.RuneCount([]byte(val)))
+				m.app.historyIndex++
+			}
+
+		case "ctrl+j":
+			if m.app.historyIndex > 1 {
+				val := m.app.history[m.app.historyIndex-2]
+				m.input.SetValue(val)
+				m.input.SetCursor(utf8.RuneCount([]byte(val)))
+				m.app.historyIndex--
+			} else if m.app.historyIndex == 1 {
+				val := m.app.history[0]
+				m.input.SetValue(val)
+				m.input.SetCursor(utf8.RuneCount([]byte(val)))
+				m.app.historyIndex = 0
+			}
+			if m.app.historyIndex == 0 {
+				m.input.Reset()
+			}
 
 		case "ctrl+p":
 			index := m.table.Cursor()
@@ -297,6 +326,7 @@ var outputFile string
 var startingMode string
 var startingInput string
 var theme string
+var historyID string
 
 func main() {
 	flag.StringVar(&switchModeTitle, "title", " Switch session ", "Default mode title")
@@ -306,6 +336,7 @@ func main() {
 	flag.StringVar(&startingMode, "mode", "switch", "Starting mode, defaults to switch")
 	flag.StringVar(&startingInput, "initial", "", "Initial input")
 	flag.StringVar(&theme, "theme", "", "Shift's theme, default to the value of ~/.config/shift/theme or 'kanagawa-dragon' if no config file")
+	flag.StringVar(&historyID, "history", "", "History ID")
 	flag.IntVar(&width, "width", 100, "Menu width")
 	flag.IntVar(&height, "height", 10, "Menu height")
 	flag.Parse()
@@ -316,6 +347,7 @@ func main() {
 	app.startingMode = startingMode
 
 	app.loadTheme(theme)
+	app.parseHistory(historyID)
 
 	err := app.loadLines(input)
 	if err != nil {
