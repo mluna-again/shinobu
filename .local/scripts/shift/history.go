@@ -89,6 +89,7 @@ func (a *app) saveHistory() {
 		history = history[0:10]
 	}
 	slices.Reverse(history)
+	history = removeDuplicateStr(history)
 
 	filtered := []string{}
 	for _, h := range history {

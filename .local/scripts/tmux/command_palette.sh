@@ -507,7 +507,7 @@ case "$action" in
 		;;
 
 	"Layouts: Make grid")
-		free_input " Size " " 󱗼 " "hello"
+		free_input " Size " " 󱗼 "
 		size=$(read_input)
 		[ -z "$size" ] && exit
 		sequence="$(seq 1 "$size")"
@@ -540,7 +540,7 @@ case "$action" in
 		files=$(find "$LOCAL_SCRIPTS_FOLDER" -type f -iname "*.sh")
 		trimmed_files=$(sed "s|$LOCAL_SCRIPTS_FOLDER/||g" <<< "$files")
 		[ -z "$files" ] && {
-			free_input " Script to run " "  " ""
+			free_input " Script to run " "  "
 			exit
 		}
 
@@ -663,7 +663,7 @@ EOF
 
 		case "$response" in
 			"Custom timer")
-				free_input " Time " "  " "hello"
+				free_input " Time " "  "
 				time=$(read_input)
 				output=$(pomo start "$time")
 				if [ "$?" -ne 0 ]; then
@@ -717,19 +717,19 @@ EOF
 		;;
 
 	"Alert: success")
-		free_input " Message " " 󰭺 " "hello"
+		free_input " Message " " 󰭺 "
 		[ -z "$(read_input)" ] && exit
 		success "$(read_input)"
 		;;
 
 	"Alert: information")
-		free_input " Message " " 󰭺 " "hello"
+		free_input " Message " " 󰭺 "
 		[ -z "$(read_input)" ] && exit
 		alert "$(read_input)"
 		;;
 
 	"Alert: error")
-		free_input " Message " " 󰭺 " "hello"
+		free_input " Message " " 󰭺 "
 		[ -z "$(read_input)" ] && exit
 		error "$(read_input)"
 		;;
@@ -883,7 +883,7 @@ EOF
 	"Spotify: search")
 		try_to_wake_bop || exit 0
 
-		free_input " Search by name " " 󰓇 " "hello" "spotify"
+		free_input " Search by name " " 󰓇 " "spotify"
 		song=$(read_input)
 		[ -z "$song" ] && exit
 
@@ -1018,7 +1018,7 @@ EOF
 			exit
 		fi
 
-		free_input " New window name " "  " ""
+		free_input " New window name " "  "
 		name=$(read_input)
 		[ -z "$name" ] && exit
 
