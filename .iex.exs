@@ -30,6 +30,7 @@ if function_exported?(Mix, :target, 0) do
         "#{IO.ANSI.blue()}#{app_name || project_dir}#{IO.ANSI.reset()}" <>
         "@" <>
         "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
-        ">"
+        " λ",
+    continuation_prompt: "..."
   )
 end
