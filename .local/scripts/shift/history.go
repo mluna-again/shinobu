@@ -29,6 +29,9 @@ func maybeCreateHistoryDir() {
 }
 
 func createHistoryFile(id string) {
+	if id == "" {
+		return
+	}
 	p := path.Join(HISTORY_DIR, id)
 	f, err := os.Create(p)
 	if err != nil {
@@ -76,6 +79,9 @@ func (a *app) parseHistory(id string) {
 }
 
 func (a *app) saveHistory() {
+	if a.historyID == "" {
+		return
+	}
 	p := path.Join(HISTORY_DIR, a.historyID)
 
 	history := a.history

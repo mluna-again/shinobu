@@ -176,25 +176,29 @@ input() {
 	local icon
 	local input
 	local mode
+	local history_id
 	rm "$RESULTS_FILE"
 
 	title="$1"
 	icon="$2"
 	input="$3"
 	mode="${4:-switch}"
+	history_id="${5:-tmux_palette}"
 
-	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input \"$input\" -output \"$RESULTS_FILE\" -width 65 -height 9 -mode \"$mode\""
+	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input \"$input\" -output \"$RESULTS_FILE\" -width 65 -height 9 -mode \"$mode\" -history \"$history_id\""
 }
 
 free_input() {
 	local title
 	local icon
+	local history_id
 	rm "$RESULTS_FILE"
 
 	title="$1"
 	icon="$2"
+	history_id="${3:-tmux_palette}"
 
-	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input '\n' -output \"$RESULTS_FILE\" -width 65 -height 9 -mode rename"
+	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input '\n' -output \"$RESULTS_FILE\" -width 65 -height 9 -mode rename -history \"$history_id\""
 }
 
 alert() {
@@ -879,7 +883,7 @@ EOF
 	"Spotify: search")
 		try_to_wake_bop || exit 0
 
-		free_input " Search by name " " 󰓇 " "hello"
+		free_input " Search by name " " 󰓇 " "hello" "spotify"
 		song=$(read_input)
 		[ -z "$song" ] && exit
 
@@ -899,7 +903,7 @@ EOF
 				exit
 			}
 
-			input " WHICH/ONE " " 󰓇 " "$songs_without_ids"
+			input " WHICH/ONE " " 󰓇 " "$songs_without_ids" "spotify"
 
 			response=$(read_input)
 			[ -z "$response" ] && exit
