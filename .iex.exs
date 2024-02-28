@@ -26,11 +26,11 @@ if function_exported?(Mix, :target, 0) do
     history_size: 50,
     width: 100,
     default_prompt:
-      "#{IO.ANSI.yellow()}(%counter)#{IO.ANSI.reset()} " <>
-        "#{IO.ANSI.blue()}#{app_name || project_dir}#{IO.ANSI.reset()}" <>
+      "#{IO.ANSI.yellow()}(%counter) " <>
+        "#{IO.ANSI.blue()}#{app_name || project_dir}" <>
         "@" <>
-        "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
-        " λ",
+          "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
+        "$",
     continuation_prompt: "..."
   )
 end
