@@ -28,7 +28,7 @@ if function_exported?(Mix, :target, 0) do
     default_prompt:
       "#{IO.ANSI.yellow()}(%counter) " <>
         "#{IO.ANSI.blue()}#{app_name || project_dir}" <>
-        "@" <>
+        "#{IO.ANSI.red()}@" <>
           "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
         "$",
     continuation_prompt: "..."
