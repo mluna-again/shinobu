@@ -81,5 +81,3 @@ defmodule IExHelpers do
     "OTP #{:erlang.system_info(:otp_release)}"
   end
 end
-
-import IExHelpers
