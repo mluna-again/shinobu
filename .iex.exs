@@ -1,7 +1,4 @@
-if function_exported?(Mix, :target, 0) do
-  cwd = File.cwd!()
-  project_dir = Path.basename(cwd)
-  app_name = Mix.Project.config()[:app]
+setup_iex_prompt = fn ->
   {:ok, local_net_interfaces} = :inet.getifaddrs()
 
   wlan_interface =
@@ -22,17 +19,35 @@ if function_exported?(Mix, :target, 0) do
     |> Tuple.to_list()
     |> Enum.join(".")
 
-  IEx.configure(
-    history_size: 50,
-    width: 100,
-    default_prompt:
-      "#{IO.ANSI.yellow()}(%counter) " <>
-        "#{IO.ANSI.blue()}#{app_name || project_dir}" <>
-        "#{IO.ANSI.red()}@" <>
-        "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
-        "$",
-    continuation_prompt: "..."
-  )
+  if function_exported?(Mix, :target, 0) do
+    cwd = File.cwd!()
+    project_dir = Path.basename(cwd)
+    app_name = Mix.Project.config()[:app]
+
+    IEx.configure(
+      history_size: 50,
+      width: 100,
+      default_prompt:
+        "#{IO.ANSI.yellow()}(%counter) " <>
+          "#{IO.ANSI.blue()}#{app_name || project_dir}" <>
+          "#{IO.ANSI.red()}@" <>
+          "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
+          "$",
+      continuation_prompt: "..."
+    )
+  else
+    IEx.configure(
+      history_size: 50,
+      width: 100,
+      default_prompt:
+        "#{IO.ANSI.yellow()}(%counter) " <>
+          "#{IO.ANSI.blue()}iex" <>
+          "#{IO.ANSI.red()}@" <>
+          "#{IO.ANSI.magenta()}#{local_ip}#{IO.ANSI.reset()}" <>
+          "$",
+      continuation_prompt: "..."
+    )
+  end
 end
 
 defmodule IExHelpers do
@@ -81,3 +96,5 @@ defmodule IExHelpers do
     "OTP #{:erlang.system_info(:otp_release)}"
   end
 end
+
+setup_iex_prompt.()
