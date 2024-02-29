@@ -6,6 +6,7 @@ die() { [ -n "$*" ] && tostderr "$*"; exit 1; }
 info() { printf "%s\n" "$*"; }
 tostderr() { tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2; tput sgr0; }
 assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
+assert_no_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
 broken_pipe() { grep -vq "^[0 ]*$" <<< "${PIPESTATUS[*]}"; }
 
 assert_installed fzf
@@ -16,11 +17,11 @@ selection=$(fzf <<< "$opts")
 [ -z "$selection" ] && die
 
 pid=$(awk '{ print $6 }' <<< "$selection" | sed 's|[][]||g')
-[ -z "$pid" ] && die "pid was empty when it shouldn't be"
+assert_no_empty pid
 user=$(awk '{ print $1 }' <<< "$selection")
-[ -z "$user" ] && die "user was empty when it shouldn't be"
+assert_no_empty user
 tty=$(awk '{ print $3 }' <<< "$selection")
-[ -z "$tty" ] && die "tty was empty when it shouldn't be"
+assert_no_empty tty
 
 read -r -p "Final message: " msg
 [ -z "$msg" ] && die
