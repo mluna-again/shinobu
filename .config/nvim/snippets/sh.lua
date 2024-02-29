@@ -26,7 +26,7 @@ return {
 			[[info() { printf "%s\n" "$*"; }]],
 			[[tostderr() { tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2; tput sgr0; }]],
 			[[assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }]],
-			[[broken_pipe() { grep -vq "^[0 ]$" <<< "${PIPESTATUS[*]}"; }]]
+			[[broken_pipe() { grep -vq "^[0 ]*$" <<< "${PIPESTATUS[*]}"; }]]
 		})
 	}),
 
