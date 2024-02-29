@@ -107,6 +107,23 @@ function dock
                 echo "Copied to clipboard."
             end
 
+        case exec
+            set -l id (
+                docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
+                    awk 'NR > 1' |\
+                    fzf --header="Enter container" |\
+                    awk '{print $1}' |\
+                    xargs
+            )
+
+            test -z "$id"; and return
+            set -l shell $argv[2]
+            if test -z "$shell"
+                set shell bash
+            end
+
+            docker container exec -it "$id" "$shell"
+
         case restart
             set -l container (
                 docker container ls --filter status=running --format "table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.CreatedAt}}" |\
