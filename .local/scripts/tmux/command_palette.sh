@@ -1100,7 +1100,7 @@ EOF
 		linux_config_file="$HOME/.config/alacritty/alacritty_linux.toml"
 
 		if grep -iq "opacity[[:space:]]*=[[:space:]]1" "$config_file"; then
-			opacity="0.93"
+			opacity="0.85"
 		else
 			opacity="1"
 		fi
