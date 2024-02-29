@@ -105,6 +105,7 @@ abbr --add gofmt go fmt ./...
 abbr --add artisan php artisan
 abbr --add sym symfony
 abbr --add jcurl curl -sSf -H \"Content-Type: application/json\"
+abbr --add ww watchexec -r -c clear
 
 command -v z &>/dev/null; and function cd
     z $argv

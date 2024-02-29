@@ -20,11 +20,12 @@ return {
 
 	s("helpers", {
 		t({
-			[[info() { printf "%s\n" "$*"; }]],
-			[[tostderr() { printf "%s\n" "$*" >&2; }]],
+			[[: # bash 5+ required]],
 			[[# shellcheck disable=SC2120]],
 			[[die() { [ -n "$*" ] && tostderr "$*"; exit 1; }]],
-			[[assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }]],
+			[[info() { printf "%s\n" "$*"; }]],
+			[[tostderr() { tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2; tput sgr0; }]],
+			[[assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }]]
 		})
 	}),
 
