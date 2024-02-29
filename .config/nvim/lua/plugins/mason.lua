@@ -27,7 +27,8 @@ return {
 			"solargraph",
 			"rust-analyzer",
 			"tailwindcss-language-server",
-			"bash-language-server"
+			"bash-language-server",
+			"sqlfluff"
 		}
 
 		mason.setup({
