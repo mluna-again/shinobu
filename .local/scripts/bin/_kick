@@ -24,7 +24,7 @@ tty=$(awk '{ print $3 }' <<< "$selection")
 assert_no_empty tty
 
 read -r -p "Final message: " msg
-[ -z "$msg" ] && die
+[ -z "$msg" ] && info no message, alright
 
 info "$msg" | write "$user" "$tty"
 broken_pipe && info could not write to user && die
