@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/zmb3/spotify/v2"
 )
@@ -101,13 +102,34 @@ func (app *app) addAlbumToQueue(c context.Context, album spotify.ID) error {
 		return err
 	}
 
-	// why would they not allow to queue a whole album in a single request -_-
-	for _, song := range info.Tracks.Tracks {
-		err := app.addSongToQueue(c, song.ID)
-		if err != nil {
-			return err
-		}
+	if len(info.Tracks.Tracks) < 1 {
+		return nil
 	}
+	first := info.Tracks.Tracks[0]
+
+	err = app.addSongToQueue(c, first.ID)
+	if err != nil {
+		return err
+	}
+
+	if len(info.Tracks.Tracks) < 2 {
+		return nil
+	}
+	remainingSongs := info.Tracks.Tracks[1:len(info.Tracks.Tracks)]
+
+	go func(tracks []spotify.SimpleTrack) {
+		// why would they not allow to queue a whole album in a single request -_-
+		for _, song := range tracks {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+			defer cancel()
+			err := app.addSongToQueue(ctx, song.ID)
+			if err != nil {
+				return
+			}
+
+			time.Sleep(time.Millisecond * 1500)
+		}
+	}(remainingSongs)
 
 	return nil
 }
