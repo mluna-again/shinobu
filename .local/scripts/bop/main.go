@@ -130,6 +130,8 @@ func main() {
 	router.HandleFunc("/queue", app.checkTokenMiddleware(loggingMiddleware(app.queue)))
 	router.HandleFunc("/addToLiked", app.checkTokenMiddleware(loggingMiddleware(app.addToLiked)))
 	router.HandleFunc("/removeFromLiked", app.checkTokenMiddleware(loggingMiddleware(app.removeFromLiked)))
+	router.HandleFunc("/devices", app.checkTokenMiddleware(loggingMiddleware(app.listDevices)))
+	router.HandleFunc("/setDevice", app.checkTokenMiddleware(loggingMiddleware(app.setDevice)))
 
 	log.Printf("Waiting for requests at port %d", PORT)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))

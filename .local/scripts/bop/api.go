@@ -204,3 +204,68 @@ func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
 
 	sendOk(w)
 }
+
+type device struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
+func (app *app) listDevices(w http.ResponseWriter, r *http.Request) {
+	devs, err := app.client.PlayerDevices(r.Context())
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	resp := []device{}
+	for _, dev := range devs {
+		resp = append(resp, device{
+			ID:   dev.ID.String(),
+			Name: dev.Name,
+			Type: dev.Type,
+		})
+	}
+
+	data, err := json.Marshal(resp)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	sendJSON(w, data)
+}
+
+type setDeviceReq struct {
+	ID   string `json:"id"`
+	Play *bool  `json:"play"`
+}
+
+func (app *app) setDevice(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	defer r.Body.Close()
+
+	data := setDeviceReq{}
+	err := decoder.Decode(&data)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	if data.ID == "" {
+		sendBadRequestWithMessage(w, "missing ID")
+		return
+	}
+
+	play := true
+	if data.Play != nil {
+		play = *data.Play
+	}
+	err = app.client.TransferPlayback(r.Context(), spotify.ID(data.ID), play)
+	if err != nil {
+		sendInternalServerErrorWithMessage(w, err.Error())
+		return
+	}
+
+	sendOk(w)
+}
