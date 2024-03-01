@@ -57,6 +57,7 @@ Spotify: get song
 Spotify: queue
 Spotify: save song
 Spotify: delete song
+Spotify: set device
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -107,6 +108,31 @@ make_popup_border() {
 	icon="${2:-󰂞}"
 
 	echo "#[bg=#{@components_active_background1},fg=black] $icon $title "
+}
+
+select_bop_device() {
+	code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$BOP_PORT/status")
+	if [ "$code" = 404 ] || [ "$1" = force ]; then
+		devs=$(curl -Ssf "http://localhost:$BOP_PORT/devices") || {
+			error "Something went wrong while fetching devices."
+			exit
+		}
+		devices=$(jq -r '.[] | "[\(.type)] \(.name)"' <<< "$devs" | awk '{ printf "%d. %s\n", NR, $0; }')
+		input " Choose device " "  " "$devices"
+		device=$(read_input)
+		[ -z "$device" ] && exit
+		index=$(awk '{ print $1 }' <<< "$device" | sed 's/[^0-9]//g')
+		dev_id=$(jq -r ".[$((index - 1))].id" <<< "$devs")
+		[ -z "$dev_id" ] && {
+			error "Something is not right (device ID not in response)."
+			exit
+		}
+
+		curl -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
+			error "Something went wrong while setting device."
+			exit
+		}
+	fi
 }
 
 try_to_wake_bop() {
@@ -166,28 +192,7 @@ try_to_wake_bop() {
 	esac
 
 	# handle no device active
-	code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$BOP_PORT/status")
-	if [ "$code" = 404 ]; then
-		devs=$(curl -Ssf "http://localhost:$BOP_PORT/devices") || {
-			error "Something went wrong while fetching devices."
-			exit
-		}
-		devices=$(jq -r '.[] | "[\(.type)] \(.name)"' <<< "$devs" | awk '{ printf "%d. %s\n", NR, $0; }')
-		input " Choose device " "  " "$devices"
-		device=$(read_input)
-		[ -z "$device" ] && exit
-		index=$(awk '{ print $1 }' <<< "$device" | sed 's/[^0-9]//g')
-		dev_id=$(jq -r ".[$((index - 1))].id" <<< "$devs")
-		[ -z "$dev_id" ] && {
-			error "Something is not right (device ID not in response)."
-			exit
-		}
-
-		curl -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
-			error "Something went wrong while setting device."
-			exit
-		}
-	fi
+	select_bop_device || exit 0
 }
 
 close_all_but_focused() {
@@ -917,6 +922,10 @@ EOF
 		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
 
 		true
+		;;
+
+	"Spotify: set device")
+		select_bop_device force || exit 0
 		;;
 
 	"Spotify: search")
