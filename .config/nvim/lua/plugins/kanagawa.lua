@@ -242,10 +242,10 @@ return {
 					-- CmpItemKindEnumMember = { fg = theme.syn.identifier, bg = theme.ui.bg },
 					-- CmpItemKindProperty = { fg = theme.ui.bg_m1, bg = theme.syn.identifier },
 
-					LeapLabelPrimary = { bg = theme.syn.identifier, fg = theme.ui.bg },
-					LeapLabelSecondary = { bg = theme.syn.identifier, fg = theme.ui.bg },
-					LeapLabelSelected = { bg = theme.syn.regex, fg = theme.ui.bg },
-					LeapMatch = { bg = theme.syn.identifier, fg = theme.ui.bg },
+					LeapLabelPrimary = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
+					LeapLabelSecondary = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
+					LeapLabelSelected = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
+					LeapMatch = { bg = theme.syn.identifier, fg = theme.ui.bg_m1 },
 
 					WinSeparator = { fg = theme.ui.bg_gutter, bg = theme.ui.bg },
 
