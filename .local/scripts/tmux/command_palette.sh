@@ -925,6 +925,7 @@ EOF
 		;;
 
 	"Spotify: set device")
+		try_to_wake_bop || exit 0
 		select_bop_device force || exit 0
 		;;
 
