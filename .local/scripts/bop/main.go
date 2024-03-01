@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strings"
+	"time"
 
 	"html/template"
 
@@ -133,6 +134,14 @@ func main() {
 	router.HandleFunc("/devices", app.checkTokenMiddleware(loggingMiddleware(app.listDevices)))
 	router.HandleFunc("/setDevice", app.checkTokenMiddleware(loggingMiddleware(app.setDevice)))
 
+	server := http.Server{
+		ReadTimeout:       1 * time.Second,
+		WriteTimeout:      1 * time.Second,
+		IdleTimeout:       30 * time.Second,
+		ReadHeaderTimeout: 2 * time.Second,
+		Handler:           router,
+		Addr:              fmt.Sprintf(":%d", PORT),
+	}
 	log.Printf("Waiting for requests at port %d", PORT)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), router))
+	log.Fatal(server.ListenAndServe())
 }
