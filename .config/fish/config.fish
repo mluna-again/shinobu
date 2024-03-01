@@ -106,6 +106,7 @@ abbr --add artisan php artisan
 abbr --add sym symfony
 abbr --add jcurl curl -sSf -H \"Content-Type: application/json\"
 abbr --add ww watchexec -r -c clear
+abbr --add hcurl curl -s -o /dev/null -w "%{http_code}"
 
 command -v z &>/dev/null; and function cd
     z $argv

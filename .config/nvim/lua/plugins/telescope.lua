@@ -30,22 +30,22 @@ return {
 			vim.api.nvim_input("<C-c>")
 		end
 
-		vim.api.nvim_create_autocmd("BufEnter", {
-			pattern = "*",
-			callback = function()
-				vim.opt.laststatus = 3
-			end,
-		})
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "*",
-			callback = function()
-				if (vim.bo.filetype == "TelescopePrompt") or (vim.bo.filetype == "TelescopeResults") then
-					vim.opt.laststatus = 0
-				else
-					vim.opt.laststatus = 3
-				end
-			end,
-		})
+		-- vim.api.nvim_create_autocmd("BufEnter", {
+		-- 	pattern = "*",
+		-- 	callback = function()
+		-- 		vim.opt.laststatus = 3
+		-- 	end,
+		-- })
+		-- vim.api.nvim_create_autocmd("FileType", {
+		-- 	pattern = "*",
+		-- 	callback = function()
+		-- 		if (vim.bo.filetype == "TelescopePrompt") or (vim.bo.filetype == "TelescopeResults") then
+		-- 			vim.opt.laststatus = 0
+		-- 		else
+		-- 			vim.opt.laststatus = 3
+		-- 		end
+		-- 	end,
+		-- })
 
 		require("telescope").setup({
 			defaults = {
