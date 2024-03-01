@@ -7,6 +7,17 @@ customformatters.csharpier = {
 	stdin = true,
 }
 
+customformatters.sqlfluff = {
+	exe = "sqlfluff",
+	args = {
+		"fix",
+		"--dialect=postgres",
+		"-",
+	},
+	stdin = true,
+	ignore_exitcode = true,
+}
+
 return {
 	"mhartington/formatter.nvim",
 	cmd = {
@@ -75,7 +86,7 @@ return {
 					formatters.sh.shfmt,
 				},
 				sql = {
-					formatters.sql.pgformat,
+					customformatters.sqlfluff,
 				},
 				rust = {
 					formatters.rust.rustfmt,
