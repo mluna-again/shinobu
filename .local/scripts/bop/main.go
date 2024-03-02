@@ -66,6 +66,7 @@ func main() {
 	go func() {
 		<-c
 		app.cleanup()
+		os.Exit(1)
 	}()
 
 	if err != nil {

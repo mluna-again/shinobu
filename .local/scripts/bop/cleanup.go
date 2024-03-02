@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"os"
 )
 
 func (app *app) cleanup() {
@@ -12,6 +11,4 @@ func (app *app) cleanup() {
 	} else {
 		app.logger.Info("DB connection closed")
 	}
-
-	os.Exit(1)
 }
