@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/charmbracelet/log"
 	"os"
+
+	"github.com/charmbracelet/log"
 
 	"errors"
 
@@ -18,6 +19,8 @@ type app struct {
 	clientId      string
 	secret        string
 	db            *pgx.Conn
+	logger        *log.Logger
+	errLogger     *log.Logger
 }
 
 var (
@@ -45,9 +48,10 @@ func initializeApp() (*app, error) {
 	flag.StringVar(&queryFlag, "query", "", "query")
 	flag.Parse()
 
+	l, errL := newLogger()
 	conn, err := newDb()
 	if err != nil {
-		log.Infof("Could not connect to database: %s\n", err.Error())
+		l.Infof("Could not connect to database: %s\n", err.Error())
 	}
 
 	a := &app{
@@ -55,6 +59,8 @@ func initializeApp() (*app, error) {
 		clientId:      clientId,
 		secret:        secret,
 		db:            conn,
+		logger:        l,
+		errLogger:     errL,
 	}
 
 	return a, nil

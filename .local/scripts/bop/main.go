@@ -12,7 +12,6 @@ import (
 
 	"github.com/zmb3/spotify/v2"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
-	"github.com/charmbracelet/log"
 )
 
 type loginSuccess struct {
@@ -51,7 +50,7 @@ var scopes = []string{
 func main() {
 	app, err := initializeApp()
 	if err != nil {
-		log.Fatal(err)
+		app.errLogger.Fatal(err)
 	}
 	redirectURL := fmt.Sprintf("http://localhost:%d/callback", PORT)
 	redirectComps := strings.Split(redirectURL, "/")
@@ -64,10 +63,10 @@ func main() {
 	t, err := app.retrieveToken(auth)
 	if err == nil {
 		app.client = spotify.New(auth.Client(context.Background(), t))
-		log.Info("Authenticated")
+		app.logger.Info("Authenticated")
 	} else {
-		log.Infof("Could not retrieve token: %s", err.Error())
-		log.Infof("Authenticate using the following link: \n%s\n\n", url)
+		app.logger.Infof("Could not retrieve token: %s", err.Error())
+		app.logger.Infof("Authenticate using the following link: \n%s\n\n", url)
 	}
 
 	router := http.NewServeMux()
@@ -108,31 +107,31 @@ func main() {
 			err = tmpl.Execute(w, data)
 			if err != nil {
 				_, _ = w.Write([]byte(err.Error()))
-				log.Info("user (maybe) authenticated")
+				app.logger.Info("user (maybe) authenticated")
 				return
 			}
 		}
 
-		log.Info("user authenticated")
+		app.logger.Info("user authenticated")
 		err = app.saveToken(token)
 		if err != nil {
-			log.Info(err)
+			app.errLogger.Info(err)
 		}
 	})
 
 	router.HandleFunc("/health", app.health)
-	router.HandleFunc("/search", app.checkTokenMiddleware(loggingMiddleware(app.search)))
-	router.HandleFunc("/play", app.checkTokenMiddleware(loggingMiddleware(app.playSong)))
-	router.HandleFunc("/pause", app.checkTokenMiddleware(loggingMiddleware(app.pause)))
-	router.HandleFunc("/next", app.checkTokenMiddleware(loggingMiddleware(app.next)))
-	router.HandleFunc("/prev", app.checkTokenMiddleware(loggingMiddleware(app.prev)))
-	router.HandleFunc("/status", app.checkTokenMiddleware(loggingMiddleware(app.status)))
-	router.HandleFunc("/restart", app.checkTokenMiddleware(loggingMiddleware(app.restart)))
-	router.HandleFunc("/queue", app.checkTokenMiddleware(loggingMiddleware(app.queue)))
-	router.HandleFunc("/addToLiked", app.checkTokenMiddleware(loggingMiddleware(app.addToLiked)))
-	router.HandleFunc("/removeFromLiked", app.checkTokenMiddleware(loggingMiddleware(app.removeFromLiked)))
-	router.HandleFunc("/devices", app.checkTokenMiddleware(loggingMiddleware(app.listDevices)))
-	router.HandleFunc("/setDevice", app.checkTokenMiddleware(loggingMiddleware(app.setDevice)))
+	router.HandleFunc("/search", app.checkTokenMiddleware(app.loggingMiddleware(app.search)))
+	router.HandleFunc("/play", app.checkTokenMiddleware(app.loggingMiddleware(app.playSong)))
+	router.HandleFunc("/pause", app.checkTokenMiddleware(app.loggingMiddleware(app.pause)))
+	router.HandleFunc("/next", app.checkTokenMiddleware(app.loggingMiddleware(app.next)))
+	router.HandleFunc("/prev", app.checkTokenMiddleware(app.loggingMiddleware(app.prev)))
+	router.HandleFunc("/status", app.checkTokenMiddleware(app.loggingMiddleware(app.status)))
+	router.HandleFunc("/restart", app.checkTokenMiddleware(app.loggingMiddleware(app.restart)))
+	router.HandleFunc("/queue", app.checkTokenMiddleware(app.loggingMiddleware(app.queue)))
+	router.HandleFunc("/addToLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.addToLiked)))
+	router.HandleFunc("/removeFromLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.removeFromLiked)))
+	router.HandleFunc("/devices", app.checkTokenMiddleware(app.loggingMiddleware(app.listDevices)))
+	router.HandleFunc("/setDevice", app.checkTokenMiddleware(app.loggingMiddleware(app.setDevice)))
 
 	server := http.Server{
 		ReadTimeout:       1 * time.Second,
@@ -142,6 +141,12 @@ func main() {
 		Handler:           router,
 		Addr:              fmt.Sprintf(":%d", PORT),
 	}
-	log.Infof("Waiting for requests at port %d", PORT)
-	log.Fatal(server.ListenAndServe())
+
+	app.logger.Info("hi")
+	app.logger.Debug("hi")
+	app.logger.Error("hi")
+	app.logger.Warn("hi")
+
+	app.logger.Infof("Waiting for requests at port %d", PORT)
+	app.errLogger.Fatal(server.ListenAndServe())
 }

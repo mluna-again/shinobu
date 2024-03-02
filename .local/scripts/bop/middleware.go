@@ -5,18 +5,16 @@ import (
 	"errors"
 	"io"
 	"net/http"
-
-	"github.com/charmbracelet/log"
 )
 
-func loggingMiddleware(next http.HandlerFunc) http.HandlerFunc {
+func (app *app) loggingMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		requestId := randomString()
 
 		defer r.Body.Close()
 		body, err := io.ReadAll(r.Body)
 		if err != nil && !errors.Is(err, io.EOF) {
-			log.Infof("[%s] %s : ERROR PARSING BODY", requestId, r.URL)
+			app.logger.Infof("[%s] %s : ERROR PARSING BODY", requestId, r.URL)
 			return
 		}
 
@@ -24,7 +22,7 @@ func loggingMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			body = []byte("<empty>")
 		}
 
-		log.Infof("[%s] %s : %s", requestId, r.URL, string(body))
+		app.logger.Infof("[%s] %s : %s", requestId, r.URL, string(body))
 
 		r.Body = io.NopCloser(bytes.NewBuffer(body))
 		next(w, r)
