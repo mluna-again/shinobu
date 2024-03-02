@@ -33,6 +33,12 @@ func newLogger() (*log.Logger, *log.Logger) {
 		Background(lipgloss.Color("208")).
 		Foreground(lipgloss.Color("0"))
 
+	styles.Levels[log.FatalLevel] = lipgloss.NewStyle().
+		SetString("FATAL").
+		Padding(0, 1, 0, 1).
+		Background(lipgloss.Color("052")).
+		Foreground(lipgloss.Color("231"))
+
 	logger := log.New(os.Stdout)
 	logger.SetStyles(styles)
 	logger.SetReportTimestamp(true)
