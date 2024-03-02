@@ -124,6 +124,7 @@ func (app *app) addAlbumToQueue(c context.Context, album spotify.ID) error {
 			defer cancel()
 			err := app.addSongToQueue(ctx, song.ID)
 			if err != nil {
+				app.errLogger.Error(err)
 				return
 			}
 
