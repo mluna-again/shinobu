@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"os"
+	"os/signal"
 	"strings"
 	"time"
 
@@ -57,6 +59,15 @@ func main() {
 	}
 
 	app, err := initializeApp()
+	defer app.cleanup()
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		<-c
+		app.cleanup()
+	}()
+
 	if err != nil {
 		app.errLogger.Fatal(err)
 	}
