@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -13,6 +14,8 @@ import (
 	"github.com/zmb3/spotify/v2"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
 )
+
+var portFlag string
 
 type loginSuccess struct {
 	Username string
@@ -36,8 +39,6 @@ func randomString() string {
 	return string(b)
 }
 
-const PORT = 8888
-
 var scopes = []string{
 	spotifyauth.ScopeUserReadPrivate,
 	spotifyauth.ScopeUserModifyPlaybackState,
@@ -48,11 +49,18 @@ var scopes = []string{
 }
 
 func main() {
+	flag.StringVar(&portFlag, "port", "8888", "bop's server port")
+	flag.Parse()
+	port := portFlag
+	if port == "" {
+		port = "8888"
+	}
+
 	app, err := initializeApp()
 	if err != nil {
 		app.errLogger.Fatal(err)
 	}
-	redirectURL := fmt.Sprintf("http://localhost:%d/callback", PORT)
+	redirectURL := fmt.Sprintf("http://localhost:%s/callback", port)
 	redirectComps := strings.Split(redirectURL, "/")
 	redirectPath := fmt.Sprintf("/%s", redirectComps[len(redirectComps)-1])
 
@@ -139,9 +147,9 @@ func main() {
 		IdleTimeout:       30 * time.Second,
 		ReadHeaderTimeout: 2 * time.Second,
 		Handler:           router,
-		Addr:              fmt.Sprintf(":%d", PORT),
+		Addr:              fmt.Sprintf(":%s", port),
 	}
 
-	app.logger.Infof("Waiting for requests at port %d", PORT)
+	app.logger.Infof("Waiting for requests at port %s", port)
 	app.errLogger.Fatal(server.ListenAndServe())
 }
