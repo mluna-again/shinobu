@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"log"
+	"github.com/charmbracelet/log"
 	"os"
 
 	"errors"
@@ -47,7 +47,7 @@ func initializeApp() (*app, error) {
 
 	conn, err := newDb()
 	if err != nil {
-		log.Printf("Could not connect to database: %s\n", err.Error())
+		log.Infof("Could not connect to database: %s\n", err.Error())
 	}
 
 	a := &app{

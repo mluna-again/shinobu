@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/rand"
 	"net/http"
 	"strings"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/zmb3/spotify/v2"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
+	"github.com/charmbracelet/log"
 )
 
 type loginSuccess struct {
@@ -64,10 +64,10 @@ func main() {
 	t, err := app.retrieveToken(auth)
 	if err == nil {
 		app.client = spotify.New(auth.Client(context.Background(), t))
-		log.Println("Authenticated")
+		log.Info("Authenticated")
 	} else {
-		log.Printf("Could not retrieve token: %s", err.Error())
-		log.Printf("Authenticate using the following link: \n%s\n\n", url)
+		log.Infof("Could not retrieve token: %s", err.Error())
+		log.Infof("Authenticate using the following link: \n%s\n\n", url)
 	}
 
 	router := http.NewServeMux()
@@ -108,15 +108,15 @@ func main() {
 			err = tmpl.Execute(w, data)
 			if err != nil {
 				_, _ = w.Write([]byte(err.Error()))
-				log.Println("user (maybe) authenticated")
+				log.Info("user (maybe) authenticated")
 				return
 			}
 		}
 
-		log.Println("user authenticated")
+		log.Info("user authenticated")
 		err = app.saveToken(token)
 		if err != nil {
-			log.Println(err)
+			log.Info(err)
 		}
 	})
 
@@ -142,6 +142,6 @@ func main() {
 		Handler:           router,
 		Addr:              fmt.Sprintf(":%d", PORT),
 	}
-	log.Printf("Waiting for requests at port %d", PORT)
+	log.Infof("Waiting for requests at port %d", PORT)
 	log.Fatal(server.ListenAndServe())
 }
