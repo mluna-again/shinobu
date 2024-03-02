@@ -142,11 +142,6 @@ func main() {
 		Addr:              fmt.Sprintf(":%d", PORT),
 	}
 
-	app.logger.Info("info")
-	app.logger.Debug("debug")
-	app.errLogger.Error("error")
-	app.logger.Warn("warn")
-
 	app.logger.Infof("Waiting for requests at port %d", PORT)
 	app.errLogger.Fatal(server.ListenAndServe())
 }
