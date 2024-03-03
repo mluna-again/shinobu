@@ -34,21 +34,13 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 	var params playParams
 	err := d.Decode(&params)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		_, err := w.Write([]byte("error parsing request"))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		app.sendInternalServerError(w, err)
 		return
 	}
 
 	query := params.Item
 	if query == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		_, err := w.Write([]byte(noSongIdError.Error()))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		app.sendBadRequestWithMessage(w, "missing query")
 		return
 	}
 	id := spotify.ID(query)
@@ -81,19 +73,11 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 	}
 	err = app.client.Next(r.Context())
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		_, err := w.Write([]byte(err.Error()))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		app.sendInternalServerError(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	_, err = w.Write([]byte("ok"))
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-	}
+	_ = app.sendContent(w, []byte("ok"))
 }
 
 func (app *app) addAlbumToQueue(c context.Context, album spotify.ID) error {

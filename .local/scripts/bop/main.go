@@ -141,7 +141,7 @@ func main() {
 	})
 
 	router.Get("/health", app.health)
-	router.Get("/search", app.checkTokenMiddleware(app.loggingMiddleware(app.search)))
+	router.Post("/search", app.checkTokenMiddleware(app.loggingMiddleware(app.search)))
 	router.Post("/play", app.checkTokenMiddleware(app.loggingMiddleware(app.playSong)))
 	router.Post("/pause", app.checkTokenMiddleware(app.loggingMiddleware(app.pause)))
 	router.Post("/next", app.checkTokenMiddleware(app.loggingMiddleware(app.next)))
@@ -153,15 +153,15 @@ func main() {
 	router.Post("/removeFromLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.removeFromLiked)))
 	router.Get("/devices", app.checkTokenMiddleware(app.loggingMiddleware(app.listDevices)))
 	router.Post("/setDevice", app.checkTokenMiddleware(app.loggingMiddleware(app.setDevice)))
-	router.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/*", func(w http.ResponseWriter, r *http.Request) {
 		app.sendNotFound(w, r)
 	})
 
 	server := http.Server{
-		ReadTimeout:       1 * time.Second,
-		WriteTimeout:      1 * time.Second,
+		ReadTimeout:       10 * time.Second,
+		WriteTimeout:      10 * time.Second,
 		IdleTimeout:       30 * time.Second,
-		ReadHeaderTimeout: 2 * time.Second,
+		ReadHeaderTimeout: 20 * time.Second,
 		Handler:           router,
 		Addr:              fmt.Sprintf(":%s", port),
 	}

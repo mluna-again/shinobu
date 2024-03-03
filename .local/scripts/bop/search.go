@@ -33,11 +33,7 @@ type searchParams struct {
 
 func (app *app) search(w http.ResponseWriter, r *http.Request) {
 	if app.client == nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		_, err := w.Write([]byte("server says no (it's not ready)"))
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
+		app.sendServerNotReadyError(w)
 		return
 	}
 

@@ -128,7 +128,7 @@ select_bop_device() {
 			exit
 		}
 
-		curl -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
+		curl -X POST -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
 			error "Something went wrong while setting device."
 			exit
 		}
@@ -812,7 +812,7 @@ EOF
 		try_to_wake_bop || exit 0
 		try_shpotify pause && exit
 
-		output=$(curl -sSf "http://localhost:8888/pause")
+		output=$(curl -X POST -sSf "http://localhost:8888/pause")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
@@ -825,7 +825,7 @@ EOF
 		try_to_wake_bop || exit 0
 		try_shpotify next && exit
 
-		output=$(curl -sSf "http://localhost:8888/next")
+		output=$(curl -X POST -sSf "http://localhost:8888/next")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
@@ -838,7 +838,7 @@ EOF
 		try_to_wake_bop || exit 0
 		try_shpotify prev && exit
 
-		output=$(curl -sSf "http://localhost:8888/prev")
+		output=$(curl -X POST -sSf "http://localhost:8888/prev")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
@@ -851,7 +851,7 @@ EOF
 		try_to_wake_bop || exit 0
 		try_shpotify restart && exit
 
-		output=$(curl -sSf "http://localhost:8888/restart")
+		output=$(curl -X POST -sSf "http://localhost:8888/restart")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
@@ -874,14 +874,14 @@ EOF
 		try_to_wake_bop || exit 0
 
 		# we delete it first so if the song its already liked it will appear at the top after liking it again
-		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
+		output=$(curl -X POST -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
 			exit
 		}
 
-		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/addToLiked")
+		output=$(curl -X POST -sSf -d '{"ID": ""}' "http://localhost:8888/addToLiked")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
@@ -894,7 +894,7 @@ EOF
 	"Spotify: delete song")
 		try_to_wake_bop || exit 0
 
-		output=$(curl -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
+		output=$(curl -X POST -sSf -d '{"ID": ""}' "http://localhost:8888/removeFromLiked")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"
@@ -974,7 +974,7 @@ EOF
 			exit
 		}
 
-		output=$(curl -sSf -d "{\"item\": \"$song_id\", \"type\": \"$type\"}" "http://localhost:8888/play")
+		output=$(curl -X POST -sSf -d "{\"item\": \"$song_id\", \"type\": \"$type\"}" "http://localhost:8888/play")
 		code="$?"
 		[ "$code" -ne 0 ] && {
 			handle_no_device_spotify "$output" "$code"

@@ -29,7 +29,7 @@ func (app *app) sendOk(w http.ResponseWriter) {
 }
 
 func (app *app) sendNotFound(w http.ResponseWriter, r *http.Request) {
-	app.errLogger.Errorf("%s Not Found", r.URL)
+	app.errLogger.Errorf("[%s] %s Not Found", r.Method, r.URL)
 
 	w.WriteHeader(http.StatusNotFound)
 	_, _ = w.Write([]byte(http.StatusText(http.StatusNotFound)))
