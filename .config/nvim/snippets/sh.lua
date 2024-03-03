@@ -27,7 +27,9 @@ return {
 			[[tostderr() { tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2; tput sgr0; }]],
 			[[assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }]],
 			[[assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }]],
-			[[broken_pipe() { grep -vq "^[0 ]*$" <<< "${PIPESTATUS[*]}"; }]]
+			[[broken_pipe() { grep -vq "^[0 ]*$" <<< "${PIPESTATUS[*]}"; }]],
+			[[termheight() { tput lines; }]],
+			[[termwidth() { tput cols; }]],
 		})
 	}),
 

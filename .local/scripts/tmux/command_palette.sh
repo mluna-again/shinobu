@@ -98,6 +98,7 @@ Dotfiles: status
 Dotfiles: pull
 Cheatsheet: select and copy
 Alacritty: toggle opacity
+Life: register food
 EOF
 )"
 
@@ -1153,6 +1154,10 @@ EOF
 			sed -i "s/opacity.*$/opacity = $opacity/" "$config_file"
 			sed -i "s/opacity.*$/opacity = $opacity/" "$linux_config_file"
 		fi
+		;;
+
+	"Life: register food")
+		"$HOME/.local/scripts/tmux/food.sh"
 		;;
 
 	"Theme: choose colorscheme")
