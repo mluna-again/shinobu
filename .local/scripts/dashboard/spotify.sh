@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-declare mode="${1:-tmux}" BOP_URL WINDOW_ID lost_focus
+declare mode="${1:-tmux}" BOP_URL WINDOW_ID lost_focus=0 retrying=0
 BOP_URL="http://localhost:8888"
 WINDOW_ID="$(tmux display -p '#{window_id}')"
 
@@ -24,27 +24,31 @@ has_focus() {
 	[ -n "$status" ] && [ "$status" -eq 1 ]
 }
 
+show_no_music_msg() {
+	clear
+	info "No music playing right now (◞‸◟；)"
+}
+
 _display_bop_dead_message() {
 	local msg
 	msg=${1:-"bop is asleep!"}
 
 	if [ "$mode" = tmux ]; then
 		tmux display -d 0 "#[bg=red,fill=red,fg=black] 󰭺 Message: $msg"
+		exit
 	else
-		tostderr "$msg"
+		retrying=1
+		show_no_music_msg
 	fi
-	exit 1
 }
 
 status=$(curl -sSf "$BOP_URL/status" 2>&1)
 if grep -iq "connection refused" <<<"$status"; then
 	_display_bop_dead_message "bop is offline."
-	exit 1
 fi
 
 if grep -iq "404" <<<"$status"; then
 	_display_bop_dead_message "no music playing right now."
-	exit 1
 fi
 
 DELAY=7
@@ -79,6 +83,7 @@ date() {
 }
 
 download_if_not_exists() {
+	[ "$retrying" -eq 1 ] && return
 	url="$1"
 	[ -z "$url" ] && return
 
@@ -89,11 +94,11 @@ download_if_not_exists() {
 
 	curl -fs --output "${image_path}.jpg" "$url" || {
 		_display_bop_dead_message
-		exit 1
 	}
 }
 
 chafa_if_not_yet() {
+	[ "$retrying" -eq 1 ] && return
 	path="$1"
 
 	[ -e "$path" ] && return
@@ -132,11 +137,6 @@ progress_bar() {
 current_song=$(curl -fs "$BOP_URL/status")
 [ "$?" -ne 0 ] && {
 	_display_bop_dead_message
-	exit 1
-}
-grep -iq "Not found" <<<"$current_song" && {
-	printf "No song playing.\n"
-	exit
 }
 
 song=$(jq -r '.display_name' <<<"$current_song" | _ellipsis)
@@ -151,11 +151,11 @@ image_path=$(download_if_not_exists "$image")
 chafa_if_not_yet "$image_path"
 
 refetch_data() {
-	current_song=$(curl -fs "$BOP_URL/status")
-	grep -iq "Not found" <<<"$current_song" && {
-		printf "No song playing.\n"
-		exit
+	current_song=$(curl -fs "$BOP_URL/status") || {
+		_display_bop_dead_message
+		return
 	}
+	retrying=0
 	song=$(jq -r '.display_name' <<<"$current_song" | _ellipsis)
 	album=$(jq -r '.album' <<<"$current_song" | _ellipsis)
 	artist=$(jq -r '.artist' <<<"$current_song" | _ellipsis)
@@ -185,6 +185,12 @@ while true; do
 	else
 		lost_focus=1
 		sleep 1
+		continue
+	fi
+
+	if [ "$retrying" -eq 1 ]; then
+		sleep "$DELAY"
+		refetch_data
 		continue
 	fi
 
