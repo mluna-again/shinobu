@@ -101,6 +101,11 @@ Alacritty: toggle opacity
 EOF
 )"
 
+top_right_pane() {
+	tmux list-panes -F "#{pane_index} #{pane_at_top} #{pane_at_right}" | \
+		awk '$2 == 1 && $3 == 1 { print $1 }'
+}
+
 make_popup_border() {
 	local title
 	local icon
@@ -869,11 +874,7 @@ EOF
 	"Spotify: get song")
 		try_to_wake_bop || exit 0
 
-		top_right_pane=$(
-			tmux list-panes -F "#{pane_index} #{pane_at_top} #{pane_at_right}" | \
-				awk '$2 == 1 && $3 == 1 { print $1 }'
-		)
-		tmux display-popup -t "$top_right_pane" -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
+		tmux display-popup -t "$($top_right_pane)" -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
 		;;
 
 	"Spotify: save song")
@@ -925,7 +926,7 @@ EOF
 		}
 
 		message=$(printf "\n                  Queue                 \n\n%s" "$items")
-		tmux display-popup -w 40 -h 25 -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
+		tmux display-popup -w 40 -h 25 -t "$(top_right_pane)" -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
 
 		true
 		;;
