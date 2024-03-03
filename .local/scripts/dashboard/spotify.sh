@@ -1,7 +1,8 @@
 #! /usr/bin/env bash
 
-declare mode="${1:-tmux}"
-declare BOP_URL="http://localhost:8888"
+declare mode="${1:-tmux}" BOP_URL WINDOW_ID lost_focus
+BOP_URL="http://localhost:8888"
+WINDOW_ID="$(tmux display -p '#{window_id}')"
 
 : # bash 5+ required
 # shellcheck disable=SC2120
@@ -17,6 +18,11 @@ tostderr() {
 assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
 assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
 broken_pipe() { grep -vq "^[0 ]*$" <<<"${PIPESTATUS[*]}"; }
+has_focus() {
+	status=$(tmux list-windows -F "#{window_id} #{window_active}" | awk "\$1 == \"$WINDOW_ID\" { print \$2 }")
+
+	[ -n "$status" ] && [ "$status" -eq 1 ]
+}
 
 _display_bop_dead_message() {
 	local msg
@@ -172,6 +178,16 @@ printf '\033[?25l'
 trap "printf '\033[?25h' ; trap - SIGTERM SIGINT ; exit" SIGTERM SIGINT
 
 while true; do
+	if has_focus; then
+		# refetch data if focus is gained
+		[ "$lost_focus" -eq 1 ] && refetch_data
+		lost_focus=0
+	else
+		lost_focus=1
+		sleep 1
+		continue
+	fi
+
 	((current_time >= total_time)) && {
 		time_since_last_fetch=0
 		refetch_data || break
