@@ -117,6 +117,12 @@ select_bop_device() {
 			error "Something went wrong while fetching devices."
 			exit
 		}
+
+		[ -z "$devs" ] || (( "$(jq 'length' <<< "$devs")" < 1 )) && {
+			error "No devices found."
+			exit
+		}
+
 		devices=$(jq -r '.[] | "[\(.type)] \(.name)"' <<< "$devs" | awk '{ printf "%d. %s\n", NR, $0; }')
 		input " Choose device " "  " "$devices"
 		device=$(read_input)
