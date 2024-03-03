@@ -12,7 +12,7 @@ import (
 
 func (app *app) pause(w http.ResponseWriter, r *http.Request) {
 	if app.client == nil {
-		sendServerNotReadyError(w)
+		app.sendServerNotReadyError(w)
 		return
 	}
 
@@ -22,63 +22,63 @@ func (app *app) pause(w http.ResponseWriter, r *http.Request) {
 		if strings.Contains(err.Error(), "Restriction violated") {
 			err := app.client.Pause(r.Context())
 			if err != nil {
-				sendInternalServerErrorWithMessage(w, err.Error())
+				app.sendInternalServerErrorWithMessage(w, err.Error())
 				return
 			}
-			sendOk(w)
+			app.sendOk(w)
 			return
 		}
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }
 
 func (app *app) next(w http.ResponseWriter, r *http.Request) {
 	if app.client == nil {
-		sendServerNotReadyError(w)
+		app.sendServerNotReadyError(w)
 		return
 	}
 
 	err := app.client.Next(r.Context())
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }
 
 func (app *app) prev(w http.ResponseWriter, r *http.Request) {
 	if app.client == nil {
-		sendServerNotReadyError(w)
+		app.sendServerNotReadyError(w)
 		return
 	}
 
 	err := app.client.Previous(r.Context())
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }
 
 func (app *app) status(w http.ResponseWriter, r *http.Request) {
 	if app.client == nil {
-		sendServerNotReadyError(w)
+		app.sendServerNotReadyError(w)
 		return
 	}
 
 	info, err := app.client.PlayerCurrentlyPlaying(r.Context())
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
 	if info.Item == nil {
-		sendNotFound(w)
+		app.sendNotFound(w, r)
 		return
 	}
 
@@ -95,27 +95,27 @@ func (app *app) status(w http.ResponseWriter, r *http.Request) {
 
 	output, err := json.Marshal(response)
 	if err != nil {
-		sendInternalServerError(w)
+		app.sendInternalServerError(w, err)
 		return
 	}
 
-	sendJSON(w, output)
+	app.sendJSON(w, output)
 }
 
 func (app *app) restart(w http.ResponseWriter, r *http.Request) {
 	err := app.client.Seek(r.Context(), 0)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }
 
 func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 	q, err := app.client.GetQueue(r.Context())
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
@@ -134,10 +134,10 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 
 	output, err := json.Marshal(items)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
-	sendJSON(w, output)
+	app.sendJSON(w, output)
 }
 
 type addToLikedParams struct {
@@ -149,7 +149,7 @@ func (app *app) addToLiked(w http.ResponseWriter, r *http.Request) {
 	d := json.NewDecoder(r.Body)
 	err := d.Decode(&params)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
@@ -157,7 +157,7 @@ func (app *app) addToLiked(w http.ResponseWriter, r *http.Request) {
 	if id == "" {
 		info, err := app.client.PlayerCurrentlyPlaying(r.Context())
 		if err != nil {
-			sendInternalServerErrorWithMessage(w, err.Error())
+			app.sendInternalServerErrorWithMessage(w, err.Error())
 			return
 		}
 
@@ -165,11 +165,11 @@ func (app *app) addToLiked(w http.ResponseWriter, r *http.Request) {
 	}
 	err = app.client.AddTracksToLibrary(r.Context(), spotify.ID(id))
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }
 
 type removeFromLikedParams struct {
@@ -181,7 +181,7 @@ func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
 	d := json.NewDecoder(r.Body)
 	err := d.Decode(&params)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
@@ -189,7 +189,7 @@ func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
 	if id == "" {
 		info, err := app.client.PlayerCurrentlyPlaying(r.Context())
 		if err != nil {
-			sendInternalServerErrorWithMessage(w, err.Error())
+			app.sendInternalServerErrorWithMessage(w, err.Error())
 			return
 		}
 
@@ -198,11 +198,11 @@ func (app *app) removeFromLiked(w http.ResponseWriter, r *http.Request) {
 
 	err = app.client.RemoveTracksFromLibrary(r.Context(), spotify.ID(id))
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }
 
 type device struct {
@@ -214,7 +214,7 @@ type device struct {
 func (app *app) listDevices(w http.ResponseWriter, r *http.Request) {
 	devs, err := app.client.PlayerDevices(r.Context())
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
@@ -229,11 +229,11 @@ func (app *app) listDevices(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(resp)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendJSON(w, data)
+	app.sendJSON(w, data)
 }
 
 type setDeviceReq struct {
@@ -248,12 +248,12 @@ func (app *app) setDevice(w http.ResponseWriter, r *http.Request) {
 	data := setDeviceReq{}
 	err := decoder.Decode(&data)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
 	if data.ID == "" {
-		sendBadRequestWithMessage(w, "missing ID")
+		app.sendBadRequestWithMessage(w, "missing ID")
 		return
 	}
 
@@ -263,9 +263,9 @@ func (app *app) setDevice(w http.ResponseWriter, r *http.Request) {
 	}
 	err = app.client.TransferPlayback(r.Context(), spotify.ID(data.ID), play)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
-	sendOk(w)
+	app.sendOk(w)
 }

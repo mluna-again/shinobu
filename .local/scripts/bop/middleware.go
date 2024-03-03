@@ -32,7 +32,7 @@ func (app *app) loggingMiddleware(next http.HandlerFunc) http.HandlerFunc {
 func (app *app) checkTokenMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if app.client == nil {
-			sendInternalServerErrorWithMessage(w, "server says no (it's not ready)")
+			app.sendInternalServerErrorWithMessage(w, "server says no (it's not ready)")
 			return
 		}
 

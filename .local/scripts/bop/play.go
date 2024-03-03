@@ -71,12 +71,12 @@ func (app *app) playSong(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if errorWhileAddingItem != nil {
-		sendInternalServerErrorWithMessage(w, errorWhileAddingItem.Error())
+		app.sendInternalServerErrorWithMessage(w, errorWhileAddingItem.Error())
 		return
 	}
 
 	if !somethingDone {
-		sendOk(w)
+		app.sendOk(w)
 		return
 	}
 	err = app.client.Next(r.Context())

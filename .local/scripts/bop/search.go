@@ -46,13 +46,13 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 	d := json.NewDecoder(r.Body)
 	err := d.Decode(&params)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
 	query := params.Query
 	if query == "" {
-		sendBadRequestWithMessage(w, noSearchQueryError.Error())
+		app.sendBadRequestWithMessage(w, noSearchQueryError.Error())
 		return
 	}
 
@@ -80,14 +80,14 @@ func (app *app) search(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 
 	w.Header().Add("content-type", "application/json")
 	err = printResults(w, results, queryType)
 	if err != nil {
-		sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerErrorWithMessage(w, err.Error())
 		return
 	}
 }
