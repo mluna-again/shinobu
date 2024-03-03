@@ -13,6 +13,7 @@ import (
 
 	"html/template"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/zmb3/spotify/v2"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
 )
@@ -89,7 +90,7 @@ func main() {
 		app.logger.Infof("Authenticate using the following link: \n%s\n\n", url)
 	}
 
-	router := http.NewServeMux()
+	router := chi.NewRouter()
 
 	fs := http.FileServer(http.Dir("./static"))
 	router.Handle("/files/", http.StripPrefix("/files/", fs))
@@ -139,19 +140,22 @@ func main() {
 		}
 	})
 
-	router.HandleFunc("/health", app.health)
-	router.HandleFunc("/search", app.checkTokenMiddleware(app.loggingMiddleware(app.search)))
-	router.HandleFunc("/play", app.checkTokenMiddleware(app.loggingMiddleware(app.playSong)))
-	router.HandleFunc("/pause", app.checkTokenMiddleware(app.loggingMiddleware(app.pause)))
-	router.HandleFunc("/next", app.checkTokenMiddleware(app.loggingMiddleware(app.next)))
-	router.HandleFunc("/prev", app.checkTokenMiddleware(app.loggingMiddleware(app.prev)))
-	router.HandleFunc("/status", app.checkTokenMiddleware(app.loggingMiddleware(app.status)))
-	router.HandleFunc("/restart", app.checkTokenMiddleware(app.loggingMiddleware(app.restart)))
-	router.HandleFunc("/queue", app.checkTokenMiddleware(app.loggingMiddleware(app.queue)))
-	router.HandleFunc("/addToLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.addToLiked)))
-	router.HandleFunc("/removeFromLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.removeFromLiked)))
-	router.HandleFunc("/devices", app.checkTokenMiddleware(app.loggingMiddleware(app.listDevices)))
-	router.HandleFunc("/setDevice", app.checkTokenMiddleware(app.loggingMiddleware(app.setDevice)))
+	router.Get("/health", app.health)
+	router.Get("/search", app.checkTokenMiddleware(app.loggingMiddleware(app.search)))
+	router.Post("/play", app.checkTokenMiddleware(app.loggingMiddleware(app.playSong)))
+	router.Post("/pause", app.checkTokenMiddleware(app.loggingMiddleware(app.pause)))
+	router.Post("/next", app.checkTokenMiddleware(app.loggingMiddleware(app.next)))
+	router.Post("/prev", app.checkTokenMiddleware(app.loggingMiddleware(app.prev)))
+	router.Get("/status", app.checkTokenMiddleware(app.loggingMiddleware(app.status)))
+	router.Post("/restart", app.checkTokenMiddleware(app.loggingMiddleware(app.restart)))
+	router.Get("/queue", app.checkTokenMiddleware(app.loggingMiddleware(app.queue)))
+	router.Post("/addToLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.addToLiked)))
+	router.Post("/removeFromLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.removeFromLiked)))
+	router.Get("/devices", app.checkTokenMiddleware(app.loggingMiddleware(app.listDevices)))
+	router.Post("/setDevice", app.checkTokenMiddleware(app.loggingMiddleware(app.setDevice)))
+	router.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+		app.sendNotFound(w, r)
+	})
 
 	server := http.Server{
 		ReadTimeout:       1 * time.Second,

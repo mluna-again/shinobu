@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/charmbracelet/log v0.3.1
+	github.com/go-chi/chi/v5 v5.0.12
 	github.com/jackc/pgx/v5 v5.5.3
 	github.com/zmb3/spotify/v2 v2.4.0
 	golang.org/x/oauth2 v0.0.0-20210810183815-faf39c7919d5
