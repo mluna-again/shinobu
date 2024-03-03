@@ -155,7 +155,7 @@ try_to_wake_bop() {
 	bop_response=$(curl -is http://localhost:8888/health )
 	# no server running
 	if [ "$?" -eq 7 ]; then
-		nohup fish -c "start_bop dev" &>"$HOME/.cache/bop_logs" &
+		nohup fish -c "start_bop" &>"$HOME/.cache/bop_logs" &
 		tries=0
 		while ! pgrep bop &>/dev/null; do
 			if [ "$tries" -ge 5 ]; then
