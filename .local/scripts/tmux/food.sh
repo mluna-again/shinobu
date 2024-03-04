@@ -90,6 +90,26 @@ fetch_foods() {
 		--data-raw "$req_body"
 }
 
+fetch_food_info() {
+	local id="$1" data name
+
+	data=$(curl "https://fdc.nal.usda.gov/portal-data/external/$id" \
+		-H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0' \
+		-H 'Accept: application/json, text/plain, */*' \
+		-H 'Accept-Language: en-US,en;q=0.5' \
+		-H 'Accept-Encoding: gzip, deflate, br' \
+		-H 'Connection: keep-alive' \
+		-H 'Referer: https://fdc.nal.usda.gov/fdc-app.html' \
+		-H 'Sec-Fetch-Dest: empty' \
+		-H 'Sec-Fetch-Mode: cors' \
+		-H 'Sec-Fetch-Site: same-origin')
+
+	calories=$(jq -r '.foodNutrients | map(select(.nutrient.nutrientUnit.name == "kcal")) | sort_by(-.value)[0].value' <<< "$data")
+	name=$(jq -r '.description' <<< "$data")
+
+	echo "$calories|100g|$name"
+}
+
 add_new_entry() {
 	local query \
 		results \
@@ -98,7 +118,11 @@ add_new_entry() {
 		food_id \
 		new_item \
 		new_db \
-		time_of_the_day
+		time_of_the_day \
+		food_info \
+		calories \
+		portion \
+		name
 
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
@@ -139,11 +163,17 @@ EOF
 	[ -z "$food_index" ] && exit
 	food_id="$(jq ".foods[$((food_index - 1))].fdcId" <<<"$results")"
 
+	food_info="$(fetch_food_info "$food_id")"
+	calories="$(awk -F'|' '{ print $1 }' <<<"$food_info")"
+	portion="$(awk -F'|' '{ print $2 }' <<<"$food_info")"
+	name="$(awk -F'|' '{ print $3 }' <<<"$food_info")"
 	new_item="$(
 		cat - <<EOF
 {
-	"name": "$query",
-	"id": "$food_id"
+	"name": "$name",
+	"id": "$food_id",
+	"quantity": "$portion",
+	"calories": $calories
 }
 EOF
 	)"
@@ -169,7 +199,7 @@ EOF
 	)"
 
 	time_of_the_day="$(read_result)"
-	new_db=$(jq ".$time_of_the_day += [$new_item]" "$DATABASE")
+	new_db=$(jq ".$(tr '[:upper:]' '[:lower:]' <<< "$time_of_the_day") += [$new_item]" "$DATABASE")
 	echo "$new_db" >"$DATABASE"
 
 	tsuccess "Entry added :)"
