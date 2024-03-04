@@ -40,6 +40,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/6fbde91e-3ffd-4689-b2c9-4
 22. json-server
 23. presenterm
 24. sqlfluff
+25. the_silver_searcher
 
 ## Problems I've encountered that I don't want to forget
 

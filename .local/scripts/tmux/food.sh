@@ -1,19 +1,33 @@
 #! /usr/bin/env bash
 
-declare SHIFT_PATH="$HOME/.local/scripts/shift/shift" OUTFILE="$HOME/.cache/.cornucopia"
+declare SHIFT_PATH="$HOME/.local/scripts/shift/shift" \
+	OUTFILE="$HOME/.cache/.cornucopia" \
+	DATABASE="$HOME/.cache/.cornucopia.json"
 
-: > "$OUTFILE"
+db_template() {
+	local timestamp="$1"
+	[ -z "$timestamp" ] && die No timestamp provided
+
+	cat - <<-EOF
+		{
+			"last_updated_at": "$timestamp",
+			"breakfast": [],
+			"dinner": [],
+			"lunch": [],
+			"extra": []
+		}
+	EOF
+}
+
+: >"$OUTFILE"
 
 : # bash 5+ required
 # shellcheck disable=SC2120
 die() {
-	[ -n "$*" ] && tostderr "$*"
-	exit 1
+	[ -n "$*" ] && terror "$*"
+	exit
 }
-tostderr() {
-	tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2
-	tput sgr0
-}
+assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
 istmux() { [ -n "$TMUX" ]; }
 talert() { tmux display -d 0 "#[bg=#{@color_info},fill=#{@color_info},fg=black] 󰭺 Message: $*"; }
 terror() { tmux display -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Message: $*"; }
@@ -24,11 +38,32 @@ read_result() {
 }
 
 istmux || die this script only works inside tmux
+assert_installed jq
 
 if [ ! -x "$SHIFT_PATH" ]; then
-	terror "shift not installedk"
+	terror "shift not installed"
 	exit
 fi
+
+empty_db_if_older_than_today() {
+	local day last_date today timestamp
+
+	timestamp="$(date +'%d/%m/%Y')"
+
+	if [ ! -f "$DATABASE" ]; then
+		db_template "$timestamp" >"$DATABASE"
+		return
+	fi
+
+	today="$(date +'%d')"
+	last_date="$(jq -r '.last_updated_at' "$DATABASE")"
+	day="$(awk -F"/" '{print $1}' <<<"$last_date")"
+	if [ -z "$day" ] || ((today > day)); then
+		db_template "$timestamp" >"$DATABASE"
+	fi
+}
+
+empty_db_if_older_than_today
 
 fetch_foods() {
 	local food="$1"
@@ -55,7 +90,8 @@ fetch_foods() {
 		--data-raw "$req_body"
 }
 
-tmux display-popup -w 65 -h 11 -y 15 -E "$(cat - <<EOF
+tmux display-popup -w 65 -h 11 -y 15 -E "$(
+	cat - <<EOF
 	"$SHIFT_PATH" -mode create \
 		-title " Search by name " \
 		-icon " 󰉜 " \
@@ -66,18 +102,29 @@ tmux display-popup -w 65 -h 11 -y 15 -E "$(cat - <<EOF
 EOF
 )"
 
-query="$(read_result)"
-[ -z "$query" ] && exit
+add_new_entry() {
+	local query \
+		results \
+		options \
+		food_index \
+		food_id \
+		new_item \
+		new_db \
+		time_of_the_day
 
-results="$(fetch_foods "$query")"
+	query="$(read_result)"
+	[ -z "$query" ] && exit
 
-options="$(echo "$results" | jq -r '.foods[].description' | awk '{ printf "%d. %s\n", NR, $0 }')"
-if [ -z "$options" ]; then
-	terror "No matches found."
-	exit
-fi
+	results="$(fetch_foods "$query")"
 
-tmux display-popup -w 65 -h 11 -y 15 -E "$(cat - <<EOF
+	options="$(echo "$results" | jq -r '.foods[].description' | awk '{ printf "%d. %s\n", NR, $0 }')"
+	if [ -z "$options" ]; then
+		terror "No matches found."
+		exit
+	fi
+
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
 	echo "$options" |
 		"$SHIFT_PATH" \
 		-title " Search by name " \
@@ -86,10 +133,55 @@ tmux display-popup -w 65 -h 11 -y 15 -E "$(cat - <<EOF
 		-height 9 \
 		-output "$OUTFILE"
 EOF
-)"
+	)"
 
-food_index="$(read_result | awk '{print $1}' | sed 's/[^0-9]//g')"
-[ -z "$food_index" ] && exit
-food_id="$(jq ".foods[$((food_index - 1))].fdcId" <<<"$results")"
+	food_index="$(read_result | awk '{print $1}' | sed 's/[^0-9]//g')"
+	[ -z "$food_index" ] && exit
+	food_id="$(jq ".foods[$((food_index - 1))].fdcId" <<<"$results")"
 
-talert "$food_id"
+	new_item="$(
+		cat - <<EOF
+{
+	"name": "$query",
+	"id": "$food_id"
+}
+EOF
+	)"
+
+	options="$(
+		cat - <<-EOF
+			Breakfast
+			Lunch
+			Dinner
+			Extra
+		EOF
+	)"
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "$options" |
+		"$SHIFT_PATH" \
+		-title " Time of the day " \
+		-icon " 󰉜 " \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE"
+EOF
+	)"
+
+	time_of_the_day="$(read_result)"
+	new_db=$(jq ".$time_of_the_day += [$new_item]" "$DATABASE")
+	echo "$new_db" >"$DATABASE"
+
+	tsuccess "Entry added :)"
+}
+
+case "${1:-add}" in
+add)
+	add_new_entry
+	;;
+
+*)
+	terror "Invalid cmd: $1"
+	die
+	;;
+esac
