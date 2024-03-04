@@ -98,7 +98,8 @@ Dotfiles: status
 Dotfiles: pull
 Cheatsheet: select and copy
 Alacritty: toggle opacity
-Life: register food
+Food: add entry
+Food: total today
 EOF
 )"
 
@@ -1156,8 +1157,12 @@ EOF
 		fi
 		;;
 
-	"Life: register food")
-		"$HOME/.local/scripts/tmux/food.sh"
+	"Food: add entry")
+		"$HOME/.local/scripts/tmux/food.sh" add
+		;;
+
+	"Food: total today")
+		"$HOME/.local/scripts/tmux/food.sh" total
 		;;
 
 	"Theme: choose colorscheme")

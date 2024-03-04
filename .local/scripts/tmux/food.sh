@@ -102,10 +102,11 @@ fetch_food_info() {
 		-H 'Referer: https://fdc.nal.usda.gov/fdc-app.html' \
 		-H 'Sec-Fetch-Dest: empty' \
 		-H 'Sec-Fetch-Mode: cors' \
-		-H 'Sec-Fetch-Site: same-origin')
+		-H 'Sec-Fetch-Site: same-origin' \
+		--max-time 10)
 
-	calories=$(jq -r '.foodNutrients | map(select(.nutrient.nutrientUnit.name == "kcal")) | sort_by(-.value)[0].value' <<< "$data")
-	name=$(jq -r '.description' <<< "$data")
+	calories=$(jq -r '.foodNutrients | map(select(.nutrient.nutrientUnit.name == "kcal")) | sort_by(-.value)[0].value' <<< "$data") || die "Something went wrong while retreaving calories."
+	name=$(jq -r '.description' <<< "$data") || die "Something went wrong while retreaving name."
 
 	echo "$calories|100g|$name"
 }
@@ -139,9 +140,9 @@ EOF
 	query="$(read_result)"
 	[ -z "$query" ] && exit
 
-	results="$(fetch_foods "$query")"
+	results="$(fetch_foods "$query")" || die "Could not fetch foods"
 
-	options="$(echo "$results" | jq -r '.foods[].description' | awk '{ printf "%d. %s\n", NR, $0 }')"
+	options="$(echo "$results" | jq -r '.foods[].description' | awk '{ printf "%d. %s\n", NR, $0 }')" || die "Something went wrong while retreaving options"
 	if [ -z "$options" ]; then
 		terror "No matches found."
 		exit
@@ -161,12 +162,18 @@ EOF
 
 	food_index="$(read_result | awk '{print $1}' | sed 's/[^0-9]//g')"
 	[ -z "$food_index" ] && exit
-	food_id="$(jq ".foods[$((food_index - 1))].fdcId" <<<"$results")"
+	food_id="$(jq ".foods[$((food_index - 1))].fdcId" <<<"$results")" || die "Something went wrong while retreaving food ID"
 
-	food_info="$(fetch_food_info "$food_id")"
+	food_info="$(fetch_food_info "$food_id")" || die "Could not fetch details"
 	calories="$(awk -F'|' '{ print $1 }' <<<"$food_info")"
+	if [ -z "$calories" ]; then
+		die "Calories are empty when they should not be, something went wrong."
+	fi
 	portion="$(awk -F'|' '{ print $2 }' <<<"$food_info")"
 	name="$(awk -F'|' '{ print $3 }' <<<"$food_info")"
+	if [ -z "$name" ]; then
+		die "Name is empty when they should not be, something went wrong."
+	fi
 	new_item="$(
 		cat - <<EOF
 {
@@ -199,15 +206,29 @@ EOF
 	)"
 
 	time_of_the_day="$(read_result)"
-	new_db=$(jq ".$(tr '[:upper:]' '[:lower:]' <<< "$time_of_the_day") += [$new_item]" "$DATABASE")
+	[ -z "$time_of_the_day" ] && exit
+	new_db=$(jq ".$(tr '[:upper:]' '[:lower:]' <<< "$time_of_the_day") += [$new_item]" "$DATABASE") || die "Something went wrong while updating database"
 	echo "$new_db" >"$DATABASE"
 
 	tsuccess "Entry added :)"
 }
 
+total_today() {
+	if [ ! -f "$DATABASE" ]; then
+		terror "No info yet."
+		exit
+	fi
+
+	talert "100 today"
+}
+
 case "${1:-add}" in
 add)
 	add_new_entry
+	;;
+
+total)
+	total_today
 	;;
 
 *)
