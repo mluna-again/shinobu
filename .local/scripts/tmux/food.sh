@@ -219,7 +219,14 @@ total_today() {
 		exit
 	fi
 
-	talert "100 today"
+	local breakfast lunch dinner extra
+
+	breakfast="$(jq '.breakfast | map(.calories) | add // 0' "$DATABASE")" || die "Something went wrong while calculating breakfast calories"
+	lunch="$(jq '.lunch | map(.calories) | add // 0' "$DATABASE")" || die "Something went wrong while calculating lunch calories"
+	dinner="$(jq '.dinner | map(.calories) | add // 0' "$DATABASE")" || die "Something went wrong while calculating dinner calories"
+	extra="$(jq '.extra | map(.calories) | add // 0' "$DATABASE")" || die "Something went wrong while calculating extra calories"
+
+	talert "$(( breakfast + lunch + dinner + extra )) calories consumed today, so far."
 }
 
 case "${1:-add}" in
