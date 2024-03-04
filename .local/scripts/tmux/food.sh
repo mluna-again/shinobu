@@ -90,18 +90,6 @@ fetch_foods() {
 		--data-raw "$req_body"
 }
 
-tmux display-popup -w 65 -h 11 -y 15 -E "$(
-	cat - <<EOF
-	"$SHIFT_PATH" -mode create \
-		-title " Search by name " \
-		-icon " 󰉜 " \
-		-input "\n" \
-		-width 65 \
-		-height 9 \
-		-output "$OUTFILE"
-EOF
-)"
-
 add_new_entry() {
 	local query \
 		results \
@@ -111,6 +99,18 @@ add_new_entry() {
 		new_item \
 		new_db \
 		time_of_the_day
+
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	"$SHIFT_PATH" -mode create \
+		-title " Search by name " \
+		-icon " 󰉜 " \
+		-input "\n" \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE"
+EOF
+	)"
 
 	query="$(read_result)"
 	[ -z "$query" ] && exit
