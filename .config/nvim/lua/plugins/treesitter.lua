@@ -23,7 +23,8 @@ return {
 				"lua",
 				"sql",
 				"ruby",
-				"rust"
+				"rust",
+				"zig"
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)

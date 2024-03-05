@@ -28,7 +28,8 @@ return {
 			"rust-analyzer",
 			"tailwindcss-language-server",
 			"bash-language-server",
-			"sqlfluff"
+			"sqlfluff",
+			"zls"
 		}
 
 		mason.setup({
