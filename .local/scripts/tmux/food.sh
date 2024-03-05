@@ -54,13 +54,13 @@ EOF
 	options="$(cornucopia search -q "$query")" || die "Could not fetch food"
 	[ -z "$options" ] && die "No matches found."
 	options="$(sed 's/"//g' <<< "$options")"
-	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+	tmux display-popup -w 95 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "$options" |
 		"$SHIFT_PATH" \
 		-title " Select by name " \
 		-icon " 󰉜 " \
-		-width 65 \
+		-width 95 \
 		-height 9 \
 		-output "$OUTFILE"
 EOF
@@ -91,8 +91,8 @@ EOF
 	time="$(read_result | xargs)"
 	[ -z "$time" ] && exit
 
-	calories="$(sed 's/^[^[]*\[//' <<< "$item" | sed 's/]$//' | sed 's/calories//' | xargs)"
-	item="$(sed 's/\[.*\]$//' <<< "$item" | xargs)"
+	calories="$(awk '{print $1}' <<< "$item" | sed 's/^\[//' | sed 's/calories//' | xargs)"
+	item="$(sed 's/\[.*\]//' <<< "$item" | xargs)"
 
 	cornucopia add -n "$item" -t "$time" -c "$calories" || die "Could not add entry."
 
