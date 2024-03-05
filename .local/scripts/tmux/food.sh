@@ -141,7 +141,7 @@ EOF
 
 
 report)
-	tmux display-popup -w 95 -h 30 -y 35 "cornucopia reports today"
+	tmux display-popup -w "100%" -h "100%" -E "cornucopia reports today"
 	;;
 
 *)
