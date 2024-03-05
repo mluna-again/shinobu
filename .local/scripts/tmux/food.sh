@@ -94,15 +94,21 @@ EOF
 	calories="$(awk '{print $1}' <<< "$item" | sed 's/^\[//' | sed 's/calories//' | xargs)"
 	item="$(sed 's/\[.*\]//' <<< "$item" | xargs)"
 
-	cornucopia add -n "$item" -t "$time" -c "$calories" || die "Could not add entry."
+	cornucopia entries add -n "$item" -t "$time" -c "$calories" || die "Could not add entry."
 
 	tsuccess "Entry added."
 	;;
 
 total)
-	t=$(cornucopia total) || die Could not fetch data
+	t=$(cornucopia entries total) || die Could not fetch data
 
 	talert "$t calories consumed today, so far."
+	;;
+
+reset)
+	cornucopia entries reset &>/dev/null || die Could not update entries.
+
+	tsuccess "Entries reset."
 	;;
 
 custom)

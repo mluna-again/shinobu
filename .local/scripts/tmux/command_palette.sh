@@ -101,6 +101,7 @@ Alacritty: toggle opacity
 Food: add entry
 Food: add custom entry
 Food: total today
+Food: reset today's entries
 EOF
 )"
 
@@ -1168,6 +1169,10 @@ EOF
 
 	"Food: add custom entry")
 		"$HOME/.local/scripts/tmux/food.sh" custom
+		;;
+
+	"Food: reset today's entries")
+		"$HOME/.local/scripts/tmux/food.sh" reset
 		;;
 
 	"Theme: choose colorscheme")
