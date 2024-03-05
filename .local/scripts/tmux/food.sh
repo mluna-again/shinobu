@@ -100,9 +100,37 @@ EOF
 	;;
 
 total)
-	t=$(cornucopia total) || die could not fetch data
+	t=$(cornucopia total) || die Could not fetch data
 
 	talert "$t calories consumed today, so far."
+	;;
+
+custom)
+	clear_response
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "\n" |
+		"$SHIFT_PATH" \
+		-title " Format: <calories> <name> " \
+		-icon " 󰉜 " \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE" \
+		-mode create
+EOF
+	)"
+	entry="$(read_result)"
+	[ -z "$entry" ] && exit
+
+	calories="$(awk '{print $1}' <<< "$entry")"
+	name="$(awk '{$1=""; print $0}' <<< "$entry" | xargs)"
+	if [ -z "$calories" ] || [ -z "$name" ]; then
+		die "Invalid entry."
+	fi
+
+	cornucopia foods add -n "$name" -c "$calories" || die "Could not create entry."
+
+	tsuccess "Food added."
 	;;
 
 *)

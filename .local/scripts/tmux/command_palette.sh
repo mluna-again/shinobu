@@ -99,6 +99,7 @@ Dotfiles: pull
 Cheatsheet: select and copy
 Alacritty: toggle opacity
 Food: add entry
+Food: add custom entry
 Food: total today
 EOF
 )"
@@ -1163,6 +1164,10 @@ EOF
 
 	"Food: total today")
 		"$HOME/.local/scripts/tmux/food.sh" total
+		;;
+
+	"Food: add custom entry")
+		"$HOME/.local/scripts/tmux/food.sh" custom
 		;;
 
 	"Theme: choose colorscheme")
