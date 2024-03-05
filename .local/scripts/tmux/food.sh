@@ -139,6 +139,11 @@ EOF
 	tsuccess "Food added."
 	;;
 
+
+report)
+	tmux display-popup -w 95 -h 30 -y 35 "cornucopia reports today"
+	;;
+
 *)
 	terror "Invalid cmd: $1"
 	die
