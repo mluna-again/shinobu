@@ -103,6 +103,7 @@ Food: add custom entry
 Food: total today
 Food: reset today's entries
 Food: report
+Food: delete entry
 EOF
 )"
 
@@ -1178,6 +1179,10 @@ EOF
 
 	"Food: report")
 		"$HOME/.local/scripts/tmux/food.sh" report
+		;;
+
+	"Food: delete entry")
+		"$HOME/.local/scripts/tmux/food.sh" delete
 		;;
 
 	"Theme: choose colorscheme")

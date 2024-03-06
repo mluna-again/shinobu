@@ -163,6 +163,53 @@ report)
 	tmux display-popup -w "100%" -h "100%" -E "cornucopia reports today"
 	;;
 
+delete)
+	clear_response
+	options="$(cornucopia entries today)" || die "Could not fetch entries"
+	tmux display-popup -w 95 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "$options" |
+		"$SHIFT_PATH" \
+		-title " Daily entries " \
+		-icon " 󰉜 " \
+		-width 95 \
+		-height 9 \
+		-output "$OUTFILE"
+EOF
+	)"
+
+	item="$(read_result)"
+	[ -z "$item" ] && die
+
+	output=$(cornucopia entries delete -q "$item" 2>&1)
+	if [[ "$output" =~ .*Duplicate.* ]]; then
+		clear_response
+		tmux display-popup -w 95 -h 11 -y 15 -E "$(
+			cat - <<EOF
+		echo "\n" |
+			"$SHIFT_PATH" \
+			-title " Duplicated entry, delete all? [N/y] " \
+			-icon " 󰉜 " \
+			-width 95 \
+			-height 9 \
+			-output "$OUTFILE" \
+			-mode create \
+			-initial n
+EOF
+		)"
+
+		resp="$(read_result)"
+		[ -z "$resp" ] && die
+		[[ ! "$resp" =~ ^(y|Y)$ ]] && die
+
+		cornucopia entries delete -f -q "$item" &>/dev/null || die "Could not delete entries."
+		tsuccess "Entries deleted."
+		exit
+	fi
+
+	tsuccess "Entry deleted."
+	;;
+
 *)
 	terror "Invalid cmd: $1"
 	die
