@@ -94,7 +94,26 @@ EOF
 	calories="$(awk '{print $1}' <<< "$item" | sed 's/^\[//' | sed 's/calories//' | xargs)"
 	item="$(sed 's/\[.*\]//' <<< "$item" | xargs)"
 
-	cornucopia entries add -n "$item" -t "$time" -c "$calories" || die "Could not add entry."
+	clear_response
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "\n" |
+		"$SHIFT_PATH" \
+		-title " Grams/Milliliters " \
+		-icon " 󰉜 " \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE" \
+		-mode create \
+		-initial 100
+EOF
+	)"
+	grams=$(read_result)
+	if [[ ! "$grams" =~ ^[0-9]+$ ]]; then
+		die "Invalid number"
+	fi
+
+	cornucopia entries add -n "$item" -t "$time" -c "$calories" -g "$grams" || die "Could not add entry."
 
 	tsuccess "Entry added."
 	;;
