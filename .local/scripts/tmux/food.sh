@@ -244,6 +244,63 @@ EOF
 	tsuccess "Entry deleted."
 	;;
 
+recipe)
+	clear_response
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "\n" |
+		"$SHIFT_PATH" \
+		-title " Calories in total " \
+		-icon " 󰉜 " \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE" \
+		-mode create
+EOF
+	)"
+	calories="$(read_result)"
+	[ -z "$calories" ] && exit
+	if [[ ! "$calories" =~ ^[0-9.]+$ ]]; then
+		die "Invalid number"
+	fi
+
+	clear_response
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "\n" |
+		"$SHIFT_PATH" \
+		-title " Recipe's name " \
+		-icon " 󰉜 " \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE" \
+		-mode create
+EOF
+	)"
+	name="$(read_result)"
+	[ -z "$name" ] && exit
+
+	clear_response
+	tmux display-popup -w 65 -h 11 -y 15 -E "$(
+		cat - <<EOF
+	echo "\n" |
+		"$SHIFT_PATH" \
+		-title " Recipe's description " \
+		-icon " 󰉜 " \
+		-width 65 \
+		-height 9 \
+		-output "$OUTFILE" \
+		-mode create
+EOF
+	)"
+	description="$(read_result)"
+	[ -z "$description" ] && exit
+
+	cornucopia recipes add -n "$name" -c "$calories" -d "$description" || die "Could not create recipe."
+
+	tsuccess "Recipe added."
+	;;
+
 *)
 	terror "Invalid cmd: $1"
 	die
