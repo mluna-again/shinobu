@@ -51,7 +51,9 @@ EOF
 	[ -z "$query" ] && exit
 
 	clear_response
-	options="$({ cornucopia search -q "$query"; cornucopia recipes search -q "$query"; })" || die "Could not fetch food"
+	recipes="$(cornucopia recipes search -q "$query")" || die "Could not fetch recipes"
+	food="$(cornucopia search -q "$query")" || die "Could not fetch food"
+	options="$({ echo "$recipes"; echo "$food"; })"
 	[ -z "$options" ] && die "No matches found."
 	options="$(sed 's/"//g' <<< "$options")"
 	tmux display-popup -w 95 -h 11 -y 15 -E "$(
@@ -94,23 +96,27 @@ EOF
 	calories="$(awk '{print $1}' <<< "$item" | sed 's/^\[//' | sed 's/calories//' | xargs)"
 	item="$(sed 's/\[.*\]//' <<< "$item" | xargs)"
 
-	clear_response
-	tmux display-popup -w 65 -h 11 -y 15 -E "$(
-		cat - <<EOF
-	echo "\n" |
-		"$SHIFT_PATH" \
-		-title " Grams/Milliliters " \
-		-icon " 󰉜 " \
-		-width 65 \
-		-height 9 \
-		-output "$OUTFILE" \
-		-mode create \
-		-initial 100
+	if echo "$recipes" | grep -iq "$item"; then
+		grams=100
+	else
+		clear_response
+		tmux display-popup -w 65 -h 11 -y 15 -E "$(
+			cat - <<EOF
+		echo "\n" |
+			"$SHIFT_PATH" \
+			-title " Grams/Milliliters " \
+			-icon " 󰉜 " \
+			-width 65 \
+			-height 9 \
+			-output "$OUTFILE" \
+			-mode create \
+			-initial 100
 EOF
-	)"
-	grams=$(read_result)
-	if [[ ! "$grams" =~ ^[0-9]+$ ]]; then
-		die "Invalid number"
+		)"
+		grams=$(read_result)
+		if [[ ! "$grams" =~ ^[0-9]+$ ]]; then
+			die "Invalid number"
+		fi
 	fi
 
 	cornucopia entries add -n "$item" -t "$time" -c "$calories" -g "$grams" || die "Could not add entry."
