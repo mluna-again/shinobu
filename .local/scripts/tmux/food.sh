@@ -250,25 +250,6 @@ recipe)
 		cat - <<EOF
 	echo "\n" |
 		"$SHIFT_PATH" \
-		-title " Calories in total " \
-		-icon " 󰉜 " \
-		-width 65 \
-		-height 9 \
-		-output "$OUTFILE" \
-		-mode create
-EOF
-	)"
-	calories="$(read_result)"
-	[ -z "$calories" ] && exit
-	if [[ ! "$calories" =~ ^[0-9.]+$ ]]; then
-		die "Invalid number"
-	fi
-
-	clear_response
-	tmux display-popup -w 65 -h 11 -y 15 -E "$(
-		cat - <<EOF
-	echo "\n" |
-		"$SHIFT_PATH" \
 		-title " Recipe's name " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -296,7 +277,7 @@ EOF
 	description="$(read_result)"
 	[ -z "$description" ] && exit
 
-	cornucopia recipes add -n "$name" -c "$calories" -d "$description" || die "Could not create recipe."
+	cornucopia recipes add -n "$name" -d "$description" || die "Could not create recipe."
 
 	tsuccess "Recipe added."
 	;;
