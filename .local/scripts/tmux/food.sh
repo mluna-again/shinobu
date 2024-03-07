@@ -51,7 +51,7 @@ EOF
 	[ -z "$query" ] && exit
 
 	clear_response
-	options="$(cornucopia search -q "$query")" || die "Could not fetch food"
+	options="$({ cornucopia search -q "$query"; cornucopia recipes search -q "$query"; })" || die "Could not fetch food"
 	[ -z "$options" ] && die "No matches found."
 	options="$(sed 's/"//g' <<< "$options")"
 	tmux display-popup -w 95 -h 11 -y 15 -E "$(
