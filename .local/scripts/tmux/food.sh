@@ -24,7 +24,7 @@ read_result() {
 	tail -1 "$OUTFILE"
 }
 
-istmux || die this script only works inside tmux
+istmux || { echo this script only works inside tmux 1>&2; exit 1; }
 assert_installed cornucopia
 
 if [ ! -x "$SHIFT_PATH" ]; then
