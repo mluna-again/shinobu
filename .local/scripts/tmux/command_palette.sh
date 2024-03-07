@@ -1089,7 +1089,9 @@ EOF
 		;;
 
 	"Tmux: join panes")
-		items=$(awk '{ printf "%s: vertical\n%s: horizontal\n", $1, $1 }' <<< "$(tmux list-windows -F '#{window_name}')")
+		current="$(tmux display -p "#{window_name}")"
+		panes="$(tmux list-windows -F '#{window_name}' | grep -v "$current")"
+		items=$(awk '{ printf "%s: vertical\n%s: horizontal\n", $1, $1 }' <<< "$panes")
 		input " Target " " 󰓾 " "$items"
 		target=$(read_input)
 		[ -z "$target" ] && exit
