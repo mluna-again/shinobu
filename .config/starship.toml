@@ -31,7 +31,7 @@ truncation_length = 3
 ssh_only = true
 disabled = false
 style = "fg:yellow"
-format = "@[$localipv4](bold red) "
+format = "@[$localipv4](bold red)"
 
 [cmd_duration]
 min_time = 1_000
