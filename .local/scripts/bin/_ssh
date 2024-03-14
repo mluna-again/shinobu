@@ -1,13 +1,37 @@
 #! /usr/bin/env bash
 
+manual_ports=()
+
+options=$(getopt "p:" "$*")
+set -- $options
+
+while true; do
+  case "$1" in
+    -p|--p)
+      manual_ports+=("$2")
+      shift
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      shift
+      ;;
+  esac
+done
+
 workspace=$(cat - <<EOF | fzf --header="Select workspace"
 mluna@desktop.local
 mluna@dh.local
 EOF
 )
 
-common_ports="3000 8080 8888 4000 9000 4008 4009 4010 4011 5173"
-ports=$(sed 's/ /\n/g' <<< "$common_ports" | awk '{ printf " -L %s:localhost:%s", $1, $1 }' | sed 's/^ //')
+common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173)
+common_ports=("${common_ports[@]}" "${manual_ports[@]}")
+ports=$(sed 's/ /\n/g' <<< "${common_ports[@]}" | awk '{ printf " -L %s:localhost:%s", $1, $1 }' | sed 's/^ //')
 
 [ -z "$workspace" ] && exit 1
 
