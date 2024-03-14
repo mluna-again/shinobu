@@ -90,6 +90,8 @@ Tmux: floating terminal
 Tmux: block outer session
 Tmux: join panes
 Tmux: split panes
+Clipboard: push
+Clipboard: pop
 Lol: wake up
 Monitor: open dashboard
 Dumb: screen-saver
@@ -1190,6 +1192,14 @@ EOF
 
 	"Food: add recipe")
 		"$HOME/.local/scripts/tmux/food.sh" recipe
+		;;
+
+	"Clipboard: push")
+		"$HOME/.local/scripts/tmux/clipboard.sh" push
+		;;
+
+	"Clipboard: pop")
+		"$HOME/.local/scripts/tmux/clipboard.sh" pop
 		;;
 
 	"Theme: choose colorscheme")
