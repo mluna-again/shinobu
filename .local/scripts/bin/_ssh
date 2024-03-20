@@ -29,7 +29,7 @@ mluna@dh.local
 EOF
 )
 
-common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173)
+common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173 8001 6111 6112)
 common_ports=("${common_ports[@]}" "${manual_ports[@]}")
 ports=$(sed 's/ /\n/g' <<< "${common_ports[@]}" | awk '{ printf " -L %s:localhost:%s", $1, $1 }' | sed 's/^ //')
 
