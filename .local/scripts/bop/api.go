@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"net/http"
-	"strings"
 
 	"github.com/zmb3/spotify/v2"
 )
@@ -16,19 +15,20 @@ func (app *app) pause(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := app.client.Play(r.Context())
+	state, err := app.client.PlayerState(r.Context())
 	if err != nil {
-		// maybe player is already playing (i guess there is a way to tell spotify to toggle it but idk how)
-		if strings.Contains(err.Error(), "Restriction violated") {
-			err := app.client.Pause(r.Context())
-			if err != nil {
-				app.sendInternalServerErrorWithMessage(w, err.Error())
-				return
-			}
-			app.sendOk(w)
-			return
-		}
-		app.sendInternalServerErrorWithMessage(w, err.Error())
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	if state.Playing {
+		err = app.client.Pause(r.Context())
+	} else {
+		err = app.client.Play(r.Context())
+	}
+
+	if err != nil {
+		app.sendInternalServerError(w, err)
 		return
 	}
 
