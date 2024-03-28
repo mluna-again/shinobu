@@ -23,11 +23,7 @@ while true; do
   esac
 done
 
-workspace=$(cat - <<EOF | fzf --header="Select workspace"
-mluna@desktop.local
-mluna@dh.local
-EOF
-)
+workspace=$(awk '{print $1}' < "$HOME/.ssh/known_hosts" | sort | uniq | fzf --header="Select workspace")
 
 common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173 8001 6111 6112)
 common_ports=("${common_ports[@]}" "${manual_ports[@]}")
