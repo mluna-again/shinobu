@@ -22,8 +22,9 @@ function catsays
     set -l rborder "┏"
     set -l lborder "┓"
 
-    echo "$rborder"(string repeat -n (math (string length "$border") - 2) "━")"$lborder"
-
+    echo -n "$rborder catsays: "
+    echo -n (string repeat -n (math (string length "$border") - 2 - 10) "━")
+    echo "$lborder"
 
     for line in $lines
         set line (echo $line | sed 's/\t/  /g')
