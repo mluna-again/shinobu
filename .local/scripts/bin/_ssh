@@ -1,14 +1,20 @@
 #! /usr/bin/env bash
 
 manual_ports=()
+user="$USER"
 
-options=$(getopt "p:" "$*")
+options=$(getopt "p:u:" "$*")
 set -- $options
 
 while true; do
   case "$1" in
     -p|--p)
       manual_ports+=("$2")
+      shift
+      ;;
+
+    -u)
+      user="$2"
       shift
       ;;
 
@@ -23,7 +29,7 @@ while true; do
   esac
 done
 
-workspace=$(awk '{print $1}' < "$HOME/.ssh/known_hosts" | sort | uniq | fzf --header="Select workspace")
+workspace=$(awk "{printf \"%s@%s\n\", \"$user\", \$1; }" < "$HOME/.ssh/known_hosts" | sort | uniq | fzf --header="Select workspace")
 
 common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173 8001 6111 6112)
 common_ports=("${common_ports[@]}" "${manual_ports[@]}")
