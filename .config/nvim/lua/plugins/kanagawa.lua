@@ -342,6 +342,12 @@ return {
 					NeogitRemote = { fg = theme.syn.number, bg = theme.ui.bg },
 					NeogitDiffContext = { fg = theme.ui.fg, bg = theme.diff.change },
 					NeogitDiffContextHighlight = { fg = theme.ui.fg, bg = theme.diff.change },
+					NeogitCommitViewHeader = { fg = theme.syn.statement, bg = theme.ui.bg },
+
+					DiffviewFilePanelTitle = { fg = theme.syn.statement },
+					DiffviewFilePanelCounter = { fg = theme.syn.statement },
+					DiffviewFilePrimary = { fg = theme.syn.identifier },
+					DiffviewFileSecondary = { fg = theme.syn.operator },
 				}
 			end,
 		})
