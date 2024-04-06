@@ -53,12 +53,24 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.symfony5/bin" \
     "$HOME/.nimble/bin"
 
+function search_dir
+    set -l dir (find . -maxdepth 5 -type d | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)
+    if test -z "$dir"
+        commandline -f repaint
+        return
+    end
+
+    cd "$dir"
+    commandline -f repaint
+end
+
 # BINDINGS
 bind -M insert \ce end-of-line
 bind -M insert \ca beginning-of-line
 bind -M insert \ck accept-autosuggestion
 bind -M insert \cp history-search-backward
 bind -M insert \cn history-search-forward
+bind -M insert \cf search_dir
 bind --mode insert --sets-mode default jj backward-char repaint
 
 # ENV
