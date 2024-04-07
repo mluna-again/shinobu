@@ -1,9 +1,10 @@
 #! /usr/bin/env bash
 
 manual_ports=()
+ports_to_remove=()
 user="$USER"
 
-options=$(getopt "p:u:" "$*")
+options=$(getopt "p:u:x:" "$*")
 set -- $options
 
 while true; do
@@ -15,6 +16,11 @@ while true; do
 
     -u)
       user="$2"
+      shift
+      ;;
+
+    -x|--x)
+      ports_to_remove+=("$2")
       shift
       ;;
 
@@ -33,7 +39,19 @@ workspace=$(awk "{printf \"%s@%s\n\", \"$user\", \$1; }" < "$HOME/.ssh/known_hos
 
 common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173 8001 6111 6112)
 common_ports=("${common_ports[@]}" "${manual_ports[@]}")
-ports=$(sed 's/ /\n/g' <<< "${common_ports[@]}" | awk '{ printf " -L %s:localhost:%s", $1, $1 }' | sed 's/^ //')
+filtered_common_ports=()
+
+if [ -n "${ports_to_remove[*]}" ]; then
+  for p in "${common_ports[@]}"; do
+    if ! grep -q "$p" <<< "${ports_to_remove[@]}"; then
+      filtered_common_ports+=("$p")
+    fi
+  done
+else
+  filtered_common_ports+=("${common_ports[@]}")
+fi
+
+ports=$(sed 's/ /\n/g' <<< "${filtered_common_ports[@]}" | awk '{ printf " -L %s:localhost:%s", $1, $1 }' | sed 's/^ //')
 
 [ -z "$workspace" ] && exit 1
 
