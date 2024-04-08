@@ -15,30 +15,30 @@
 -- }
 
 local normalized = {
-	Property      = "Property   ",
-	Constructor   = "Constructor",
-	Text          = "Text       ",
-	Method        = "Method     ",
-	Function      = "Function   ",
-	Field         = "Field      ",
-	Variable      = "Variable   ",
-	Class         = "Class      ",
-	Struct        = "Struct     ",
-	Interface     = "Interface  ",
-	Value         = "Value      ",
-	Keyword       = "Keyword    ",
-	Snippet       = "Snippet    ",
-	File          = "File       ",
-	Folder        = "Folder     ",
-	Module        = "Module     ",
-	Enum          = "Enum       ",
-	EnumMember    = "Enum       ",
-	Unit          = "Unit       ",
-	Color         = "Color      ",
-	Reference     = "Reference  ",
-	Constant      = "Constant   ",
-	Event         = "Event      ",
-	Operator      = "Operator   ",
+	Property = "Property   ",
+	Constructor = "Constructor",
+	Text = "Text       ",
+	Method = "Method     ",
+	Function = "Function   ",
+	Field = "Field      ",
+	Variable = "Variable   ",
+	Class = "Class      ",
+	Struct = "Struct     ",
+	Interface = "Interface  ",
+	Value = "Value      ",
+	Keyword = "Keyword    ",
+	Snippet = "Snippet    ",
+	File = "File       ",
+	Folder = "Folder     ",
+	Module = "Module     ",
+	Enum = "Enum       ",
+	EnumMember = "Enum       ",
+	Unit = "Unit       ",
+	Color = "Color      ",
+	Reference = "Reference  ",
+	Constant = "Constant   ",
+	Event = "Event      ",
+	Operator = "Operator   ",
 	TypeParameter = "Type       ",
 }
 
@@ -111,13 +111,13 @@ return {
 			},
 			window = {
 				completion = cmp.config.window.bordered({
-          border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"},
-          scrollbar = false
-        }),
+					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+					scrollbar = false,
+				}),
 				documentation = cmp.config.window.bordered({
-          border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"},
-          scrollbar = false
-        }),
+					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+					scrollbar = false,
+				}),
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -168,20 +168,20 @@ return {
 				},
 				{
 					name = "vim-dadbod-completion",
-					priority = 6
-				}
+					priority = 6,
+				},
 			}),
 			formatting = {
 				format = function(entry, item)
-					item.kind = string.format(' %s %s ', kind_icons[item.kind], normalized[item.kind])
+					item.kind = string.format(" %s %s ", kind_icons[item.kind], normalized[item.kind])
 					return item
 				end,
 			},
 		})
 
 		-- disable for some filetypes
-		cmp.setup.filetype({ 'oil', 'oil_preview' }, {
-			sources = {}
+		cmp.setup.filetype({ "oil", "oil_preview" }, {
+			sources = {},
 		})
 
 		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -204,15 +204,25 @@ return {
 			"pyright",
 			"intelephense",
 			"gdscript",
-			"tailwindcss",
-			"bashls"
+			"bashls",
 		}
 
+		local lspconfig = require("lspconfig")
+
 		for _, server in pairs(servers) do
-			require("lspconfig")[server].setup({
+			lspconfig[server].setup({
 				capabilities = capabilities,
 			})
 		end
+
+		lspconfig["tailwindcss"].setup({
+			capabilities = capabilities,
+			root_dir = function(fname)
+				local root_pattern = lspconfig.util.root_pattern("tailwind.config.cjs", "tailwind.config.js", "postcss.config.js")
+
+				return root_pattern(fname)
+			end,
+		})
 
 		local wk = require("which-key")
 		wk.register({
@@ -220,11 +230,11 @@ return {
 				name = "Lsp",
 				u = {
 					function()
-						require('telescope.builtin').lsp_references()
+						require("telescope.builtin").lsp_references()
 					end,
 					"References",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				h = {
 					function()
@@ -232,7 +242,7 @@ return {
 					end,
 					"Hover",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				r = {
 					function()
@@ -240,7 +250,7 @@ return {
 					end,
 					"Rename",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				f = {
 					function()
@@ -248,7 +258,7 @@ return {
 					end,
 					"Definition preview",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				F = {
 					function()
@@ -256,7 +266,7 @@ return {
 					end,
 					"Go to definition",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				d = {
 					function()
@@ -264,7 +274,7 @@ return {
 					end,
 					"Diagnostics",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				R = {
 					function()
@@ -272,9 +282,9 @@ return {
 					end,
 					"Restart server",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
-			}
+			},
 		}, { prefix = "<Leader>" })
 	end,
 }
