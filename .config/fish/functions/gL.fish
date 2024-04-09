@@ -8,7 +8,10 @@ function gL
     test -z "$log"; and return
 
     set -l log_id (echo "$log" | awk '{ print $1 }')
-    git log -1 "$log_id"
     git diff "$log_id~" "$log_id"
+
+    clear
+    git log -1 "$log_id"
+
     echo -n "$log_id" | fish_clipboard_copy
 end

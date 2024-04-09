@@ -8,8 +8,10 @@ function dotsL
     test -z "$log"; and return
 
     set -l log_id (echo "$log" | awk '{ print $1 }')
-    yadm log -1 "$log_id"
     yadm diff "$log_id~" "$log_id"
+
+    clear
+    yadm log -1 "$log_id"
 
     echo -n "$log_id" | fish_clipboard_copy
 end
