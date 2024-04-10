@@ -6,50 +6,24 @@ end
 
 function _try_start_docker_desktop_app
     if not uname | grep -iq linux
-        printf "Sorry osx user, you are on your own (can't auto-start docker desktop).\n"
+        printf "Docker is not running."
         return 1
     end
 
     printf "Trying to start docker...\n"
     if systemctl --user start docker-desktop
-        printf "Docker started.\n"
+        printf "Docker started, try again.\n"
         return 0
     else
         printf "Docker could not be started.\n" 2>&1
         return 1
     end
-
-    sleep 2.5
-end
-
-function _try_hide_docker_desktop_app
-    set -l should_close_desktop $argv[1]
-    if not test "$should_close_desktop" = true
-        return 1
-    end
-
-    if not command -vq xdotool
-        printf "[xdotool] xdotool is not installed. Install it to autoclose docker-desktop app."
-        return 1
-    end
-
-    set -l id (xdotool search --name "docker desktop")
-    if test "$(echo $id | wc -l)" -ge 2
-        printf "[xdotool] too many windows matched 'docker-desktop'. Won't close them to be safe.\n"
-        return 1
-    end
-
-    xdotool windowclose "$id"
 end
 
 function dock
-    set -l should_close_desktop false
-    # i try to close docker-desktop at the end because by
-    # the time the function reaches its end docker-desktop
-    # *should* already be running and xdotool will be able
-    # to find it
-    _is_docker_running &>/dev/null; or begin
-        _try_start_docker_desktop_app; and set should_close_desktop true
+    if not _is_docker_running &>/dev/null
+        _try_start_docker_desktop_app
+        return 0
     end
 
     set -l cmd $argv[1]
@@ -162,9 +136,6 @@ function dock
 
         case '*'
             printf "Invalid command.\n"
-            _try_hide_docker_desktop_app "$should_close_desktop"
             return 1
     end
-
-    _try_hide_docker_desktop_app "$should_close_desktop"; or true
 end
