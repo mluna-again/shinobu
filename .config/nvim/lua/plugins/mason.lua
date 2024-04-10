@@ -29,11 +29,18 @@ return {
 			"tailwindcss-language-server",
 			"bash-language-server",
 			"sqlfluff",
-			"zls"
+			"zls",
+			"csharp-language-server",
+			"svelte-language-server",
+			"pyright",
+			"intelephense",
+			"nilaway",
+			"shfmt",
+			"black",
 		}
 
 		mason.setup({
-			max_concurrent_installers = 10,
+			max_concurrent_installers = 25,
 		})
 
 		vim.api.nvim_create_user_command("MasonInstallAll", function()
