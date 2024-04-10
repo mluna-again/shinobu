@@ -26,6 +26,9 @@ BUDGET_FILE="$HOME/Notes/budget.sc"
 
 LOCAL_SCRIPTS_FOLDER="$HOME/.local/custom_scripts"
 
+CACHE="$HOME/.cache/toggle_borders.sh"
+[ -f "$CACHE" ] || touch "$CACHE"
+
 orientations="$(cat - <<EOF
 Horizontal
 Vertical
@@ -623,13 +626,7 @@ case "$action" in
 		;;
 
 	"Borders: Toggle for current window")
-		current_ignored=$(
-	grep '^ignored_windows' "$HOME/.local/scripts/tmux/toggle_pane_borders.sh" | \
-		sed 's/^ignored_windows=//' | \
-		sed "s/^'//" | \
-		sed "s/'$//" | \
-		jq .
-		)
+		current_ignored=$(jq . "$BORDERS_CACHE_FILE")
 		current_window=$(tmux list-windows -F "#{window_active} #{window_name}" | awk '$1 == 1' | awk '{print $2}')
 
 		arg=$(printf '. += ["%s"]' "$current_window")
@@ -642,11 +639,7 @@ case "$action" in
 			new_ignored=$(jq -c "$arg" <<< "$current_ignored")
 		fi
 
-		if uname | grep -i darwin &>/dev/null; then
-			sed -i '' "s/^ignored_windows=.*\$/ignored_windows='$new_ignored'/" "$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
-		else
-			sed -i "s/^ignored_windows=.*\$/ignored_windows='$new_ignored'/" "$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
-		fi
+		echo "$new_ignored" > "$CACHE"
 
 		"$HOME/.local/scripts/tmux/toggle_pane_borders.sh"
 		;;
