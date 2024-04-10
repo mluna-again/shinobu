@@ -34,7 +34,7 @@ return {
 			"svelte-language-server",
 			"pyright",
 			"intelephense",
-			"nilaway",
+			"flake8",
 			"shfmt",
 			"black",
 		}

@@ -205,7 +205,6 @@ return {
 			"intelephense",
 			"gdscript",
 			"bashls",
-			"nilaway"
 		}
 
 		local lspconfig = require("lspconfig")
