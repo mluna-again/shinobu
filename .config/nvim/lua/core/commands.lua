@@ -6,5 +6,5 @@ local function yankBufferPath()
 	vim.cmd("let @+ = expand(\"%\")")
 end
 
-vim.api.nvim_create_user_command("YankF", yankFullBufferPath, {})
-vim.api.nvim_create_user_command("YankP", yankBufferPath, {})
+vim.api.nvim_create_user_command("YankFull", yankFullBufferPath, {})
+vim.api.nvim_create_user_command("Yank", yankBufferPath, {})
