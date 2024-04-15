@@ -1,7 +1,7 @@
 function git_reset_branch
   if test -z "$argv[1]"
     echo "Missing branch."
-    return
+    return 1
   end
 
   set -l branch "$argv[1]"
