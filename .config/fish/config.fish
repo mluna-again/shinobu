@@ -54,7 +54,7 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.nimble/bin"
 
 function search_dir
-    set -l dir (find . -maxdepth 10 | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)
+    set -l dir (find . -maxdepth 10 | grep -v '^.$' | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)
     if test -z "$dir"
         commandline -f repaint
         return
