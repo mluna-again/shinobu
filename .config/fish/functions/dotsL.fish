@@ -3,7 +3,7 @@ function dotsL
     set -l fsize (math \($cols - 10\) / 2)
     set -l fsize (math floor $fsize)
 
-    set -l log (yadm log --format="%h • %s • %an @ %ad" | fzf +s -i -e --header="Search git logs" --preview="echo {} | fold -w $fsize -s && yadm diff '{+1}~' {+1} | delta")
+    set -l log (yadm log --format="%h • %s • %an @ %ad" | fzf +s --header="Search git logs" --preview="echo {} | fold -w $fsize -s && yadm diff '{+1}~' {+1} | delta")
 
     test -z "$log"; and return
 
