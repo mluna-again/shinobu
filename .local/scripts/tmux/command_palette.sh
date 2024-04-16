@@ -93,6 +93,7 @@ Tmux: floating terminal
 Tmux: block outer session
 Tmux: join panes
 Tmux: split panes
+Tmux: welcome screen
 Clipboard: push
 Clipboard: pop
 Lol: wake up
@@ -810,6 +811,10 @@ EOF
 		tmux resize-pane -t . -R 10
 		;;
 
+	"Tmux: welcome screen")
+		"$HOME/.local/scripts/tmux/welcome/welcome.sh"
+		;;
+
 	"Tmux: set current directory as default")
 		tmux attach-session -t . -c "#{pane_current_path}"
 		true
@@ -1133,7 +1138,6 @@ EOF
 		tmux send-keys -t . "$cheat"
 
 		;;
-
 
 	"Lol: wake up")
 		if ! figlet -c hey &>/dev/null; then
