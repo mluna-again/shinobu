@@ -1,0 +1,28 @@
+#! /usr/bin/env bash
+
+declare SAVE_FILE="$HOME/yes" SEARCH_PATH="$HOME/.local/scripts/tmux/search_all_panes.sh"
+
+pane_id=$("$SEARCH_PATH" -p -q catsays)
+history_limit=$("$SEARCH_PATH" -l)
+
+copy_to_clipboard() {
+  local os
+  os="$(uname)"
+
+  case "${os,,}" in
+    linux)
+      cat - | xclip -selection clipboard
+      ;;
+
+    darwin)
+      cat - | pbcopy
+      ;;
+
+    *)
+      echo "[copy_to_clipboard] Unsupported platform!"
+      exit 1
+      ;;
+  esac
+}
+
+tmux capture-pane -S -"$history_limit" -p -t "$pane_id" | sed '/じしf_,)ノ/q' | tee --append "$SAVE_FILE" | copy_to_clipboard
