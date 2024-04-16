@@ -4,6 +4,7 @@ declare WELCOME_PATH="$HOME/.local/scripts/tmux/welcome" RESPATH="$HOME/.local/s
 declare run="${1:-0}" SCRIPT="$WELCOME_PATH/welcome.sh"
 
 [ ! -f "$RESPATH" ] && touch "$RESPATH"
+cd "$WELCOME_PATH"
 
 binary_exists() {
 	[ -x "$WELCOME_PATH/welcome" ]
@@ -15,7 +16,7 @@ go_installed() {
 
 compile_welcome() {
 	echo "Compiling Welcome Screen..."
-	go build &>/dev/null || return 1
+	go build || return 1
 	clear
 }
 
@@ -36,7 +37,7 @@ main() {
 	w=$(tput cols)
 
 	tmux list-sessions -F "#{session_name} #{session_last_attached} #{session_id}" | \
-	  "$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" || exit
+	  "$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" || exit 1
 
 	tmux switch-client -t "$(cat "$RESPATH")"
 }
