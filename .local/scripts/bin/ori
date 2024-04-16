@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-declare model route route_prefix method context prefix dir schema item
+declare model route route_prefix method context prefix dir schema item file
 
 # shellcheck disable=SC2120
 die() {
@@ -14,8 +14,11 @@ tostderr() {
 assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
 assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
 
-while getopts "i:m:c:p:" o; do
+while getopts "i:m:c:p:f:" o; do
 	case "${o}" in
+	f)
+		file="${OPTARG}"
+		;;
 	c)
 		context="${OPTARG}"
 		;;
@@ -67,11 +70,57 @@ error() {
 	printf '\033[41;30m ERROR \033[0m %s\n' "$1"
 }
 
-title() {
-	figlet -w 120 -f ~/.local/fonts/ansi.flf "$1"
-}
+# EXTRACT INFO FROM FILE
+if [ -n "$file" ]; then
+	if [ ! -f "$file" ]; then
+		die "$file doesn't exist"
+	fi
 
-assert_installed figlet
+	case "$file" in
+		*controller_test*)
+			name="$(basename "$file" _controller_test.exs)"
+			model="$(pascal_case "${name//-/_}")"
+			context="${model}s"
+			item="test"
+			;;
+
+		*controller*)
+			name="$(basename "$file" _controller.ex)"
+			model="$(pascal_case "${name//-/_}")"
+			context="${model}s"
+			item=controller
+			;;
+
+		*view*)
+			name="$(basename "$file" _view.ex)"
+			model="$(pascal_case "${name//-/_}")"
+			context="${model}s"
+			item=view
+			;;
+
+		*)
+			case "$item" in
+				schema)
+					name="$(basename "$file" .ex)"
+					model="$(pascal_case "${name//-/_}")"
+					context="${model}s"
+					item=schema
+					;;
+
+				context)
+					name="$(basename "$file" .ex)"
+					model="$(pascal_case "${name//-/_}")"
+					context="${model}s"
+					item=context
+					;;
+
+				*)
+					die "Ambiguous file type, possible options: schema, context"
+					;;
+			esac
+			;;
+	esac
+fi
 
 # VALIDATION
 
@@ -108,7 +157,7 @@ project_name="$(pascal_case "$(basename "$PWD")")"
 schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
 context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-if [ -z "$item" ] || [ "$item" = schema ]; then
+if [ -z "$item" ] || [ "$item" = context ]; then
 	cat - <<EOF
 defmodule $project_name.$context_name do
 	alias $project_name.$schema_name
@@ -146,7 +195,7 @@ context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
 if [ -z "$item" ] || [ "$item" = controller ]; then
 	cat - <<EOF
-defmodule $project_name$controller_prefix${model_name}Controller do
+defmodule ${project_name}Web$controller_prefix${model_name}Controller do
 	use ${project_name}Web, :controller
 	action_fallback ${project_name}Web.FallbackController
 
@@ -164,7 +213,7 @@ context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
 if [ -z "$item" ] || [ "$item" = view ]; then
 	cat - <<EOF
-defmodule $project_name$view_prefix${model_name}View do
+defmodule ${project_name}Web$view_prefix${model_name}View do
 	use ${project_name}Web, :view
 
 	def render("show.json", %{$model_name_snake: $model_name_snake}) do
