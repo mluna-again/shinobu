@@ -10,6 +10,8 @@
   "Reset colors": "printf '\\033[0m'",
   "Longest line (count)": "awk '{ if ( length > x ) { x = length } } END { print x }'",
   "Longest line (text)": "awk '{ if ( length > x ) { x = length; line = $0 } } END { print line }'",
+  "To Snake Case": "sed -r 's/([a-z0-9])([A-Z])/\\1_\\L\\2/g'",
+  "To Pascal Case": "sed -r 's/(^|_)([a-z])/\\U\\2/g'",
   "Enter container": "docker container exec -it (dock id) bash",
   "Files older than": "find . -type f -mtime +<days>",
   "PostgreSQL connections string": "postgresql://postgres:postgres@localhost:5432/database",
