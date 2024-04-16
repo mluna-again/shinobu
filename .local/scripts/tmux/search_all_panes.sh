@@ -1,16 +1,20 @@
 #! /usr/bin/env bash
 
-declare HISTORY_LIMIT=2500 only_pane=0
+declare HISTORY_LIMIT=2500 only_pane=0 print_limit=0
 
 usage() {
   cat - <<EOF
 Available flags:
   -p: print pane id instead of switching
+  -l: print current HISTORY_LIMIT
 EOF
 }
 
-while getopts "p" arg; do
+while getopts "pl" arg; do
   case "$arg" in
+    l)
+      print_limit=1
+      ;;
     p)
       only_pane=1
       ;;
@@ -20,6 +24,11 @@ while getopts "p" arg; do
     ;;
   esac
 done
+
+if [[ "$print_limit" -eq 1 ]]; then
+  echo "$HISTORY_LIMIT"
+  exit 0
+fi
 
 pane=$(while read -r pane; do
 	id=$(awk '{print $1}' <<< "$pane")
