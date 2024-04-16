@@ -230,7 +230,7 @@ defmodule ${project_name}Web$view_prefix${model_name}View do
 		%{}
 	end
 
-	def render("list.json", %{$(pluralize "$model_name_snake"): $(pluralize "$model_name_snake") do
+	def render("list.json", %{$(pluralize "$model_name_snake"): $(pluralize "$model_name_snake")}) do
 		render_many($(pluralize "$model_name_snake"), __MODULE__, "show.json")
 	end
 end
