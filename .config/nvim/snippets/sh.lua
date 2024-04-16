@@ -30,7 +30,7 @@ return {
 			[[broken_pipe() { grep -vq "^[0 ]*$" <<< "${PIPESTATUS[*]}"; }]],
 			[[termheight() { tput lines; }]],
 			[[termwidth() { tput cols; }]],
-		})
+		}),
 	}),
 
 	s("tmux_helpers", {
@@ -39,6 +39,25 @@ return {
 			[[talert() { tmux display -d 0 "#[bg=#{@color_info},fill=#{@color_info},fg=black] 󰭺 Message: $*"; }]],
 			[[terror() { tmux display -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Message: $*"; }]],
 			[[tsuccess() { tmux display -d 0 "#[bg=#{@color_success},fill=#{@color_success},fg=black]  Message: $*"; }]],
-		})
-	})
+		}),
+	}),
+
+	s("opts", {
+		t({
+			[[while getopts "hs:p:" arg; do]],
+			[[	case "$arg" in]],
+			[[		p)]],
+			[[			value="${OPTARG}"]],
+			[[			;;]],
+			[[		s)]],
+			[[			value="${OPTARG}"]],
+			[[			;;]],
+			[[		h | *)]],
+			[[			usage]],
+			[[			exit 1]],
+			[[  		;;]],
+			[[	esac]],
+			[[done]],
+		}),
+	}),
 }, {}
