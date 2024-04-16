@@ -60,4 +60,28 @@ return {
 			[[done]],
 		}),
 	}),
+
+	s("clipboard", {
+		t({
+			[[copy_to_clipboard() {]],
+			[[	local os]],
+			[[	os="$(uname)"]],
+			[[]],
+			[[	case "${os,,}" in]],
+			[[		linux)]],
+			[[			cat - | xclip -selection clipboard]],
+			[[			;;]],
+			[[]],
+			[[		darwin)]],
+			[[			cat - | pbcopy]],
+			[[			;;]],
+			[[]],
+			[[		*)]],
+			[[			echo "[copy_to_clipboard] Unsupported platform!"]],
+			[[			exit 1]],
+			[[			;;]],
+			[[	esac]],
+			[[}]],
+		}),
+	}),
 }, {}

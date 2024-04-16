@@ -1,17 +1,21 @@
 #! /usr/bin/env bash
 
-declare HISTORY_LIMIT=2500 only_pane=0 print_limit=0
+declare HISTORY_LIMIT=2500 only_pane=0 print_limit=0 query=""
 
 usage() {
   cat - <<EOF
 Available flags:
   -p: print pane id instead of switching
   -l: print current HISTORY_LIMIT
+  -q <query>: initial query
 EOF
 }
 
-while getopts "pl" arg; do
+while getopts "plq:" arg; do
   case "$arg" in
+    q)
+      query="${OPTARG}"
+      ;;
     l)
       print_limit=1
       ;;
@@ -35,7 +39,7 @@ pane=$(while read -r pane; do
 	name=$(awk '{print $2}' <<< "$pane")
 
 	tmux capture-pane -S -"$HISTORY_LIMIT" -p -t "$id" | awk "\$0 != \"\" {printf \"%s %s %s: %s\n\", \"$id\", NR, \"$name\", \$0 ;}"
-done < <(tmux list-panes -a -F "#{pane_id} #{window_name}") | fzf -d " " --with-nth=3.. --height=0 --cycle --preview="tmux capture-pane -e -p -S -$HISTORY_LIMIT -t {1} | grep -i --color=always -C 15 "{q}"")
+done < <(tmux list-panes -a -F "#{pane_id} #{window_name}") | fzf -q "$query" -d " " --with-nth=3.. --height=0 --cycle --preview="tmux capture-pane -e -p -S -$HISTORY_LIMIT -t {1} | grep -i --color=always -C 15 "{q}"")
 
 [ -z "$pane" ] && exit
 
