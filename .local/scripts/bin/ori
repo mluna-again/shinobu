@@ -1,0 +1,250 @@
+#! /usr/bin/env bash
+
+declare model route route_prefix method controller view test context prefix dir schema confirmation
+
+with_prefix() {
+	local item="$1"
+	local prefix="$2"
+
+	if [ -z "$prefix" ]; then
+		echo "$item"
+		return
+	fi
+
+	echo "$prefix/$item"
+}
+
+snake_case() {
+	echo "$1" | sed -r 's/([a-z0-9])([A-Z])/\1_\L\2/g' | tr '[:upper:]' '[:lower:]'
+}
+
+pascal_case() {
+	echo "$1" | sed -r 's/(^|_)([a-z])/\U\2/g'
+}
+
+# shellcheck disable=SC2120
+die() {
+	[ -n "$*" ] && tostderr "$*"
+	exit 1
+}
+tostderr() {
+	tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2
+	tput sgr0
+}
+assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
+assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
+
+success() {
+	printf '\033[42;30m SUCCESS \033[0m %s\n' "$1"
+}
+
+info() {
+	printf '\033[43;30m INFO \033[0m %s\n' "$1"
+}
+
+error() {
+	printf '\033[41;30m ERROR \033[0m %s\n' "$1"
+}
+
+read_variable() {
+	if [ -n "$3" ]; then
+		echo -n "$3"
+	else
+		echo -n "${1^}"
+	fi
+	[ -n "$2" ] && echo -n " [$2]"
+	echo -n ": "
+	read -r "$1"
+
+	if [ -n "$2" ] && [ -z "${!1}" ]; then
+		declare -g "$1"="$2"
+	fi
+
+	if [ -z "${!1}" ]; then
+		die "${1^} required."
+	fi
+}
+
+# GETTING INFO
+
+read_variable model
+read_variable route_prefix "/api/v1/$(snake_case "$model")s" "Route Prefix"
+read_variable route "/"
+read_variable method "GET"
+read_variable context
+
+# VALIDATION
+
+if [[ ! "$model" =~ ^[a-zA-Z]*$ ]]; then
+	die "Model: $model is invalid"
+fi
+
+if [[ ! "$route" =~ ^[a-z0-9_/]*$ ]]; then
+	die "Route: $route is invalid"
+fi
+
+if [[ ! "$route_prefix" =~ ^[a-z0-9_/]*$ ]]; then
+	die "Route Prefix: $route_prefix is invalid"
+fi
+
+if [[ ! "${method^^}" =~ ^(GET|POST|PATCH|PUT|OPTION|HEAD)$ ]]; then
+	die "Method: $method is invalid"
+fi
+
+if [[ ! "$context" =~ ^[a-zA-Z]*$ ]]; then
+	die "Context: $context is invalid"
+fi
+
+# TRANSFORMS
+method="${method^^}"
+
+# GENERATION
+dir="$(basename "$PWD")"
+echo -n "Prefix (v1)? [no] "
+read -r prefix
+if [ "${prefix:-no}" = no ]; then
+	prefix=""
+fi
+
+method="${method^^}"
+controller="./lib/${dir}_web/controllers/$(with_prefix "$(snake_case "$model")" "$prefix")_controller.ex"
+view="./lib/${dir}_web/views/$(with_prefix "$(snake_case "$model")" "$prefix")_view.ex"
+context="./lib/${dir}/$(snake_case "$model")s/$(snake_case "$context").ex"
+schema="./lib/${dir}/$(snake_case "$model")s/$(snake_case "$model").ex"
+test="./test/${dir}_web/controllers/$(snake_case "$model")_test.exs"
+[ "$route" = "/" ] && route="$route_prefix$route"
+echo "$prefix"
+
+# CONFIRMATION
+echo
+cat - <<EOF
+Schema: $schema
+Context: $context
+Method: $method
+Route: $route
+Controller: $controller
+View: $view
+Test: $test
+EOF
+echo -n "Everything alright? [n] "
+read -r confirmation
+# if [[ ! "${confirmation,,}" =~ ^(y|yes)$ ]]; then
+# 	exit 1
+# fi
+echo
+echo
+
+# CONTEXT
+project_name="$(pascal_case "$(basename "$PWD")")"
+context_dir="$(dirname "$context")"
+if [ -d "$context_dir" ]; then
+	info "$context_dir already exists. Skipping."
+else
+	mkdir -p "$context_dir"
+fi
+
+if [ ! -f "$context" ]; then
+	schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
+	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+	cat - <<EOF >"$context"
+defmodule $project_name.$context_name do
+	alias $project_name.$schema_name
+end
+EOF
+	success "$context created."
+else
+	info "$context already exists. Skipping."
+fi
+
+# SCHEMA
+if [ ! -f "$schema" ]; then
+	schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
+	model_name="$(snake_case "$model")"
+	cat - <<EOF > "$schema"
+defmodule $project_name.$schema_name do
+	use $project_name.Schema
+
+	@derive {Jason.Encoder, except: [:__meta__]}
+	@primary_key {:id, Ecto.UUID, autogenerate: true}
+	schema "${model_name}s" do
+		timestamps()
+	end
+
+	def changeset($model_name, attrs) do
+		$model_name
+	end
+end
+EOF
+	success "$schema created."
+else
+	info "$schema already exists. Skipping."
+fi
+
+# CONTROLLER
+if [ ! -f "$controller" ]; then
+	controller_prefix="."
+	[ -n "$prefix" ] && controller_prefix=".${prefix^^}."
+	model_name="$(pascal_case "$model")"
+	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+
+	cat - <<EOF > "$controller"
+defmodule $project_name$controller_prefix${model_name}Controller do
+	use ${project_name}Web, :controller
+	action_fallback ${project_name}Web.FallbackController
+
+	alias $project_name.$context_name
+end
+EOF
+	success "$controller created."
+else
+	info "$controller already exists. Skipping."
+fi
+
+# VIEW
+if [ ! -f "$view" ]; then
+	view_prefix="."
+	[ -n "$prefix" ] && view_prefix=".${prefix^^}."
+	model_name="$(pascal_case "$model")"
+	model_name_snake="$(snake_case "$model")"
+	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+
+	cat - <<EOF > "$view"
+defmodule $project_name$view_prefix${model_name}View do
+	use ${project_name}Web, :view
+
+	def render("show.json", %{$model_name_snake: $model_name_snake}) do
+		%{}
+	end
+
+	def render("list.json", %{${model_name_snake}s: ${model_name_snake}s}) do
+		render_many(${model_name_snake}s, __MODULE__, "show.json")
+	end
+end
+EOF
+	success "$controller created."
+else
+	info "$controller already exists. Skipping."
+fi
+
+# TEST
+if [ ! -f "$test" ]; then
+	test_prefix="."
+	[ -n "$prefix" ] && test_prefix=".${prefix^^}."
+	model_name="$(pascal_case "$model")"
+	model_name_snake="$(snake_case "$model")"
+	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+
+	cat - <<EOF > "$test"
+defmodule $project_name$test_prefix${model_name}ControllerTest do
+	use ${project_name}Web.ConnCase
+	import Mock
+
+	alias $project_name.$context_name
+end
+EOF
+	success "$test created."
+else
+	info "$test already exists. Skipping."
+fi
+
+# TODO: ROUTE
