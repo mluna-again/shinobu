@@ -14,6 +14,16 @@ tostderr() {
 assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
 assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
 
+pluralize() {
+	local item="$1"
+	if grep -q "s$" <<< "$item"; then
+		echo "$item"
+		return
+	fi
+
+	echo "${item}s"
+}
+
 while getopts "i:m:c:p:f:" o; do
 	case "${o}" in
 	f)
@@ -80,21 +90,21 @@ if [ -n "$file" ]; then
 		*controller_test*)
 			name="$(basename "$file" _controller_test.exs)"
 			model="$(pascal_case "${name//-/_}")"
-			context="${model}s"
+			context="$(pluralize "$model")"
 			item="test"
 			;;
 
 		*controller*)
 			name="$(basename "$file" _controller.ex)"
 			model="$(pascal_case "${name//-/_}")"
-			context="${model}s"
+			context="$(pluralize "$model")"
 			item=controller
 			;;
 
 		*view*)
 			name="$(basename "$file" _view.ex)"
 			model="$(pascal_case "${name//-/_}")"
-			context="${model}s"
+			context="$(pluralize "$model")"
 			item=view
 			;;
 
@@ -103,14 +113,14 @@ if [ -n "$file" ]; then
 				schema)
 					name="$(basename "$file" .ex)"
 					model="$(pascal_case "${name//-/_}")"
-					context="${model}s"
+					context="$(pluralize "$model")"
 					item=schema
 					;;
 
 				context)
 					name="$(basename "$file" .ex)"
 					model="$(pascal_case "${name//-/_}")"
-					context="${model}s"
+					context="$(pluralize "$model")"
 					item=context
 					;;
 
@@ -176,7 +186,7 @@ defmodule $project_name.$schema_name do
 
 	@derive {Jason.Encoder, except: [:__meta__]}
 	@primary_key {:id, Ecto.UUID, autogenerate: true}
-	schema "${model_name}s" do
+	schema "$(pluralize "$model_name")" do
 		timestamps()
 	end
 
@@ -220,8 +230,8 @@ defmodule ${project_name}Web$view_prefix${model_name}View do
 		%{}
 	end
 
-	def render("list.json", %{${model_name_snake}s: ${model_name_snake}s}) do
-		render_many(${model_name_snake}s, __MODULE__, "show.json")
+	def render("list.json", %{$(pluralize "$model_name_snake"): $(pluralize "$model_name_snake") do
+		render_many($(pluralize "$model_name_snake"), __MODULE__, "show.json")
 	end
 end
 EOF
