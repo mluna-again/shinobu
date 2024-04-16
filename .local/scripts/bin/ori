@@ -1,6 +1,39 @@
 #! /usr/bin/env bash
 
-declare model route route_prefix method controller view test context prefix dir schema confirmation
+declare model route route_prefix method context prefix dir schema item
+
+# shellcheck disable=SC2120
+die() {
+	[ -n "$*" ] && tostderr "$*"
+	exit 1
+}
+tostderr() {
+	tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2
+	tput sgr0
+}
+assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
+assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
+
+while getopts "i:m:c:p:" o; do
+	case "${o}" in
+	c)
+		context="${OPTARG}"
+		;;
+	m)
+		model="${OPTARG}"
+		;;
+	i)
+		item="${OPTARG}"
+		;;
+	p)
+		prefix="${OPTARG}"
+		;;
+	*)
+		die "Invalid opt"
+		;;
+	esac
+done
+shift $((OPTIND - 1))
 
 with_prefix() {
 	local item="$1"
@@ -19,20 +52,8 @@ snake_case() {
 }
 
 pascal_case() {
-	echo "$1" | sed -r 's/(^|_)([a-z])/\U\2/g'
+	echo "$1" | sed 's|-|_|g' | sed -r 's/(^|_)([a-z])/\U\2/g'
 }
-
-# shellcheck disable=SC2120
-die() {
-	[ -n "$*" ] && tostderr "$*"
-	exit 1
-}
-tostderr() {
-	tput setaf 1 && printf "%s@%s: %s\n" "$0" "${BASH_LINENO[-2]}" "$*" >&2
-	tput sgr0
-}
-assert_installed() { command -v "$1" &>/dev/null || die "$1 is not installed."; }
-assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; }
 
 success() {
 	printf '\033[42;30m SUCCESS \033[0m %s\n' "$1"
@@ -50,51 +71,20 @@ title() {
 	figlet -w 120 -f ~/.local/fonts/ansi.flf "$1"
 }
 
-read_variable() {
-	if [ -n "$3" ]; then
-		echo -n "$3"
-	else
-		echo -n "${1^}"
-	fi
-	[ -n "$2" ] && echo -n " [$2]"
-	echo -n ": "
-	read -r "$1"
-
-	if [ -n "$2" ] && [ -z "${!1}" ]; then
-		declare -g "$1"="$2"
-	fi
-
-	if [ -z "${!1}" ]; then
-		die "${1^} required."
-	fi
-}
-
 assert_installed figlet
 
-# GETTING INFO
-
-read_variable model
-read_variable context
-read_variable route_prefix "/api/v1/$(snake_case "$model")s" "Route Prefix"
-read_variable route "/"
-read_variable method "GET"
-
 # VALIDATION
+
+if [ -z "$model" ]; then
+	die "Model: empty"
+fi
 
 if [[ ! "$model" =~ ^[a-zA-Z]*$ ]]; then
 	die "Model: $model is invalid"
 fi
 
-if [[ ! "$route" =~ ^[a-z0-9_/]*$ ]]; then
-	die "Route: $route is invalid"
-fi
-
-if [[ ! "$route_prefix" =~ ^[a-z0-9_/]*$ ]]; then
-	die "Route Prefix: $route_prefix is invalid"
-fi
-
-if [[ ! "${method^^}" =~ ^(GET|POST|PATCH|PUT|OPTION|HEAD)$ ]]; then
-	die "Method: $method is invalid"
+if [ -z "$context" ]; then
+	die "Context: empty"
 fi
 
 if [[ ! "$context" =~ ^[a-zA-Z]*$ ]]; then
@@ -106,33 +96,11 @@ method="${method^^}"
 
 # GENERATION
 dir="$(basename "$PWD")"
-echo -n "Prefix (v1)? [no] "
-read -r prefix
-if [ "${prefix:-no}" = no ]; then
-	prefix=""
-fi
 
 method="${method^^}"
-controller="./lib/${dir}_web/controllers/$(with_prefix "$(snake_case "$model")" "$prefix")_controller.ex"
-view="./lib/${dir}_web/views/$(with_prefix "$(snake_case "$model")" "$prefix")_view.ex"
 context="./lib/${dir}/$(snake_case "$model")s/$(snake_case "$context").ex"
 schema="./lib/${dir}/$(snake_case "$model")s/$(snake_case "$model").ex"
-test="./test/${dir}_web/controllers/$(snake_case "$model")_test.exs"
 [ "$route" = "/" ] && route="$route_prefix$route"
-echo "$prefix"
-
-# CONFIRMATION
-echo
-cat - <<EOF
-Schema: $schema
-Context: $context
-Method: $method
-Route: $route
-Controller: $controller
-View: $view
-Test: $test
-EOF
-echo
 
 # CONTEXT
 project_name="$(pascal_case "$(basename "$PWD")")"
@@ -140,19 +108,20 @@ project_name="$(pascal_case "$(basename "$PWD")")"
 schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
 context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-title "CONTEXT"
-cat - <<EOF
+if [ -z "$item" ] || [ "$item" = schema ]; then
+	cat - <<EOF
 defmodule $project_name.$context_name do
 	alias $project_name.$schema_name
 end
 EOF
+fi
 
 # SCHEMA
 schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
 model_name="$(snake_case "$model")"
 
-title "SCHEMA"
-cat - <<EOF
+if [ -z "$item" ] || [ "$item" = schema ]; then
+	cat - <<EOF
 defmodule $project_name.$schema_name do
 	use $project_name.Schema
 
@@ -167,6 +136,7 @@ defmodule $project_name.$schema_name do
 	end
 end
 EOF
+fi
 
 # CONTROLLER
 controller_prefix="."
@@ -174,8 +144,8 @@ controller_prefix="."
 model_name="$(pascal_case "$model")"
 context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-title "CONTROLLER"
-cat - <<EOF
+if [ -z "$item" ] || [ "$item" = controller ]; then
+	cat - <<EOF
 defmodule $project_name$controller_prefix${model_name}Controller do
 	use ${project_name}Web, :controller
 	action_fallback ${project_name}Web.FallbackController
@@ -183,6 +153,7 @@ defmodule $project_name$controller_prefix${model_name}Controller do
 	alias $project_name.$context_name
 end
 EOF
+fi
 
 # VIEW
 view_prefix="."
@@ -191,8 +162,8 @@ model_name="$(pascal_case "$model")"
 model_name_snake="$(snake_case "$model")"
 context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-title "VIEW"
-cat - <<EOF
+if [ -z "$item" ] || [ "$item" = view ]; then
+	cat - <<EOF
 defmodule $project_name$view_prefix${model_name}View do
 	use ${project_name}Web, :view
 
@@ -205,6 +176,7 @@ defmodule $project_name$view_prefix${model_name}View do
 	end
 end
 EOF
+fi
 
 # TEST
 test_prefix="."
@@ -213,8 +185,8 @@ model_name="$(pascal_case "$model")"
 model_name_snake="$(snake_case "$model")"
 context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-title "TEST"
-cat - <<EOF
+if [ -z "$item" ] || [ "$item" = test ]; then
+	cat - <<EOF
 defmodule $project_name$test_prefix${model_name}ControllerTest do
 	use ${project_name}Web.ConnCase
 	import Mock
@@ -222,5 +194,4 @@ defmodule $project_name$test_prefix${model_name}ControllerTest do
 	alias $project_name.$context_name
 end
 EOF
-
-# TODO: ROUTE
+fi
