@@ -5,6 +5,7 @@
   "Uppercase string (inline)": "tr '[:lower:]' '[:upper:]' <<< '<your text here>'",
   "Terminal height": "tput lines",
   "Terminal width": "tput cols",
+  "Print until match": "sed '/<pattern>/q'",
   "Hide cursor": "printf '\\033[?25l'",
   "Show cursor": "printf '\\033[?25h'",
   "Reset colors": "printf '\\033[0m'",
