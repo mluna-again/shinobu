@@ -22,7 +22,7 @@ pluralize() {
 	fi
 
 	if grep -q "s$" <<< "$item"; then
-		echo "${item}es"
+		echo "$item"
 		return
 	fi
 
