@@ -46,6 +46,10 @@ error() {
 	printf '\033[41;30m ERROR \033[0m %s\n' "$1"
 }
 
+title() {
+	figlet -w 120 -f ~/.local/fonts/ansi.flf "$1"
+}
+
 read_variable() {
 	if [ -n "$3" ]; then
 		echo -n "$3"
@@ -65,13 +69,15 @@ read_variable() {
 	fi
 }
 
+assert_installed figlet
+
 # GETTING INFO
 
 read_variable model
+read_variable context
 read_variable route_prefix "/api/v1/$(snake_case "$model")s" "Route Prefix"
 read_variable route "/"
 read_variable method "GET"
-read_variable context
 
 # VALIDATION
 
@@ -126,41 +132,27 @@ Controller: $controller
 View: $view
 Test: $test
 EOF
-echo -n "Everything alright? [n] "
-read -r confirmation
-# if [[ ! "${confirmation,,}" =~ ^(y|yes)$ ]]; then
-# 	exit 1
-# fi
-echo
 echo
 
 # CONTEXT
 project_name="$(pascal_case "$(basename "$PWD")")"
-context_dir="$(sed 's|-|_|g' <<< "$(dirname "$context")")"
-if [ -d "$context_dir" ]; then
-	info "$context_dir already exists. Skipping."
-else
-	mkdir -p "$context_dir"
-fi
 
-if [ ! -f "$context" ]; then
-	schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
-	context_name="$(pascal_case "$(basename "$context" ".ex")")"
-	cat - <<EOF >"$context"
+schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
+context_name="$(pascal_case "$(basename "$context" ".ex")")"
+
+title "CONTEXT"
+cat - <<EOF
 defmodule $project_name.$context_name do
 	alias $project_name.$schema_name
 end
 EOF
-	success "$context created."
-else
-	info "$context already exists. Skipping."
-fi
 
 # SCHEMA
-if [ ! -f "$schema" ]; then
-	schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
-	model_name="$(snake_case "$model")"
-	cat - <<EOF > "$schema"
+schema_name="$(pascal_case "$(basename "$schema" ".ex")")"
+model_name="$(snake_case "$model")"
+
+title "SCHEMA"
+cat - <<EOF
 defmodule $project_name.$schema_name do
 	use $project_name.Schema
 
@@ -175,19 +167,15 @@ defmodule $project_name.$schema_name do
 	end
 end
 EOF
-	success "$schema created."
-else
-	info "$schema already exists. Skipping."
-fi
 
 # CONTROLLER
-if [ ! -f "$controller" ]; then
-	controller_prefix="."
-	[ -n "$prefix" ] && controller_prefix=".${prefix^^}."
-	model_name="$(pascal_case "$model")"
-	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+controller_prefix="."
+[ -n "$prefix" ] && controller_prefix=".${prefix^^}."
+model_name="$(pascal_case "$model")"
+context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-	cat - <<EOF > "$controller"
+title "CONTROLLER"
+cat - <<EOF
 defmodule $project_name$controller_prefix${model_name}Controller do
 	use ${project_name}Web, :controller
 	action_fallback ${project_name}Web.FallbackController
@@ -195,20 +183,16 @@ defmodule $project_name$controller_prefix${model_name}Controller do
 	alias $project_name.$context_name
 end
 EOF
-	success "$controller created."
-else
-	info "$controller already exists. Skipping."
-fi
 
 # VIEW
-if [ ! -f "$view" ]; then
-	view_prefix="."
-	[ -n "$prefix" ] && view_prefix=".${prefix^^}."
-	model_name="$(pascal_case "$model")"
-	model_name_snake="$(snake_case "$model")"
-	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+view_prefix="."
+[ -n "$prefix" ] && view_prefix=".${prefix^^}."
+model_name="$(pascal_case "$model")"
+model_name_snake="$(snake_case "$model")"
+context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-	cat - <<EOF > "$view"
+title "VIEW"
+cat - <<EOF
 defmodule $project_name$view_prefix${model_name}View do
 	use ${project_name}Web, :view
 
@@ -221,20 +205,16 @@ defmodule $project_name$view_prefix${model_name}View do
 	end
 end
 EOF
-	success "$view created."
-else
-	info "$view already exists. Skipping."
-fi
 
 # TEST
-if [ ! -f "$test" ]; then
-	test_prefix="."
-	[ -n "$prefix" ] && test_prefix=".${prefix^^}."
-	model_name="$(pascal_case "$model")"
-	model_name_snake="$(snake_case "$model")"
-	context_name="$(pascal_case "$(basename "$context" ".ex")")"
+test_prefix="."
+[ -n "$prefix" ] && test_prefix=".${prefix^^}."
+model_name="$(pascal_case "$model")"
+model_name_snake="$(snake_case "$model")"
+context_name="$(pascal_case "$(basename "$context" ".ex")")"
 
-	cat - <<EOF > "$test"
+title "TEST"
+cat - <<EOF
 defmodule $project_name$test_prefix${model_name}ControllerTest do
 	use ${project_name}Web.ConnCase
 	import Mock
@@ -242,9 +222,5 @@ defmodule $project_name$test_prefix${model_name}ControllerTest do
 	alias $project_name.$context_name
 end
 EOF
-	success "$test created."
-else
-	info "$test already exists. Skipping."
-fi
 
 # TODO: ROUTE
