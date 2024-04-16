@@ -16,8 +16,13 @@ assert_not_empty() { [ -z "${!1}" ] && die "$1 is empty when it shouldn't be."; 
 
 pluralize() {
 	local item="$1"
+	if grep -q "ss$" <<< "$item"; then
+		echo "${item}es"
+		return
+	fi
+
 	if grep -q "s$" <<< "$item"; then
-		echo "$item"
+		echo "${item}es"
 		return
 	fi
 
