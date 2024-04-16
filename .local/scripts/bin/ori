@@ -136,7 +136,7 @@ echo
 
 # CONTEXT
 project_name="$(pascal_case "$(basename "$PWD")")"
-context_dir="$(dirname "$context")"
+context_dir="$(sed 's|-|_|g' <<< "$(dirname "$context")")"
 if [ -d "$context_dir" ]; then
 	info "$context_dir already exists. Skipping."
 else
@@ -221,9 +221,9 @@ defmodule $project_name$view_prefix${model_name}View do
 	end
 end
 EOF
-	success "$controller created."
+	success "$view created."
 else
-	info "$controller already exists. Skipping."
+	info "$view already exists. Skipping."
 fi
 
 # TEST
