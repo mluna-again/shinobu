@@ -647,6 +647,11 @@ case "$action" in
 
 	"Run: projects in current window")
 		while read -r info; do
+			current_cmd="$(awk 'print $3' <<< "$info")"
+			if [[ ! "${current_cmd,,}" =~ ^(tmux|bash|sh|zsh|fish)$ ]]; then
+				continue
+			fi
+
 			pane=$(awk '{print $1}' <<< "$info")
 			current_path=$(awk '{print $2}' <<< "$info")
 			current_path=$(basename "$current_path")
@@ -657,7 +662,7 @@ case "$action" in
 			fi
 
 			tmux send-keys -t "$pane" "$script_name" Enter
-		done < <(tmux list-panes -F "#{pane_index} #{pane_current_path}")
+		done < <(tmux list-panes -F "#{pane_index} #{pane_current_path} #{pane_current_command}")
 		;;
 
 	"Helper: Open HTTP session")
