@@ -1,8 +1,9 @@
 <h1 align="center">shinobu 🐥</h1>
 
-https://github.com/mluna-again/shinobu/assets/53100040/6fbde91e-3ffd-4689-b2c9-44cf161c714a
+https://github.com/mluna-again/shinobu/assets/53100040/31057161-8609-42a9-931f-b25a864a2ca2
 
 ## Dependencies
+
 ### Required
 1. nvim (0.9+)
 2. tmux (3.3a+)
