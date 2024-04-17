@@ -18,7 +18,7 @@ type item struct {
 	lastAttachedAt time.Time
 }
 
-func (i item) FilterValue() string { return "" }
+func (i item) FilterValue() string { return i.name }
 
 type itemDelegate struct{}
 

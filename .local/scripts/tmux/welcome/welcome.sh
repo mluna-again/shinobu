@@ -3,8 +3,10 @@
 declare WELCOME_PATH="$HOME/.local/scripts/tmux/welcome" RESPATH="$HOME/.local/scripts/tmux/welcome/.result"
 declare run="${1:-0}" SCRIPT="$WELCOME_PATH/welcome.sh"
 
-[ ! -f "$RESPATH" ] && touch "$RESPATH"
 cd "$WELCOME_PATH"
+
+[ ! -f "$RESPATH" ] && touch "$RESPATH"
+: > "$RESPATH"
 
 binary_exists() {
 	[ -x "$WELCOME_PATH/welcome" ]
@@ -39,7 +41,9 @@ main() {
 	tmux list-sessions -F "#{session_name} #{session_last_attached} #{session_id}" | \
 	  "$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" || exit 1
 
-	tmux switch-client -t "$(cat "$RESPATH")"
+	id="$(cat "$RESPATH")"
+	[ -z "$id" ] && exit
+	tmux switch-client -t "$id"
 }
 
 if [ "$run" -eq 1 ]; then

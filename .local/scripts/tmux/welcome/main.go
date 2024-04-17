@@ -63,9 +63,9 @@ func initialModel() (model, error) {
 	}
 
 	l := list.New(sessions, itemDelegate{}, termWidth, 20)
-	l.Title = "What do you want for dinner?"
 	l.SetShowStatusBar(false)
-	l.SetFilteringEnabled(false)
+	l.SetFilteringEnabled(true)
+	l.SetShowFilter(false)
 	l.SetShowHelp(false)
 	l.SetShowTitle(false)
 	l.SetShowPagination(false)
@@ -103,7 +103,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				panic("Something went wrong while selecting item")
 			}
 			m.selected = item.index
-      saveResults(m.selected)
+			saveResults(m.selected)
 			return m, tea.Quit
 		}
 	}
