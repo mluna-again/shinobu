@@ -10,6 +10,11 @@ function t
         return
     end
 
-    tmux attach \; run-shell "$HOME/.local/scripts/tmux/welcome/welcome.sh"; or tmux
+    if pgrep -u "$USER" tmux &>/dev/null
+        tmux attach \; run-shell "$HOME/.local/scripts/tmux/welcome/welcome.sh"
+        return
+    end
+
+    tmux
 end
 
