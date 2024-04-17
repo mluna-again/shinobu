@@ -10,6 +10,6 @@ function t
         return
     end
 
-    tmux attach; or tmux
+    tmux attach \; run-shell "$HOME/.local/scripts/tmux/welcome/welcome.sh"; or tmux
 end
 
