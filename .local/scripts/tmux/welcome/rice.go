@@ -76,15 +76,20 @@ var igni = `
 ████████████████████████▎
 ▔▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▔`
 
-var banners = []string{
-	aard,
-	quen,
-	axii,
-	yrden,
-	igni,
+type sign struct {
+	content string
+	color   string
 }
 
-func ascii() string {
+var banners = []sign{
+	{aard, "#8ba4b0"},
+	{quen, "#c4b28a"},
+	{axii, "#87a987"},
+	{yrden, "#8992a7"},
+	{igni, "#c4746e"},
+}
+
+func ascii() sign {
 	s := rand.NewSource(time.Now().Unix())
 	r := rand.New(s)
 	ind := r.Intn(len(banners))

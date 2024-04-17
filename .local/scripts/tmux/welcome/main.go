@@ -56,7 +56,7 @@ type model struct {
 	termH    int
 	termW    int
 	selected string
-	banner   string
+	banner   sign
 	quote    string
 	isSSH    bool
 }
@@ -99,7 +99,7 @@ func (m *model) resize() {
 
 func (m *model) resizeWithWidth(w int) {
 	m.termW = w
-	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner) / 2))
+	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner.content) / 2))
 	pagination.Width(w)
 	sessionItem.Width(w / 4)
 	title.Width(w)
@@ -183,7 +183,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := strings.Builder{}
 
-	s.WriteString(banner.Render(m.banner))
+	s.WriteString(banner.Foreground(lipgloss.Color(m.banner.color)).Render(m.banner.content))
 	s.WriteString("\n")
 	s.WriteString(title.Render("Sessions"))
 	s.WriteString("\n")
