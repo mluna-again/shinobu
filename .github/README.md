@@ -1,6 +1,7 @@
 <h1 align="center">shinobu 🐥</h1>
 
-https://github.com/mluna-again/shinobu/assets/53100040/31057161-8609-42a9-931f-b25a864a2ca2
+https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-825a7b0d7ebf
+
 
 ## Dependencies
 
