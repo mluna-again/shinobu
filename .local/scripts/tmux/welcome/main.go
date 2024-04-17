@@ -19,6 +19,7 @@ import (
 var termHeight int
 var termWidth int
 var resultsFile string
+var quote string
 
 func loadsessions() ([]list.Item, error) {
 	sessions, err := io.ReadAll(os.Stdin)
@@ -55,6 +56,8 @@ type model struct {
 	termH    int
 	termW    int
 	selected string
+	banner   string
+	quote    string
 }
 
 func initialModel() (model, error) {
@@ -81,6 +84,8 @@ func initialModel() (model, error) {
 		sessions: l,
 		termH:    termHeight,
 		termW:    termWidth,
+		banner:   ascii(),
+		quote:    quote,
 	}, nil
 }
 
@@ -90,11 +95,12 @@ func (m *model) resize() {
 
 func (m *model) resizeWithWidth(w int) {
 	m.termW = w
-	banner.Width(w)
+	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner) / 2))
 	pagination.Width(w)
 	sessionItem.Width(w / 4)
 	title.Width(w)
 	help.Width(w)
+	quoteStyle.Width(w)
 }
 
 func (m model) Init() tea.Cmd {
@@ -167,7 +173,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := strings.Builder{}
 
-	s.WriteString(banner.Render(ascii))
+	s.WriteString(banner.Render(m.banner))
 	s.WriteString("\n")
 	s.WriteString(title.Render("Sessions"))
 	s.WriteString("\n")
@@ -189,6 +195,9 @@ func (m model) View() string {
 		s.WriteString("\n")
 	}
 
+	s.WriteString(quoteStyle.Render(m.quote))
+	s.WriteString("\n")
+
 	return s.String()
 }
 
@@ -196,6 +205,7 @@ func main() {
 	flag.IntVar(&termWidth, "width", 0, "terminal width")
 	flag.IntVar(&termHeight, "height", 0, "terminal height")
 	flag.StringVar(&resultsFile, "result", "", "results file")
+	flag.StringVar(&quote, "quote", "howdy", "quote")
 	flag.Parse()
 
 	m, err := initialModel()

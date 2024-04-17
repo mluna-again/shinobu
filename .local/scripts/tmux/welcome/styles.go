@@ -5,9 +5,14 @@ import (
 )
 
 var banner = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#FAFAFA")).
+	PaddingTop(2).
+	PaddingBottom(2)
+
+var quoteStyle = lipgloss.NewStyle().
 	AlignHorizontal(lipgloss.Center).
 	Foreground(lipgloss.Color("#FAFAFA")).
-	PaddingTop(2)
+	PaddingTop(1)
 
 var title = lipgloss.NewStyle().
 	AlignHorizontal(lipgloss.Center).

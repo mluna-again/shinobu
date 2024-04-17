@@ -39,7 +39,7 @@ main() {
 	w=$(tput cols)
 
 	tmux list-sessions -F "#{session_name} #{session_windows} #{session_id}" | \
-	  "$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" || exit 1
+		"$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" -quote "$(fortune -s)" || exit 1
 
 	id="$(cat "$RESPATH")"
 	[ -z "$id" ] && exit
