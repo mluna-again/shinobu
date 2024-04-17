@@ -5,6 +5,8 @@ declare run="${1:-0}" SCRIPT="$WELCOME_PATH/welcome.sh"
 
 cd "$WELCOME_PATH"
 
+terror() { tmux display -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Message: $*"; }
+
 [ ! -f "$RESPATH" ] && touch "$RESPATH"
 : > "$RESPATH"
 
@@ -44,12 +46,25 @@ main() {
 	id="$(cat "$RESPATH")"
 	[ -z "$id" ] && exit
 
-	if [ "$id" = "@detach" ]; then
-		tmux detach
-		exit
-	fi
+	case "$id" in
+		"@detach")
+			tmux detach
+			exit
+			;;
 
-	tmux switch-client -t "$id"
+		"@disconnect")
+			pid="$(ps aux | grep -E "sshd: [a-zA-Z0-9]+@" | awk '{print $2}')"
+			if [ -z "$pid" ]; then
+				terror "Could not find sshd pid, are you in a SSH session?"
+				exit
+			fi
+			kill "$pid"
+			;;
+
+		*)
+			tmux switch-client -t "$id"
+			;;
+	esac
 }
 
 if [ "$run" -eq 1 ]; then

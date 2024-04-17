@@ -58,6 +58,7 @@ type model struct {
 	selected string
 	banner   string
 	quote    string
+	isSSH    bool
 }
 
 func initialModel() (model, error) {
@@ -80,12 +81,15 @@ func initialModel() (model, error) {
 	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/"))
 	l.InfiniteScrolling = true
 
+	ssh := os.Getenv("SSH_CLIENT")
+
 	return model{
 		sessions: l,
 		termH:    termHeight,
 		termW:    termWidth,
 		banner:   ascii(),
 		quote:    quote,
+		isSSH:    ssh != "",
 	}, nil
 }
 
@@ -122,6 +126,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "d":
 			if m.sessions.FilterState() != list.Filtering {
 				saveResults("@detach")
+				return m, tea.Quit
+			}
+
+		case "X":
+			if m.sessions.FilterState() != list.Filtering {
+				saveResults("@disconnect")
 				return m, tea.Quit
 			}
 
@@ -191,7 +201,12 @@ func (m model) View() string {
 	}
 
 	if m.sessions.FilterValue() == "" {
-		s.WriteString(help.Render("Exit (q)  Filter (/)  Detach (d)"))
+		bar := "Exit (q)  Filter (/)  Detach (d)"
+		if m.isSSH {
+			bar = fmt.Sprintf("%s  Disconnect (X)", bar)
+		}
+
+		s.WriteString(help.Render(bar))
 		s.WriteString("\n")
 	}
 
