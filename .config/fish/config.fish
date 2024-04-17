@@ -158,6 +158,10 @@ if status is-interactive
     command -vq direnv; and direnv hook fish | source
     command -vq zoxide; and zoxide init fish | source
     command -vq starship; and starship init fish | source
+
+    if uname | grep -iq linux && test -z "$TMUX"
+        t
+    end
 end
 
 # clean up undo nvim files older than 3 days
