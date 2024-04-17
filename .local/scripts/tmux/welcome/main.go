@@ -9,7 +9,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
+	"github.com/charmbracelet/bubbles/paginator"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -69,6 +71,11 @@ func initialModel() (model, error) {
 	l.SetShowTitle(false)
 	l.SetShowPagination(false)
 	l.Styles.Title = titleStyle
+	l.DisableQuitKeybindings()
+	l.Paginator.KeyMap = paginator.KeyMap{}
+	l.KeyMap = list.KeyMap{}
+	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/"))
+	l.InfiniteScrolling = true
 
 	return model{
 		sessions: l,
@@ -96,6 +103,8 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.sessions.SetWidth(msg.Width)
@@ -104,8 +113,41 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "ctrl+c", "q":
-			return m, tea.Quit
+		case "d":
+			if m.sessions.FilterState() != list.Filtering {
+				saveResults("@detach")
+				return m, tea.Quit
+			}
+
+		case "j", "down":
+			if m.sessions.FilterState() != list.Filtering {
+				m.sessions.CursorDown()
+			}
+
+		case "k", "up":
+			if m.sessions.FilterState() != list.Filtering {
+				m.sessions.CursorUp()
+			}
+
+		case tea.KeyEscape.String():
+			if m.sessions.FilterState() == list.Filtering {
+				m.sessions.FilterInput.Blur()
+				m.sessions.ResetFilter()
+				return m, nil
+			}
+
+		case "ctrl+c":
+			if m.sessions.FilterState() != list.Filtering {
+				return m, tea.Quit
+			}
+			m.sessions.FilterInput.Blur()
+			m.sessions.ResetFilter()
+			return m, nil
+
+		case "q":
+			if m.sessions.FilterState() != list.Filtering {
+				return m, tea.Quit
+			}
 
 		case "enter", " ":
 			item, ok := m.sessions.SelectedItem().(item)
@@ -118,7 +160,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	var cmd tea.Cmd
 	m.sessions, cmd = m.sessions.Update(msg)
 	return m, cmd
 }

@@ -43,6 +43,12 @@ main() {
 
 	id="$(cat "$RESPATH")"
 	[ -z "$id" ] && exit
+
+	if [ "$id" = "@detach" ]; then
+		tmux detach
+		exit
+	fi
+
 	tmux switch-client -t "$id"
 }
 
