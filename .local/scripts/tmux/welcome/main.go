@@ -8,7 +8,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -32,16 +31,16 @@ func loadsessions() ([]list.Item, error) {
 		if len(cmps) < 3 {
 			continue
 		}
-		date, err := strconv.Atoi(cmps[1])
+
+		wins, err := strconv.Atoi(cmps[1])
 		if err != nil {
 			return []list.Item{}, fmt.Errorf("Bad Session Date: %v", cmps[1])
 		}
-		lat := time.Unix(int64(date), 0)
 
 		sx := item{
-			name:           cmps[0],
-			index:          cmps[2],
-			lastAttachedAt: lat,
+			name:            cmps[0],
+			index:           cmps[2],
+			numberOfWindows: wins,
 		}
 		items = append(items, sx)
 	}
@@ -82,6 +81,7 @@ func (m model) Init() tea.Cmd {
 	banner.Width(m.termW)
 	pagination.Width(m.termW)
 	sessionItem.Width(m.termW / 4)
+	title.Width(m.termW)
 
 	return nil
 }
@@ -117,6 +117,8 @@ func (m model) View() string {
 	s := strings.Builder{}
 
 	s.WriteString(banner.Render(ascii))
+	s.WriteString("\n")
+	s.WriteString(title.Render("Sessions"))
 	s.WriteString("\n")
 
 	sessions := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.sessions.View())

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"strings"
-	"time"
 	"unicode/utf8"
 
 	"github.com/charmbracelet/bubbles/list"
@@ -13,9 +12,9 @@ import (
 )
 
 type item struct {
-	name           string
-	index          string
-	lastAttachedAt time.Time
+	name            string
+	index           string
+	numberOfWindows int
 }
 
 func (i item) FilterValue() string { return i.name }
@@ -31,20 +30,23 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 		return
 	}
 
-	dateFormat := "January 02, 2006"
-	nameWidth := sessionItem.GetWidth() - lipgloss.Width(dateFormat)
-	date := i.lastAttachedAt.Format(dateFormat)
+	windows := fmt.Sprintf("%d windows", i.numberOfWindows)
+	if i.numberOfWindows > 99 {
+		windows = "a lot of windows"
+	}
+
+	nameWidth := sessionItem.GetWidth() - lipgloss.Width(windows)
 	name := i.name
 	if utf8.RuneCount([]byte(name)) > nameWidth {
 		name = name[:nameWidth]
 	}
-	diff := sessionItem.GetWidth() - (lipgloss.Width(name) + lipgloss.Width(date))
+	diff := sessionItem.GetWidth() - (lipgloss.Width(name) + lipgloss.Width(windows))
 	if diff < 0 {
 		diff = 0
 	}
 	padd := strings.Repeat(" ", diff)
 
-	str := fmt.Sprintf("%s%s%s", name, padd, date)
+	str := fmt.Sprintf("%s%s%s", name, padd, windows)
 
 	fn := sessionItem.Render
 	if index == m.Index() {

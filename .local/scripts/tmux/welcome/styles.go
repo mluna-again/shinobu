@@ -9,6 +9,12 @@ var banner = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#FAFAFA")).
 	PaddingTop(2)
 
+var title = lipgloss.NewStyle().
+	AlignHorizontal(lipgloss.Center).
+	Foreground(lipgloss.Color("#FAFAFA")).
+	PaddingBottom(1).
+	PaddingTop(1)
+
 var sessionItem = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#FAFAFA"))
 
