@@ -15,6 +15,11 @@ var title = lipgloss.NewStyle().
 	PaddingBottom(1).
 	PaddingTop(1)
 
+var help = lipgloss.NewStyle().
+	AlignHorizontal(lipgloss.Center).
+	Foreground(lipgloss.Color("#585959")).
+	PaddingTop(2)
+
 var sessionItem = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#FAFAFA"))
 

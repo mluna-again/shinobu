@@ -77,12 +77,21 @@ func initialModel() (model, error) {
 	}, nil
 }
 
-func (m model) Init() tea.Cmd {
-	banner.Width(m.termW)
-	pagination.Width(m.termW)
-	sessionItem.Width(m.termW / 4)
-	title.Width(m.termW)
+func (m *model) resize() {
+	m.resizeWithWidth(m.termW)
+}
 
+func (m *model) resizeWithWidth(w int) {
+	m.termW = w
+	banner.Width(w)
+	pagination.Width(w)
+	sessionItem.Width(w / 4)
+	title.Width(w)
+	help.Width(w)
+}
+
+func (m model) Init() tea.Cmd {
+	m.resize()
 	return nil
 }
 
@@ -90,6 +99,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.sessions.SetWidth(msg.Width)
+		m.resizeWithWidth(msg.Width)
 		return m, nil
 
 	case tea.KeyMsg:
@@ -130,6 +140,11 @@ func (m model) View() string {
 
 	if m.sessions.FilterValue() != "" {
 		s.WriteString(banner.Render(fmt.Sprintf(" %s", m.sessions.FilterValue())))
+		s.WriteString("\n")
+	}
+
+	if m.sessions.FilterValue() == "" {
+		s.WriteString(help.Render("Exit (q)  Filter (/)  Detach (d)"))
 		s.WriteString("\n")
 	}
 
