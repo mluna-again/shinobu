@@ -126,6 +126,11 @@ func (m model) View() string {
 		s.WriteString(pagination.Render(""))
 	}
 
+	if m.sessions.FilterValue() != "" {
+		s.WriteString(banner.Render(fmt.Sprintf(" %s", m.sessions.FilterValue())))
+		s.WriteString("\n")
+	}
+
 	return s.String()
 }
 
