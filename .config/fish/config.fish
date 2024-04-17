@@ -159,7 +159,7 @@ if status is-interactive
     command -vq zoxide; and zoxide init fish | source
     command -vq starship; and starship init fish | source
 
-    if uname | grep -iq linux && test -z "$TMUX"
+    if uname | grep -iq linux && test -z "$TMUX" && command -vq tmux
         t
     end
 end
