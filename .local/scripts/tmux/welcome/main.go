@@ -81,7 +81,7 @@ func initialModel() (model, error) {
 	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/"))
 	l.InfiniteScrolling = true
 
-	ssh := os.Getenv("SSH_CLIENT")
+	ssh := os.Getenv("SSH_CONNECTION")
 
 	return model{
 		sessions: l,
