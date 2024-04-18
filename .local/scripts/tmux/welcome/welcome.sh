@@ -41,6 +41,13 @@ main() {
 	w=$(tput cols)
 	quote="$(fortune -s 2>/dev/null)"
 	[ -z "$quote" ] && quote="Evil is Evil."
+	# for some reason fortune just ignores the -s option, so i try a few times
+	# to get a short cookie before giving up
+	counter=0
+	while [ "${#quote}" -gt 80 ] && [ "$counter" -lt 10 ]; do
+		quote="$(fortune -s 2>/dev/null)"
+		counter=$((counter + 1))
+	done
 
 	tmux list-sessions -F "#{session_name} #{session_windows} #{session_id}" | \
 		"$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" -quote "$quote" || exit 1
