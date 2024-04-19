@@ -78,7 +78,7 @@ func initialModel() (model, error) {
 	l.DisableQuitKeybindings()
 	l.Paginator.KeyMap = paginator.KeyMap{}
 	l.KeyMap = list.KeyMap{}
-	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/"))
+	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/", " "))
 	l.InfiniteScrolling = true
 
 	ssh := os.Getenv("SSH_CONNECTION")
@@ -165,7 +165,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Quit
 			}
 
-		case "enter", " ":
+		case "enter":
 			item, ok := m.sessions.SelectedItem().(item)
 			if !ok {
 				panic("Something went wrong while selecting item")
