@@ -57,6 +57,11 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 	return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
+-- FILETYPE ALIASES
+vim.filetype.add({ extension = {
+	heex = "html",
+} })
+
 vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
@@ -75,5 +80,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.bo.indentexpr = ""
 		vim.bo.smartindent = true
 		vim.bo.autoindent = true
-	end
+	end,
 })
