@@ -97,6 +97,10 @@ func (m *model) resize() {
 	m.resizeWithWidth(m.termW)
 }
 
+func (m *model) resizeWithHeight(h int) {
+	m.termH = h
+}
+
 func (m *model) resizeWithWidth(w int) {
 	m.termW = w
 	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner.content) / 2))
@@ -119,6 +123,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.sessions.SetWidth(msg.Width)
 		m.resizeWithWidth(msg.Width)
+		m.resizeWithHeight(msg.Height)
 		return m, nil
 
 	case tea.KeyMsg:
@@ -213,7 +218,9 @@ func (m model) View() string {
 	s.WriteString(quoteStyle.Render(m.quote))
 	s.WriteString("\n")
 
-	return s.String()
+	dashboard := s.String()
+
+	return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Top, dashboard, lipgloss.WithWhitespaceBackground(bg))
 }
 
 func main() {

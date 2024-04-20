@@ -4,6 +4,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+var bg = lipgloss.Color("#181616")
+
 var banner = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#FAFAFA")).
 	PaddingTop(2).
