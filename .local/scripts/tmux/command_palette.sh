@@ -38,6 +38,7 @@ EOF
 commands="$(cat - <<EOF
 Notes: fuzzy find
 TODO: open
+TODO: search by tag
 Cleanup: clear panes
 Cleanup: clear ALL panes
 Cleanup: terminate processes and clear panes
@@ -481,6 +482,24 @@ case "$action" in
 		tmux display-popup -T "$(make_popup_border 'TODO' '')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "nvim -c 'hi NORMAL guibg=NONE' -c 'hi LineNr guibg=NONE' \"$NOTES_PATH/todo.md\""
 
 		true
+		;;
+
+	"TODO: search by tag")
+		[ -d "$NOTES_PATH" ] || mkdir "$NOTES_PATH"
+		[ ! -f "$NOTES_PATH/todo.md" ] || touch "$NOTES_PATH/todo.md"
+
+		tags=$(grep -Eo '@\w*\w' "$NOTES_PATH/todo.md" | sort | uniq)
+		if [ -z "$tags" ]; then
+			alert "No tags found."
+			exit
+		fi
+
+		input " Tags " "  " "$tags"
+		response=$(read_input)
+
+		todos=$(grep -E "$response" "$NOTES_PATH/todo.md" | sed 's/^\s*\*\s*//' | awk '{printf "%d. %s\n", NR, $0}')
+
+		tmux display-popup -w 40 -h 25 -t "$(top_right_pane)" -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$todos"
 		;;
 
 	"Cleanup: clear ALL panes")
