@@ -648,20 +648,22 @@ case "$action" in
 
 	"Run: projects in current window")
 		while read -r info; do
-			current_cmd="$(awk 'print $3' <<< "$info")"
+			current_cmd="$(awk '{print $3}' <<< "$info")"
 			if [[ ! "${current_cmd,,}" =~ ^(tmux|bash|sh|zsh|fish)$ ]]; then
 				continue
 			fi
 
 			pane=$(awk '{print $1}' <<< "$info")
-			current_path=$(awk '{print $2}' <<< "$info")
-			current_path=$(basename "$current_path")
+			current_path_original=$(awk '{print $2}' <<< "$info")
+			current_path=$(basename "$current_path_original")
 			script_name="${current_path}.sh"
-			if ! command -v "$script_name" &>/dev/null; then
-				error "No script found for $current_path (you can put your scripts in ~/.local/bin)."
+
+			if ! command -v "$script_name" &>/dev/null && [ ! -x "$current_path_original/__START__.sh" ]; then
+				error "No script found for $current_path (you can put your scripts in ~/.local/bin or create a __START__.sh file in current dir)."
 				exit
 			fi
 
+			[ -x "$current_path_original/__START__.sh" ] && script_name="./__START__.sh"
 			tmux send-keys -t "$pane" "$script_name" Enter
 		done < <(tmux list-panes -F "#{pane_index} #{pane_current_path} #{pane_current_command}")
 		;;
