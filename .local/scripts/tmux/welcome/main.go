@@ -52,13 +52,15 @@ func loadsessions() ([]list.Item, error) {
 }
 
 type model struct {
-	sessions list.Model
-	termH    int
-	termW    int
-	selected string
-	banner   sign
-	quote    string
-	isSSH    bool
+	sessions  list.Model
+	termH     int
+	termW     int
+	selected  string
+	banner    sign
+	quote     string
+	isSSH     bool
+	rebooting bool
+	shutting  bool
 }
 
 func initialModel() (model, error) {
@@ -127,6 +129,22 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 
 	case tea.KeyMsg:
+		if m.shutting && msg.String() == "ctrl+q" {
+			saveResults("@shutdown")
+			return m, tea.Quit
+		}
+
+		if m.rebooting && msg.String() == "ctrl+r" {
+			saveResults("@reboot")
+			return m, tea.Quit
+		}
+
+		// its either rebooting or shutting down but no confirmation
+		if m.rebooting || m.shutting {
+			m.rebooting = false
+			m.shutting = false
+		}
+
 		switch msg.String() {
 		case "d":
 			if m.sessions.FilterState() != list.Filtering {
@@ -139,6 +157,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				saveResults("@disconnect")
 				return m, tea.Quit
 			}
+
+		case "ctrl+q":
+			m.shutting = true
+			return m, nil
+
+		case "ctrl+r":
+			m.rebooting = true
+			return m, nil
 
 		case "j", "down", "tab", "ctrl+n":
 			if m.sessions.FilterState() != list.Filtering || msg.String() != "j" {
@@ -209,6 +235,15 @@ func (m model) View() string {
 		bar := "Exit (q)  Filter (/)  Detach (d)"
 		if m.isSSH {
 			bar = fmt.Sprintf("%s  Disconnect (X)", bar)
+		}
+		bar = fmt.Sprintf("%s  Reboot (C-r)  Shut Down (C-q)", bar)
+
+		if m.shutting {
+			bar = "Are you sure? Type C-q again to confirm."
+		}
+
+		if m.rebooting {
+			bar = "Are you sure? Type C-r again to confirm."
 		}
 
 		s.WriteString(help.Render(bar))

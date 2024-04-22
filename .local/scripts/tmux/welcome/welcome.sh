@@ -70,6 +70,14 @@ main() {
 			kill "$pid"
 			;;
 
+		"@reboot")
+			sudo shutdown -r now
+			;;
+
+		"@shutdown")
+			sudo shutdown now
+			;;
+
 		*)
 			tmux switch-client -t "$id"
 			;;

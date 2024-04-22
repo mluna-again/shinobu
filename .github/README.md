@@ -64,6 +64,13 @@ $ cd ~/.local/scripts/shift
 $ go build
 ```
 
+* Enable shutdown without password prompt:
+```sh
+$ sudo visudo
+# add the following line: <username> ALL=(ALL) NOPASSWD: /sbin/poweroff, /sbin/reboot, /sbin/shutdown
+# replace <username> with your username 😑
+```
+
 * Install tmp:
 ```sh
 $ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
