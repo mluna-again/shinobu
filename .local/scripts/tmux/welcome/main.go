@@ -140,13 +140,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Quit
 			}
 
-		case "j", "down", "tab":
-			if m.sessions.FilterState() != list.Filtering {
+		case "j", "down", "tab", "ctrl+n":
+			if m.sessions.FilterState() != list.Filtering || msg.String() != "j" {
 				m.sessions.CursorDown()
 			}
 
-		case "k", "up", "shift+tab":
-			if m.sessions.FilterState() != list.Filtering {
+		case "k", "up", "shift+tab", "ctrl+p":
+			if m.sessions.FilterState() != list.Filtering || msg.String() != "k" {
 				m.sessions.CursorUp()
 			}
 
