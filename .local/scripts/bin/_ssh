@@ -1,10 +1,12 @@
 #! /usr/bin/env bash
 
+declare NOPORTS=0
+
 manual_ports=()
 ports_to_remove=()
 user="$USER"
 
-options=$(getopt "p:u:x:" "$*")
+options=$(getopt "p:u:x:X" "$*")
 set -- $options
 
 while true; do
@@ -19,6 +21,10 @@ while true; do
       shift
       ;;
 
+    -X)
+      NOPORTS=1
+      shift
+      ;;
     -x|--x)
       ports_to_remove+=("$2")
       shift
@@ -56,6 +62,7 @@ ports=$(sed 's/ /\n/g' <<< "${filtered_common_ports[@]}" | awk '{ printf " -L %s
 [ -z "$workspace" ] && exit 1
 
 args="$ports $workspace"
+[ "$NOPORTS" -eq 1 ] && args="$workspace"
 
 # shellcheck disable=SC2086
 /usr/bin/env ssh $args
