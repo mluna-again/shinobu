@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # This script prints the colored (tmux format) current battery percentage.
-command -v upower &>/dev/null || { echo "Please install upower :)"; exit; }
+command -v upower &>/dev/null || { echo "#[fg=terminal] % #[bg=$2,fg=black] 󰂑 "; exit; }
 
 battery=$(upower -e 2>/dev/null | grep -i bat0)
 
