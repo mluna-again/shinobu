@@ -105,7 +105,6 @@ abbr --add dotsR yadm reset --hard
 abbr --add dotsp yadm push
 abbr --add dotsd yadm diff
 abbr --add dotsdd yadm diff --cached
-abbr --add dotsc yadm commit
 abbr --add gd git diff
 abbr --add gdd git diff --cached
 abbr --add gl git log
@@ -118,7 +117,6 @@ abbr --add gs git status
 abbr --add ga git add .
 abbr --add gA git add
 abbr --add gr git reset --soft
-abbr --add gc git commit
 abbr --add gofmt go fmt ./...
 abbr --add artisan php artisan
 abbr --add sym symfony
