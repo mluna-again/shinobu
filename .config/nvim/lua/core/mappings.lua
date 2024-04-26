@@ -16,14 +16,6 @@ wk.register({
 	},
 	g = {
 		name = "Git",
-		g = {
-			function()
-				require("neogit").open({ kind = "replace" })
-			end,
-			"Open neogit",
-			silent = true,
-			noremap = true
-		},
 		d = {
 			function()
 				if next(require("diffview.lib").views) == nil then
