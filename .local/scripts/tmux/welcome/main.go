@@ -198,12 +198,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "enter":
 			item, ok := m.sessions.SelectedItem().(item)
-			if !ok {
-				panic("Something went wrong while selecting item")
+			if ok {
+				m.selected = item.index
+				saveResults(m.selected)
+				return m, tea.Quit
 			}
-			m.selected = item.index
-			saveResults(m.selected)
-			return m, tea.Quit
 		}
 	}
 
