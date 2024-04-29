@@ -51,7 +51,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.config/composer/vendor/bin" \
     "$HOME/.local/scripts/bin" \
     "$HOME/.symfony5/bin" \
-    "$HOME/.nimble/bin"
+    "$HOME/.nimble/bin" \
+    "$HOME/.local/bin/inklecate"
 
 function search_dir
     set -l dir (find . -maxdepth 10 | grep -v '^.$' | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)

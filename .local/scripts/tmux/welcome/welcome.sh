@@ -61,6 +61,16 @@ main() {
 			exit
 			;;
 
+		"@create"*)
+			name=$(awk '{$1=""; print $0}' <<< "$id" | xargs)
+			dup=$(tmux ls | awk "\$1 == \"${name}:\"")
+			if [ -z "$dup" ]; then
+				tmux new-session -d -s "$name" -c "$HOME"
+			fi
+			tmux switch-client -t "$name"
+			exit
+			;;
+
 		"@disconnect")
 			pid="$(ps aux | grep -E "sshd: [a-zA-Z0-9]+@" | awk '{print $2}')"
 			if [ -z "$pid" ]; then

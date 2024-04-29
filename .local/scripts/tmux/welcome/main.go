@@ -12,6 +12,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/paginator"
+	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -52,15 +53,17 @@ func loadsessions() ([]list.Item, error) {
 }
 
 type model struct {
-	sessions  list.Model
-	termH     int
-	termW     int
-	selected  string
-	banner    sign
-	quote     string
-	isSSH     bool
-	rebooting bool
-	shutting  bool
+	sessions    list.Model
+	termH       int
+	termW       int
+	selected    string
+	banner      sign
+	quote       string
+	isSSH       bool
+	rebooting   bool
+	shutting    bool
+	creatingNew bool
+	input       textinput.Model
 }
 
 func initialModel() (model, error) {
@@ -85,6 +88,12 @@ func initialModel() (model, error) {
 
 	ssh := os.Getenv("SSH_CONNECTION")
 
+	ti := textinput.New()
+	ti.Placeholder = "Session name"
+	ti.CharLimit = 30
+	ti.Width = 35
+	ti.Prompt = "  "
+
 	return model{
 		sessions: l,
 		termH:    termHeight,
@@ -92,6 +101,7 @@ func initialModel() (model, error) {
 		banner:   ascii(),
 		quote:    quote,
 		isSSH:    ssh != "",
+		input:    ti,
 	}, nil
 }
 
@@ -113,9 +123,13 @@ func (m *model) resizeWithWidth(w int) {
 	quoteStyle.Width(w)
 }
 
+func (m *model) shouldIgnoreInput() bool {
+	return m.sessions.FilterState() == list.Filtering || m.creatingNew
+}
+
 func (m model) Init() tea.Cmd {
 	m.resize()
-	return nil
+	return textinput.Blink
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -147,13 +161,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		switch msg.String() {
 		case "d":
-			if m.sessions.FilterState() != list.Filtering {
+			if !m.shouldIgnoreInput() {
 				saveResults("@detach")
 				return m, tea.Quit
 			}
 
+		case "n":
+			if !m.shouldIgnoreInput() {
+				m.creatingNew = true
+				m.input.Focus()
+				return m, nil
+			}
+
 		case "X":
-			if m.sessions.FilterState() != list.Filtering {
+			if !m.shouldIgnoreInput() {
 				saveResults("@disconnect")
 				return m, tea.Quit
 			}
@@ -167,24 +188,26 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 
 		case "j", "down", "tab", "ctrl+n":
-			if m.sessions.FilterState() != list.Filtering || msg.String() != "j" {
+			if !m.shouldIgnoreInput() || msg.String() != "j" {
 				m.sessions.CursorDown()
 			}
 
 		case "k", "up", "shift+tab", "ctrl+p":
-			if m.sessions.FilterState() != list.Filtering || msg.String() != "k" {
+			if !m.shouldIgnoreInput() || msg.String() != "k" {
 				m.sessions.CursorUp()
 			}
 
 		case tea.KeyEscape.String():
-			if m.sessions.FilterState() == list.Filtering {
+			if m.shouldIgnoreInput() {
 				m.sessions.FilterInput.Blur()
 				m.sessions.ResetFilter()
+				m.creatingNew = false
+				m.input.Blur()
 				return m, nil
 			}
 
 		case "ctrl+c":
-			if m.sessions.FilterState() != list.Filtering {
+			if !m.shouldIgnoreInput() {
 				return m, tea.Quit
 			}
 			m.sessions.FilterInput.Blur()
@@ -192,11 +215,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 
 		case "q":
-			if m.sessions.FilterState() != list.Filtering {
+			if !m.shouldIgnoreInput() {
 				return m, tea.Quit
 			}
 
 		case "enter":
+			if m.creatingNew {
+				saveResults(fmt.Sprintf("@create %s", m.input.Value()))
+				return m, tea.Quit
+			}
+
 			item, ok := m.sessions.SelectedItem().(item)
 			if ok {
 				m.selected = item.index
@@ -206,8 +234,18 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	m.sessions, cmd = m.sessions.Update(msg)
-	return m, cmd
+	var cmds []tea.Cmd
+	if !m.creatingNew {
+		m.sessions, cmd = m.sessions.Update(msg)
+		cmds = append(cmds, cmd)
+	}
+
+	if m.creatingNew {
+		m.input, cmd = m.input.Update(msg)
+		cmds = append(cmds, cmd)
+	}
+
+	return m, tea.Batch(cmds...)
 }
 
 func (m model) View() string {
@@ -230,12 +268,19 @@ func (m model) View() string {
 		s.WriteString("\n")
 	}
 
-	if m.sessions.FilterValue() == "" {
-		bar := "Exit (q)  Filter (/)  Detach (d)"
+	if m.creatingNew {
+		s.WriteString("\n")
+		content := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, inputStyle.Render(m.input.View()))
+		s.WriteString(content)
+		s.WriteString("\n")
+	}
+
+	if m.sessions.FilterValue() == "" && !m.creatingNew {
+		bar := "Exit (q)  Filter (/)  Detach (d)  New Session (n)"
 		if m.isSSH {
 			bar = fmt.Sprintf("%s  Disconnect (X)", bar)
 		}
-		bar = fmt.Sprintf("%s  Reboot (C-r)  Shut Down (C-q)", bar)
+		bar = fmt.Sprintf("%s\nReboot (C-r)  Shut Down (C-q)", bar)
 
 		if m.shutting {
 			bar = "Are you sure? Type C-q again to confirm."

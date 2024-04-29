@@ -38,3 +38,8 @@ var (
 	titleStyle        = lipgloss.NewStyle().MarginLeft(2)
 	selectedItemStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#c4b28a"))
 )
+
+var inputStyle = lipgloss.
+	NewStyle().
+	Background(lipgloss.Color(bg)).
+	Margin(1, 0, 1, 0)
