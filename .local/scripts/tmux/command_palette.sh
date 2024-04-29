@@ -666,9 +666,10 @@ case "$action" in
 		;;
 
 	"Run: projects in current window")
+		default_shell=$(basename "$SHELL")
 		while read -r info; do
 			current_cmd="$(awk '{print $3}' <<< "$info")"
-			if [[ ! "${current_cmd,,}" =~ ^(tmux|bash|sh|zsh|fish)$ ]]; then
+			if [ "${current_cmd,,}" != "${default_shell,,}" ]; then
 				continue
 			fi
 
