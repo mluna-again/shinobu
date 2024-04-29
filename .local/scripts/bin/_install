@@ -4,24 +4,112 @@ _setup() {
 	[ -d "$HOME/Code" ] || mkdir "$HOME/Code"
 }
 
-program="$1"
-
 _setup
 
-case "$program" in
-	koi)
-		git clone git@github.com:mluna-again/koi.git ~/Code/koi || exit
-		cd "$HOME/Code/koi" || exit
-		make
-		;;
+declare -A spinners
+spinners[0]=""
+spinners[1]=""
+spinners[2]=""
+spinners[3]=""
+spinners[4]=""
+spinners[5]=""
+spinners[6]=""
+spinners[7]=""
+spinners[8]=""
+spinners[9]=""
+spinners[10]=""
+progress() {
+	local message pid final_msg
+	pid="$1"
+	shift
+	message="$1"
+	final_msg="$2"
+	counter=0
 
-	"")
-		printf "missing argument.\n" >&2
-		exit 1
-		;;
+	while ps -p "$pid" &>/dev/null; do
+		tput el1
+		printf "\r"
+		printf "%s %s " "${spinners[$counter]}" "$message"
+		sleep 0.3
 
-	*)
-		printf "invalid program: %s\n" "$program" >&2
+		counter=$((counter + 1))
+		if (( counter >= 10 )); then
+			counter=0
+		fi
+	done
+	tput el1
+	printf "\r"
+	printf '\033[0;32m%s %s \033[0m' "${spinners[5]}" "$final_msg"
+}
+
+do_install() {
+	case "$1" in
+		koi)
+			dir=$(mktemp -d) || exit
+			git clone git@github.com:mluna-again/koi.git "$dir" || exit
+			cd "$dir" || exit
+			make
+			rm -rf "$dir"
+			;;
+
+		shift)
+			cd "$HOME/.local/scripts/shift" || exit
+			go build
+			;;
+
+		welcome)
+			cd "$HOME/.local/scripts/tmux/welcome" || exit
+			go build
+			;;
+
+		bop)
+			cd "$HOME/.local/scripts/bop" || exit
+			make
+			;;
+
+		tmp)
+			[ -d "$HOME/.tmux/plugins/tpm" ] && return
+			git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || exit
+			"$HOME/.tmux/plugins/tpm/bin/install_plugins"
+			;;
+
+		"")
+			printf "missing argument.\n" >&2
+			exit 1
+			;;
+
+		*)
+			printf "invalid program: %s\n" "$program" >&2
+			exit 1
+			;;
+	esac
+}
+
+install() {
+	local program
+	program="$1"
+
+	temp=$(mktemp)
+	do_install "$program" 1>/dev/null 2>"$temp" &
+	pid="$!"
+	progress "$pid" "Installing ${program}..." "$program installed."
+	# shellcheck disable=SC2046
+	if ! wait "$pid"; then
+		output=$(cat "$temp")
+		tput el1
+		printf "\r"
+		[ -n "$output" ] && printf "%s\n" "$output"
+		[ -z "$output" ] && printf "Process failed without output\n"
+		rm "$temp"
 		exit 1
-		;;
-esac
+	else
+		printf "\n"
+	fi
+	rm "$temp"
+}
+
+install koi
+install shift
+install welcome
+install bop
+install tmp
