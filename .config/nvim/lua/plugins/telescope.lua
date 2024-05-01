@@ -4,10 +4,6 @@ return {
 	cmd = {
 		"Telescope"
 	},
-	dependencies = {
-		"nvim-telescope/telescope-fzf-native.nvim",
-		"LukasPietzschmann/telescope-tabs",
-	},
 	config = function()
 		local action_state = require("telescope.actions.state")
 		local actions = require("telescope.actions")
@@ -93,7 +89,5 @@ return {
 				},
 			},
 		})
-
-		require("telescope").load_extension("fzf")
 	end,
 }
