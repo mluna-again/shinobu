@@ -65,7 +65,7 @@ return {
 				lualine_a = {
 					{
 						"mode",
-						color = { gui = "bold" },
+						color = {},
 						icon = { "  ", color = "StatusLineModeIcon" },
 						padding = { right = 1 },
 					},
@@ -78,7 +78,7 @@ return {
 						symbols = {
 							modified = "",
 						},
-						color = { gui = "bold" },
+						color = {},
 						icon = { "  ", color = "StatusLineFileIcon" },
 						padding = { right = 1 },
 					},
