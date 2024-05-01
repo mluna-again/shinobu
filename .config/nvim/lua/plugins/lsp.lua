@@ -205,6 +205,7 @@ return {
 			"intelephense",
 			"gdscript",
 			"bashls",
+			"fsautocomplete"
 		}
 
 		local lspconfig = require("lspconfig")
