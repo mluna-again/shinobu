@@ -87,4 +87,5 @@ if vim.g.neovide then
 	-- vim.cmd("set guicursor=n-v-c-i:block-blinkwait275-blinkoff250-blinkon400")
 	-- vim.g.neovide_cursor_smooth_blink = true
 	vim.g.neovide_cursor_vfx_mode = "ripple"
+	vim.cmd("cd")
 end
