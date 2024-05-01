@@ -1,9 +1,13 @@
 #! /usr/bin/env bash
 
+if [ -n "$NVIM" ]; then
+	exit
+fi
+
 declare WELCOME_PATH="$HOME/.local/scripts/tmux/welcome" RESPATH="$HOME/.local/scripts/tmux/welcome/.result"
 declare run="${1:-0}" SCRIPT="$WELCOME_PATH/welcome.sh"
 
-cd "$WELCOME_PATH"
+cd "$WELCOME_PATH" || exit
 
 terror() { tmux display -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Message: $*"; }
 
