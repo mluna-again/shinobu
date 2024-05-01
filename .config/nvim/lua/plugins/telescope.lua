@@ -2,29 +2,11 @@ return {
 	"nvim-telescope/telescope.nvim",
 	lazy = true,
 	cmd = {
-		"Telescope"
+		"Telescope",
 	},
 	config = function()
 		local action_state = require("telescope.actions.state")
 		local actions = require("telescope.actions")
-
-		-- or create your custom action
-		local quick_close_esc = function(prompt_bufnr)
-			local query = action_state.get_current_line()
-			local mode = vim.api.nvim_get_mode().mode
-
-			if query == "" then
-				actions.close(prompt_bufnr)
-				return
-			end
-
-			if mode == "n" then
-				actions.close(prompt_bufnr)
-				return
-			end
-
-			vim.api.nvim_input("<C-c>")
-		end
 
 		-- vim.api.nvim_create_autocmd("BufEnter", {
 		-- 	pattern = "*",
@@ -49,7 +31,7 @@ return {
 					i = {
 						["<C-s>"] = "select_horizontal",
 						["<C-v>"] = "select_vertical",
-						["<Esc>"] = quick_close_esc,
+						["<Esc>"] = actions.close
 					},
 				},
 				path_display = { "truncate" },
