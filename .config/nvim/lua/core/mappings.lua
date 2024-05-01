@@ -58,7 +58,6 @@ wk.register({
 	},
 }, { prefix = "<Leader>" })
 
-
 nmap("gr", ":tabprevious<CR>")
 nmap("gt", ":tabnext<CR>")
 nmap("<C-w><C-o>", ":wincmd r<CR>")
@@ -77,13 +76,50 @@ nmap("-", "<C-e>")
 nmap("¿", "<C-y>")
 nmap("<Space>", "<Nop>")
 nmap("/", ":lua require('telescope.builtin').current_buffer_fuzzy_find({prompt_title='Find in current file'})<CR>")
-nmap("<Leader>fo", ":lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>")
-nmap("<Leader>fw", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>")
-nmap("ff", ":lua require('telescope.builtin').buffers({ prompt_title = 'Buffers' })<CR>")
-nmap("<Leader>ff", ":Telescope find_files<CR>")
-nmap("<Leader>fd", ":Telescope cder<CR>")
+wk.register({
+	f = {
+		name = "Files and Directories",
+		b = {
+			"<cmd>lua require('telescope.builtin').buffers({ prompt_title = 'Buffers' })<CR>",
+			"Search buffers",
+			silent = true,
+			noremap = true
+		},
+		o = {
+			"<cmd>lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>",
+			"Search history",
+			silent = true,
+			noremap = true
+		},
+		w = {
+			"<cmd>lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>",
+			"Search expresion",
+			silent = true,
+			noremap = true
+		},
+		f = {
+			"<cmd>Telescope find_files<CR>",
+			"Search files",
+			silent = true,
+			noremap = true,
+		},
+		d = {
+			function()
+				require("telescope").extensions.cder.cder({ exclude = { "Library" } })
+			end,
+			"Search directories",
+			silent = true,
+			noremap = true,
+		},
+		n = {
+			"<cmd>Oil --float<CR>",
+			"Open Oil.nvim",
+			silent = true,
+			noremap = true,
+		}
+	},
+}, { prefix = "<leader>" })
 nmap("<Leader>cn", ":enew<CR>")
-nmap("<Leader>fn", ":Oil --float<CR>")
 
 vim.cmd("command -nargs=* Figlet :read!figlet -w 80 -f larry3d <args>")
 vim.cmd("command Empty :%bd|e#|bd#")
