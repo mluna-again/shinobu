@@ -31,19 +31,25 @@ return {
 		-- 	augroup END
 		-- ]])
 
+		local colors_override = {
+			theme = {
+				all = {
+					ui = {
+						bg = "none"
+					}
+				}
+			}
+		}
+
+		if vim.g.neovide then
+			colors_override = {}
+		end
+
 		require("kanagawa").setup({
 			theme = "dragon",
 			keywordStyle = { italic = false },
 			commentStyle = { italic = false },
-			colors = {
-				theme = {
-					all = {
-						ui = {
-							bg = "none"
-						},
-					},
-				},
-			},
+			colors = colors_override,
 			overrides = function(colors)
 				local theme = colors.theme
 				return {

@@ -3,6 +3,19 @@ require("core.maps")
 return {
 	"akinsho/toggleterm.nvim",
 	cmd = "ToggleTerm",
+	init = function()
+
+		local wk = require("which-key")
+		wk.register({
+			t = {
+				name = "Testing/Terminal",
+				v = { ":ToggleTerm direction=vertical<CR>", "Vertical terminal", noremap = true, silent = true },
+				s = { ":ToggleTerm direction=horizontal<CR>", "Horizontal terminal", noremap = true, silent = true },
+				t = { ":ToggleTerm<CR>", "Toggle main terminal", noremap = true, silent = true },
+			}
+		}, {prefix = "<Leader>"})
+		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
+	end,
 	config = function()
 		require("toggleterm").setup({
 			-- size can be a number or function which is passed the current terminal
@@ -28,16 +41,5 @@ return {
 			close_on_exit = true, -- close the terminal window when the process exits
 			auto_scroll = true, -- automatically scroll to the bottom on terminal output
 		})
-
-		local wk = require("which-key")
-		wk.register({
-			t = {
-				name = "Testing/Terminal",
-				v = { ":ToggleTerm direction=vertical<CR>", "Vertical terminal", noremap = true, silent = true },
-				s = { ":ToggleTerm direction=horizontal<CR>", "Horizontal terminal", noremap = true, silent = true },
-				t = { ":ToggleTerm<CR>", "Toggle main terminal", noremap = true, silent = true },
-			}
-		}, {prefix = "<Leader>"})
-		tmap("<Leader>ww", "<C-\\><C-n><C-w><C-w>")
 	end,
 }
