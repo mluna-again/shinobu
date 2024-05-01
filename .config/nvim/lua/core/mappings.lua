@@ -81,6 +81,7 @@ nmap("<Leader>fo", ":lua require('telescope.builtin').oldfiles({prompt_title='Hi
 nmap("<Leader>fw", ":lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>")
 nmap("ff", ":lua require('telescope.builtin').buffers({ prompt_title = 'Buffers' })<CR>")
 nmap("<Leader>ff", ":Telescope find_files<CR>")
+nmap("<Leader>fd", ":Telescope cder<CR>")
 nmap("<Leader>cn", ":enew<CR>")
 nmap("<Leader>fn", ":Oil --float<CR>")
 

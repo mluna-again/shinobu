@@ -4,6 +4,9 @@ return {
 	cmd = {
 		"Telescope",
 	},
+	dependencies = {
+		"mluna-again/cder.nvim"
+	},
 	config = function()
 		local action_state = require("telescope.actions.state")
 		local actions = require("telescope.actions")
@@ -71,5 +74,7 @@ return {
 				},
 			},
 		})
+
+		require('telescope').load_extension('cder')
 	end,
 }
