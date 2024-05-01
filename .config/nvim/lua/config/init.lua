@@ -82,3 +82,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.bo.autoindent = true
 	end,
 })
+
+if vim.g.neovide then
+	-- vim.cmd("set guicursor=n-v-c-i:block-blinkwait275-blinkoff250-blinkon400")
+	-- vim.g.neovide_cursor_smooth_blink = true
+	vim.g.neovide_cursor_vfx_mode = "ripple"
+end
