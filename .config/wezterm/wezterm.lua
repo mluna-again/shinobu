@@ -17,28 +17,48 @@ config.colors = kanagawa
 config.hide_tab_bar_if_only_one_tab = true
 
 config.window_padding = {
-  left = 0,
-  right = 0,
-  bottom = 0,
-  top = 0
+	left = 0,
+	right = 0,
+	bottom = 0,
+	top = 0,
 }
 
 -- config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
 config.window_background_image_hsb = {
-  brightness = 0.01
+	brightness = 0.01,
 }
 
 config.keys = {
-  {
-    key = "f",
-    mods = "CMD",
-    action = w.action.ToggleFullScreen
-  },
-  {
-    key = "f",
-    mods = "CTRL",
-    action = w.action.ToggleFullScreen
-  }
+	{
+		key = "f",
+		mods = "CMD",
+		action = w.action.ToggleFullScreen,
+	},
+	{
+		key = "f",
+		mods = "CTRL",
+		action = w.action.ToggleFullScreen,
+	},
+	{
+		key = "+",
+		mods = "CMD",
+		action = w.action.IncreaseFontSize,
+	},
+	{
+		key = "+",
+		mods = "CTRL",
+		action = w.action.IncreaseFontSize,
+	},
+	{
+		key = "-",
+		mods = "CMD",
+		action = w.action.DecreaseFontSize,
+	},
+	{
+		key = "-",
+		mods = "CTRL",
+		action = w.action.DecreaseFontSize,
+	},
 }
 
 config.check_for_updates = false
