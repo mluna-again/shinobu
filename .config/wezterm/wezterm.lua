@@ -2,12 +2,12 @@ local kanagawa = require("kanagawa")
 local w = require("wezterm")
 local act = w.action
 
--- local mux = w.mux
+local mux = w.mux
 
--- w.on("gui-startup", function(cmd)
---   local tab, pane, window = mux.spawn_window(cmd or {})
---   window:gui_window():maximize()
--- end)
+w.on("gui-startup", function(cmd)
+  local tab, pane, window = mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
+end)
 
 local config = {}
 
@@ -90,5 +90,7 @@ end
 config.check_for_updates = false
 
 config.native_macos_fullscreen_mode = true
+
+config.audible_bell = "Disabled"
 
 return config
