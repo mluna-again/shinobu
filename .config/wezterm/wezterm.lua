@@ -19,7 +19,7 @@ config.window_padding = {
 
 -- config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
 config.window_background_image_hsb = {
-  brightness = 0.02
+  brightness = 0.01
 }
 
 config.keys = {
