@@ -120,15 +120,6 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
-wk.register({
-	R = {
-		function() vim.cmd("@:") end,
-		"Repeat last command (not motion)",
-		silent = true,
-		noremap = true
-	}
-}, { prefix = "<leader>" })
-
 nmap("<Leader>cn", ":enew<CR>")
 
 vim.cmd("command -nargs=* Figlet :read!figlet -w 80 -f larry3d <args>")
