@@ -37,6 +37,7 @@ return {
 			"flake8",
 			"shfmt",
 			"black",
+			"lua-language-server"
 		}
 
 		mason.setup({
