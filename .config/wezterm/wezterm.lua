@@ -4,7 +4,7 @@ local w = require("wezterm")
 local config = {}
 
 config.font = w.font("FiraCode Nerd Font")
-config.font_size = 14
+config.font_size = 12
 
 config.colors = kanagawa
 
