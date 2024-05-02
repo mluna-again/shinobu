@@ -4,8 +4,10 @@ if [ -n "$NVIM" ]; then
 	exit
 fi
 
+declare WELCOME_SESSION="__WELCOME__"
+
 declare WELCOME_PATH="$HOME/.local/scripts/tmux/welcome" RESPATH="$HOME/.local/scripts/tmux/welcome/.result"
-declare run="${1:-0}" SCRIPT="$WELCOME_PATH/welcome.sh"
+declare run="${1:-0}" original_session="$2" SCRIPT="$WELCOME_PATH/welcome.sh"
 
 cd "$WELCOME_PATH" || exit
 
@@ -53,11 +55,14 @@ main() {
 		counter=$((counter + 1))
 	done
 
-	tmux list-sessions -F "#{session_name} #{session_windows} #{session_id}" | \
+	tmux list-sessions -f "#{!=:#{session_name},$WELCOME_SESSION}" -F "#{session_name} #{session_windows} #{session_id}" | \
 		"$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" -quote "$quote" || exit 1
 
 	id="$(cat "$RESPATH")"
-	[ -z "$id" ] && exit
+	if [ -z "$id" ]; then
+		tmux switch-client -t "$original_session"
+		exit
+	fi
 
 	case "$id" in
 		"@detach")
@@ -99,8 +104,9 @@ main() {
 }
 
 if [ "$run" -eq 1 ]; then
-	main
+	main "$original_session"
 	exit
 fi
 
-tmux display-popup -w "100%" -h "100%" -EE "$SCRIPT 1"
+tmux new-session -d -s "$WELCOME_SESSION" "$SCRIPT 1 \"$(tmux display -p '#{session_name}')\""
+tmux switch-client -t "$WELCOME_SESSION"

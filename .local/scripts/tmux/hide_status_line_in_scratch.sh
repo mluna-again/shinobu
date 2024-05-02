@@ -7,4 +7,9 @@ if [ "$session" = scratch ]; then
 	exit
 fi
 
+if [ "$session" = __WELCOME__ ]; then
+	tmux set status off
+	exit
+fi
+
 tmux set status on

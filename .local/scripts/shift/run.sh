@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+if [ "$(tmux display -p '#{session_name}')" = __WELCOME__ ]; then
+	exit
+fi
+
 w="$1"
 h="$2"
 mode="${3:-sessions}"
