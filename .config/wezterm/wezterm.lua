@@ -1,5 +1,7 @@
 local kanagawa = require("kanagawa")
 local w = require("wezterm")
+local act = w.action
+
 -- local mux = w.mux
 
 -- w.on("gui-startup", function(cmd)
@@ -23,9 +25,9 @@ config.window_padding = {
 	top = 0,
 }
 
--- config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
+config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
 config.window_background_image_hsb = {
-	brightness = 0.01,
+	brightness = 0.02,
 }
 
 config.keys = {
@@ -59,7 +61,31 @@ config.keys = {
 		mods = "CTRL",
 		action = w.action.DecreaseFontSize,
 	},
+	{
+		key = "n",
+		mods = "CMD",
+		action = act.SpawnTab("CurrentPaneDomain"),
+	},
+	{
+		key = "n",
+		mods = "CTRL|SHIFT",
+		action = act.SpawnTab("CurrentPaneDomain"),
+	},
 }
+
+for i = 1, 8 do
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "CTRL",
+		action = act.ActivateTab(i - 1),
+	})
+
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "META",
+		action = act.ActivateTab(i - 1),
+	})
+end
 
 config.check_for_updates = false
 
