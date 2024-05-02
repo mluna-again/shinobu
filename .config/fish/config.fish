@@ -53,7 +53,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.symfony5/bin" \
     "$HOME/.nimble/bin" \
     "$HOME/.local/bin/inklecate" \
-    "$HOME/.local/share/bob/nvim-bin"
+    "$HOME/.local/share/bob/nvim-bin" \
+    "$HOME/.local/bin/odin"
 
 function search_dir
     set -l dir (find . -maxdepth 10 | grep -v '^.$' | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)
