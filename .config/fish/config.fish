@@ -72,6 +72,25 @@ function search_dir
     commandline -f repaint
 end
 
+function ask_confirmation_exit
+    if test -z "$TMUX"
+        exit
+    end
+
+    set -l panes (tmux list-panes | wc -l)
+    if test "$panes" -gt 1
+        exit
+    end
+
+    set -l confirmation (read -P "You are inside TMUX, continue? [N/no/yes/y] " | tr '[:upper:]' '[:lower:]')
+    if test "$confirmation" != y; and test "$confirmation" != yes
+        commandline -f repaint
+        return
+    end
+
+    exit
+end
+
 # BINDINGS
 bind -M insert \ce end-of-line
 bind -M insert \ca beginning-of-line
@@ -79,6 +98,7 @@ bind -M insert \ck accept-autosuggestion
 bind -M insert \cp history-search-backward
 bind -M insert \cn history-search-forward
 bind -M insert \cf search_dir
+bind -M insert \cd ask_confirmation_exit
 bind --mode insert --sets-mode default jj backward-char repaint
 
 # ENV
