@@ -24,7 +24,8 @@ return {
 				"sql",
 				"ruby",
 				"rust",
-				"zig"
+				"zig",
+				"odin"
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)

@@ -206,7 +206,8 @@ return {
 			"gdscript",
 			"bashls",
 			"fsautocomplete",
-			"lua_ls"
+			"lua_ls",
+			"ols"
 		}
 
 		local lspconfig = require("lspconfig")
