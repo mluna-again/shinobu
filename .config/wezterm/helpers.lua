@@ -10,7 +10,7 @@ M.get_background_brightness = function()
 	end
 	local result = cmd:read("*a")
 
-	if string.lower(result) == "darwin" then
+	if string.lower(string.gsub(result, "\n", "")) == "darwin" then
 		return 0.02
 	end
 
