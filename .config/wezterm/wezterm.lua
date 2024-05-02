@@ -1,5 +1,11 @@
 local kanagawa = require("kanagawa")
 local w = require("wezterm")
+-- local mux = w.mux
+
+-- w.on("gui-startup", function(cmd)
+--   local tab, pane, window = mux.spawn_window(cmd or {})
+--   window:gui_window():maximize()
+-- end)
 
 local config = {}
 
@@ -34,5 +40,9 @@ config.keys = {
     action = w.action.ToggleFullScreen
   }
 }
+
+config.check_for_updates = false
+
+config.native_macos_fullscreen_mode = true
 
 return config
