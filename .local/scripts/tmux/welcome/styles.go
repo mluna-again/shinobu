@@ -4,7 +4,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-var bg = lipgloss.Color("#181616")
+var bg = lipgloss.NoColor{}
 
 var banner = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#FAFAFA")).
@@ -41,5 +41,4 @@ var (
 
 var inputStyle = lipgloss.
 	NewStyle().
-	Background(lipgloss.Color(bg)).
 	Margin(1, 0, 1, 0)
