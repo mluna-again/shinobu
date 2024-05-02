@@ -105,6 +105,7 @@ Dotfiles: status
 Dotfiles: pull
 Cheatsheet: select and copy
 Alacritty: toggle opacity
+Wezterm: toggle background
 Food: add entry
 Food: add custom entry
 Food: total today
@@ -114,6 +115,15 @@ Food: delete entry
 Food: add recipe
 EOF
 )"
+
+universal_sed() {
+	local file="$1" exp="$2"
+	if uname | grep -iq darwin; then
+		sed -i '' "$exp" "$file"
+	else
+		sed -i "$exp" "$file"
+	fi
+}
 
 top_right_pane() {
 	tmux list-panes -F "#{pane_index} #{pane_at_top} #{pane_at_right}" | \
@@ -1169,6 +1179,16 @@ EOF
 
 		tmux display-popup -T "$(make_popup_border 'Message')" \
 			-b heavy -S fg=white,bg=terminal -w "80%" -h "80%" -E "$HOME/.local/scripts/lol.sh 'WAKE UP!'"
+		;;
+
+	"Wezterm: toggle background")
+		file="$HOME/.config/wezterm/wezterm.lua"
+		line=$(grep -i "config.window_background_image\s*=" "$file")
+		if [[ "$line" =~ ^--.*$ ]]; then
+			universal_sed "$file" "s/--\s*config.window_background_image\s*=/config.window_background_image =/"
+		else
+			universal_sed "$file" "s/\s*config.window_background_image\s*=/-- config.window_background_image =/"
+		fi
 		;;
 
 	"Alacritty: toggle opacity")
