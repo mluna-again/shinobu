@@ -83,19 +83,19 @@ wk.register({
 			"<cmd>lua require('telescope.builtin').buffers({ prompt_title = 'Buffers' })<CR>",
 			"Search buffers",
 			silent = true,
-			noremap = true
+			noremap = true,
 		},
 		o = {
 			"<cmd>lua require('telescope.builtin').oldfiles({prompt_title='History'})<CR>",
 			"Search history",
 			silent = true,
-			noremap = true
+			noremap = true,
 		},
 		w = {
 			"<cmd>lua require('telescope.builtin').live_grep({prompt_title='Search expression'})<CR>",
 			"Search expresion",
 			silent = true,
-			noremap = true
+			noremap = true,
 		},
 		f = {
 			"<cmd>Telescope find_files<CR>",
@@ -116,9 +116,19 @@ wk.register({
 			"Open Oil.nvim",
 			silent = true,
 			noremap = true,
-		}
+		},
 	},
 }, { prefix = "<leader>" })
+
+wk.register({
+	R = {
+		function() vim.cmd("@:") end,
+		"Repeat last command (not motion)",
+		silent = true,
+		noremap = true
+	}
+}, { prefix = "<leader>" })
+
 nmap("<Leader>cn", ":enew<CR>")
 
 vim.cmd("command -nargs=* Figlet :read!figlet -w 80 -f larry3d <args>")
