@@ -1,0 +1,6 @@
+frame = "buttonless"
+maximized = true
+
+[font]
+normal = "FiraCode Nerd Font"
+size = 13
