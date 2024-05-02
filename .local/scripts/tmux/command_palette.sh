@@ -117,7 +117,7 @@ EOF
 )"
 
 universal_sed() {
-	local file="$1" exp="$2"
+	local file="$2" exp="$1"
 	if uname | grep -iq darwin; then
 		sed -i '' "$exp" "$file"
 	else
@@ -293,17 +293,11 @@ _modify_nvim_and_alacritty_err() {
 	exit
 }
 
-modify_nvim_and_alacritty() {
-	# -_-
-	if uname | grep -i darwin &>/dev/null; then
-		sed -i '' "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || _modify_nvim_and_alacritty_err
-		sed -i '' "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty.toml" || _modify_nvim_and_alacritty_err
-		sed -i '' "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty_linux.toml" || _modify_nvim_and_alacritty_err
-	else
-		sed -i "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || _modify_nvim_and_alacritty_err
-		sed -i "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty.toml" || _modify_nvim_and_alacritty_err
-		sed -i "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty_linux.toml" || _modify_nvim_and_alacritty_err
-	fi
+modify_alacritty_nvim_and_wezterm() {
+	universal_sed "s/^vim.cmd(\"colorscheme.*/vim.cmd(\"colorscheme $1\")/" "$HOME/.config/nvim/lua/config/init.lua" || _modify_nvim_and_alacritty_err
+	universal_sed "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty.toml" || _modify_nvim_and_alacritty_err
+	universal_sed "s|~/.config/alacritty/themes/.*]|~/.config/alacritty/themes/$1.toml\"]|" "$HOME/.config/alacritty/alacritty_linux.toml" || _modify_nvim_and_alacritty_err
+	# TODO: wezterm, i just have kanagawa at the moment
 
 	[ ! -d "$HOME/.config/shift" ] && mkdir "$HOME/.config/shift"
 	echo "$1" > "$HOME/.config/shift/theme"
@@ -1185,9 +1179,9 @@ EOF
 		file="$HOME/.config/wezterm/wezterm.lua"
 		line=$(grep -i "config.window_background_image\s*=" "$file")
 		if [[ "$line" =~ ^--.*$ ]]; then
-			universal_sed "$file" "s/--\s*config.window_background_image\s*=/config.window_background_image =/"
+			universal_sed "s/--\s*config.window_background_image\s*=/config.window_background_image =/" "$file"
 		else
-			universal_sed "$file" "s/\s*config.window_background_image\s*=/-- config.window_background_image =/"
+			universal_sed "s/\s*config.window_background_image\s*=/-- config.window_background_image =/" "$file"
 		fi
 		;;
 
@@ -1256,7 +1250,7 @@ EOF
 				tmux set -g @components_active_background3 blue
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "kanagawa-dragon"
-				modify_nvim_and_alacritty kanagawa-dragon
+				modify_alacritty_nvim_and_wezterm kanagawa-dragon
 				;;
 
 			"Kanagawa Wave")
@@ -1265,7 +1259,7 @@ EOF
 				tmux set -g @components_active_background3 blue
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "kanagawa-wave"
-				modify_nvim_and_alacritty kanagawa-wave
+				modify_alacritty_nvim_and_wezterm kanagawa-wave
 				;;
 
 			"Everforest")
@@ -1274,7 +1268,7 @@ EOF
 				tmux set -g @components_active_background3 yellow
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "everforest"
-				modify_nvim_and_alacritty everforest
+				modify_alacritty_nvim_and_wezterm everforest
 				;;
 
 			"Gruvbox")
@@ -1283,7 +1277,7 @@ EOF
 				tmux set -g @components_active_background3 blue
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "gruvbox-material"
-				modify_nvim_and_alacritty gruvbox-material
+				modify_alacritty_nvim_and_wezterm gruvbox-material
 				;;
 
 			"Catppuccin")
@@ -1292,7 +1286,7 @@ EOF
 				tmux set -g @components_active_background3 yellow
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "catppuccin"
-				modify_nvim_and_alacritty catppuccin
+				modify_alacritty_nvim_and_wezterm catppuccin
 				;;
 
 			"Rosé Pine")
@@ -1301,7 +1295,7 @@ EOF
 				tmux set -g @components_active_background3 yellow
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "rose-pine"
-				modify_nvim_and_alacritty rose-pine
+				modify_alacritty_nvim_and_wezterm rose-pine
 				;;
 
 			"Yoru")
@@ -1310,7 +1304,7 @@ EOF
 				tmux set -g @components_active_background3 yellow
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "yoru"
-				modify_nvim_and_alacritty yoru
+				modify_alacritty_nvim_and_wezterm yoru
 				;;
 
 			"Dracula")
@@ -1319,7 +1313,7 @@ EOF
 				tmux set -g @components_active_background3 yellow
 				tmux set -g @components_active_background4 magenta
 				send_keys_to_nvim "dracula"
-				modify_nvim_and_alacritty dracula
+				modify_alacritty_nvim_and_wezterm dracula
 				;;
 		esac
 		;;
