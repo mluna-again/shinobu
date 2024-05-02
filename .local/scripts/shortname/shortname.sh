@@ -4,7 +4,7 @@ _session_path="$1"
 width="$2"
 background="$3"
 session_name="$4"
-[ "$width" -lt 100 ] && exit
+[ "$width" -le 100 ] && exit
 
 if grep -vq '/' <<< "$_session_path"; then
 	printf "#[fg=black,bg=%s]  #[bg=terminal,fg=terminal] %s " "$background" "$_session_path"

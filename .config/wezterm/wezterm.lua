@@ -1,8 +1,8 @@
 local kanagawa = require("kanagawa")
 local w = require("wezterm")
 local act = w.action
-
 local mux = w.mux
+local helpers = require("helpers")
 
 w.on("gui-startup", function(cmd)
   local tab, pane, window = mux.spawn_window(cmd or {})
@@ -27,7 +27,7 @@ config.window_padding = {
 
 config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
 config.window_background_image_hsb = {
-	brightness = 0.02,
+	brightness = helpers.get_background_brightness(),
 }
 
 config.keys = {
