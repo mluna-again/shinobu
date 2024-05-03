@@ -108,5 +108,7 @@ if [ "$run" -eq 1 ]; then
 	exit
 fi
 
+tmux kill-session -t "$WELCOME_SESSION"
+
 tmux new-session -d -s "$WELCOME_SESSION" "$SCRIPT 1 \"$(tmux display -p '#{session_name}')\""
 tmux switch-client -t "$WELCOME_SESSION"
