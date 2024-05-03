@@ -2,6 +2,8 @@
 
 BOP_PORT=8888
 
+WALLPAPERS="$HOME/.local/walls"
+
 THEMES="$(
 cat - <<EOF
 Kanagawa Dragon
@@ -106,6 +108,7 @@ Dotfiles: pull
 Cheatsheet: select and copy
 Alacritty: toggle opacity
 Wezterm: toggle background
+Wezterm: choose background
 Food: add entry
 Food: add custom entry
 Food: total today
@@ -1183,6 +1186,13 @@ EOF
 		else
 			universal_sed "s/\s*config.window_background_image\s*=/-- config.window_background_image =/" "$file"
 		fi
+		;;
+
+	"Wezterm: choose background")
+		walls=$(find "$WALLPAPERS" -type f | sed "s|${WALLPAPERS}/||g")
+		input " Choose background " " 󰸉 " "$walls"
+		selection=$(read_input)
+		universal_sed "s|^.*config.window_background_image\s*=.*$|config.window_background_image = string.format(\"%s/.local/walls/$selection\", os.getenv(\"HOME\"))|g" "$HOME/.config/wezterm/wezterm.lua"
 		;;
 
 	"Alacritty: toggle opacity")
