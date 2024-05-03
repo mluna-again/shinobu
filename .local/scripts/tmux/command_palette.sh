@@ -122,7 +122,11 @@ EOF
 universal_sed() {
 	local file="$2" exp="$1"
 	if uname | grep -iq darwin; then
-		sed -i '' "$exp" "$file"
+		if ! command -v gsed &>/dev/null; then
+			error "Please install gnu-sed"
+			exit
+		fi
+		gsed -i "$exp" "$file"
 	else
 		sed -i "$exp" "$file"
 	fi
