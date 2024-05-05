@@ -11,6 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
+vim.g.zig_fmt_autosave = 0
 require("lazy").setup("plugins")
 require('config')
 require('core.mappings')
