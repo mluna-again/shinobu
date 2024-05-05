@@ -89,6 +89,10 @@ main() {
 			kill "$pid"
 			;;
 
+		"@kill-server")
+			tmux kill-server
+			;;
+
 		"@reboot")
 			sudo shutdown -r now
 			;;

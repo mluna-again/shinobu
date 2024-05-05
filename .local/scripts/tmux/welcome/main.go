@@ -53,17 +53,18 @@ func loadsessions() ([]list.Item, error) {
 }
 
 type model struct {
-	sessions    list.Model
-	termH       int
-	termW       int
-	selected    string
-	banner      sign
-	quote       string
-	isSSH       bool
-	rebooting   bool
-	shutting    bool
-	creatingNew bool
-	input       textinput.Model
+	sessions      list.Model
+	termH         int
+	termW         int
+	selected      string
+	banner        sign
+	quote         string
+	isSSH         bool
+	rebooting     bool
+	shutting      bool
+	creatingNew   bool
+	killingServer bool
+	input         textinput.Model
 }
 
 func initialModel() (model, error) {
@@ -153,10 +154,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		}
 
+		if m.killingServer && msg.String() == "Q" {
+			saveResults("@kill-server")
+			return m, tea.Quit
+		}
+
 		// its either rebooting or shutting down but no confirmation
-		if m.rebooting || m.shutting {
+		if m.rebooting || m.shutting || m.killingServer {
 			m.rebooting = false
 			m.shutting = false
+			m.killingServer = false
 		}
 
 		switch msg.String() {
@@ -170,6 +177,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if !m.shouldIgnoreInput() {
 				m.creatingNew = true
 				m.input.Focus()
+				return m, nil
+			}
+
+		case "Q":
+			if !m.shouldIgnoreInput() {
+				m.killingServer = true
 				return m, nil
 			}
 
@@ -280,7 +293,7 @@ func (m model) View() string {
 		if m.isSSH {
 			bar = fmt.Sprintf("%s  Disconnect (X)", bar)
 		}
-		bar = fmt.Sprintf("%s\nReboot (C-r)  Shut Down (C-q)", bar)
+		bar = fmt.Sprintf("%s\nKill Server (Q)  Reboot (C-r)  Shut Down (C-q)", bar)
 
 		if m.shutting {
 			bar = "Are you sure? Type C-q again to confirm."
@@ -288,6 +301,10 @@ func (m model) View() string {
 
 		if m.rebooting {
 			bar = "Are you sure? Type C-r again to confirm."
+		}
+
+		if m.killingServer {
+			bar = "Are you sure? Type Q again to confirm."
 		}
 
 		s.WriteString(help.Render(bar))
