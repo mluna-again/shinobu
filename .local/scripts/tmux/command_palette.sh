@@ -91,7 +91,6 @@ Resize: right
 Tmux: set current directory as default
 Tmux: move window to the left
 Tmux: move window to the right
-Tmux: zen mode
 Tmux: floating terminal
 Tmux: block outer session
 Tmux: join panes

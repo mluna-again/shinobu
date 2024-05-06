@@ -13,7 +13,7 @@ small() {
 width=$(tmux display -p "#{client_width}")
 
 [ "$width" -ge 100 ] && {
-  tmux set -g status-justify absolute-centre
+  tmux set -g status-justify left
   big
   exit
 }
