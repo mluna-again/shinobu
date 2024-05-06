@@ -9,13 +9,18 @@ fi
 output=$(curl -fsSL "http://localhost:$BOP_PORT/status")
 [ -z "$output" ] && exit
 
-title=$(jq -r '"\(.display_name) by \(.artist)"' <<< "$output")
-[ -z "$title" ] && exit
-
-short=$(cut -c -30 <<< "$title")
-
-if [ "$short" != "$title" ]; then
-  title="$short..."
+song=$(jq -r '.display_name' <<< "$output")
+[ -z "$song" ] && exit
+ssong=$(cut -c -15 <<< "$song")
+if [ "$ssong" != "$song" ]; then
+  song="${ssong}..."
 fi
 
-echo "#[fg=default,bg=default]$title #[bg=green,fg=black]  "
+artist=$(jq -r '.artist' <<< "$output")
+[ -z "$artist" ] && exit
+sartist=$(cut -c -15 <<< "$artist")
+if [ "$sartist" != "$artist" ]; then
+  artist="${sartist}..."
+fi
+
+echo "#[fg=default,bg=default]$song by $artist #[bg=green,fg=black]  "
