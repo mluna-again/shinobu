@@ -38,7 +38,7 @@ config.keys = {
 	},
 	{
 		key = "f",
-		mods = "CTRL",
+		mods = "META",
 		action = w.action.ToggleFullScreen,
 	},
 	{
@@ -48,7 +48,7 @@ config.keys = {
 	},
 	{
 		key = "+",
-		mods = "CTRL",
+		mods = "META",
 		action = w.action.IncreaseFontSize,
 	},
 	{
@@ -58,7 +58,7 @@ config.keys = {
 	},
 	{
 		key = "-",
-		mods = "CTRL",
+		mods = "META",
 		action = w.action.DecreaseFontSize,
 	},
 	{
