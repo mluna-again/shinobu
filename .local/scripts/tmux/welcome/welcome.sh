@@ -61,7 +61,7 @@ main() {
 	id="$(cat "$RESPATH")"
 	if [ -z "$id" ]; then
 		tmux switch-client -t "$original_session"
-		tmux set -g status
+		tmux set -g status on
 		exit
 	fi
 
@@ -110,7 +110,7 @@ main() {
 
 if [ "$run" -eq 1 ]; then
 	main "$original_session"
-	tmux set -g status
+	tmux set -g status on
 	exit
 fi
 
@@ -120,6 +120,6 @@ fi
 
 tmux kill-session -t "$WELCOME_SESSION"
 
-tmux set -g status
+tmux set -g status off
 tmux new-session -d -s "$WELCOME_SESSION" "$SCRIPT 1 \"$(tmux display -p '#{session_name}')\""
 tmux switch-client -t "$WELCOME_SESSION"
