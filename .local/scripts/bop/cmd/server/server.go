@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -60,6 +61,9 @@ func Serve() {
 	}
 
 	app, err := initializeApp()
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer app.cleanup()
 
 	c := make(chan os.Signal, 1)

@@ -64,7 +64,7 @@ do_install() {
 
 		bop)
 			cd "$HOME/.local/scripts/bop" || exit
-			make
+			go install
 			;;
 
 		tmp)
