@@ -48,7 +48,7 @@ config.keys = {
 	},
 	{
 		key = "+",
-		mods = "META",
+		mods = "CTRL",
 		action = w.action.IncreaseFontSize,
 	},
 	{
@@ -58,7 +58,7 @@ config.keys = {
 	},
 	{
 		key = "-",
-		mods = "META",
+		mods = "CTRL",
 		action = w.action.DecreaseFontSize,
 	},
 	{
