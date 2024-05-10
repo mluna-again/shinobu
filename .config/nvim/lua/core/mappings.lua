@@ -105,7 +105,7 @@ wk.register({
 		},
 		d = {
 			function()
-				require("telescope").extensions.cder.cder({ exclude = { "Library" } })
+				require("telescope").extensions.zoxide.list()
 			end,
 			"Search directories",
 			silent = true,

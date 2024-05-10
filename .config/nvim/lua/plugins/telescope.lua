@@ -4,9 +4,6 @@ return {
 	cmd = {
 		"Telescope",
 	},
-	dependencies = {
-		"mluna-again/cder.nvim"
-	},
 	config = function()
 		local action_state = require("telescope.actions.state")
 		local actions = require("telescope.actions")
@@ -65,6 +62,9 @@ return {
 			},
 			pickers = {},
 			extensions = {
+				zoxide = {
+					prompt_title = "Common files and directories"
+				},
 				fzf = {
 					fuzzy = true, -- false will only do exact matching
 					override_generic_sorter = true, -- override the generic sorter
@@ -74,7 +74,5 @@ return {
 				},
 			},
 		})
-
-		require('telescope').load_extension('cder')
 	end,
 }
