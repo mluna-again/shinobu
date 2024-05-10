@@ -112,8 +112,12 @@ wk.register({
 			noremap = true,
 		},
 		n = {
-			"<cmd>Oil --float<CR>",
-			"Open Oil.nvim",
+			function()
+				if not MiniFiles.close() then
+					MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+				end
+			end,
+			"Open file explorer",
 			silent = true,
 			noremap = true,
 		},
