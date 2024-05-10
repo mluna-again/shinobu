@@ -20,7 +20,17 @@ return {
 				l = {
 					"<cmd>SessionLoad<CR>",
 					"Load session"
-				}
+				},
+        d = {
+          function()
+            vim.cmd("SessionDelete")
+            vim.cmd("silent only")
+            vim.cmd("silent bufdo bwipeout")
+            vim.cmd("Alpha")
+						vim.cmd("normal gg")
+          end,
+          "Delete current session",
+        }
 			}
 		}, {
 			prefix = "<Leader>"
