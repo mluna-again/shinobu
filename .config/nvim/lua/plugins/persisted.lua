@@ -15,25 +15,25 @@ return {
 				name = "Sessions",
 				s = {
 					"<cmd>SessionSave<CR>",
-					"Save current session"
+					"Save current session",
 				},
 				l = {
 					"<cmd>SessionLoad<CR>",
-					"Load session"
+					"Load session",
 				},
-        d = {
-          function()
-            vim.cmd("SessionDelete")
-            vim.cmd("silent only")
-            vim.cmd("silent bufdo bwipeout")
-            vim.cmd("Alpha")
+				d = {
+					function()
+						vim.cmd("SessionDelete")
+						vim.cmd("silent only")
+						vim.cmd("silent bufdo bwipeout")
+						vim.cmd("Alpha")
 						vim.cmd("normal gg")
-          end,
-          "Delete current session",
-        }
-			}
+					end,
+					"Delete current session",
+				},
+			},
 		}, {
-			prefix = "<Leader>"
+			prefix = "<Leader>",
 		})
 	end,
 	config = function()
