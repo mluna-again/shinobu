@@ -74,6 +74,11 @@ local function greetings()
 		"there is no quote today",
 		"Happ33##n0T++-b$rthdy11",
 		"try to relax and enjoy the crisis",
+		"the root of all your evil is in always relying on one of your other possibilities to get your wish.",
+		{
+			"there is no such thing as that rose-colored campus life. why?",
+			"because there is nothing rose-colored in this world. everything is all a bunch of colors mixed up, you see."
+		},
 		"<empty>",
 		"<empty>"
 	}
