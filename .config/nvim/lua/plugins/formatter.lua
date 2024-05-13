@@ -97,6 +97,9 @@ return {
 				python = {
 					formatters.python.black,
 				},
+				c = {
+					formatters.c.clangformat,
+				}
 			},
 		})
 	end,

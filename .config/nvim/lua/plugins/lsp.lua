@@ -207,7 +207,8 @@ return {
 			"bashls",
 			"fsautocomplete",
 			"lua_ls",
-			"ols"
+			"ols",
+			"clangd"
 		}
 
 		local lspconfig = require("lspconfig")

@@ -25,7 +25,7 @@ config.window_padding = {
 	top = 0,
 }
 
-config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
+-- config.window_background_image = string.format("%s/.local/walls/valhalla.gif", os.getenv("HOME"))
 config.window_background_image_hsb = {
 	brightness = helpers.get_background_brightness(),
 }

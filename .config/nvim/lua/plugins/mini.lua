@@ -4,7 +4,7 @@ return {
 	event = "BufEnter",
 	config = function ()
 		require("mini.trailspace").setup()
-		require("mini.files").setup()
+		-- require("mini.files").setup()
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			pattern = { "*" },
