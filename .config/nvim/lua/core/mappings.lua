@@ -116,7 +116,7 @@ wk.register({
 				-- if not MiniFiles.close() then
 				-- 	MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
 				-- end
-				vim.cmd("Oil --float")
+				vim.cmd("Oil")
 			end,
 			"Open file explorer",
 			silent = true,
