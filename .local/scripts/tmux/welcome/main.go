@@ -269,6 +269,8 @@ func (m model) View() string {
 	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
 		s.WriteString(header)
 		s.WriteString("\n")
+	} else {
+		s.WriteString("\n\n")
 	}
 
 	s.WriteString(title.Render("Sessions"))
