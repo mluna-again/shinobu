@@ -138,6 +138,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
+		m.sessions.SetHeight(msg.Height / 3)
 		m.sessions.SetWidth(msg.Width)
 		m.resizeWithWidth(msg.Width)
 		m.resizeWithHeight(msg.Height)
@@ -264,8 +265,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := strings.Builder{}
 
-	s.WriteString(banner.Foreground(lipgloss.Color(m.banner.color)).Render(m.banner.content))
-	s.WriteString("\n")
+	header := banner.Foreground(lipgloss.Color(m.banner.color)).Render(m.banner.content)
+	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
+		s.WriteString(header)
+		s.WriteString("\n")
+	}
+
 	s.WriteString(title.Render("Sessions"))
 	s.WriteString("\n")
 
@@ -320,8 +325,8 @@ func (m model) View() string {
 }
 
 func main() {
-	flag.IntVar(&termWidth, "width", 0, "terminal width")
-	flag.IntVar(&termHeight, "height", 0, "terminal height")
+	flag.IntVar(&termWidth, "width", 80, "terminal width")
+	flag.IntVar(&termHeight, "height", 40, "terminal height")
 	flag.StringVar(&resultsFile, "result", "", "results file")
 	flag.StringVar(&quote, "quote", "howdy", "quote")
 	flag.Parse()
