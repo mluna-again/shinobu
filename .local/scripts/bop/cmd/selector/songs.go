@@ -114,7 +114,7 @@ func (m *songsModel) Focus() {
 }
 
 func (m *songsModel) Blur() {
-	m.focused = true
+	m.focused = false
 }
 
 func (m songsModel) Focused() bool {
