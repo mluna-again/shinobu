@@ -110,7 +110,7 @@ func printResults(w io.Writer, results *spotify.SearchResult, qType string) erro
 				DisplayName: fmt.Sprintf("[SONG] %s", song.Name),
 				Artist:      song.Artists[0].Name,
 				ImageUrl:    song.Album.Images[0].URL,
-				Duration:    fmt.Sprintf("%d:%d", (song.Duration/1000)/60, (song.Duration/1000)%60),
+				Duration:    fmt.Sprintf("%d:%02d", (song.Duration/1000)/60, (song.Duration/1000)%60),
 			}
 			response = append(response, item)
 		}

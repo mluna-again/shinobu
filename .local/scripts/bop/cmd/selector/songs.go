@@ -49,18 +49,32 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "g":
+			m.viewport.GotoTop()
+			m.index = 0
+
+		case "G":
+			m.viewport.GotoBottom()
+			m.index = len(m.songs) - 1
+
 		case "j":
 			if m.index < len(m.songs)-1 {
 				m.index++
+				if m.index*3 >= m.viewport.VisibleLineCount()-3 {
+					m.viewport.LineDown(3)
+				}
 			} else {
 				m.index = 0
+				m.viewport.GotoTop()
 			}
 
 		case "k":
 			if m.index > 0 {
 				m.index--
+				m.viewport.LineUp(3)
 			} else {
 				m.index = len(m.songs) - 1
+				m.viewport.GotoBottom()
 			}
 
 		case " ":
@@ -80,15 +94,16 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 	content := m.makeSongs(m.clearSongs(m.songs))
 	m.viewport.SetContent(content)
 
-	var (
-		cmd  tea.Cmd
-		cmds []tea.Cmd
-	)
+	// var (
+	// 	cmd  tea.Cmd
+	// 	cmds []tea.Cmd
+	// )
+	//
+	// m.viewport, cmd = m.viewport.Update(msg)
+	// cmds = append(cmds, cmd)
+	// return m, tea.Batch(cmds...)
 
-	m.viewport, cmd = m.viewport.Update(msg)
-	cmds = append(cmds, cmd)
-
-	return m, tea.Batch(cmds...)
+	return m, nil
 }
 
 func (m songsModel) View() string {
