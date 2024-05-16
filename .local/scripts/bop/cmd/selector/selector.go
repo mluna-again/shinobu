@@ -130,8 +130,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case tea.KeyEnter:
-			cmds = append(cmds, m.fetchSongs)
-			return m, tea.Batch(cmds...)
+			if m.input.Focused() {
+				cmds = append(cmds, m.fetchSongs)
+				return m, tea.Batch(cmds...)
+			}
 
 		case tea.KeyTab, tea.KeyShiftTab:
 			if m.input.Focused() {

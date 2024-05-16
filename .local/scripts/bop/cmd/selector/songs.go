@@ -19,18 +19,20 @@ type Song struct {
 }
 
 type songsModel struct {
-	songs    []Song
-	focused  bool
-	viewport viewport.Model
-	index    int
+	songs         []Song
+	selectedSongs map[string]Song
+	focused       bool
+	viewport      viewport.Model
+	index         int
 }
 
 func newSongsModel(songs []Song) songsModel {
 	v := viewport.New(0, 0)
 
 	return songsModel{
-		songs:    songs,
-		viewport: v,
+		songs:         songs,
+		viewport:      v,
+		selectedSongs: map[string]Song{},
 	}
 }
 
@@ -65,6 +67,11 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 			for i := 0; i < len(m.songs); i++ {
 				if i == m.index {
 					m.songs[i].Selected = !m.songs[i].Selected
+					if m.songs[i].Selected {
+						m.addSelectedSong(m.songs[i])
+					} else {
+						m.removeSelectedSong(m.songs[i])
+					}
 				}
 			}
 		}
@@ -115,14 +122,7 @@ func (m songsModel) Focused() bool {
 }
 
 func (m songsModel) SongsLen() int {
-	count := 0
-	for _, s := range m.songs {
-		if s.Selected {
-			count++
-		}
-	}
-
-	return count
+	return len(m.selectedSongs)
 }
 
 func (m *songsModel) SetSongs(songs []Song) {
@@ -147,7 +147,7 @@ func (m songsModel) makeSongs(ss []Song) string {
 
 		selCol := ""
 		if s.Selected {
-			selCol = ""
+			selCol = "  "
 		}
 		msg := lipgloss.JoinHorizontal(lipgloss.Left, cs.Render(selCol), cs.Render(s.Name), cs.Render(s.Artist), cs.Render(s.Duration))
 
@@ -175,8 +175,21 @@ func (m songsModel) clearSongs(songs []Song) []Song {
 		if utf8.RuneCount([]byte(s.Artist)) > m.viewport.Width/4 {
 			s.Artist = fmt.Sprintf("%s...", string([]rune(s.Artist)[0:20]))
 		}
+
+		if _, ok := m.selectedSongs[s.ID]; ok {
+			s.Selected = true
+		}
+
 		clean = append(clean, s)
 	}
 
 	return clean
+}
+
+func (m *songsModel) addSelectedSong(song Song) {
+	m.selectedSongs[song.ID] = song
+}
+
+func (m *songsModel) removeSelectedSong(song Song) {
+	delete(m.selectedSongs, song.ID)
 }
