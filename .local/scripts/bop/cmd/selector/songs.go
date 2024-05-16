@@ -107,11 +107,13 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 }
 
 func (m songsModel) View() string {
-	return songViewportS.Render(m.viewport.View())
+	header := lipgloss.JoinHorizontal(lipgloss.Left, songColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songColS.Render("Duration"))
+
+	return lipgloss.JoinVertical(lipgloss.Top, songViewportHeaderS.Render(header), songViewportS.Render(m.viewport.View()))
 }
 
 func (m *songsModel) SetHeight(h int) {
-	m.viewport.Height = h
+	m.viewport.Height = h - 3 // header
 }
 
 func (m *songsModel) SetWidth(w int) {
@@ -122,6 +124,8 @@ func (m *songsModel) SetWidth(w int) {
 	songHeaderS.Width(w)
 	songItemS.Width(w)
 	songItemSelectedS.Width(w)
+	songViewportS.Width(w)
+	songViewportHeaderS.Width(w)
 }
 
 func (m *songsModel) Focus() {
@@ -148,10 +152,6 @@ func (m *songsModel) SetSongs(songs []Song) {
 
 func (m songsModel) makeSongs(ss []Song) string {
 	b := strings.Builder{}
-	header := lipgloss.JoinHorizontal(lipgloss.Left, songColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songColS.Render("Duration"))
-	b.WriteString(songHeaderS.Render(header))
-	b.WriteString("\n")
-
 	for i, s := range ss {
 		var cs lipgloss.Style
 		if i == m.index {

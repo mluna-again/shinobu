@@ -42,6 +42,11 @@ var songColS = lipgloss.NewStyle().
 var songViewportS = lipgloss.NewStyle().
 	Background(darkerBlack)
 
+var songViewportHeaderS = lipgloss.NewStyle().
+	Background(darkerBlack).
+	Height(3).
+	AlignVertical(lipgloss.Center)
+
 var bg = black
 
 var inputS = lipgloss.NewStyle().
