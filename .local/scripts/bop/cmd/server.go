@@ -7,8 +7,8 @@ import (
 )
 
 var serverCmd = &cobra.Command{
-  Use: "serve",
-  Short: "starts bop server",
+	Use:   "serve",
+	Short: "starts bop server",
 	Run: func(cmd *cobra.Command, args []string) {
 		server.Serve()
 	},
