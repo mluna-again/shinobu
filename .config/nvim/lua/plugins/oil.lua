@@ -6,12 +6,28 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
+		local oil = require("oil")
+
 		require("oil").setup({
 			keymaps = {
 				["g?"] = "actions.show_help",
 				["<CR>"] = "actions.select",
-				["<C-v>"] = "actions.select_vsplit",
-				["<C-s>"] = "actions.select_split",
+				["<C-v>"] = {
+					callback = function()
+						oil.select({ vertical = true })
+						oil.close()
+					end,
+					desc = "Vertical Split",
+					mode = "n",
+				},
+				["<C-s>"] = {
+					callback = function()
+						oil.select({ horizontal = true })
+						oil.close()
+					end,
+					desc = "Horizontal Split",
+					mode = "n",
+				},
 				["<C-t>"] = "actions.select_tab",
 				["<C-p>"] = "actions.preview",
 				["<C-c>"] = "actions.close",
@@ -25,7 +41,7 @@ return {
 				["g."] = "actions.toggle_hidden",
 			},
 			view_options = {
-				show_hidden = true
+				show_hidden = true,
 			},
 			float = {
 				border = "rounded",
@@ -33,7 +49,7 @@ return {
 					winblend = 0,
 					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder,LineNr:OilBackground",
 				},
-				padding = 6
+				padding = 6,
 			},
 			buf_options = {
 				buflisted = false,
@@ -43,12 +59,12 @@ return {
 				win_options = {
 					winblend = 0,
 					winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder,LineNr:OilBackground",
-				}
+				},
 			},
 			win_options = {
 				winhighlight = "Normal:OilBackground,FloatBorder:OilBorder,FloatTitle:OilBorder,LineNr:OilBackground",
 			},
-      skip_confirm_for_simple_edits = true,
+			skip_confirm_for_simple_edits = true,
 		})
-	end
+	end,
 }
