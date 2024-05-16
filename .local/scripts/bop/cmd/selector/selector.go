@@ -67,8 +67,14 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 }
 
 func (m model) fetchSongs() tea.Msg {
+	if m.input.Value() == "" {
+		return refetchedSongs{
+			songs: []Song{},
+		}
+	}
+
 	maxCount := (m.termH / 3) - 3
-  payload := []byte(fmt.Sprintf("{\"query\": \"s:%s\", \"limit\": %d}", m.input.Value(), maxCount))
+	payload := []byte(fmt.Sprintf("{\"query\": \"s:%s\", \"limit\": %d}", m.input.Value(), maxCount))
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/search", BOP), bytes.NewBuffer(payload))
 	if err != nil {
 		return refetchedSongs{
@@ -119,7 +125,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case refetchedSongs:
 		m.fetching = false
-		m.songs.SetSongs(msg.songs)
+		if msg.err != nil {
+			m.err = msg.err
+		} else {
+			m.songs.SetSongs(msg.songs)
+		}
 
 	case tea.WindowSizeMsg:
 		m.resize(msg)
