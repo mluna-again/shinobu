@@ -22,12 +22,13 @@ type refetchedSongs struct {
 }
 
 type model struct {
-	termH    int
-	termW    int
-	input    textinput.Model
-	err      error
-	songs    songsModel
-	fetching bool
+	termH         int
+	termW         int
+	input         textinput.Model
+	err           error
+	songs         songsModel
+	fetching      bool
+	notFetchedYet bool
 }
 
 func newModel() model {
@@ -46,11 +47,12 @@ func newModel() model {
 	s := newSongsModel(songs)
 
 	return model{
-		termH: 40,
-		termW: 80,
-		input: ti,
-		err:   nil,
-		songs: s,
+		termH:         40,
+		termW:         80,
+		input:         ti,
+		err:           nil,
+		songs:         s,
+		notFetchedYet: true,
 	}
 }
 
@@ -64,6 +66,11 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 	helpLInfo.Width(m.termW / 2)
 	helpRInfo.Width(m.termW / 2)
 	helpInfo.Width(m.termW)
+
+	bannerLPadd := (m.termW / 2) - (lipgloss.Width(noSongsBanner) / 2)
+	bannerS.PaddingLeft(bannerLPadd)
+	bannerS.PaddingRight(m.termW - bannerLPadd)
+	bannerS.Height(m.termH - 3)
 }
 
 func (m model) fetchSongs() tea.Msg {
@@ -129,6 +136,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.err = msg.err
 		} else {
 			m.songs.SetSongs(msg.songs)
+			m.notFetchedYet = false
 		}
 
 	case tea.WindowSizeMsg:
@@ -173,6 +181,16 @@ func (m model) View() string {
 	prompt := promptS.Render("  ")
 	s.WriteString(lipgloss.JoinHorizontal(lipgloss.Left, prompt, input))
 	s.WriteString("\n")
+
+	if m.notFetchedYet {
+		s.WriteString(bannerS.Render(noSongsBanner))
+		return s.String()
+	}
+
+	if !m.notFetchedYet && len(m.songs.songs) == 0 {
+		s.WriteString(bannerS.Render(noResultsBanner))
+		return s.String()
+	}
 
 	// SONGS LIST
 	s.WriteString(m.songs.View())

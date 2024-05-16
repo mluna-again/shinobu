@@ -81,3 +81,7 @@ var helpRInfo = lipgloss.NewStyle().
 
 var helpLInfo = lipgloss.NewStyle().
 	Background(darkerBlack)
+
+var bannerS = lipgloss.NewStyle().
+	Background(darkerBlack).
+	AlignVertical(lipgloss.Center)
