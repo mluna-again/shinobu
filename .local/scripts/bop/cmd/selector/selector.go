@@ -1,8 +1,12 @@
 package selector
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -10,12 +14,20 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-type model struct {
-	termH int
-	termW int
-	input textinput.Model
+var BOP = "http://localhost:8888"
+
+type refetchedSongs struct {
+	songs []Song
 	err   error
-	songs songsModel
+}
+
+type model struct {
+	termH    int
+	termW    int
+	input    textinput.Model
+	err      error
+	songs    songsModel
+	fetching bool
 }
 
 func newModel() model {
@@ -30,11 +42,7 @@ func newModel() model {
 	ti.Cursor.Style = cursorS
 	ti.Cursor.TextStyle = cursorS
 
-	songs := []song{
-		{false, "Covet", "Basement", "4:31"},
-		{true, "Ghost Town", "Kanye", "4:31"},
-		{false, "Pink Matter", "Frank Ocean", "4:31"},
-	}
+	songs := []Song{}
 	s := newSongsModel(songs)
 
 	return model{
@@ -53,9 +61,51 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 	m.input.CharLimit = m.termW - 8
 	m.songs.SetWidth(m.termW)
 	m.songs.SetHeight(m.termH - 4)
-  helpLInfo.Width(m.termW/2)
-  helpRInfo.Width(m.termW/2)
-  helpInfo.Width(m.termW)
+	helpLInfo.Width(m.termW / 2)
+	helpRInfo.Width(m.termW / 2)
+	helpInfo.Width(m.termW)
+}
+
+func (m model) fetchSongs() tea.Msg {
+	maxCount := (m.termH / 3) - 3
+	payload := []byte(fmt.Sprintf("{\"query\": \"%s\", \"limit\": %d}", m.input.Value(), maxCount))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/search", BOP), bytes.NewBuffer(payload))
+	if err != nil {
+		return refetchedSongs{
+			err: errors.New("Could not fetch data..."),
+		}
+	}
+
+	client := http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return refetchedSongs{
+			err: errors.New("Server error..."),
+		}
+	}
+	defer resp.Body.Close()
+
+	var data []Song
+	d := json.NewDecoder(resp.Body)
+	err = d.Decode(&data)
+	if err != nil {
+		return refetchedSongs{
+			err: errors.New("Could not parse response..."),
+		}
+	}
+
+	parsed := []Song{}
+	for i := 0; i < maxCount; i++ {
+		if i > len(data)-1 {
+			break
+		}
+
+		parsed = append(parsed, data[i])
+	}
+
+	return refetchedSongs{
+		songs: parsed,
+	}
 }
 
 func (m model) Init() tea.Cmd {
@@ -63,7 +113,14 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+	var cmds []tea.Cmd
+
 	switch msg := msg.(type) {
+	case refetchedSongs:
+		m.fetching = false
+		m.songs.SetSongs(msg.songs)
+
 	case tea.WindowSizeMsg:
 		m.resize(msg)
 
@@ -71,6 +128,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.Type {
 		case tea.KeyCtrlC, tea.KeyEscape:
 			return m, tea.Quit
+
+		case tea.KeyEnter:
+			cmds = append(cmds, m.fetchSongs)
+			return m, tea.Batch(cmds...)
 
 		case tea.KeyTab, tea.KeyShiftTab:
 			if m.input.Focused() {
@@ -83,8 +144,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	var cmd tea.Cmd
-	var cmds []tea.Cmd
 	m.input, cmd = m.input.Update(msg)
 	cmds = append(cmds, cmd)
 
@@ -108,9 +167,9 @@ func (m model) View() string {
 	s.WriteString("\n")
 
 	// HELP AND INFO
-  songCount := m.songs.SongsLen()
-  count := helpRInfo.Render(fmt.Sprintf("%d songs queued.", songCount))
-  help := helpLInfo.Render("Press Esc to quit.")
+	songCount := m.songs.SongsLen()
+	count := helpRInfo.Render(fmt.Sprintf("%d songs queued.", songCount))
+	help := helpLInfo.Render("Press Esc to quit.")
 
 	s.WriteString(helpInfo.Render(lipgloss.JoinHorizontal(lipgloss.Left, help, count)))
 

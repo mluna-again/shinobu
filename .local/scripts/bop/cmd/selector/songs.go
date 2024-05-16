@@ -1,28 +1,31 @@
 package selector
 
 import (
+	"fmt"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
-type song struct {
-	Selected bool
-	Name     string
-	Artist   string
-	Duration string
+type Song struct {
+	Selected bool   `json:"selected"`
+	Name     string `json:"display_name"`
+	Artist   string `json:"artist"`
+	Duration string `json:"duration"`
+	ID       string `json:"id"`
 }
 
 type songsModel struct {
-	songs    []song
+	songs    []Song
 	focused  bool
 	viewport viewport.Model
 	index    int
 }
 
-func newSongsModel(songs []song) songsModel {
+func newSongsModel(songs []Song) songsModel {
 	v := viewport.New(0, 0)
 
 	return songsModel{
@@ -67,7 +70,7 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 		}
 	}
 
-	content := m.makeSongs(m.songs)
+	content := m.makeSongs(m.clearSongs(m.songs))
 	m.viewport.SetContent(content)
 
 	var (
@@ -122,7 +125,13 @@ func (m songsModel) SongsLen() int {
 	return count
 }
 
-func (m songsModel) makeSongs(ss []song) string {
+func (m *songsModel) SetSongs(songs []Song) {
+	m.songs = songs
+	content := m.makeSongs(m.clearSongs(m.songs))
+	m.viewport.SetContent(content)
+}
+
+func (m songsModel) makeSongs(ss []Song) string {
 	b := strings.Builder{}
 	header := lipgloss.JoinHorizontal(lipgloss.Left, songColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songColS.Render("Duration"))
 	b.WriteString(songHeaderS.Render(header))
@@ -153,4 +162,21 @@ func (m songsModel) makeSongs(ss []song) string {
 	}
 
 	return b.String()
+}
+
+func (m songsModel) clearSongs(songs []Song) []Song {
+	clean := []Song{}
+
+	for _, s := range songs {
+		s.Name = strings.TrimPrefix(s.Name, "[SONG] ")
+		if utf8.RuneCount([]byte(s.Name)) > m.viewport.Width/4 {
+			s.Name = fmt.Sprintf("%s...", string([]rune(s.Name)[0:20]))
+		}
+		if utf8.RuneCount([]byte(s.Artist)) > m.viewport.Width/4 {
+			s.Artist = fmt.Sprintf("%s...", string([]rune(s.Artist)[0:20]))
+		}
+		clean = append(clean, s)
+	}
+
+	return clean
 }

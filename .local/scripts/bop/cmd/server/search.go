@@ -25,6 +25,7 @@ type item struct {
 	TotalSeconds  int    `json:"total_seconds"`
 	IsPlaying     bool   `json:"is_playing"`
 	Album         string `json:"album"`
+	Duration      string `json:"duration"`
 }
 
 type searchParams struct {
@@ -109,6 +110,7 @@ func printResults(w io.Writer, results *spotify.SearchResult, qType string) erro
 				DisplayName: fmt.Sprintf("[SONG] %s", song.Name),
 				Artist:      song.Artists[0].Name,
 				ImageUrl:    song.Album.Images[0].URL,
+				Duration:    fmt.Sprintf("%d:%d", (song.Duration/1000)/60, (song.Duration/1000)%60),
 			}
 			response = append(response, item)
 		}
