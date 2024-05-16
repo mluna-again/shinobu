@@ -32,7 +32,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-8
 12. eza
 13. delta
 14. direnv
-15. watchexec
+15. entr
 16. bat
 17. r*st
 18. yq
