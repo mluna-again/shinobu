@@ -20,6 +20,16 @@ var songItemSelectedS = lipgloss.NewStyle().
 	Background(black).
 	Foreground(red)
 
+var songSelColS = lipgloss.NewStyle().
+	AlignHorizontal(lipgloss.Center).
+	Foreground(gray).
+	Background(darkerBlack)
+
+var songSelColSelectedS = lipgloss.NewStyle().
+	AlignHorizontal(lipgloss.Center).
+	Foreground(gray).
+	Background(black)
+
 var songCellS = lipgloss.NewStyle().
 	AlignHorizontal(lipgloss.Center).
 	Foreground(gray).

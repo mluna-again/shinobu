@@ -107,7 +107,7 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 }
 
 func (m songsModel) View() string {
-	header := lipgloss.JoinHorizontal(lipgloss.Left, songColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songColS.Render("Duration"))
+	header := lipgloss.JoinHorizontal(lipgloss.Left, songSelColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songSelColS.Render("Duration"))
 
 	return lipgloss.JoinVertical(lipgloss.Top, songViewportHeaderS.Render(header), songViewportS.Render(m.viewport.View()))
 }
@@ -118,9 +118,11 @@ func (m *songsModel) SetHeight(h int) {
 
 func (m *songsModel) SetWidth(w int) {
 	m.viewport.Width = w
-	songCellS.Width(w / 4)
-	songCellSelectedS.Width(w / 4)
-	songColS.Width(w / 4)
+	songSelColS.Width(12)
+	songSelColSelectedS.Width(12)
+	songCellS.Width((w - 24) / 2)
+	songCellSelectedS.Width((w - 24) / 2)
+	songColS.Width((w - 24) / 2)
 	songHeaderS.Width(w)
 	songItemS.Width(w)
 	songItemSelectedS.Width(w)
@@ -154,17 +156,21 @@ func (m songsModel) makeSongs(ss []Song) string {
 	b := strings.Builder{}
 	for i, s := range ss {
 		var cs lipgloss.Style
+		var selcs lipgloss.Style
+
 		if i == m.index {
 			cs = songCellSelectedS
+			selcs = songSelColSelectedS
 		} else {
 			cs = songCellS
+			selcs = songSelColS
 		}
 
 		selCol := ""
 		if s.Selected {
 			selCol = "  "
 		}
-		msg := lipgloss.JoinHorizontal(lipgloss.Left, cs.Render(selCol), cs.Render(s.Name), cs.Render(s.Artist), cs.Render(s.Duration))
+		msg := lipgloss.JoinHorizontal(lipgloss.Left, selcs.Render(selCol), cs.Render(s.Name), cs.Render(s.Artist), selcs.Render(s.Duration))
 
 		var style lipgloss.Style
 		if i == m.index {
@@ -185,7 +191,7 @@ func (m songsModel) clearSongs(songs []Song) []Song {
 	for _, s := range songs {
 		s.Name = strings.TrimPrefix(s.Name, "[SONG] ")
 		if utf8.RuneCount([]byte(s.Name)) > m.viewport.Width/4 {
-			s.Name = fmt.Sprintf("%s...", string([]rune(s.Name)[0:20]))
+			s.Name = fmt.Sprintf("%s...", string([]rune(s.Name)[0:30]))
 		}
 		if utf8.RuneCount([]byte(s.Artist)) > m.viewport.Width/4 {
 			s.Artist = fmt.Sprintf("%s...", string([]rune(s.Artist)[0:20]))

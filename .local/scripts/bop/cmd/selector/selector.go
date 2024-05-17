@@ -11,14 +11,25 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+type screen int
+
+const (
+	songsScreen screen = 1
+	queueScreen screen = iota
+	helpScreen  screen = iota
+)
+
 type model struct {
 	termH         int
 	termW         int
 	input         textinput.Model
 	err           error
-	songs         songsModel
 	fetching      bool
 	notFetchedYet bool
+	songs         songsModel
+	help          helpModel
+	queue         queueModel
+	screenIndex   screen
 }
 
 func newModel() model {
@@ -41,8 +52,10 @@ func newModel() model {
 		termW:         80,
 		input:         ti,
 		err:           nil,
-		songs:         s,
 		notFetchedYet: true,
+		songs:         s,
+		help:          newHelp(),
+		queue:         newQueue(),
 	}
 }
 
@@ -95,8 +108,27 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.resize(msg)
 
 	case tea.KeyMsg:
+		switch msg.String() {
+		case "?":
+			if m.input.Focused() {
+				break
+			}
+
+			if m.screenIndex == helpScreen {
+				m.screenIndex = songsScreen
+				return m, nil
+			} else {
+				m.screenIndex = helpScreen
+				return m, nil
+			}
+		}
+
 		switch msg.Type {
 		case tea.KeyCtrlC, tea.KeyEscape:
+			if m.screenIndex == helpScreen {
+				m.screenIndex = songsScreen
+				return m, nil
+			}
 			return m, tea.Quit
 
 		case tea.KeyEnter:
@@ -132,6 +164,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
+	if m.screenIndex == helpScreen {
+		return m.help.View()
+	}
+
 	s := strings.Builder{}
 
 	// HEADER/PROMPT
@@ -157,7 +193,7 @@ func (m model) View() string {
 	// HELP AND INFO
 	songCount := m.songs.SongsLen()
 	count := helpRInfo.Render(fmt.Sprintf("%d songs queued.", songCount))
-	help := helpLInfo.Render("Press Esc to quit.")
+	help := helpLInfo.Render("Press ? for help.")
 
 	s.WriteString(helpInfo.Render(lipgloss.JoinHorizontal(lipgloss.Left, help, count)))
 
