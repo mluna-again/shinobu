@@ -74,6 +74,9 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 	bannerS.PaddingLeft(bannerLPadd)
 	bannerS.PaddingRight(m.termW - bannerLPadd)
 	bannerS.Height(m.termH - 3)
+
+	m.help.termW = msg.Width
+	m.help.termH = msg.Height
 }
 
 func (m model) Init() tea.Cmd {
@@ -116,9 +119,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 			if m.screenIndex == helpScreen {
 				m.screenIndex = songsScreen
+				m.input.Focus()
+				m.songs.Blur()
 				return m, nil
 			} else {
 				m.screenIndex = helpScreen
+				m.input.Blur()
 				return m, nil
 			}
 		}
