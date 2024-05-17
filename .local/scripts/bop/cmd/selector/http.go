@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -25,8 +26,12 @@ func (m model) addToQueue() tea.Msg {
 		return addedToQueue{}
 	}
 
+	songs := []string{}
+	for k := range m.songs.selectedSongs {
+		songs = append(songs, k)
+	}
 	data := AddToQueuePayload{
-		IDS: []string{},
+		IDS: songs,
 	}
 	payload, err := json.Marshal(&data)
 	if err != nil {
@@ -43,7 +48,11 @@ func (m model) addToQueue() tea.Msg {
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return addedToQueue{err: errors.New("server said no.")}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return addedToQueue{err}
+		}
+		return addedToQueue{err: errors.New(string(body))}
 	}
 
 	return addedToQueue{}
