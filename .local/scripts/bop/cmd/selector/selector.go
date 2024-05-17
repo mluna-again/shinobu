@@ -1,0 +1,187 @@
+package selector
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"strings"
+
+	"github.com/charmbracelet/bubbles/textinput"
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+)
+
+type model struct {
+	termH         int
+	termW         int
+	input         textinput.Model
+	err           error
+	songs         songsModel
+	fetching      bool
+	notFetchedYet bool
+}
+
+func newModel() model {
+	ti := textinput.New()
+	ti.Placeholder = "Search songs..."
+	ti.Focus()
+	ti.CharLimit = 156
+	ti.Width = 20
+	ti.Prompt = ""
+	ti.TextStyle = textS
+	ti.PlaceholderStyle = placeholderS
+	ti.Cursor.Style = cursorS
+	ti.Cursor.TextStyle = cursorS
+
+	songs := []Song{}
+	s := newSongsModel(songs)
+
+	return model{
+		termH:         40,
+		termW:         80,
+		input:         ti,
+		err:           nil,
+		songs:         s,
+		notFetchedYet: true,
+	}
+}
+
+func (m *model) resize(msg tea.WindowSizeMsg) {
+	m.termH = msg.Height
+	m.termW = msg.Width
+	m.input.Width = m.termW - 4
+	m.input.CharLimit = m.termW - 8
+	m.songs.SetWidth(m.termW)
+	m.songs.SetHeight(m.termH - 4)
+	helpLInfo.Width(m.termW / 2)
+	helpRInfo.Width(m.termW / 2)
+	helpInfo.Width(m.termW)
+
+	bannerLPadd := (m.termW / 2) - (lipgloss.Width(noSongsBanner) / 2)
+	bannerS.PaddingLeft(bannerLPadd)
+	bannerS.PaddingRight(m.termW - bannerLPadd)
+	bannerS.Height(m.termH - 3)
+}
+
+func (m model) Init() tea.Cmd {
+	return textinput.Blink
+}
+
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+	var cmds []tea.Cmd
+
+	switch msg := msg.(type) {
+	case refetchedSongs:
+		m.fetching = false
+		if msg.err != nil {
+			m.err = msg.err
+		} else {
+			m.songs.SetSongs(msg.songs)
+			m.notFetchedYet = false
+		}
+
+	case addedToQueue:
+		if msg.err != nil {
+			m.err = msg.err
+			return m, tea.Quit
+		}
+		for _, s := range m.songs.selectedSongs {
+			fmt.Println(s.ID)
+		}
+		return m, tea.Quit
+
+	case tea.WindowSizeMsg:
+		m.resize(msg)
+
+	case tea.KeyMsg:
+		switch msg.Type {
+		case tea.KeyCtrlC, tea.KeyEscape:
+			return m, tea.Quit
+
+		case tea.KeyEnter:
+			if m.input.Focused() {
+				cmds = append(cmds, m.fetchSongs)
+				return m, tea.Batch(cmds...)
+			} else {
+				return m, m.addToQueue
+			}
+
+		case tea.KeyTab, tea.KeyShiftTab:
+			if m.notFetchedYet {
+				return m, nil
+			}
+
+			if m.input.Focused() {
+				m.input.Blur()
+				m.songs.Focus()
+			} else {
+				m.input.Focus()
+				m.songs.Blur()
+			}
+		}
+	}
+
+	m.input, cmd = m.input.Update(msg)
+	cmds = append(cmds, cmd)
+
+	m.songs, cmd = m.songs.Update(msg)
+	cmds = append(cmds, cmd)
+
+	return m, tea.Batch(cmds...)
+}
+
+func (m model) View() string {
+	s := strings.Builder{}
+
+	// HEADER/PROMPT
+	input := inputS.Render(m.input.View())
+	prompt := promptS.Render("  ")
+	s.WriteString(lipgloss.JoinHorizontal(lipgloss.Left, prompt, input))
+	s.WriteString("\n")
+
+	if m.notFetchedYet {
+		s.WriteString(bannerS.Render(noSongsBanner))
+		return s.String()
+	}
+
+	if !m.notFetchedYet && len(m.songs.songs) == 0 {
+		s.WriteString(bannerS.Render(noResultsBanner))
+		return s.String()
+	}
+
+	// SONGS LIST
+	s.WriteString(m.songs.View())
+	s.WriteString("\n")
+
+	// HELP AND INFO
+	songCount := m.songs.SongsLen()
+	count := helpRInfo.Render(fmt.Sprintf("%d songs queued.", songCount))
+	help := helpLInfo.Render("Press Esc to quit.")
+
+	s.WriteString(helpInfo.Render(lipgloss.JoinHorizontal(lipgloss.Left, help, count)))
+
+	content := lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Top, s.String())
+
+	return content
+}
+
+func Run() {
+	lipgloss.SetColorProfile(0)
+
+	m := newModel()
+	program := tea.NewProgram(m, tea.WithAltScreen(), tea.WithOutput(os.Stderr))
+	finalModel, err := program.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	finalM, ok := finalModel.(model)
+	if !ok {
+		panic("could not coerce model")
+	}
+	if finalM.err != nil {
+		fmt.Println(finalM.err)
+		os.Exit(1)
+	}
+}

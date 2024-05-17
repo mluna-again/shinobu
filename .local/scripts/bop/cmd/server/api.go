@@ -1,8 +1,10 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/zmb3/spotify/v2"
 )
@@ -138,6 +140,66 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	app.sendJSON(w, output)
+}
+
+type addToQueueParams struct {
+	IDS []string `json:"ids"`
+}
+
+func (app *app) addToQueue(w http.ResponseWriter, r *http.Request) {
+	var data addToQueueParams
+	d := json.NewDecoder(r.Body)
+	err := d.Decode(&data)
+	if err != nil {
+		app.sendBadRequestWithMessage(w, "invalid params")
+		return
+	}
+	defer r.Body.Close()
+
+	ids := []spotify.ID{}
+	for _, i := range data.IDS {
+		ids = append(ids, spotify.ID(i))
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	defer cancel()
+	tracks, err := app.client.GetTracks(ctx, ids)
+	if err != nil {
+		app.sendBadRequestWithMessage(w, err.Error())
+		return
+	}
+
+	if len(tracks) == 0 {
+		app.sendOk(w)
+		return
+	}
+
+	firstSong := tracks[0]
+	err = app.client.QueueSong(ctx, firstSong.ID)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	if len(tracks) == 1 {
+		app.sendOk(w)
+		return
+	}
+
+	remaining := tracks[1:]
+	go func(tracks []*spotify.FullTrack) {
+		for _, song := range tracks {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+			defer cancel()
+			err := app.client.QueueSong(ctx, song.ID)
+			if err != nil {
+				app.errLogger.Error(err)
+				return
+			}
+			time.Sleep(time.Millisecond * 1500)
+		}
+	}(remaining)
+
+	app.sendOk(w)
 }
 
 type addToLikedParams struct {
