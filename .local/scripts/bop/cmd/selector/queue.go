@@ -17,5 +17,5 @@ func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
 }
 
 func (m queueModel) View() string {
-	return ""
+	return "WIP"
 }

@@ -15,8 +15,8 @@ type screen int
 
 const (
 	songsScreen screen = 1
-	queueScreen screen = iota
-	helpScreen  screen = iota
+	queueScreen screen = 2
+	helpScreen  screen = 3
 )
 
 type model struct {
@@ -112,6 +112,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "q":
+			if m.input.Focused() {
+				break
+			}
+			if m.screenIndex == queueScreen {
+				m.screenIndex = songsScreen
+				m.input.Focus()
+				m.songs.Blur()
+				return m, nil
+			} else {
+				m.input.Blur()
+				m.screenIndex = queueScreen
+				return m, nil
+			}
+
 		case "?":
 			if m.input.Focused() {
 				break
@@ -132,6 +147,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.Type {
 		case tea.KeyCtrlC, tea.KeyEscape:
 			if m.screenIndex == helpScreen {
+				m.songs.Blur()
+				m.input.Focus()
+				m.screenIndex = songsScreen
+				return m, nil
+			}
+
+			if m.screenIndex == queueScreen {
+				m.songs.Blur()
+				m.input.Focus()
 				m.screenIndex = songsScreen
 				return m, nil
 			}
@@ -172,6 +196,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	if m.screenIndex == helpScreen {
 		return m.help.View()
+	}
+
+	if m.screenIndex == queueScreen {
+		return m.queue.View()
 	}
 
 	s := strings.Builder{}
