@@ -1,25 +1,15 @@
 package selector
 
 import (
-	"bytes"
-	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
-	"net/http"
+	"os"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
-
-var BOP = "http://localhost:8888"
-
-type refetchedSongs struct {
-	songs []Song
-	err   error
-}
 
 type model struct {
 	termH         int
@@ -73,54 +63,6 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 	bannerS.Height(m.termH - 3)
 }
 
-func (m model) fetchSongs() tea.Msg {
-	if m.input.Value() == "" {
-		return refetchedSongs{
-			songs: []Song{},
-		}
-	}
-
-	maxCount := (m.termH / 3) - 3
-	payload := []byte(fmt.Sprintf("{\"query\": \"s:%s\", \"limit\": %d}", m.input.Value(), maxCount))
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/search", BOP), bytes.NewBuffer(payload))
-	if err != nil {
-		return refetchedSongs{
-			err: errors.New("Could not fetch data..."),
-		}
-	}
-
-	client := http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return refetchedSongs{
-			err: errors.New("Server error..."),
-		}
-	}
-	defer resp.Body.Close()
-
-	var data []Song
-	d := json.NewDecoder(resp.Body)
-	err = d.Decode(&data)
-	if err != nil {
-		return refetchedSongs{
-			err: errors.New("Could not parse response..."),
-		}
-	}
-
-	// parsed := []Song{}
-	// for i := 0; i < maxCount; i++ {
-	// 	if i > len(data)-1 {
-	// 		break
-	// 	}
-	//
-	// 	parsed = append(parsed, data[i])
-	// }
-
-	return refetchedSongs{
-		songs: data,
-	}
-}
-
 func (m model) Init() tea.Cmd {
 	return textinput.Blink
 }
@@ -139,6 +81,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.notFetchedYet = false
 		}
 
+	case addedToQueue:
+		if msg.err != nil {
+			m.err = msg.err
+			return m, tea.Quit
+		}
+		for _, s := range m.songs.selectedSongs {
+			fmt.Println(s.ID)
+		}
+		return m, tea.Quit
+
 	case tea.WindowSizeMsg:
 		m.resize(msg)
 
@@ -151,9 +103,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.input.Focused() {
 				cmds = append(cmds, m.fetchSongs)
 				return m, tea.Batch(cmds...)
+			} else {
+				return m, m.addToQueue
 			}
 
 		case tea.KeyTab, tea.KeyShiftTab:
+			if m.notFetchedYet {
+				return m, nil
+			}
+
 			if m.input.Focused() {
 				m.input.Blur()
 				m.songs.Focus()
@@ -209,9 +167,21 @@ func (m model) View() string {
 }
 
 func Run() {
+	lipgloss.SetColorProfile(0)
+
 	m := newModel()
-	program := tea.NewProgram(m)
-	if _, err := program.Run(); err != nil {
+	program := tea.NewProgram(m, tea.WithAltScreen(), tea.WithOutput(os.Stderr))
+	finalModel, err := program.Run()
+	if err != nil {
 		log.Fatal(err)
+	}
+
+	finalM, ok := finalModel.(model)
+	if !ok {
+		panic("could not coerce model")
+	}
+	if finalM.err != nil {
+		fmt.Println(finalM.err)
+		os.Exit(1)
 	}
 }

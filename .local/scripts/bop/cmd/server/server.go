@@ -153,6 +153,7 @@ func Serve() {
 	router.Get("/status", app.checkTokenMiddleware(app.loggingMiddleware(app.status)))
 	router.Post("/restart", app.checkTokenMiddleware(app.loggingMiddleware(app.restart)))
 	router.Get("/queue", app.checkTokenMiddleware(app.loggingMiddleware(app.queue)))
+	router.Post("/queue", app.checkTokenMiddleware(app.loggingMiddleware(app.queue)))
 	router.Post("/addToLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.addToLiked)))
 	router.Post("/removeFromLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.removeFromLiked)))
 	router.Get("/devices", app.checkTokenMiddleware(app.loggingMiddleware(app.listDevices)))
