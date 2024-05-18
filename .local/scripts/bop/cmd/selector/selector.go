@@ -96,6 +96,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		} else {
 			m.songs.SetSongs(msg.songs)
 			m.notFetchedYet = false
+			m.err = nil
 		}
 
 	case addedToQueue:
