@@ -64,6 +64,7 @@ main() {
 		tmux set -g status on
 		exit
 	fi
+	tmux set -g status on
 
 	case "$id" in
 		"@detach")
