@@ -59,6 +59,7 @@ func newModel(c SelectorConfig) model {
 		help:          newHelp(),
 		queue:         newQueue(),
 		devMode:       c.DevMode,
+		screenIndex:   songsScreen,
 	}
 }
 
@@ -124,9 +125,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.screenIndex = songsScreen
 				m.input.Focus()
 				m.songs.Blur()
+				m.queue.Blur()
 				return m, nil
 			} else {
 				m.input.Blur()
+				m.songs.Blur()
+				m.queue.Focus()
 				m.screenIndex = queueScreen
 				m.queue.SetSongs(m.songs.selectedSongs)
 				return m, nil
@@ -141,10 +145,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.screenIndex = songsScreen
 				m.input.Focus()
 				m.songs.Blur()
+				m.queue.Blur()
 				return m, nil
 			} else {
 				m.screenIndex = helpScreen
 				m.input.Blur()
+				m.songs.Blur()
+				m.queue.Blur()
 				return m, nil
 			}
 		}
@@ -179,6 +186,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, nil
 			}
 
+			if m.screenIndex != songsScreen {
+				break
+			}
+
 			if m.input.Focused() {
 				m.input.Blur()
 				m.songs.Focus()
@@ -196,6 +207,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	cmds = append(cmds, cmd)
 
 	m.queue, cmd = m.queue.Update(msg)
+	cmds = append(cmds, cmd)
 
 	return m, tea.Batch(cmds...)
 }

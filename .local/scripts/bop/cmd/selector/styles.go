@@ -106,6 +106,13 @@ var queueSongComptS = lipgloss.NewStyle().
 	Height(3).
 	Foreground(gray)
 
+var queueSongComptSelectedS = lipgloss.NewStyle().
+	Background(black).
+	AlignHorizontal(lipgloss.Center).
+	AlignVertical(lipgloss.Center).
+	Height(3).
+	Foreground(gray)
+
 var queueHeaderComptS = lipgloss.NewStyle().
 	Background(darkerBlack).
 	AlignHorizontal(lipgloss.Center).
