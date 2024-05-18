@@ -61,6 +61,7 @@ Spotify: previous song
 Spotify: restart song
 Spotify: get song
 Spotify: queue
+Spotify: bop queue
 Spotify: save song
 Spotify: delete song
 Spotify: set device
@@ -953,6 +954,10 @@ EOF
 		}
 
 		success "Song deleted."
+		;;
+
+	"Spotify: bop queue")
+		tmux display-popup -T "$(make_popup_border 'Bop TUI' '󰄛')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "bop tui select"
 		;;
 
 	"Spotify: queue")
