@@ -183,10 +183,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, m.addToQueue
 			}
 
-			if m.screenIndex == songsScreen {
+			if m.input.Focused() {
 				cmds = append(cmds, m.fetchSongs)
 				return m, tea.Batch(cmds...)
-			} else {
+			}
+
+			if m.screenIndex == songsScreen {
 				return m, m.addToQueue
 			}
 
