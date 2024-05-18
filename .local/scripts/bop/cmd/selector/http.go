@@ -31,8 +31,14 @@ func (m model) addToQueue() tea.Msg {
 	}
 
 	songs := []string{}
-	for k := range m.songs.selectedSongs {
-		songs = append(songs, k)
+	for _, s := range m.queue.GetSongs() {
+		songs = append(songs, s.ID)
+	}
+
+	if len(songs) == 0 {
+		for k := range m.songs.selectedSongs {
+			songs = append(songs, k)
+		}
 	}
 	data := AddToQueuePayload{
 		IDS: songs,

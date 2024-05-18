@@ -158,6 +158,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		switch msg.Type {
 		case tea.KeyCtrlC, tea.KeyEscape:
+			if m.err != nil {
+				m.err = nil
+				return m, nil
+			}
+
 			if m.screenIndex == helpScreen {
 				m.songs.Blur()
 				m.input.Focus()
@@ -174,7 +179,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case tea.KeyEnter:
-			if m.input.Focused() {
+			if m.screenIndex == queueScreen {
+				return m, m.addToQueue
+			}
+
+			if m.screenIndex == songsScreen {
 				cmds = append(cmds, m.fetchSongs)
 				return m, tea.Batch(cmds...)
 			} else {
@@ -213,6 +222,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
+	s := strings.Builder{}
+	if m.err != nil {
+		msg := fmt.Sprintf("Computer says: %s", m.err.Error())
+		msg = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, msg)
+		msg = lipgloss.JoinVertical(lipgloss.Top, msg, internal.CenterBanner(m.termW, sadCat))
+		msg = lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, msg)
+		s.WriteString(bannerBGS.Render(msg))
+		return s.String()
+	}
+
 	if m.screenIndex == helpScreen {
 		return m.help.View()
 	}
@@ -221,23 +240,12 @@ func (m model) View() string {
 		return m.queue.View()
 	}
 
-	s := strings.Builder{}
-
 	// HEADER/PROMPT
 	input := inputS.Render(m.input.View())
 	prompt := promptS.Render("  ")
 	prompt = lipgloss.JoinHorizontal(lipgloss.Left, prompt, input)
 	s.WriteString(prompt)
 	s.WriteString("\n")
-
-	if m.err != nil {
-		msg := fmt.Sprintf("Computer says: %s", m.err.Error())
-		msg = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, msg)
-		msg = lipgloss.JoinVertical(lipgloss.Top, msg, internal.CenterBanner(m.termW, sadCat))
-		msg = lipgloss.Place(m.termW, m.termH-lipgloss.Height(prompt), lipgloss.Center, lipgloss.Center, msg)
-		s.WriteString(bannerBGS.Render(msg))
-		return s.String()
-	}
 
 	if m.notFetchedYet {
 		s.WriteString(bannerS.Render(noSongsBanner))
