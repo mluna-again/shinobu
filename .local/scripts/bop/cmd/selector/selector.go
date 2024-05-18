@@ -1,6 +1,7 @@
 package selector
 
 import (
+	"bop/internal"
 	"fmt"
 	"log"
 	"os"
@@ -207,8 +208,18 @@ func (m model) View() string {
 	// HEADER/PROMPT
 	input := inputS.Render(m.input.View())
 	prompt := promptS.Render("  ")
-	s.WriteString(lipgloss.JoinHorizontal(lipgloss.Left, prompt, input))
+	prompt = lipgloss.JoinHorizontal(lipgloss.Left, prompt, input)
+	s.WriteString(prompt)
 	s.WriteString("\n")
+
+	if m.err != nil {
+		msg := fmt.Sprintf("Computer says: %s", m.err.Error())
+		msg = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, msg)
+		msg = lipgloss.JoinVertical(lipgloss.Top, msg, internal.CenterBanner(m.termW, sadCat))
+		msg = lipgloss.Place(m.termW, m.termH-lipgloss.Height(prompt), lipgloss.Center, lipgloss.Center, msg)
+		s.WriteString(bannerBGS.Render(msg))
+		return s.String()
+	}
 
 	if m.notFetchedYet {
 		s.WriteString(bannerS.Render(noSongsBanner))
