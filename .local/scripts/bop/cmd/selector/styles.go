@@ -98,3 +98,20 @@ var bannerS = lipgloss.NewStyle().
 
 var bannerBGS = lipgloss.NewStyle().
 	Background(darkerBlack)
+
+var queueSongComptS = lipgloss.NewStyle().
+	Background(darkerBlack).
+	AlignHorizontal(lipgloss.Center).
+	AlignVertical(lipgloss.Center).
+	Height(3).
+	Foreground(gray)
+
+var queueHeaderComptS = lipgloss.NewStyle().
+	Background(darkerBlack).
+	AlignHorizontal(lipgloss.Center).
+	AlignVertical(lipgloss.Center).
+	Height(3).
+	Foreground(white)
+
+var queueViewportS = lipgloss.NewStyle().
+	Background(darkerBlack)

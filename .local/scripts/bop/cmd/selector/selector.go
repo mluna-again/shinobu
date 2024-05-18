@@ -128,6 +128,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				m.input.Blur()
 				m.screenIndex = queueScreen
+				m.queue.SetSongs(m.songs.selectedSongs)
 				return m, nil
 			}
 
@@ -193,6 +194,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	m.songs, cmd = m.songs.Update(msg)
 	cmds = append(cmds, cmd)
+
+	m.queue, cmd = m.queue.Update(msg)
 
 	return m, tea.Batch(cmds...)
 }
