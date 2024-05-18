@@ -176,7 +176,7 @@ func (app *app) addToQueue(w http.ResponseWriter, r *http.Request) {
 	firstSong := tracks[0]
 	err = app.client.QueueSong(ctx, firstSong.ID)
 	if err != nil {
-		app.sendInternalServerError(w, err)
+		app.sendBadRequestWithMessage(w, err.Error())
 		return
 	}
 

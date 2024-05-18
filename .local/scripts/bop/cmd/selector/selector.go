@@ -101,7 +101,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case addedToQueue:
 		if msg.err != nil {
 			m.err = msg.err
-			return m, tea.Quit
+			return m, nil
 		}
 		for _, s := range m.songs.selectedSongs {
 			fmt.Println(s.ID)
