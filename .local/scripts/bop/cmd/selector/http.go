@@ -22,6 +22,10 @@ type AddToQueuePayload struct {
 }
 
 func (m model) addToQueue() tea.Msg {
+	if m.devMode {
+		return addedToQueue{}
+	}
+
 	if len(m.songs.selectedSongs) == 0 {
 		return addedToQueue{}
 	}

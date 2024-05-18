@@ -31,9 +31,10 @@ type model struct {
 	help          helpModel
 	queue         queueModel
 	screenIndex   screen
+	devMode       bool
 }
 
-func newModel() model {
+func newModel(c SelectorConfig) model {
 	ti := textinput.New()
 	ti.Placeholder = "Search songs..."
 	ti.Focus()
@@ -57,6 +58,7 @@ func newModel() model {
 		songs:         s,
 		help:          newHelp(),
 		queue:         newQueue(),
+		devMode:       c.DevMode,
 	}
 }
 
@@ -248,10 +250,14 @@ func (m model) View() string {
 	return content
 }
 
-func Run() {
+type SelectorConfig struct {
+	DevMode bool
+}
+
+func Run(c SelectorConfig) {
 	lipgloss.SetColorProfile(0)
 
-	m := newModel()
+	m := newModel(c)
 	program := tea.NewProgram(m, tea.WithAltScreen(), tea.WithOutput(os.Stderr))
 	finalModel, err := program.Run()
 	if err != nil {
