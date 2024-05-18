@@ -100,6 +100,7 @@ func (m queueModel) View() string {
 
 func (m *queueModel) SetSongs(s map[string]Song) {
 	m.originalSongs = s
+	m.orderedSongs = []Song{}
 	for _, s := range m.originalSongs {
 		m.orderedSongs = append(m.orderedSongs, s)
 	}
