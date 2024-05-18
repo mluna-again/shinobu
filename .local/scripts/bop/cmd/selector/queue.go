@@ -32,14 +32,15 @@ func (m queueModel) Init() tea.Cmd {
 }
 
 func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
+	_, iswinmsg := msg.(tea.WindowSizeMsg)
+	if !m.focused && !iswinmsg {
+		return m, nil
+	}
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.resize(msg)
 
 	case tea.KeyMsg:
-		if !m.focused {
-			break
-		}
 		switch msg.String() {
 		case "j":
 			if m.index < len(m.orderedSongs)-1 {
@@ -66,6 +67,20 @@ func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
 		case "G":
 			m.viewport.GotoBottom()
 			m.index = len(m.orderedSongs) - 1
+
+		case "J":
+			if m.index < len(m.orderedSongs)-1 {
+				m.resortSong(false)
+				m.index++
+				m.viewport.LineDown(3)
+			}
+
+		case "K":
+			if m.index > 0 {
+				m.resortSong(true)
+				m.index--
+				m.viewport.LineUp(3)
+			}
 		}
 	}
 	m.redrawViewport()
@@ -76,6 +91,8 @@ func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
 func (m queueModel) View() string {
 	h := queueHeaderComptS
 	header := lipgloss.JoinHorizontal(lipgloss.Left, h.Render("Name"), h.Render("Artist"), h.Render("Duration"))
+	header = lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, header, lipgloss.WithWhitespaceBackground(darkerBlack))
+
 	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, "Use J/K to reorder songs. Press Enter to exit or Esc to go back.")
 	help = helpInfo.Render(help)
 	return lipgloss.JoinVertical(lipgloss.Top, header, m.viewport.View(), help)
@@ -135,4 +152,42 @@ func (m *queueModel) redrawViewport() {
 
 	content := lipgloss.JoinVertical(lipgloss.Top, songs...)
 	m.viewport.SetContent(content)
+}
+
+// what the hell man
+func (m *queueModel) resortSong(up bool) {
+	songs := []Song{}
+
+	var prev Song
+	for i, s := range m.orderedSongs {
+		if i == m.index+1 && !up {
+			songs = append(songs, s)
+			songs = append(songs, prev)
+			continue
+		}
+
+		if i == m.index && !up {
+			prev = s
+			continue
+		}
+
+		if up && i == m.index-1 {
+			prev = s
+			continue
+		}
+
+		if up && i == m.index {
+			songs = append(songs, s)
+			songs = append(songs, prev)
+			continue
+		}
+
+		if i != m.index {
+			songs = append(songs, s)
+			continue
+		}
+
+	}
+
+	m.orderedSongs = songs
 }
