@@ -120,3 +120,19 @@ func (m model) fetchSongs() tea.Msg {
 		songs: data,
 	}
 }
+
+type serverStatusMsg struct {
+	err error
+}
+
+var serverDownErr = errors.New("server is down!")
+
+func (m model) checkServerStatus() tea.Msg {
+	r, err := http.DefaultClient.Get(fmt.Sprintf("%s/health", BOP))
+	if err != nil {
+		return serverStatusMsg{err: serverDownErr}
+	}
+	defer r.Body.Close()
+
+	return serverStatusMsg{}
+}

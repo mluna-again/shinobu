@@ -94,7 +94,9 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 }
 
 func (m model) Init() tea.Cmd {
-	return textinput.Blink
+	var cmds []tea.Cmd
+	cmds = append(cmds, textinput.Blink, m.checkServerStatus)
+	return tea.Batch(cmds...)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -102,6 +104,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	switch msg := msg.(type) {
+	case serverStatusMsg:
+		if msg.err != nil {
+			m.err = msg.err
+			return m, nil
+		}
+
 	case refetchedSongs:
 		m.fetching = false
 		if msg.err != nil {
