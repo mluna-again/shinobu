@@ -16,8 +16,8 @@ import (
 var BOP = "http://localhost:8888"
 
 type currentQueueMsg struct {
-	err   error
-	queue []Song
+	err         error
+	queue       []Song
 	mappedQueue map[string]Song
 }
 
@@ -219,7 +219,7 @@ func parseQuery(query string) ([]byte, error) {
 	}
 
 	// by
-	if fromIndex != 1 && fromIndexEnd != -1 {
+	if fromIndex != -1 && fromIndexEnd != -1 {
 		query = string(append([]rune(query)[0:fromIndex], []rune(query)[fromIndexEnd+1:]...))
 	}
 	byIndex := strings.Index(query, "by:")
@@ -260,7 +260,7 @@ func parseQuery(query string) ([]byte, error) {
 		return []byte{}, errors.New("bad by clause")
 	}
 
-	if byIndex != 1 && byIndexEnd != -1 {
+	if byIndex != -1 && byIndexEnd != -1 {
 		query = string(append([]rune(query)[0:byIndex], []rune(query)[byIndexEnd+1:]...))
 	}
 
