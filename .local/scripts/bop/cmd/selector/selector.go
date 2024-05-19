@@ -37,6 +37,13 @@ type model struct {
 }
 
 func newModel(c SelectorConfig) model {
+	t := kanagawaDragon
+	// TODO: more themes
+	if c.Theme != "kanagawa-dragon" && c.Theme != "" {
+		log.Fatal(errors.New("theme not implemented"))
+	}
+	loadTheme(t)
+
 	ti := textinput.New()
 	ti.Placeholder = "Search songs..."
 	ti.Focus()
@@ -44,20 +51,12 @@ func newModel(c SelectorConfig) model {
 	ti.Width = 20
 	ti.Prompt = ""
 	ti.TextStyle = textS
-	ti.CompletionStyle = textS
 	ti.PlaceholderStyle = placeholderS
 	ti.Cursor.Style = cursorS
 	ti.Cursor.TextStyle = cursorS
 
 	songs := []Song{}
 	s := newSongsModel(songs)
-
-	t := kanagawaDragon
-	// TODO: more themes
-	if c.Theme != "kanagawa-dragon" && c.Theme != "" {
-		log.Fatal(errors.New("theme not implemented"))
-	}
-	loadTheme(t)
 
 	return model{
 		termH:         40,
