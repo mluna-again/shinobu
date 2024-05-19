@@ -146,6 +146,7 @@ func Serve() {
 
 	router.Get("/health", app.health)
 	router.Post("/search", app.checkTokenMiddleware(app.loggingMiddleware(app.search)))
+	router.Post("/advancedsearch", app.checkTokenMiddleware(app.loggingMiddleware(app.advancedSearch)))
 	router.Post("/play", app.checkTokenMiddleware(app.loggingMiddleware(app.playSong)))
 	router.Post("/pause", app.checkTokenMiddleware(app.loggingMiddleware(app.pause)))
 	router.Post("/next", app.checkTokenMiddleware(app.loggingMiddleware(app.next)))
