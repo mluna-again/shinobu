@@ -44,6 +44,18 @@ func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "d":
+			if len(m.orderedSongs) == 0 {
+				break
+			}
+			delete(m.originalSongs, m.orderedSongs[m.index].ID)
+			m.orderedSongs = append(m.orderedSongs[0:m.index], m.orderedSongs[m.index+1:]...)
+			if m.index > 0 {
+				m.index--
+			} else {
+				m.index = 0
+			}
+
 		case "j":
 			if m.index < len(m.orderedSongs)-1 {
 				m.index++
@@ -95,7 +107,7 @@ func (m queueModel) View() string {
 	header := lipgloss.JoinHorizontal(lipgloss.Left, h.Render("Name"), h.Render("Artist"), h.Render("Duration"))
 	header = lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, header, lipgloss.WithWhitespaceBackground(m.theme.BGDark))
 
-	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, "Use J/K to reorder songs. Press Enter to exit or Esc to go back.")
+	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, "Use J/K to reorder songs. d to delete songs. Press Enter to exit or Esc to go back.")
 	help = helpInfo.Render(help)
 	return lipgloss.JoinVertical(lipgloss.Top, header, m.viewport.View(), help)
 }
