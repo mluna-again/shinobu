@@ -185,9 +185,11 @@ func parseQuery(query string) ([]byte, error) {
 	if fromIndex != -1 {
 		quotes := false
 		q := ""
-		for i, char := range query {
+		index := -1
+		for _, char := range query {
+			index++
 			// +5 'from:' len
-			if i < fromIndex+5 {
+			if index < fromIndex+5 {
 				continue
 			}
 			if char == '"' && !quotes {
@@ -196,17 +198,17 @@ func parseQuery(query string) ([]byte, error) {
 			}
 
 			if char == '"' {
-				fromIndexEnd = i
+				fromIndexEnd = index
 				break
 			}
 
 			if char == ' ' && !quotes {
-				fromIndexEnd = i
+				fromIndexEnd = index
 				break
 			}
 
-			if !quotes && i+1 == utf8.RuneCount([]byte(query)) {
-				fromIndexEnd = i
+			if !quotes && index+1 == utf8.RuneCount([]byte(query)) {
+				fromIndexEnd = index
 			}
 
 			q = fmt.Sprintf("%s%c", q, char)
@@ -227,9 +229,11 @@ func parseQuery(query string) ([]byte, error) {
 	if byIndex != -1 {
 		quotes := false
 		q := ""
-		for i, char := range query {
+		index := -1
+		for _, char := range query {
+			index++
 			// +5 'by:' len
-			if i < byIndex+3 {
+			if index < byIndex+3 {
 				continue
 			}
 			if char == '"' && !quotes {
@@ -238,17 +242,17 @@ func parseQuery(query string) ([]byte, error) {
 			}
 
 			if char == '"' {
-				byIndexEnd = i
+				byIndexEnd = index
 				break
 			}
 
 			if char == ' ' && !quotes {
-				byIndexEnd = i
+				byIndexEnd = index
 				break
 			}
 
-			if !quotes && i+1 == utf8.RuneCount([]byte(query)) {
-				byIndexEnd = i
+			if !quotes && index+1 == utf8.RuneCount([]byte(query)) {
+				byIndexEnd = index
 			}
 
 			q = fmt.Sprintf("%s%c", q, char)
