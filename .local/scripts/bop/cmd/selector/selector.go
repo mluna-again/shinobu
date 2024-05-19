@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -25,6 +26,7 @@ type model struct {
 	termH         int
 	termW         int
 	input         textinput.Model
+	spinner       spinner.Model
 	err           error
 	fetching      bool
 	notFetchedYet bool
@@ -58,6 +60,9 @@ func newModel(c SelectorConfig) model {
 	songs := []Song{}
 	s := newSongsModel(songs)
 
+	sp := spinner.New()
+	sp.Spinner = spinner.Dot
+
 	return model{
 		termH:         40,
 		termW:         80,
@@ -70,6 +75,7 @@ func newModel(c SelectorConfig) model {
 		devMode:       c.DevMode,
 		screenIndex:   songsScreen,
 		theme:         t,
+		spinner:       sp,
 	}
 }
 
@@ -97,6 +103,7 @@ func (m model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 	// cmds = append(cmds, textinput.Blink, m.checkServerStatus, m.getCurrentQueue)
 	cmds = append(cmds, textinput.Blink, m.checkServerStatus)
+	cmds = append(cmds, m.spinner.Tick)
 	return tea.Batch(cmds...)
 }
 
@@ -207,10 +214,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case tea.KeyEnter:
 			if m.screenIndex == queueScreen {
+				m.fetching = true
 				return m, m.addToQueue
 			}
 
 			if m.input.Focused() {
+				m.fetching = true
 				cmds = append(cmds, m.fetchSongs)
 				return m, tea.Batch(cmds...)
 			}
@@ -245,6 +254,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	cmds = append(cmds, cmd)
 
 	m.queue, cmd = m.queue.Update(msg)
+	cmds = append(cmds, cmd)
+
+	m.spinner, cmd = m.spinner.Update(msg)
 	cmds = append(cmds, cmd)
 
 	return m, tea.Batch(cmds...)
@@ -293,6 +305,10 @@ func (m model) View() string {
 	// HELP AND INFO
 	songCount := m.songs.SongsLen()
 	count := helpRInfo.Render(fmt.Sprintf("%d songs queued.", songCount))
+	if m.fetching {
+		count = helpRInfo.Render(m.spinner.View())
+	}
+
 	help := helpLInfo.Render("Press ? for help.")
 
 	s.WriteString(helpInfo.Render(lipgloss.JoinHorizontal(lipgloss.Left, help, count)))
