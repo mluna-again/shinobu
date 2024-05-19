@@ -16,14 +16,16 @@ type queueModel struct {
 	viewport      viewport.Model
 	index         int
 	focused       bool
+	theme         Theme
 }
 
-func newQueue() queueModel {
+func newQueue(t Theme) queueModel {
 	v := viewport.New(0, 0)
 	v.Style = queueViewportS
 
 	return queueModel{
 		viewport: v,
+		theme:    t,
 	}
 }
 
@@ -91,7 +93,7 @@ func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
 func (m queueModel) View() string {
 	h := queueHeaderComptS
 	header := lipgloss.JoinHorizontal(lipgloss.Left, h.Render("Name"), h.Render("Artist"), h.Render("Duration"))
-	header = lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, header, lipgloss.WithWhitespaceBackground(darkerBlack))
+	header = lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, header, lipgloss.WithWhitespaceBackground(m.theme.BGDark))
 
 	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, "Use J/K to reorder songs. Press Enter to exit or Esc to go back.")
 	help = helpInfo.Render(help)
@@ -147,7 +149,7 @@ func (m *queueModel) redrawViewport() {
 			s = queueSongComptSelectedS
 		}
 		row := lipgloss.JoinHorizontal(lipgloss.Left, s.Render(song.Name), s.Render(song.Artist), s.Render(song.Duration))
-		row = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, row, lipgloss.WithWhitespaceBackground(darkerBlack))
+		row = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, row, lipgloss.WithWhitespaceBackground(m.theme.BGDark))
 		songs = append(songs, row)
 	}
 

@@ -2,6 +2,7 @@ package selector
 
 import (
 	"bop/internal"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -32,6 +33,7 @@ type model struct {
 	queue         queueModel
 	screenIndex   screen
 	devMode       bool
+	theme         Theme
 }
 
 func newModel(c SelectorConfig) model {
@@ -42,12 +44,20 @@ func newModel(c SelectorConfig) model {
 	ti.Width = 20
 	ti.Prompt = ""
 	ti.TextStyle = textS
+	ti.CompletionStyle = textS
 	ti.PlaceholderStyle = placeholderS
 	ti.Cursor.Style = cursorS
 	ti.Cursor.TextStyle = cursorS
 
 	songs := []Song{}
 	s := newSongsModel(songs)
+
+	t := kanagawaDragon
+	// TODO: more themes
+	if c.Theme != "kanagawa-dragon" && c.Theme != "" {
+		log.Fatal(errors.New("theme not implemented"))
+	}
+	loadTheme(t)
 
 	return model{
 		termH:         40,
@@ -57,9 +67,10 @@ func newModel(c SelectorConfig) model {
 		notFetchedYet: true,
 		songs:         s,
 		help:          newHelp(),
-		queue:         newQueue(),
+		queue:         newQueue(t),
 		devMode:       c.DevMode,
 		screenIndex:   songsScreen,
+		theme:         t,
 	}
 }
 
@@ -276,6 +287,7 @@ func (m model) View() string {
 }
 
 type SelectorConfig struct {
+	Theme   string
 	DevMode bool
 }
 
