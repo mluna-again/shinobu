@@ -24,8 +24,9 @@ func newQueue(t Theme) queueModel {
 	v.Style = queueViewportS
 
 	return queueModel{
-		viewport: v,
-		theme:    t,
+		viewport:      v,
+		theme:         t,
+		originalSongs: map[string]Song{},
 	}
 }
 
@@ -118,6 +119,18 @@ func (m *queueModel) SetSongs(s map[string]Song) {
 	for _, s := range m.originalSongs {
 		m.orderedSongs = append(m.orderedSongs, s)
 	}
+	m.clearSongs()
+	m.redrawViewport()
+}
+
+func (m *queueModel) AppendSongs(s map[string]Song) {
+	songs := []Song{}
+	for k, v := range s {
+		m.originalSongs[k] = v
+		songs = append(songs, v)
+	}
+
+	m.orderedSongs = append(m.orderedSongs, songs...)
 	m.clearSongs()
 	m.redrawViewport()
 }

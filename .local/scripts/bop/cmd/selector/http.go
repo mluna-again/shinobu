@@ -15,6 +15,35 @@ import (
 
 var BOP = "http://localhost:8888"
 
+type currentQueueMsg struct {
+	err   error
+	queue []Song
+	mappedQueue map[string]Song
+}
+
+func (m model) getCurrentQueue() tea.Msg {
+	resp, err := http.DefaultClient.Get(fmt.Sprintf("%s/queue", BOP))
+	if err != nil {
+		return currentQueueMsg{err: err}
+	}
+
+	var songs []Song
+	d := json.NewDecoder(resp.Body)
+	err = d.Decode(&songs)
+	if err != nil {
+		return currentQueueMsg{err: err}
+	}
+	defer resp.Body.Close()
+
+	mapped := map[string]Song{}
+	for i, s := range songs {
+		songs[i].Selected = true
+		mapped[s.ID] = songs[i]
+	}
+
+	return currentQueueMsg{queue: songs, mappedQueue: mapped}
+}
+
 type addedToQueue struct {
 	err error
 }

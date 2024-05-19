@@ -95,6 +95,7 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 
 func (m model) Init() tea.Cmd {
 	var cmds []tea.Cmd
+	// cmds = append(cmds, textinput.Blink, m.checkServerStatus, m.getCurrentQueue)
 	cmds = append(cmds, textinput.Blink, m.checkServerStatus)
 	return tea.Batch(cmds...)
 }
@@ -104,6 +105,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	switch msg := msg.(type) {
+	// i feels weird
+	// case currentQueueMsg:
+	// 	if msg.err != nil {
+	// 		m.err = msg.err
+	// 		return m, nil
+	// 	}
+	// 	m.queue.SetSongs(msg.mappedQueue)
+
 	case serverStatusMsg:
 		if msg.err != nil {
 			m.err = msg.err
@@ -150,7 +159,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.songs.Blur()
 				m.queue.Focus()
 				m.screenIndex = queueScreen
-				m.queue.SetSongs(m.songs.selectedSongs)
+				m.queue.AppendSongs(m.songs.selectedSongs)
 				return m, nil
 			}
 
