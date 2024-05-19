@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
+	"unicode/utf8"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -80,9 +82,11 @@ func (m model) fetchSongs() tea.Msg {
 		}
 	}
 
-	maxCount := (m.termH / 3) - 3
-	payload := []byte(fmt.Sprintf("{\"query\": \"s:%s\", \"limit\": %d}", m.input.Value(), maxCount))
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/search", BOP), bytes.NewBuffer(payload))
+	payload, err := parseQuery(m.input.Value())
+	if err != nil {
+		return refetchedSongs{err: err}
+	}
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/advancedsearch", BOP), bytes.NewBuffer(payload))
 	if err != nil {
 		return refetchedSongs{
 			err: errors.New("Could not fetch data..."),
@@ -135,4 +139,106 @@ func (m model) checkServerStatus() tea.Msg {
 	defer r.Body.Close()
 
 	return serverStatusMsg{}
+}
+
+type BopQuery struct {
+	From  string `json:"from"`
+	By    string `json:"by"`
+	Query string `json:"query"`
+}
+
+func parseQuery(query string) ([]byte, error) {
+	bq := BopQuery{}
+
+	// from
+	fromIndex := strings.Index(query, "from:")
+	fromIndexEnd := -1
+	if fromIndex != -1 {
+		quotes := false
+		q := ""
+		for i, char := range query {
+			// +5 'from:' len
+			if i < fromIndex+5 {
+				continue
+			}
+			if char == '"' && !quotes {
+				quotes = true
+				continue
+			}
+
+			if char == '"' {
+				fromIndexEnd = i
+				break
+			}
+
+			if char == ' ' && !quotes {
+				fromIndexEnd = i
+				break
+			}
+
+			if !quotes && i+1 == utf8.RuneCount([]byte(query)) {
+				fromIndexEnd = i
+			}
+
+			q = fmt.Sprintf("%s%c", q, char)
+		}
+		bq.From = q
+	}
+
+	if fromIndexEnd == -1 && fromIndex != -1 {
+		return []byte{}, errors.New("bad from clause")
+	}
+
+	// by
+	if fromIndex != 1 && fromIndexEnd != -1 {
+		query = string(append([]rune(query)[0:fromIndex], []rune(query)[fromIndexEnd+1:]...))
+	}
+	byIndex := strings.Index(query, "by:")
+	byIndexEnd := -1
+	if byIndex != -1 {
+		quotes := false
+		q := ""
+		for i, char := range query {
+			// +5 'by:' len
+			if i < byIndex+3 {
+				continue
+			}
+			if char == '"' && !quotes {
+				quotes = true
+				continue
+			}
+
+			if char == '"' {
+				byIndexEnd = i
+				break
+			}
+
+			if char == ' ' && !quotes {
+				byIndexEnd = i
+				break
+			}
+
+			if !quotes && i+1 == utf8.RuneCount([]byte(query)) {
+				byIndexEnd = i
+			}
+
+			q = fmt.Sprintf("%s%c", q, char)
+		}
+		bq.By = q
+	}
+
+	if byIndexEnd == -1 && byIndex != -1 {
+		return []byte{}, errors.New("bad by clause")
+	}
+
+	if byIndex != 1 && byIndexEnd != -1 {
+		query = string(append([]rune(query)[0:byIndex], []rune(query)[byIndexEnd+1:]...))
+	}
+
+	bq.Query = query
+	payload, err := json.Marshal(bq)
+	if err != nil {
+		return []byte{}, errors.New("error parsing query")
+	}
+	return payload, nil
 }
