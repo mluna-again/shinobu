@@ -341,4 +341,10 @@ func Run(c SelectorConfig) {
 		fmt.Fprintln(os.Stderr, finalM.err.Error())
 		os.Exit(2)
 	}
+
+	if len(finalM.queue.orderedSongs) == 0 && len(finalM.songs.songs) == 0 {
+		os.Exit(1)
+	}
+
+	os.Exit(0)
 }

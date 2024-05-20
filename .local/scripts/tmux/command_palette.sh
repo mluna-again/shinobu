@@ -958,6 +958,17 @@ EOF
 
 	"Spotify: bop queue")
 		tmux display-popup -T "$(make_popup_border 'Bop TUI' '󰄛')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "bop tui select"
+		if [ "$?" -eq 0 ]; then
+			try_shpotify next && exit
+
+			output=$(curl -X POST -sSf "http://localhost:8888/next")
+			code="$?"
+			[ "$code" -ne 0 ] && {
+				handle_no_device_spotify "$output" "$code"
+			}
+
+			true
+		fi
 		;;
 
 	"Spotify: queue")
