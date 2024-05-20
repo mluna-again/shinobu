@@ -2,9 +2,7 @@ package selector
 
 import (
 	"bop/internal"
-	"errors"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -42,7 +40,8 @@ func newModel(c SelectorConfig) model {
 	t := kanagawaDragon
 	// TODO: more themes
 	if c.Theme != "kanagawa-dragon" && c.Theme != "" {
-		log.Fatal(errors.New("theme not implemented"))
+		fmt.Fprintf(os.Stderr, "%s\n", "theme not implemented\n")
+		os.Exit(2)
 	}
 	loadTheme(t)
 
@@ -330,7 +329,8 @@ func Run(c SelectorConfig) {
 	program := tea.NewProgram(m, tea.WithAltScreen(), tea.WithOutput(os.Stderr))
 	finalModel, err := program.Run()
 	if err != nil {
-		log.Fatal(err)
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(2)
 	}
 
 	finalM, ok := finalModel.(model)
@@ -338,7 +338,7 @@ func Run(c SelectorConfig) {
 		panic("could not coerce model")
 	}
 	if finalM.err != nil {
-		fmt.Println(finalM.err)
-		os.Exit(1)
+		fmt.Fprintln(os.Stderr, finalM.err.Error())
+		os.Exit(2)
 	}
 }
