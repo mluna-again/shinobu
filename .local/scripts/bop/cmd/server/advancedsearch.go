@@ -99,7 +99,7 @@ func (app *app) searchAdvancedAlbum(w http.ResponseWriter, params advancedSearch
 			DisplayName: t.Name,
 			Artist:      t.Artists[0].Name,
 			Duration:    fmt.Sprintf("%d:%02d", (t.Duration/1000)/60, (t.Duration/1000)%60),
-			Album:       t.Album.Name,
+			Album:       album.Name,
 		})
 	}
 
