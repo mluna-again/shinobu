@@ -75,4 +75,5 @@ func (params *advancedSearchParams) parseTags() {
 	params.Liked = strings.Contains(params.Query, "@liked")
 	params.Latest = strings.Contains(params.Query, "@latest")
 	params.Query = removeTagsFromQuery(params.Query)
+	params.Query = strings.TrimSpace(params.Query)
 }
