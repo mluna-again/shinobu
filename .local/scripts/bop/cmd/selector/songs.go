@@ -15,6 +15,7 @@ type Song struct {
 	Name     string `json:"display_name"`
 	Artist   string `json:"artist"`
 	Duration string `json:"duration"`
+	Album    string `json:"album"`
 	ID       string `json:"id"`
 }
 
@@ -107,7 +108,7 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 }
 
 func (m songsModel) View() string {
-	header := lipgloss.JoinHorizontal(lipgloss.Left, songSelColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songSelColS.Render("Duration"))
+	header := lipgloss.JoinHorizontal(lipgloss.Left, songSelColS.Render("Selected"), songColS.Render("Name"), songColS.Render("Artist"), songColS.Render("Album"), songSelColS.Render("Duration"))
 
 	return lipgloss.JoinVertical(lipgloss.Top, songViewportHeaderS.Render(header), songViewportS.Render(m.viewport.View()))
 }
@@ -120,9 +121,9 @@ func (m *songsModel) SetWidth(w int) {
 	m.viewport.Width = w
 	songSelColS.Width(12)
 	songSelColSelectedS.Width(12)
-	songCellS.Width((w - 24) / 2)
-	songCellSelectedS.Width((w - 24) / 2)
-	songColS.Width((w - 24) / 2)
+	songCellS.Width((w - 24) / 3)
+	songCellSelectedS.Width((w - 24) / 3)
+	songColS.Width((w - 24) / 3)
 	songHeaderS.Width(w)
 	songItemS.Width(w)
 	songItemSelectedS.Width(w)
@@ -170,7 +171,7 @@ func (m songsModel) makeSongs(ss []Song) string {
 		if s.Selected {
 			selCol = "  "
 		}
-		msg := lipgloss.JoinHorizontal(lipgloss.Left, selcs.Render(selCol), cs.Render(s.Name), cs.Render(s.Artist), selcs.Render(s.Duration))
+		msg := lipgloss.JoinHorizontal(lipgloss.Left, selcs.Render(selCol), cs.Render(s.Name), cs.Render(s.Artist), cs.Render(s.Album), selcs.Render(s.Duration))
 
 		var style lipgloss.Style
 		if i == m.index {
