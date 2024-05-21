@@ -21,19 +21,20 @@ const (
 )
 
 type model struct {
-	termH         int
-	termW         int
-	input         textinput.Model
-	spinner       spinner.Model
-	err           error
-	fetching      bool
-	notFetchedYet bool
-	songs         songsModel
-	help          helpModel
-	queue         queueModel
-	screenIndex   screen
-	devMode       bool
-	theme         Theme
+	termH             int
+	termW             int
+	input             textinput.Model
+	spinner           spinner.Model
+	err               error
+	fetching          bool
+	notFetchedYet     bool
+	songs             songsModel
+	help              helpModel
+	queue             queueModel
+	screenIndex       screen
+	devMode           bool
+	theme             Theme
+	songsAddedToQueue bool
 }
 
 func newModel(c SelectorConfig) model {
@@ -143,6 +144,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		for _, s := range m.songs.selectedSongs {
 			fmt.Println(s.ID)
 		}
+		m.songsAddedToQueue = true
 		return m, tea.Quit
 
 	case tea.WindowSizeMsg:
@@ -342,9 +344,10 @@ func Run(c SelectorConfig) {
 		os.Exit(2)
 	}
 
-	if len(finalM.queue.orderedSongs) == 0 && len(finalM.songs.songs) == 0 {
-		os.Exit(1)
+	if finalM.songsAddedToQueue {
+		os.Exit(0)
+		return
 	}
 
-	os.Exit(0)
+	os.Exit(1)
 }
