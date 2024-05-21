@@ -49,6 +49,11 @@ func (m helpModel) View() string {
 	s.WriteString("\n\n")
 	s.WriteString("Queue: press q outside of the search input to open the queue.\n")
 	s.WriteString("Search: press s inside the queue to go back to the search screen.\n")
+	s.WriteString("\n\nSearching:\n")
+	s.WriteString("You can use the following prefixes: from, by\n")
+	s.WriteString("For example, 'from:yeezus' will fetch all songs from the Yeezus album.\n")
+	s.WriteString("Whereas 'from:ye violent crimes' will fetch Violent Crimes from the Ye album.\n")
+
 
 	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, s.String())
 	help = lipgloss.PlaceVertical(m.termH-lipgloss.Height(helpBanner), lipgloss.Top, help)
