@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -12,9 +13,11 @@ import (
 )
 
 type advancedSearchParams struct {
-	Query string `json:"query"`
-	From  string `json:"from"`
-	By    string `json:"by"`
+	Query  string `json:"query"`
+	From   string `json:"from"`
+	By     string `json:"by"`
+	Liked  bool
+	Latest bool
 }
 
 func (a *app) advancedSearch(w http.ResponseWriter, r *http.Request) {
@@ -26,9 +29,10 @@ func (a *app) advancedSearch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+	params.parseTags()
 
-	if strings.Contains(params.Query, "@latest") {
-		a.searchAdvancedLatest(w, params)
+	if params.Latest {
+		a.searchAdvancedTags(w, params)
 		return
 	}
 
@@ -54,7 +58,7 @@ func (app *app) searchAdvancedAlbum(w http.ResponseWriter, params advancedSearch
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	albums, err := app.client.Search(ctx, params.From, spotify.SearchTypeAlbum)
+	albums, err := app.client.Search(ctx, params.From, spotify.SearchTypeAlbum, spotify.Limit(50))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return
@@ -93,9 +97,27 @@ func (app *app) searchAdvancedAlbum(w http.ResponseWriter, params advancedSearch
 		return
 	}
 
-	items := []item{}
+	ids := []spotify.ID{}
 	for _, t := range fullAlbum.Tracks.Tracks {
+		ids = append(ids, t.ID)
+	}
+	liked, err := app.client.UserHasTracks(ctx, ids...)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+	if len(liked) != len(fullAlbum.Tracks.Tracks) {
+		app.sendInternalServerError(w, errors.New("not enough liked songs to compare!"))
+		return
+	}
+
+	items := []item{}
+	for i, t := range fullAlbum.Tracks.Tracks {
 		if params.Query != "" && !strings.Contains(strings.ToLower(t.Name), strings.ToLower(params.Query)) {
+			continue
+		}
+
+		if params.Liked && !liked[i] {
 			continue
 		}
 
@@ -121,20 +143,38 @@ func (app *app) searchAdvancedArtist(w http.ResponseWriter, params advancedSearc
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	tracks, err := app.client.Search(ctx, params.By, spotify.SearchTypeTrack)
+	tracks, err := app.client.Search(ctx, params.By, spotify.SearchTypeTrack, spotify.Limit(50))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return
 	}
 
-	items := []item{}
+	ids := []spotify.ID{}
 	for _, t := range tracks.Tracks.Tracks {
+		ids = append(ids, t.ID)
+	}
+	liked, err := app.client.UserHasTracks(ctx, ids...)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+	if len(liked) != len(tracks.Tracks.Tracks) {
+		app.sendInternalServerError(w, errors.New("not enough liked songs to compare!"))
+		return
+	}
+
+	items := []item{}
+	for i, t := range tracks.Tracks.Tracks {
 		isArtist := false
 		for _, a := range t.Artists {
 			if strings.Contains(strings.ToLower(a.Name), strings.ToLower(params.By)) {
 				isArtist = true
 				break
 			}
+		}
+
+		if params.Liked && !liked[i] {
+			continue
 		}
 
 		if !isArtist {
@@ -167,14 +207,32 @@ func (app *app) searchAdvancedTracks(w http.ResponseWriter, params advancedSearc
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	tracks, err := app.client.Search(ctx, params.Query, spotify.SearchTypeTrack)
+	tracks, err := app.client.Search(ctx, params.Query, spotify.SearchTypeTrack, spotify.Limit(50))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return
 	}
 
-	items := []item{}
+	ids := []spotify.ID{}
 	for _, t := range tracks.Tracks.Tracks {
+		ids = append(ids, t.ID)
+	}
+	liked, err := app.client.UserHasTracks(ctx, ids...)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+	if len(liked) != len(tracks.Tracks.Tracks) {
+		app.sendInternalServerError(w, errors.New("not enough liked songs to compare!"))
+		return
+	}
+
+	items := []item{}
+	for i, t := range tracks.Tracks.Tracks {
+		if params.Liked && !liked[i] {
+			continue
+		}
+
 		if strings.Contains(strings.ToLower(t.Name), strings.ToLower(params.Query)) {
 			items = append(items, item{
 				ID:          string(t.ID),
@@ -195,8 +253,7 @@ func (app *app) searchAdvancedTracks(w http.ResponseWriter, params advancedSearc
 	app.sendJSON(w, payload)
 }
 
-func (app *app) searchAdvancedLatest(w http.ResponseWriter, params advancedSearchParams) {
-	params.Query = removeTagsFromQuery(params.Query)
+func (app *app) searchAdvancedTags(w http.ResponseWriter, params advancedSearchParams) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*4)
 	defer cancel()
 
@@ -206,8 +263,26 @@ func (app *app) searchAdvancedLatest(w http.ResponseWriter, params advancedSearc
 		return
 	}
 
-	items := []item{}
+	ids := []spotify.ID{}
 	for _, t := range tracks.Tracks {
+		ids = append(ids, t.ID)
+	}
+	liked, err := app.client.UserHasTracks(ctx, ids...)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+	if len(liked) != len(tracks.Tracks) {
+		app.sendInternalServerError(w, errors.New("not enough liked songs to compare!"))
+		return
+	}
+
+	items := []item{}
+	for i, t := range tracks.Tracks {
+		if params.Liked && !liked[i] {
+			continue
+		}
+
 		if params.From != "" && !sSongFrom(t, params.From) {
 			continue
 		}

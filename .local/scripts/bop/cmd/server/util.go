@@ -61,5 +61,18 @@ func sSongQueried(s spotify.SavedTrack, query string) bool {
 }
 
 func removeTagsFromQuery(query string) string {
-	return strings.ReplaceAll(query, "@latest", "")
+	query = strings.ReplaceAll(query, "@latest", "")
+	query = strings.ReplaceAll(query, "@liked", "")
+
+	return query
+}
+
+func queryHasTags(query string) bool {
+	return strings.Contains(query, "@latest") || strings.Contains(query, "@liked")
+}
+
+func (params *advancedSearchParams) parseTags() {
+	params.Liked = strings.Contains(params.Query, "@liked")
+	params.Latest = strings.Contains(params.Query, "@latest")
+	params.Query = removeTagsFromQuery(params.Query)
 }
