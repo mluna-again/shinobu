@@ -27,6 +27,11 @@ func (a *app) advancedSearch(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
+	if strings.Contains(params.Query, "@latest") {
+		a.searchAdvancedLatest(w, params)
+		return
+	}
+
 	if params.From != "" {
 		a.searchAdvancedAlbum(w, params)
 		return
@@ -179,6 +184,49 @@ func (app *app) searchAdvancedTracks(w http.ResponseWriter, params advancedSearc
 				Album:       t.Album.Name,
 			})
 		}
+	}
+
+	payload, err := json.Marshal(items)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	app.sendJSON(w, payload)
+}
+
+func (app *app) searchAdvancedLatest(w http.ResponseWriter, params advancedSearchParams) {
+	params.Query = removeTagsFromQuery(params.Query)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*4)
+	defer cancel()
+
+	tracks, err := app.client.CurrentUsersTracks(ctx, spotify.Limit(50))
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	items := []item{}
+	for _, t := range tracks.Tracks {
+		if params.From != "" && !sSongFrom(t, params.From) {
+			continue
+		}
+
+		if params.By != "" && !sSongBy(t, params.By) {
+			continue
+		}
+
+		if params.Query != "" && !sSongQueried(t, params.Query) {
+			continue
+		}
+
+		items = append(items, item{
+			ID:          string(t.ID),
+			DisplayName: t.Name,
+			Artist:      t.Artists[0].Name,
+			Duration:    fmt.Sprintf("%d:%02d", (t.Duration/1000)/60, (t.Duration/1000)%60),
+			Album:       t.Album.Name,
+		})
 	}
 
 	payload, err := json.Marshal(items)

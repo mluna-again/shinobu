@@ -52,7 +52,10 @@ func (m helpModel) View() string {
 	s.WriteString("\n\nSearching:\n")
 	s.WriteString("You can use the following prefixes: from, by\n")
 	s.WriteString("For example, 'from:yeezus' will fetch all songs from the Yeezus album.\n")
-	s.WriteString("Whereas 'from:ye violent crimes' will fetch Violent Crimes from the Ye album.\n")
+	s.WriteString("Whereas 'from:ye violent crimes' will fetch Violent Crimes from the Ye album.\n\n")
+	s.WriteString("Tags:\n")
+	s.WriteString("You can use the following tags in your search: @latest\n")
+	s.WriteString("The query 'from:\"frank ocean\" @latest' will fetch your latest liked songs by Frank Ocean.\n")
 
 
 	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, s.String())
