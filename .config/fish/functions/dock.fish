@@ -38,6 +38,7 @@ function dock
         printf "\tstop\n"
         printf "Usage:\n"
         printf "\tdock <cmd>\n"
+        printf "\tdock <cmd> [<initial_query>] # automatically selects first match\n"
         return 1
     end
 
