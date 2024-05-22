@@ -31,7 +31,7 @@ return {
 					i = {
 						["<C-s>"] = "select_horizontal",
 						["<C-v>"] = "select_vertical",
-						["<Esc>"] = actions.close
+						-- ["<Esc>"] = actions.close
 					},
 				},
 				path_display = { "truncate" },
