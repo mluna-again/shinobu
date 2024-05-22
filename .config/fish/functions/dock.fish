@@ -27,6 +27,7 @@ function dock
     end
 
     set -l cmd $argv[1]
+    set -l query $argv[2]
     test -z "$cmd"; and begin
         printf "Available CMDs:\n"
         printf "\tid\n"
@@ -45,7 +46,7 @@ function dock
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Remove container(s)" --multi --bind ctrl-a:select-all |\
+                    fzf -q "$query" -1 --header="Remove container(s)" --multi --bind ctrl-a:select-all |\
                     awk '{print $1}'
             )
             test -z "$id"; and return
@@ -56,7 +57,7 @@ function dock
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="See container logs" |\
+                    fzf -q "$query" -1 --header="See container logs" |\
                     awk '{print $1}' |\
                     xargs
             )
@@ -68,7 +69,7 @@ function dock
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Copy container ID" |\
+                    fzf -q "$query" -1 --header="Copy container ID" |\
                     awk '{print $1}' |\
                     xargs
             )
@@ -85,7 +86,7 @@ function dock
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Enter container" |\
+                    fzf -q "$query" -1 --header="Enter container" |\
                     awk '{print $1}' |\
                     xargs
             )
@@ -102,7 +103,7 @@ function dock
             set -l container (
                 docker container ls --filter status=running --format "table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.CreatedAt}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Restart container" --multi --bind ctrl-a:select-all |\
+                    fzf -q "$query" -1 --header="Restart container" --multi --bind ctrl-a:select-all |\
                     awk '{print $1}'
             )
 
@@ -114,7 +115,7 @@ function dock
             set -l container (
                 docker container ls --filter status=exited --format "table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.CreatedAt}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Start container" --multi --bind ctrl-a:select-all |\
+                    fzf -q "$query" -1 --header="Start container" --multi --bind ctrl-a:select-all |\
                     awk '{print $1}'
             )
 
@@ -126,7 +127,7 @@ function dock
             set -l container (
                 docker container ls --filter status=running --format "table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.CreatedAt}}" |\
                     awk 'NR > 1' |\
-                    fzf --header="Stop container" --multi --bind ctrl-a:select-all |\
+                    fzf -q "$query" -1 --header="Stop container" --multi --bind ctrl-a:select-all |\
                     awk '{print $1}'
             )
 
