@@ -183,7 +183,7 @@ try_to_wake_bop() {
 		return 1
 	fi
 
-	bop_response=$(curl -is http://localhost:8888/health )
+	bop_response=$(curl -is http://localhost:8888/health)
 	# no server running
 	if [ "$?" -eq 7 ]; then
 		nohup fish -c "start_bop" &>"$HOME/.cache/bop_logs" &
@@ -234,7 +234,9 @@ try_to_wake_bop() {
 	esac
 
 	# handle no device active
-	select_bop_device || exit 0
+	if [ "$1" != "--no-select" ]; then
+		select_bop_device || exit 0
+	fi
 }
 
 close_all_but_focused() {
@@ -957,6 +959,8 @@ EOF
 		;;
 
 	"Spotify: bop queue")
+		try_to_wake_bop || exit 0
+
 		tmux display-popup -T "$(make_popup_border 'Bop TUI' '󰄛')" -b heavy -S fg=white,bg=black -s bg=black -w "80%" -h "80%" -E "bop tui select"
 		if [ "$?" -eq 0 ]; then
 			try_shpotify next && exit
@@ -993,7 +997,7 @@ EOF
 		;;
 
 	"Spotify: set device")
-		try_to_wake_bop || exit 0
+		try_to_wake_bop --no-select || exit 0
 		select_bop_device force || exit 0
 		;;
 
