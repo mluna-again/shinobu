@@ -60,6 +60,9 @@ var helpLInfo = lipgloss.NewStyle()
 var bannerS = lipgloss.NewStyle().
 	AlignVertical(lipgloss.Center)
 
+var bannerWithHelpS = lipgloss.NewStyle().
+	AlignVertical(lipgloss.Center)
+
 var bannerBGS = lipgloss.NewStyle()
 
 var queueSongComptS = lipgloss.NewStyle().

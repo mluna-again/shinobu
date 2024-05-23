@@ -94,6 +94,9 @@ func (m *model) resize(msg tea.WindowSizeMsg) {
 	bannerS.PaddingLeft(bannerLPadd)
 	bannerS.PaddingRight(m.termW - bannerLPadd)
 	bannerS.Height(m.termH - 3)
+	bannerWithHelpS.Height(m.termH - 4)
+	bannerWithHelpS.PaddingLeft(bannerLPadd)
+	bannerWithHelpS.PaddingRight(m.termW - bannerLPadd)
 
 	m.help.termW = msg.Width
 	m.help.termH = msg.Height
@@ -289,6 +292,13 @@ func (m model) View() string {
 	prompt = lipgloss.JoinHorizontal(lipgloss.Left, prompt, input)
 	s.WriteString(prompt)
 	s.WriteString("\n")
+
+	if m.notFetchedYet && m.fetching {
+		s.WriteString(bannerWithHelpS.Render(noSongsBanner))
+		s.WriteString("\n")
+		s.WriteString(helpInfo.Render(lipgloss.PlaceHorizontal(m.termW, lipgloss.Right, m.spinner.View())))
+		return s.String()
+	}
 
 	if m.notFetchedYet {
 		s.WriteString(bannerS.Render(noSongsBanner))

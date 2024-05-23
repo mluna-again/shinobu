@@ -54,6 +54,7 @@ func loadTheme(t Theme) {
 	helpRInfo = helpRInfo.Background(t.BGDark)
 	helpLInfo = helpLInfo.Background(t.BGDark)
 	bannerS = bannerS.Background(t.BGDark)
+	bannerWithHelpS = bannerWithHelpS.Background(t.BGDark)
 	bannerBGS = bannerBGS.Background(t.BGDark)
 	queueSongComptS = queueSongComptS.Background(t.BGDark)
 	queueHeaderComptS = queueHeaderComptS.Background(t.BGDark)
