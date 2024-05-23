@@ -294,7 +294,7 @@ func (m model) View() string {
 	s.WriteString("\n")
 
 	if m.notFetchedYet && m.fetching {
-		s.WriteString(bannerWithHelpS.Render(noSongsBanner))
+		s.WriteString(bannerWithHelpS.Render(noSongsWithHelpBanner))
 		s.WriteString("\n")
 		s.WriteString(helpInfo.Render(lipgloss.PlaceHorizontal(m.termW, lipgloss.Right, m.spinner.View())))
 		return s.String()
