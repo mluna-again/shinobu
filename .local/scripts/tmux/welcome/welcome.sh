@@ -9,15 +9,13 @@ declare WELCOME_SESSION="__WELCOME__"
 declare WELCOME_PATH="$HOME/.local/scripts/tmux/welcome" RESPATH="$HOME/.local/scripts/tmux/welcome/.result"
 declare run="${1:-0}" original_session="$2" SCRIPT="$WELCOME_PATH/welcome.sh"
 
-cd "$WELCOME_PATH" || exit
-
 terror() { tmux display -d 0 "#[bg=#{@color_error},fill=#{@color_error},fg=black]  Message: $*"; }
 
 [ ! -f "$RESPATH" ] && touch "$RESPATH"
 : > "$RESPATH"
 
 binary_exists() {
-	[ -x "$WELCOME_PATH/welcome" ]
+	command -v welcome &>/dev/null
 }
 
 go_installed() {
@@ -26,7 +24,7 @@ go_installed() {
 
 compile_welcome() {
 	echo "Compiling Welcome Screen..."
-	go build || return 1
+	go install || return 1
 	clear
 }
 
@@ -56,7 +54,7 @@ main() {
 	done
 
 	tmux list-sessions -f "#{!=:#{session_name},$WELCOME_SESSION}" -F "#{session_name} #{session_windows} #{session_id}" | \
-		"$WELCOME_PATH/welcome" -width "$w" -height "$h" -result "$RESPATH" -quote "$quote" || exit 1
+		welcome -width "$w" -height "$h" -result "$RESPATH" -quote "$quote" || exit 1
 
 	id="$(cat "$RESPATH")"
 	if [ -z "$id" ]; then
