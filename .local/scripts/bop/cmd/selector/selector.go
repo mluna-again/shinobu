@@ -158,6 +158,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			if m.screenIndex == queueScreen {
 				m.screenIndex = songsScreen
+				m.songs.ClearSelectedSongs()
 				m.input.Focus()
 				m.songs.Blur()
 				m.queue.Blur()
@@ -305,7 +306,7 @@ func (m model) View() string {
 
 	// HELP AND INFO
 	songCount := m.songs.SongsLen()
-	count := helpRInfo.Render(fmt.Sprintf("%d songs queued.", songCount))
+	count := helpRInfo.Render(fmt.Sprintf("%d songs selected, %d songs queued.", songCount, len(m.queue.orderedSongs)))
 	if m.fetching {
 		count = helpRInfo.Render(m.spinner.View())
 	}

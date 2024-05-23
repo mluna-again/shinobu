@@ -57,7 +57,7 @@ func (m model) addToQueue() tea.Msg {
 		return addedToQueue{}
 	}
 
-	if len(m.songs.selectedSongs) == 0 {
+	if len(m.songs.selectedSongs) == 0 && len(m.queue.GetSongs()) == 0 {
 		return addedToQueue{}
 	}
 

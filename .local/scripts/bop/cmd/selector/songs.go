@@ -153,6 +153,12 @@ func (m *songsModel) SetSongs(songs []Song) {
 	m.viewport.SetContent(content)
 }
 
+func (m *songsModel) ClearSelectedSongs() {
+	m.selectedSongs = map[string]Song{}
+	content := m.makeSongs(m.clearSongs(m.songs))
+	m.viewport.SetContent(content)
+}
+
 func (m songsModel) makeSongs(ss []Song) string {
 	b := strings.Builder{}
 	for i, s := range ss {
@@ -198,8 +204,8 @@ func (m songsModel) clearSongs(songs []Song) []Song {
 			s.Artist = fmt.Sprintf("%s...", string([]rune(s.Artist)[0:20]))
 		}
 
-		if _, ok := m.selectedSongs[s.ID]; ok {
-			s.Selected = true
+		if _, ok := m.selectedSongs[s.ID]; true {
+			s.Selected = ok
 		}
 
 		clean = append(clean, s)
