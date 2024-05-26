@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -131,6 +132,9 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			ID:          string(i.ID),
 			DisplayName: i.Name,
 			Artist:      i.Artists[0].Name,
+			ImageUrl:    i.Album.Images[0].URL,
+			Duration:    fmt.Sprintf("%d:%02d", (i.Duration/1000)/60, (i.Duration/1000)%60),
+			Album:       i.Album.Name,
 		})
 	}
 

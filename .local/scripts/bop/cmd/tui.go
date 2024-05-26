@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bop/cmd/queueview"
 	"bop/cmd/selector"
 	"fmt"
 	"os"
@@ -36,9 +37,18 @@ Possible error codes:
 	},
 }
 
+var queueCmd = &cobra.Command{
+	Use:   "queue",
+	Short: "displays the current queue in a pretty table",
+	Run: func(cmd *cobra.Command, args []string) {
+		queueview.Run()
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(tuiCmd)
 
 	selectCmd.Flags().BoolP("dev", "d", false, "dev mode (doesn't queue songs)")
 	tuiCmd.AddCommand(selectCmd)
+	tuiCmd.AddCommand(queueCmd)
 }
