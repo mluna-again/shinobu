@@ -3,6 +3,7 @@ package queueview
 import (
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -11,7 +12,7 @@ import (
 
 type itemDelegate struct{}
 
-func (d itemDelegate) Height() int  { return 6 }
+func (d itemDelegate) Height() int  { return 5 }
 func (d itemDelegate) Spacing() int { return 0 }
 func (d itemDelegate) Update(_ tea.Msg, m *list.Model) tea.Cmd {
 	itemStyle.Width(m.Width())
@@ -23,22 +24,32 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 	if !ok {
 		return
 	}
-
-	icon := iconStyle.Render(i.Ascii)
-	if i.Ascii == "" {
-		icon = `//////
-//////
-//////
-//////
-//////`
+	isSelected := index == m.Index()
+	bg := iconStyle.GetBackground()
+	if isSelected {
+		bg = selectedItemStyle.GetBackground()
 	}
-	details := lipgloss.JoinVertical(lipgloss.Left, i.Name, i.Artist, i.Duration)
-	str := lipgloss.JoinHorizontal(lipgloss.Top, icon, " ", details)
 
 	fn := itemStyle.Render
-	if index == m.Index() {
+	if isSelected {
 		fn = selectedItemStyle.Render
 	}
 
-	fmt.Fprint(w, fn(str))
+	icon := strings.Trim(i.Ascii, "\n")
+	if icon == "" {
+		icon = `///////
+///////
+///////
+///////
+///////`
+	}
+
+	details := lipgloss.JoinVertical(lipgloss.Left, fn(fmt.Sprintf(" %s", i.Name)), fn(fmt.Sprintf(" %s", i.Artist)), fn(fmt.Sprintf(" %s", i.Duration)))
+	if isSelected {
+		details = lipgloss.Place(m.Width()-6, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(bg))
+	}
+
+	str := lipgloss.JoinHorizontal(lipgloss.Top, icon, details)
+
+	fmt.Fprint(w, str)
 }

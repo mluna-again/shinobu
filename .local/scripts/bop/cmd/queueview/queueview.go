@@ -1,6 +1,7 @@
 package queueview
 
 import (
+	"bop/internal"
 	"fmt"
 	"os"
 
@@ -25,6 +26,9 @@ type model struct {
 	list    list.Model
 	err     error
 	loading bool
+	termH   int
+	termW   int
+	theme   internal.Theme
 }
 
 func (m model) Init() tea.Cmd {
@@ -76,6 +80,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		paginationStyle = paginationStyle.Width(msg.Width)
 		m.list.Styles.PaginationStyle = paginationStyle
 		m.list.SetSize(msg.Width, msg.Height)
+		m.termW = msg.Width
+		m.termH = msg.Height
 	}
 
 	m.list, cmd = m.list.Update(msg)
@@ -98,13 +104,14 @@ func (m model) View() string {
 func Run() {
 	items := []list.Item{}
 
-	m := model{list: list.New(items, itemDelegate{}, 0, 0), loading: true}
+	m := model{list: list.New(items, itemDelegate{}, 0, 0), loading: true, theme: internal.KanagawaDragon}
 	m.list.SetShowTitle(false)
 	m.list.SetShowHelp(false)
 	m.list.SetShowFilter(false)
 	m.list.SetShowPagination(true)
 	m.list.SetShowStatusBar(false)
 	m.list.Styles.PaginationStyle = paginationStyle
+	m.loadTheme()
 
 	p := tea.NewProgram(m, tea.WithAltScreen())
 
