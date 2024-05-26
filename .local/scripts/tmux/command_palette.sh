@@ -977,7 +977,7 @@ EOF
 
 	"Spotify: queue")
 		try_to_wake_bop || exit 0
-		tmux display-popup -w "35%" -h "100%" -t "$(top_right_pane)" -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black "bop tui queue"
+		tmux display-popup -w "35%" -h "99%" -x "#{popup_pane_right}" -y "S" -s bg=black "bop tui queue"
 		;;
 
 	"Spotify: set device")
