@@ -146,6 +146,7 @@ make_popup_border() {
 	echo "#[bg=#{@components_active_background1},fg=black] $icon $title "
 }
 
+# returns 16 if there was only one device and it was autoselected. just because
 select_bop_device() {
 	code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$BOP_PORT/status")
 	if [ "$code" = 404 ] || [ "$1" = force ]; then
@@ -160,6 +161,15 @@ select_bop_device() {
 		}
 
 		devices=$(jq -r '.[] | "[\(.type)] \(.name)"' <<< "$devs" | awk '{ printf "%d. %s\n", NR, $0; }')
+		if [ "$(wc -l <<< "$devices")" -eq 1 ]; then
+			dev_id=$(jq -r ".[0].id" <<< "$devs")
+			curl -X POST -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
+				error "Something went wrong while setting device."
+				return 1
+			}
+			return 16
+		fi
+
 		input " Choose device " "  " "$devices"
 		device=$(read_input)
 		[ -z "$device" ] && exit
@@ -235,7 +245,15 @@ try_to_wake_bop() {
 
 	# handle no device active
 	if [ "$1" != "--no-select" ]; then
-		select_bop_device || exit 0
+		select_bop_device
+		status="$?"
+		if [ "$status" -eq 16 ]; then
+			# give bop some time to catch up
+			sleep 2
+			return 0
+		fi
+		[ "$status" -ne 0 ] && exit 0
+		return 0
 	fi
 }
 
