@@ -977,23 +977,7 @@ EOF
 
 	"Spotify: queue")
 		try_to_wake_bop || exit 0
-		output=$(curl -sSf "http://localhost:8888/queue")
-		code="$?"
-		[ "$code" -ne 0 ] && {
-			handle_no_device_spotify "$output" "$code"
-		}
-
-		items=$(jq -r '. | to_entries | .[] | "\(.key + 1). \(.value.display_name) by \(.value.artist)"' <<< "$output")
-		items=$(awk '{ printf substr($0, 1, 37); if (length($0) > 37) { printf "..."; }; printf "\n"; }' <<< "$items")
-		[ -z "$items" ] && {
-			alert "No next item in queue."
-			exit
-		}
-
-		message=$(printf "\n                  Queue                 \n\n%s" "$items")
-		tmux display-popup -w 40 -h 25 -t "$(top_right_pane)" -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black echo "$message"
-
-		true
+		tmux display-popup -w "35%" -h "100%" -t "$(top_right_pane)" -x "#{popup_pane_right}" -y "#{popup_pane_top}" -s bg=black "bop tui queue"
 		;;
 
 	"Spotify: set device")
