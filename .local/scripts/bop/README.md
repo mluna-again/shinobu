@@ -89,3 +89,6 @@ Request:
     "ID": "<id>"
 }
 `
+## Requirements
+1. postgresql (required)
+2. chafa (optional)
