@@ -79,7 +79,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		}
 		// i have no idea why i need to subtract 1 but if i don't it looks weird in *some*
-		// screen sizes :/ and somehow subtracting 1 makes it looks good in all sizes...
+		// screen sizes :/ and somehow subtracting 1 makes it look good in all sizes...
 		delegate := itemDelegate{height: lipgloss.Height(item.Ascii)-1}
 		m.list.SetDelegate(delegate)
 
