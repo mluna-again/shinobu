@@ -1,6 +1,7 @@
 package selector
 
 import (
+	"bop/internal"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/viewport"
@@ -115,7 +116,16 @@ func (m queueModel) View() string {
 
 	help := lipgloss.PlaceHorizontal(m.termW, lipgloss.Left, "Use J/K to reorder songs. d to delete songs. Press Enter to exit or Esc to go back.")
 	help = helpInfo.Render(help)
-	return lipgloss.JoinVertical(lipgloss.Top, header, m.viewport.View(), help)
+
+	content := m.viewport.View()
+	if len(m.orderedSongs) == 0 {
+		msg := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, "Empty queue")
+		msg = lipgloss.JoinVertical(lipgloss.Center, msg, internal.CenterBanner(m.termW, justACat))
+		content = lipgloss.Place(m.termW, m.termH-1-lipgloss.Height(header), lipgloss.Center, lipgloss.Center, msg)
+		content = queueViewportS.Render(content)
+	}
+
+	return lipgloss.JoinVertical(lipgloss.Top, header, content, help)
 }
 
 func (m *queueModel) SetSongs(s map[string]Song) {
