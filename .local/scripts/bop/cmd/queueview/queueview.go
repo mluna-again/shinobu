@@ -7,6 +7,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type item struct {
@@ -90,12 +91,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	// if m.loading {
-	// 	return "loading..."
-	// }
-
 	if m.err != nil {
-		return m.err.Error()
+		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSaysSerious(m.err.Error()))
+	}
+
+	if m.loading {
+		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSays("Loading..."))
 	}
 
 	return m.list.View()
