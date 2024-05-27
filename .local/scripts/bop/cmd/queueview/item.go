@@ -37,11 +37,11 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 
 	icon := strings.Trim(i.Ascii, "\n")
 	if icon == "" {
-		icon = `///////
-///////
-///////
-///////
-///////`
+		icon = `//////////
+//////////
+//////////
+//////////
+//////////`
 	}
 
 	details := lipgloss.JoinVertical(lipgloss.Left, fn(fmt.Sprintf(" %s", i.Name)), fn(fmt.Sprintf(" %s", i.Artist)), fn(fmt.Sprintf(" %s", i.Duration)))
