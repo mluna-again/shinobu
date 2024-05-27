@@ -8,7 +8,6 @@ vim.o.hidden = true
 vim.o.background = "dark"
 vim.o.mouse = "a"
 vim.o.cursorline = false
-vim.o.spelloptions = "camel,"
 vim.cmd([[
 set expandtab
 set tabstop=2
