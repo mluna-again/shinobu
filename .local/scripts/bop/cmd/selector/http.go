@@ -45,7 +45,8 @@ func (m model) getCurrentQueue() tea.Msg {
 }
 
 type addedToQueue struct {
-	err error
+	err   error
+	empty bool
 }
 
 type AddToQueuePayload struct {
@@ -57,41 +58,42 @@ func (m model) addToQueue() tea.Msg {
 		return addedToQueue{}
 	}
 
-	if len(m.songs.selectedSongs) == 0 && len(m.queue.GetSongs()) == 0 {
-		return addedToQueue{}
-	}
-
 	songs := []string{}
 	for _, s := range m.queue.GetSongs() {
 		songs = append(songs, s.ID)
 	}
 
-	if len(songs) == 0 {
+	if len(songs) == 0 && m.screenIndex == songsScreen {
 		for k := range m.songs.selectedSongs {
 			songs = append(songs, k)
 		}
 	}
+
+	if len(songs) == 0 {
+		return addedToQueue{empty: true}
+	}
+
 	data := AddToQueuePayload{
 		IDS: songs,
 	}
 	payload, err := json.Marshal(&data)
 	if err != nil {
-		return addedToQueue{err}
+		return addedToQueue{err: err}
 	}
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/queue", BOP), bytes.NewBuffer(payload))
 	if err != nil {
-		return addedToQueue{err}
+		return addedToQueue{err: err}
 	}
 	client := http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return addedToQueue{err}
+		return addedToQueue{err: err}
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
-			return addedToQueue{err}
+			return addedToQueue{err: err}
 		}
 		return addedToQueue{err: errors.New(string(body))}
 	}

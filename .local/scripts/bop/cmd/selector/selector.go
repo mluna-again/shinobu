@@ -147,7 +147,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		for _, s := range m.songs.selectedSongs {
 			fmt.Println(s.ID)
 		}
-		m.songsAddedToQueue = true
+		m.songsAddedToQueue = !msg.empty
 		return m, tea.Quit
 
 	case tea.WindowSizeMsg:
