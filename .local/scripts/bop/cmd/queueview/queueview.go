@@ -24,12 +24,13 @@ func (i item) Description() string { return i.Artist }
 func (i item) FilterValue() string { return i.Name }
 
 type model struct {
-	list    list.Model
-	err     error
-	loading bool
-	termH   int
-	termW   int
-	theme   internal.Theme
+	list       list.Model
+	err        error
+	loading    bool
+	termH      int
+	termW      int
+	theme      internal.Theme
+	reloadChan chan struct{}
 }
 
 func (m model) Init() tea.Cmd {
@@ -43,6 +44,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case queueLoadedMsg:
 		if msg.err == nil {
+			m.err = nil
 			items := []list.Item{}
 			for _, s := range msg.queue {
 				items = append(items, s)
@@ -77,6 +79,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if msg.String() == "ctrl+c" {
 			return m, tea.Quit
 		}
+
+		switch msg.String() {
+		case "r":
+			m.reloadChan <- struct{}{}
+			m.loading = true
+			m.err = nil
+			return m, nil
+		}
 	case tea.WindowSizeMsg:
 		paginationStyle = paginationStyle.Width(msg.Width)
 		m.list.Styles.PaginationStyle = paginationStyle
@@ -108,8 +118,9 @@ func (m model) View() string {
 
 func Run() {
 	items := []list.Item{}
+	reloadChan := make(chan struct{})
 
-	m := model{list: list.New(items, itemDelegate{}, 0, 0), loading: true, theme: internal.KanagawaDragon}
+	m := model{list: list.New(items, itemDelegate{}, 0, 0), loading: true, theme: internal.KanagawaDragon, reloadChan: reloadChan}
 	m.list.SetShowTitle(false)
 	m.list.SetShowHelp(false)
 	m.list.SetShowFilter(false)
@@ -129,5 +140,13 @@ func Run() {
 	}()
 
 	go m.loadThumbnails(p)
+
+	go func() {
+		for {
+			<-reloadChan
+			go m.loadThumbnails(p)
+		}
+	}()
+
 	p.Wait()
 }
