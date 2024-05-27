@@ -163,7 +163,7 @@ select_bop_device() {
 		devices=$(jq -r '.[] | "[\(.type)] \(.name)"' <<< "$devs" | awk '{ printf "%d. %s\n", NR, $0; }')
 		if [ "$(wc -l <<< "$devices")" -eq 1 ]; then
 			dev_id=$(jq -r ".[0].id" <<< "$devs")
-			curl -X POST -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
+			curl -X POST -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\", \"play\": false}" &>/dev/null || {
 				error "Something went wrong while setting device."
 				return 1
 			}
@@ -180,7 +180,7 @@ select_bop_device() {
 			exit
 		}
 
-		curl -X POST -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\"}" &>/dev/null || {
+		curl -X POST -Ssf "http://localhost:$BOP_PORT/setDevice" -d "{\"id\": \"$dev_id\", \"play\": false}" &>/dev/null || {
 			error "Something went wrong while setting device."
 			exit
 		}

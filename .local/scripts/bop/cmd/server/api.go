@@ -323,7 +323,13 @@ func (app *app) setDevice(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	play := true
+	originalState, err := app.client.PlayerCurrentlyPlaying(r.Context())
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	play := originalState.Playing
 	if data.Play != nil {
 		play = *data.Play
 	}
