@@ -45,6 +45,11 @@ func (m queueModel) Update(msg tea.Msg) (queueModel, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "D":
+			m.originalSongs = map[string]Song{}
+			m.orderedSongs = []Song{}
+			return m, nil
+
 		case "d":
 			if len(m.orderedSongs) == 0 {
 				break
