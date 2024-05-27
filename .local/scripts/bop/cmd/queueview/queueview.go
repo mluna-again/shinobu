@@ -74,6 +74,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case thumbnailsLoadedMsg:
 		m.loading = false
+		item, ok := m.list.SelectedItem().(item)
+		if !ok {
+			return m, nil
+		}
+		// i have no idea why i need to subtract 1 but if i don't it looks weird in *some*
+		// screen sizes :/ and somehow subtracting 1 makes it looks good in all sizes...
+		delegate := itemDelegate{height: lipgloss.Height(item.Ascii)-1}
+		m.list.SetDelegate(delegate)
 
 	case tea.KeyMsg:
 		if msg.String() == "ctrl+c" {
@@ -120,7 +128,7 @@ func Run() {
 	items := []list.Item{}
 	reloadChan := make(chan struct{})
 
-	m := model{list: list.New(items, itemDelegate{}, 0, 0), loading: true, theme: internal.KanagawaDragon, reloadChan: reloadChan}
+	m := model{list: list.New(items, itemDelegate{5}, 0, 0), loading: true, theme: internal.KanagawaDragon, reloadChan: reloadChan}
 	m.list.SetShowTitle(false)
 	m.list.SetShowHelp(false)
 	m.list.SetShowFilter(false)

@@ -10,9 +10,11 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-type itemDelegate struct{}
+type itemDelegate struct {
+	height int
+}
 
-func (d itemDelegate) Height() int  { return 5 }
+func (d itemDelegate) Height() int  { return d.height }
 func (d itemDelegate) Spacing() int { return 0 }
 func (d itemDelegate) Update(_ tea.Msg, m *list.Model) tea.Cmd {
 	itemStyle.Width(m.Width())
