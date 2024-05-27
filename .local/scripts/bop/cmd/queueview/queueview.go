@@ -99,6 +99,10 @@ func (m model) View() string {
 		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSays("Loading..."))
 	}
 
+	if len(m.list.Items()) == 0 {
+		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSaysSerious("Queue empty"))
+	}
+
 	return m.list.View()
 }
 
