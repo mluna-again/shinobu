@@ -3,24 +3,39 @@ return {
 	event = "VeryLazy",
 	config = function()
 		require("neoscroll").setup({
-			-- All these keys will be mapped to their corresponding default scrolling animation
-			mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb", "{", "}" },
-			hide_cursor = false, -- Hide cursor while scrolling
+			mappings = { -- Keys to be mapped to their corresponding default scrolling animation
+				"<C-u>",
+				"<C-d>",
+				"<C-b>",
+				"<C-f>",
+				"<C-y>",
+				"<C-e>",
+				"zt",
+				"zz",
+				"zb",
+			},
+			hide_cursor = true, -- Hide cursor while scrolling
 			stop_eof = true, -- Stop at <EOF> when scrolling downwards
-			use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
 			respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
 			cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-			easing_function = nil, -- Default easing function
+			easing = "linear", -- Default easing function
 			pre_hook = nil, -- Function to run before the scrolling animation starts
 			post_hook = nil, -- Function to run after the scrolling animation ends
-			performance_mode = false,
+			performance_mode = false, -- Disable "Performance Mode" on all buffers.
 		})
 
-		local t = {}
-
-		t["{"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
-		t["}"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
-
-		require("neoscroll.config").set_mappings(t)
+		local neoscroll = require("neoscroll")
+		local keymap = {
+			["{"] = function()
+				neoscroll.ctrl_u({ duration = 250 })
+			end,
+			["}"] = function()
+				neoscroll.ctrl_d({ duration = 250 })
+			end,
+		}
+		local modes = { "n", "v", "x" }
+		for key, func in pairs(keymap) do
+			vim.keymap.set(modes, key, func)
+		end
 	end,
 }
