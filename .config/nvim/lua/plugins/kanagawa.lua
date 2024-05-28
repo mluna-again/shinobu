@@ -227,6 +227,10 @@ return {
 					AlphaButtonKey = { fg = theme.syn.identifier, bg = theme.ui.bg_gutter },
 					AlphaBanner = { fg = theme.syn.identifier },
 
+					CmpDocumentationBorder = { fg = theme.syn.identifier, bg = theme.ui.bg },
+					CmpDocumentation = { fg = theme.syn.identifier, bg = theme.ui.bg },
+					CmpCompletionBorder = { fg = theme.syn.identifier, bg = theme.ui.bg },
+					CmpCompletion = { fg = theme.syn.identifier, bg = theme.ui.bg },
 					-- CmpItemAbbrMatchFuzzy = { fg = theme.syn.identifier },
 					-- CmpItemKindText = { fg = theme.syn.parameter, bg = theme.ui.bg },
 					-- CmpItemKindMethod = { fg = theme.syn.constant, bg = theme.ui.bg },

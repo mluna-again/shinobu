@@ -113,10 +113,12 @@ return {
 				completion = cmp.config.window.bordered({
 					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 					scrollbar = false,
+					winhighlight = "FloatBorder:CmpCompletionBorder,NormalFloat:CmpCompletion",
 				}),
 				documentation = cmp.config.window.bordered({
 					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 					scrollbar = false,
+					winhighlight = "FloatBorder:CmpDocumentationBorder,NormalFloat:CmpDocumentation",
 				}),
 			},
 			mapping = cmp.mapping.preset.insert({
@@ -208,7 +210,7 @@ return {
 			"fsautocomplete",
 			"lua_ls",
 			"ols",
-			"clangd"
+			"clangd",
 		}
 
 		local lspconfig = require("lspconfig")
@@ -222,7 +224,8 @@ return {
 		lspconfig["tailwindcss"].setup({
 			capabilities = capabilities,
 			root_dir = function(fname)
-				local root_pattern = lspconfig.util.root_pattern("tailwind.config.cjs", "tailwind.config.js", "postcss.config.js")
+				local root_pattern =
+					lspconfig.util.root_pattern("tailwind.config.cjs", "tailwind.config.js", "postcss.config.js")
 
 				return root_pattern(fname)
 			end,
