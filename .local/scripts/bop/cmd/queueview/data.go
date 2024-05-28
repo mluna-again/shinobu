@@ -13,11 +13,12 @@ import (
 )
 
 type BopItem struct {
-	ID       string `json:"id"`
-	Name     string `json:"display_name"`
-	Artist   string `json:"artist"`
-	URL      string `json:"image_url"`
-	Duration string `json:"duration"`
+	ID        string `json:"id"`
+	Name      string `json:"display_name"`
+	Artist    string `json:"artist"`
+	URL       string `json:"image_url"`
+	Duration  string `json:"duration"`
+	IsPlaying bool   `json:"is_playing"`
 }
 
 var BOP = "http://localhost:8888"
@@ -44,11 +45,12 @@ func (m model) loadQueue() tea.Msg {
 	items := []item{}
 	for _, s := range data {
 		items = append(items, item{
-			ID:       s.ID,
-			Name:     s.Name,
-			Artist:   s.Artist,
-			Duration: s.Duration,
-			URL:      s.URL,
+			ID:        s.ID,
+			Name:      s.Name,
+			Artist:    s.Artist,
+			Duration:  s.Duration,
+			URL:       s.URL,
+			IsPlaying: s.IsPlaying,
 		})
 	}
 

@@ -11,12 +11,13 @@ import (
 )
 
 type item struct {
-	ID       string
-	Name     string
-	Artist   string
-	Duration string
-	Ascii    string
-	URL      string
+	ID        string
+	Name      string
+	Artist    string
+	Duration  string
+	Ascii     string
+	URL       string
+	IsPlaying bool
 }
 
 func (i item) Title() string       { return i.Name }
@@ -80,7 +81,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		// i have no idea why i need to subtract 1 but if i don't it looks weird in *some*
 		// screen sizes :/ and somehow subtracting 1 makes it look good in all sizes...
-		delegate := itemDelegate{height: lipgloss.Height(item.Ascii)-1}
+		delegate := itemDelegate{height: lipgloss.Height(item.Ascii) - 1}
 		m.list.SetDelegate(delegate)
 
 	case tea.KeyMsg:

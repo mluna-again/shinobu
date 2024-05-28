@@ -116,6 +116,12 @@ func (app *app) restart(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *app) queue(w http.ResponseWriter, r *http.Request) {
+	current, err := app.client.PlayerCurrentlyPlaying(r.Context())
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
 	q, err := app.client.GetQueue(r.Context())
 	if err != nil {
 		app.sendInternalServerErrorWithMessage(w, err.Error())
@@ -136,6 +142,21 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			Duration:    fmt.Sprintf("%d:%02d", (i.Duration/1000)/60, (i.Duration/1000)%60),
 			Album:       i.Album.Name,
 		})
+	}
+
+	if current.Item != nil {
+		track := current.Item
+		items = append([]item{{
+
+			ID:          string(track.ID),
+			DisplayName: track.Name,
+			Artist:      track.Artists[0].Name,
+			ImageUrl:    track.Album.Images[0].URL,
+			Duration:    fmt.Sprintf("%d:%02d", (track.Duration/1000)/60, (track.Duration/1000)%60),
+			Album:       track.Album.Name,
+			IsPlaying:   true,
+		},
+		}, items...)
 	}
 
 	output, err := json.Marshal(items)
