@@ -358,6 +358,9 @@ return {
 					DiffviewFilePanelCounter = { fg = theme.syn.statement },
 					DiffviewFilePrimary = { fg = theme.syn.identifier },
 					DiffviewFileSecondary = { fg = theme.syn.operator },
+
+					-- -_- ofc it does random shit after updating
+					["@markup.link"] = { underline = false },
 				}
 			end,
 		})

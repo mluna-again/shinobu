@@ -26,6 +26,7 @@ au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions -=0
 vim.opt.colorcolumn = "99999"
 vim.opt.cmdheight = 0
 vim.opt.previewheight = 20
+vim.opt.spelloptions = "camel"
 
 -- vim.api.nvim_command[[highlight Normal ctermbg=NONE guibg=NONE]]
 vim.cmd([[highlight VertSplit cterm=NONE guibg=NONE]])
