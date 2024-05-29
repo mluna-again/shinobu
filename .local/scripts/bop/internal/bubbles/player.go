@@ -48,6 +48,15 @@ func (m Player) fetchSong() tea.Msg {
 	return songFetchedMsg{song: song}
 }
 
+func (m Player) redrawCover() tea.Msg {
+	err := AttachAsciiToSong(&m.song, m.coverWidth())
+	if err != nil {
+		return songFetchedMsg{err: err}
+	}
+
+	return songFetchedMsg{song: m.song}
+}
+
 func doTick() tea.Cmd {
 	return tea.Tick(time.Second*1, func(t time.Time) tea.Msg {
 		return tickMsg{}
@@ -117,12 +126,16 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.termW = msg.Width
 		m.termH = msg.Height
 		m.bar.Width = msg.Width - 12 - m.barWidth() // start+end time and cover size
+		if m.mounted {
+			return m, m.redrawCover
+		}
 		return m, m.fetchSong
 
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "r":
 			m.loading = true
+			m.err = nil
 			return m, m.fetchSong
 
 		case "ctrl+c":
