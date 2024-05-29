@@ -57,6 +57,7 @@ var playerCmd = &cobra.Command{
 			fmt.Println("Oh no!", err)
 			os.Exit(1)
 		}
+		_ = m.Cleanup()
 	},
 }
 
