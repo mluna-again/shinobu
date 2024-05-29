@@ -4,6 +4,11 @@ return {
 		require("nvim-web-devicons").setup({
 			color_icons = false,
 			override = {
+				odin = {
+					icon = "󱡄",
+					name = "odin",
+					color = "#1e5085"
+				},
 				gleam = {
 					icon = "󱕅",
 					name = "gleam",
