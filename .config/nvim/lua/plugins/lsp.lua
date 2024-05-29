@@ -233,6 +233,12 @@ return {
 		})
 
 		local wk = require("which-key")
+		vim.api.nvim_set_keymap(
+			"i",
+			"<c-s>",
+			"<cmd>lua vim.lsp.buf.signature_help()<CR>",
+			{ noremap = true, silent = true }
+		)
 		wk.register({
 			l = {
 				name = "Lsp",
