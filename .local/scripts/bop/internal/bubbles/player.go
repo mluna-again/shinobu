@@ -73,8 +73,7 @@ type Player struct {
 
 func NewPlayer(current, total int) Player {
 	color1 := string(internal.KanagawaDragon.Primary)
-	color2 := string(internal.KanagawaDragon.Secondary)
-	b := progress.New(progress.WithScaledGradient(color1, color2), progress.WithoutPercentage())
+	b := progress.New(progress.WithSolidFill(color1), progress.WithoutPercentage())
 
 	return Player{
 		CurrentSecond: current,
