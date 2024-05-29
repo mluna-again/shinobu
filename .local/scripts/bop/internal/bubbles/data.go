@@ -84,7 +84,6 @@ func (m *Player) getImagePath(imageUrl string) (*os.File, error) {
 		return m.cachedImage, nil
 	}
 
-	fmt.Fprintln(os.Stderr, "downlonading pic")
 	client := BasicClient()
 	resp, err := client.Get(imageUrl)
 	if err != nil {
