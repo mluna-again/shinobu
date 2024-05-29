@@ -940,7 +940,7 @@ EOF
 	"Spotify: get song")
 		try_to_wake_bop || exit 0
 
-		tmux display-popup -t "$($top_right_pane)" -s bg=black -w "50%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "$HOME/.local/scripts/dashboard/spotify.sh"
+		tmux display-popup -t "$($top_right_pane)" -s bg=black -w "30%" -h "40%" -y "#{popup_pane_top}" -x "#{popup_pane_right}" -E "bop tui player"
 		;;
 
 	"Spotify: save song")
