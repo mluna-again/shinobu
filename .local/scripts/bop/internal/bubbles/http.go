@@ -88,7 +88,7 @@ func AttachAsciiToSong(s *Song, size int) error {
 		return err
 	}
 
-	output, err := exec.Command("chafa", "-s", fmt.Sprintf("%dx%d", size), file.Name()).Output()
+	output, err := exec.Command("chafa", "-s", fmt.Sprintf("%dx%d", size, size), file.Name()).Output()
 	if err != nil {
 		return err
 	}

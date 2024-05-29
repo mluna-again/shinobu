@@ -40,12 +40,7 @@ type songFetchedMsg struct {
 }
 
 func (m Player) fetchSong() tea.Msg {
-	width := m.termW
-	if width <= 0 {
-		width = 40
-	}
-
-	song, err := GetCurrentSong(width / 3)
+	song, err := GetCurrentSong(m.coverWidth())
 	if err != nil {
 		return songFetchedMsg{err: err}
 	}
@@ -116,11 +111,15 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.termW = msg.Width
 		m.termH = msg.Height
-		m.bar.Width = msg.Width - 12 - ((msg.Width / 3) * 2) // start+end time and cover size
+		m.bar.Width = msg.Width - 12 - m.barWidth() // start+end time and cover size
 		return m, m.fetchSong
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "r":
+			m.loading = true
+			return m, m.fetchSong
+
 		case "ctrl+c":
 			return m, tea.Quit
 		}
@@ -135,7 +134,7 @@ func (m Player) View() string {
 	}
 
 	if m.loading {
-		return "Loading..."
+		return internal.CenterInScreen(m.termW, m.termH, internal.CatSays("Loading..."))
 	}
 
 	if m.err != nil {
@@ -143,7 +142,7 @@ func (m Player) View() string {
 	}
 
 	title := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.title(m.song.DisplayName, m.termW-20))
-	if lipgloss.Height(m.song.Ascii)+10+lipgloss.Height(title) > m.termH || lipgloss.Width(m.song.Ascii)+20 > m.termW {
+	if m.screenTooBigForTitle(title) {
 		title = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.song.DisplayName)
 	}
 
@@ -165,4 +164,30 @@ func toDuration(seconds int) string {
 	minutes := seconds / 60
 	seconds = seconds - (minutes * 60)
 	return fmt.Sprintf("%02d:%02d", minutes, seconds)
+}
+
+func (m Player) screenTooBigForTitle(title string) bool {
+	return lipgloss.Height(m.song.Ascii)+10+lipgloss.Height(title) > m.termH || lipgloss.Width(m.song.Ascii)+20 > m.termW || lipgloss.Width(title) > m.termW
+}
+
+func (m Player) coverWidth() int {
+	width := m.termW
+	if width <= 0 {
+		width = 40
+	}
+
+	w := width / 3
+	if m.termW < 80 {
+		w = width / 2
+	}
+
+	return w
+}
+
+func (m Player) barWidth() int {
+	if m.termW < 80 {
+		return m.coverWidth()
+	}
+
+	return m.coverWidth() * 2
 }
