@@ -3,9 +3,11 @@ package cmd
 import (
 	"bop/cmd/queueview"
 	"bop/cmd/selector"
+	"bop/internal/bubbles"
 	"fmt"
 	"os"
 
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
 )
 
@@ -45,10 +47,24 @@ var queueCmd = &cobra.Command{
 	},
 }
 
+var playerCmd = &cobra.Command{
+	Use:   "player",
+	Short: "player :D",
+	Run: func(cmd *cobra.Command, args []string) {
+		m := bubbles.NewPlayer(0, 130)
+		p := tea.NewProgram(m, tea.WithAltScreen())
+		if _, err := p.Run(); err != nil {
+			fmt.Println("Oh no!", err)
+			os.Exit(1)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(tuiCmd)
 
 	selectCmd.Flags().BoolP("dev", "d", false, "dev mode (doesn't queue songs)")
 	tuiCmd.AddCommand(selectCmd)
 	tuiCmd.AddCommand(queueCmd)
+	tuiCmd.AddCommand(playerCmd)
 }
