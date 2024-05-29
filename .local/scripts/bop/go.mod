@@ -9,6 +9,7 @@ require (
 	github.com/charmbracelet/log v0.3.1
 	github.com/go-chi/chi/v5 v5.0.12
 	github.com/jackc/pgx/v5 v5.5.3
+	github.com/lukesampson/figlet v0.0.0-20190211215653-8a3ef4a6ac42
 	github.com/spf13/cobra v1.8.0
 	github.com/zmb3/spotify/v2 v2.4.0
 	golang.org/x/oauth2 v0.0.0-20210810183815-faf39c7919d5

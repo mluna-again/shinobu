@@ -3,12 +3,35 @@ package bubbles
 import (
 	"bop/internal"
 	"fmt"
+	"os"
+	"path"
+	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/progress"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/lukesampson/figlet/figletlib"
 )
+
+func (m Player) title(msg string, width int) string {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return msg
+	}
+	font, err := figletlib.GetFontByName(path.Join(home, ".local", "fonts"), "ansi")
+	if err != nil {
+		return msg
+	}
+
+	t := figletlib.SprintMsg(msg, font, width, font.Settings(), "left")
+	// non-ascii characters
+	if strings.TrimSpace(t) == "" {
+		return fmt.Sprintf("\n%s\n", msg)
+	}
+
+	return strings.Trim(t, "\n")
+}
 
 type tickMsg time.Time
 type songFetchedMsg struct {
@@ -39,6 +62,7 @@ func doTick() tea.Cmd {
 type Player struct {
 	CurrentSecond int
 	TotalSeconds  int
+	song          Song
 	bar           progress.Model
 	err           error
 	termW         int
@@ -75,6 +99,7 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.CurrentSecond = msg.song.CurrentSecond
 		m.TotalSeconds = msg.song.TotalSeconds
 		m.cover = msg.song.Ascii
+		m.song = msg.song
 		return m, doTick()
 
 	case tickMsg:
@@ -114,11 +139,17 @@ func (m Player) View() string {
 		return m.err.Error()
 	}
 
+	title := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.title(m.song.DisplayName, m.termW-20))
+	if lipgloss.Height(m.song.Ascii)+10+lipgloss.Height(title) > m.termH || lipgloss.Width(m.song.Ascii)+20 > m.termW {
+		title = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.song.DisplayName)
+	}
+
+	artist := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, artistStyle.Render(m.song.Artist))
 	banner := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.cover)
 	bar := m.bar.ViewAs(m.calculateNextSecondTick())
 	details := lipgloss.JoinHorizontal(lipgloss.Left, timeStyle.Render(toDuration(m.CurrentSecond)), bar, timeStyle.Render(toDuration(m.TotalSeconds-m.CurrentSecond)))
 
-	return lipgloss.Place(m.termW-10, m.termH, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Center, banner, details))
+	return lipgloss.Place(m.termW-10, m.termH, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Center, title, artist, banner, details))
 }
 
 func (m Player) calculateNextSecondTick() float64 {
