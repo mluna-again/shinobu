@@ -64,6 +64,7 @@ type Player struct {
 	termH         int
 	cover         string
 	loading       bool
+	mounted       bool
 }
 
 func NewPlayer(current, total int) Player {
@@ -94,6 +95,10 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.TotalSeconds = msg.song.TotalSeconds
 		m.cover = msg.song.Ascii
 		m.song = msg.song
+		if m.mounted {
+			return m, nil
+		}
+		m.mounted = true
 		return m, doTick()
 
 	case tickMsg:
