@@ -130,6 +130,10 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Player) View() string {
+	if m.err != nil {
+		return internal.CenterInScreen(m.termW, m.termH, internal.CatSaysSerious(m.err.Error()))
+	}
+
 	if m.loading {
 		return "Loading..."
 	}

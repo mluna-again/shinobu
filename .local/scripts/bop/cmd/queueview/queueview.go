@@ -111,15 +111,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	if m.err != nil {
-		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSaysSerious(m.err.Error()))
+		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, internal.CatSaysSerious(m.err.Error()))
 	}
 
 	if m.loading {
-		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSays("Loading..."))
+		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, internal.CatSays("Loading..."))
 	}
 
 	if len(m.list.Items()) == 0 {
-		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, catSaysSerious("Queue empty"))
+		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, internal.CatSaysSerious("Queue empty"))
 	}
 
 	return m.list.View()

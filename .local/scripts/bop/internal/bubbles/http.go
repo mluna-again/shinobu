@@ -2,6 +2,7 @@ package bubbles
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -39,6 +40,10 @@ func BasicClient() http.Client {
 func GetCurrentSong(coversize int) (Song, error) {
 	client := BasicClient()
 	resp, err := client.Get(fmt.Sprintf("%s/status", BOP))
+	if resp.StatusCode == http.StatusNotFound {
+		return Song{}, errors.New("no music playing")
+	}
+
 	if err != nil {
 		return Song{}, err
 	}
