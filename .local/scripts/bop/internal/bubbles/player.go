@@ -115,7 +115,7 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tickMsg:
 		if m.CurrentSecond >= m.TotalSeconds {
-			return m, m.fetchSong
+			return m, tea.Batch(m.fetchSong, doTick())
 		}
 		m.CurrentSecond++
 		return m, tea.Batch(doTick())
