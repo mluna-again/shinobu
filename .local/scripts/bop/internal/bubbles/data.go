@@ -37,7 +37,8 @@ func BasicClient() http.Client {
 	return client
 }
 
-func (m Player) GetCurrentSong(coversize int) (Song, *os.File, error) {
+func (m *Player) GetCurrentSong(coversize int) (Song, *os.File, error) {
+	m.removeCache()
 	client := BasicClient()
 	resp, err := client.Get(fmt.Sprintf("%s/status", BOP))
 	if err != nil {
@@ -118,4 +119,18 @@ func (m *Player) Cleanup() error {
 	}
 
 	return nil
+}
+
+func (m *Player) removeCache() {
+	if m.cachedImage == nil {
+		return
+	}
+	m.cachedImage = nil
+
+	err := m.cachedImage.Close()
+	if err != nil {
+		return
+	}
+
+	_ = os.Remove(m.cachedImage.Name())
 }
