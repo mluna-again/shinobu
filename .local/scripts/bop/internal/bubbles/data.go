@@ -37,14 +37,14 @@ func BasicClient() http.Client {
 	return client
 }
 
-func GetCurrentSong(coversize int) (Song, error) {
+func (m Player) GetCurrentSong(coversize int) (Song, *os.File, error) {
 	client := BasicClient()
 	resp, err := client.Get(fmt.Sprintf("%s/status", BOP))
 	if err != nil {
-		return Song{}, err
+		return Song{}, nil, err
 	}
 	if resp.StatusCode == http.StatusNotFound {
-		return Song{}, errors.New("no music playing")
+		return Song{}, nil, errors.New("no music playing")
 	}
 
 	defer resp.Body.Close()
@@ -53,48 +53,70 @@ func GetCurrentSong(coversize int) (Song, error) {
 	d := json.NewDecoder(resp.Body)
 	err = d.Decode(&data)
 	if err != nil {
-		return Song{}, err
+		return Song{}, nil, err
 	}
 
-	err = AttachAsciiToSong(&data, coversize)
+	f, err := m.AttachAsciiToSong(&data, coversize)
 	if err != nil {
-		return Song{}, err
+		return Song{}, nil, err
 	}
 
-	return data, nil
+	return data, f, nil
 }
 
-func AttachAsciiToSong(s *Song, size int) error {
-	client := BasicClient()
-	resp, err := client.Get(s.ImageUrl)
+func (m Player) AttachAsciiToSong(s *Song, size int) (*os.File, error) {
+	file, err := m.getImagePath(s.ImageUrl)
 	if err != nil {
-		return err
+		return nil, err
+	}
+	output, err := exec.Command("chafa", "-s", fmt.Sprintf("%dx%d", size, size), file.Name()).Output()
+	if err != nil {
+		return nil, err
+	}
+
+	s.Ascii = string(output)
+
+	return file, nil
+}
+
+func (m *Player) getImagePath(imageUrl string) (*os.File, error) {
+	if m.cachedImage != nil {
+		return m.cachedImage, nil
+	}
+
+	fmt.Fprintln(os.Stderr, "downlonading pic")
+	client := BasicClient()
+	resp, err := client.Get(imageUrl)
+	if err != nil {
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	file, err := BopCoverTempFile()
 	if err != nil {
-		return err
+		return nil, err
 	}
-	defer func() {
-		err := file.Close()
-		if err != nil {
-			return
-		}
-		_ = os.Remove(file.Name())
-	}()
 	_, err = io.Copy(file, resp.Body)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	output, err := exec.Command("chafa", "-s", fmt.Sprintf("%dx%d", size, size), file.Name()).Output()
-	if err != nil {
-		return err
-	}
+	return file, nil
+}
 
-	s.Ascii = string(output)
+func (m *Player) Cleanup() error {
+	if m.cachedImage != nil {
+		err := m.cachedImage.Close()
+		if err != nil {
+			return err
+		}
+		err = os.Remove(m.cachedImage.Name())
+		if err != nil {
+			return err
+		}
+
+		m.cachedImage = nil
+	}
 
 	return nil
 }
-

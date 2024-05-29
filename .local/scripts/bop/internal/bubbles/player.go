@@ -35,26 +35,27 @@ func (m Player) title(msg string, width int) string {
 
 type tickMsg time.Time
 type songFetchedMsg struct {
-	song Song
-	err  error
+	song      Song
+	err       error
+	cacheFile *os.File
 }
 
 func (m Player) fetchSong() tea.Msg {
-	song, err := GetCurrentSong(m.coverWidth())
+	song, f, err := m.GetCurrentSong(m.coverWidth())
 	if err != nil {
 		return songFetchedMsg{err: err}
 	}
 
-	return songFetchedMsg{song: song}
+	return songFetchedMsg{song: song, cacheFile: f}
 }
 
 func (m Player) redrawCover() tea.Msg {
-	err := AttachAsciiToSong(&m.song, m.coverWidth())
+	f, err := m.AttachAsciiToSong(&m.song, m.coverWidth())
 	if err != nil {
 		return songFetchedMsg{err: err}
 	}
 
-	return songFetchedMsg{song: m.song}
+	return songFetchedMsg{song: m.song, cacheFile: f}
 }
 
 func doTick() tea.Cmd {
@@ -74,6 +75,7 @@ type Player struct {
 	cover         string
 	loading       bool
 	mounted       bool
+	cachedImage   *os.File
 }
 
 func NewPlayer(current, total int) Player {
@@ -100,6 +102,7 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.err = msg.err
 			return m, nil
 		}
+		m.cachedImage = msg.cacheFile
 		m.CurrentSecond = msg.song.CurrentSecond
 		m.TotalSeconds = msg.song.TotalSeconds
 		m.cover = msg.song.Ascii
@@ -139,6 +142,7 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, m.fetchSong
 
 		case "ctrl+c":
+			_ = m.Cleanup()
 			return m, tea.Quit
 		}
 	}
