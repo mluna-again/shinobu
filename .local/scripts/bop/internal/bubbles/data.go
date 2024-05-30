@@ -70,7 +70,7 @@ func (m Player) AttachAsciiToSong(s *Song, size int) (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	output, err := exec.Command("chafa", "-s", fmt.Sprintf("%dx%d", size, size), file.Name()).Output()
+	output, err := exec.Command("chafa", "-f", "symbols", "--polite", "on", "-s", fmt.Sprintf("%dx%d", size, size), file.Name()).Output()
 	if err != nil {
 		return nil, err
 	}

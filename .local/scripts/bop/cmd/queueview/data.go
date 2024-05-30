@@ -108,7 +108,7 @@ func (m model) loadThumbnails(prog *tea.Program) {
 				return
 			}
 
-			output, err := exec.Command("chafa", "-s", "10x10", file.Name()).Output()
+			output, err := exec.Command("chafa", "-f", "symbols", "--polite", "on", "-s", "10x10", file.Name()).Output()
 			if err != nil {
 				return
 			}
