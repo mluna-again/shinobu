@@ -184,7 +184,7 @@ return {
 
 					LspSignatureActiveParameter = { fg = theme.syn.identifier },
 
-					OilBackground = { bg = theme.ui.bg_m1 },
+					OilBackground = { bg = theme.ui.bg },
 					OilBorder = { bg = theme.ui.bg_m1, fg = theme.ui.bg_m1 },
 					OilPreviewBackground = { bg = theme.ui.bg_gutter },
 					OilPreviewBorder = { bg = theme.ui.bg_gutter, fg = theme.ui.bg_gutter },

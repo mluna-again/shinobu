@@ -24,6 +24,9 @@ return {
 				d = {
 					function()
 						vim.cmd("SessionDelete")
+						if vim.bo.filetype == "alpha" then
+							return
+						end
 						vim.cmd("silent only")
 						vim.cmd("silent bufdo bwipeout")
 						vim.cmd("Alpha")
