@@ -75,13 +75,23 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case thumbnailsLoadedMsg:
 		m.loading = false
-		item, ok := m.list.SelectedItem().(item)
-		if !ok {
+		var someCover *string
+		for _, s := range m.list.Items() {
+			song, ok := s.(item)
+			if !ok {
+				continue
+			}
+
+			if song.Ascii != "" {
+				someCover = &song.Ascii
+			}
+		}
+		if someCover == nil {
 			return m, nil
 		}
 		// i have no idea why i need to subtract 1 but if i don't it looks weird in *some*
 		// screen sizes :/ and somehow subtracting 1 makes it look good in all sizes...
-		delegate := itemDelegate{height: lipgloss.Height(item.Ascii) - 1}
+		delegate := itemDelegate{height: lipgloss.Height(*someCover) - 1}
 		m.list.SetDelegate(delegate)
 
 	case tea.KeyMsg:

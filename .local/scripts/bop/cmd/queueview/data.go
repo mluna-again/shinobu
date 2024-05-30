@@ -81,6 +81,10 @@ func (m model) loadThumbnails(prog *tea.Program) {
 		wg.Add(1)
 		go func(s item) {
 			defer wg.Done()
+			if s.URL == "" {
+				return
+			}
+
 			resp, err := http.DefaultClient.Get(s.URL)
 			if err != nil {
 				return

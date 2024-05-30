@@ -77,3 +77,19 @@ func (params *advancedSearchParams) parseTags() {
 	params.Query = removeTagsFromQuery(params.Query)
 	params.Query = strings.TrimSpace(params.Query)
 }
+
+func albumCoverOrEmpty(track *spotify.FullTrack) string {
+	if len(track.Album.Images) == 0 {
+		return ""
+	}
+
+	return track.Album.Images[0].URL
+}
+
+func infoAlbumCoverOrEmpty(info *spotify.CurrentlyPlaying) string {
+	if len(info.Item.Album.Images) == 0 {
+		return ""
+	}
+
+	return info.Item.Album.Images[0].URL
+}

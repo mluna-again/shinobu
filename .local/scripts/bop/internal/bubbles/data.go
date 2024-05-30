@@ -66,6 +66,10 @@ func (m *Player) GetCurrentSong(coversize int) (Song, *os.File, error) {
 }
 
 func (m Player) AttachAsciiToSong(s *Song, size int) (*os.File, error) {
+	if s.ImageUrl == "" {
+		return nil, nil
+	}
+
 	file, err := m.getImagePath(s.ImageUrl)
 	if err != nil {
 		return nil, err

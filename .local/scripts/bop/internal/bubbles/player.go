@@ -170,6 +170,13 @@ func (m Player) View() string {
 
 	artist := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, artistStyle.Render(m.song.Artist))
 	banner := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.cover)
+	if m.cover == "" {
+		w := m.coverWidth()
+		line := strings.Repeat("/", w)
+		cover := strings.Repeat(fmt.Sprintf("%s\n", line), (w/2))
+		banner = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, cover)
+	}
+
 	bar := m.bar.ViewAs(m.calculateNextSecondTick())
 	details := lipgloss.JoinHorizontal(lipgloss.Left, timeStyle.Render(toDuration(m.CurrentSecond)), bar, timeStyle.Render(toDuration(m.TotalSeconds-m.CurrentSecond)))
 
@@ -189,7 +196,7 @@ func toDuration(seconds int) string {
 }
 
 func (m Player) screenTooBigForTitle(title string) bool {
-	return lipgloss.Height(m.song.Ascii)+10+lipgloss.Height(title) > m.termH || lipgloss.Width(m.song.Ascii)+20 > m.termW || lipgloss.Width(title) > m.termW
+	return lipgloss.Height(m.song.Ascii)+20+lipgloss.Height(title) > m.termH || lipgloss.Width(m.song.Ascii)+20 > m.termW || lipgloss.Width(title) > m.termW
 }
 
 func (m Player) coverWidth() int {
