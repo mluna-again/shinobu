@@ -35,6 +35,7 @@ function dock
         printf "\tdelete\n"
         printf "\tstart\n"
         printf "\trestart\n"
+        printf "\tstatus\n"
         printf "\tstop\n"
         printf "Usage:\n"
         printf "\tdock <cmd>\n"
@@ -43,6 +44,14 @@ function dock
     end
 
     switch "$cmd"
+        case status
+            if test -z "$query"
+                echo no argument 2>&1
+                exit 1
+            end
+
+            docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" | awk 'NR > 1' | grep -i "$query" | awk '{ printf "%s: %s\n", $2, $3 }'
+
         case rm
             set -l id (
                 docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" |\
