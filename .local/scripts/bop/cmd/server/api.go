@@ -135,12 +135,13 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		items = append(items, item{
-			ID:          string(i.ID),
-			DisplayName: i.Name,
-			Artist:      i.Artists[0].Name,
-			ImageUrl:    i.Album.Images[0].URL,
-			Duration:    fmt.Sprintf("%d:%02d", (i.Duration/1000)/60, (i.Duration/1000)%60),
-			Album:       i.Album.Name,
+			ID:           string(i.ID),
+			DisplayName:  i.Name,
+			Artist:       i.Artists[0].Name,
+			ImageUrl:     i.Album.Images[0].URL,
+			Duration:     fmt.Sprintf("%d:%02d", (i.Duration/1000)/60, (i.Duration/1000)%60),
+			Album:        i.Album.Name,
+			TotalSeconds: i.Duration / 1000,
 		})
 	}
 
@@ -148,13 +149,15 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 		track := current.Item
 		items = append([]item{{
 
-			ID:          string(track.ID),
-			DisplayName: track.Name,
-			Artist:      track.Artists[0].Name,
-			ImageUrl:    albumCoverOrEmpty(track),
-			Duration:    fmt.Sprintf("%d:%02d", (track.Duration/1000)/60, (track.Duration/1000)%60),
-			Album:       track.Album.Name,
-			IsPlaying:   true,
+			ID:            string(track.ID),
+			DisplayName:   track.Name,
+			Artist:        track.Artists[0].Name,
+			ImageUrl:      albumCoverOrEmpty(track),
+			Duration:      fmt.Sprintf("%d:%02d", (track.Duration/1000)/60, (track.Duration/1000)%60),
+			Album:         track.Album.Name,
+			CurrentSecond: current.Progress / 1000,
+			TotalSeconds:  current.Item.Duration / 1000,
+			IsPlaying:     true,
 		},
 		}, items...)
 	}

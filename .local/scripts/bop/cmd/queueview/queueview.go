@@ -4,6 +4,7 @@ import (
 	"bop/internal"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -11,13 +12,15 @@ import (
 )
 
 type item struct {
-	ID        string
-	Name      string
-	Artist    string
-	Duration  string
-	Ascii     string
-	URL       string
-	IsPlaying bool
+	ID            string
+	Name          string
+	Artist        string
+	Duration      string
+	Ascii         string
+	URL           string
+	IsPlaying     bool
+	CurrentSecond int
+	TotalSeconds  int
 }
 
 func (i item) Title() string       { return i.Name }
@@ -74,6 +77,22 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.loading = false
 
 	case thumbnailsLoadedMsg:
+		// schedule refresh at the end of the current song
+		songs := m.list.Items()
+		var current *item
+		if len(songs) > 0 {
+			s, ok := songs[0].(item)
+			if ok {
+				current = &s
+			}
+		}
+		if current != nil {
+			remaining := current.TotalSeconds - current.CurrentSecond
+			cmds = append(cmds, tea.Tick(time.Second*time.Duration(remaining), func(t time.Time) tea.Msg {
+				return reloadQueueMsg{}
+			}))
+		}
+
 		m.loading = false
 		var someCover *string
 		for _, s := range m.list.Items() {
@@ -87,12 +106,18 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		}
 		if someCover == nil {
-			return m, nil
+			return m, tea.Batch(cmds...)
 		}
 		// i have no idea why i need to subtract 1 but if i don't it looks weird in *some*
 		// screen sizes :/ and somehow subtracting 1 makes it look good in all sizes...
 		delegate := itemDelegate{height: lipgloss.Height(*someCover) - 1}
 		m.list.SetDelegate(delegate)
+
+	case reloadQueueMsg:
+		m.reloadChan <- struct{}{}
+		m.loading = true
+		m.err = nil
+		return m, nil
 
 	case tea.KeyMsg:
 		if msg.String() == "ctrl+c" {

@@ -13,15 +13,19 @@ import (
 )
 
 type BopItem struct {
-	ID        string `json:"id"`
-	Name      string `json:"display_name"`
-	Artist    string `json:"artist"`
-	URL       string `json:"image_url"`
-	Duration  string `json:"duration"`
-	IsPlaying bool   `json:"is_playing"`
+	ID            string `json:"id"`
+	Name          string `json:"display_name"`
+	Artist        string `json:"artist"`
+	URL           string `json:"image_url"`
+	Duration      string `json:"duration"`
+	IsPlaying     bool   `json:"is_playing"`
+	CurrentSecond int    `json:"current_second"`
+	TotalSeconds  int    `json:"total_seconds"`
 }
 
 var BOP = "http://localhost:8888"
+
+type reloadQueueMsg struct{}
 
 type queueLoadedMsg struct {
 	queue []item
@@ -45,12 +49,14 @@ func (m model) loadQueue() tea.Msg {
 	items := []item{}
 	for _, s := range data {
 		items = append(items, item{
-			ID:        s.ID,
-			Name:      s.Name,
-			Artist:    s.Artist,
-			Duration:  s.Duration,
-			URL:       s.URL,
-			IsPlaying: s.IsPlaying,
+			ID:            s.ID,
+			Name:          s.Name,
+			Artist:        s.Artist,
+			Duration:      s.Duration,
+			URL:           s.URL,
+			IsPlaying:     s.IsPlaying,
+			CurrentSecond: s.CurrentSecond,
+			TotalSeconds:  s.TotalSeconds,
 		})
 	}
 
