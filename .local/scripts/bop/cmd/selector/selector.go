@@ -35,6 +35,7 @@ type model struct {
 	devMode           bool
 	theme             Theme
 	songsAddedToQueue bool
+	exiting           bool
 }
 
 func newModel(c SelectorConfig) model {
@@ -115,7 +116,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	switch msg := msg.(type) {
-	// i feels weird
+	// it feels weird
 	// case currentQueueMsg:
 	// 	if msg.err != nil {
 	// 		m.err = msg.err
@@ -140,6 +141,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 	case addedToQueue:
+		m.exiting = false
 		if msg.err != nil {
 			m.err = msg.err
 			return m, nil
@@ -218,6 +220,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case tea.KeyEnter:
+			if m.exiting || m.fetching {
+				break
+			}
+
 			if m.screenIndex == queueScreen {
 				m.fetching = true
 				return m, m.addToQueue
@@ -230,10 +236,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 			if m.screenIndex == songsScreen && !m.input.Focused() {
+				m.exiting = true
 				return m, m.addSelectedSongToQueue
 			}
 
 			if m.screenIndex == songsScreen {
+				m.exiting = true
 				return m, m.addToQueue
 			}
 
