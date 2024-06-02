@@ -2,7 +2,6 @@ package selector
 
 var noSongsBanner = `
                   Hello there
-
         ████                      ████
       ██░░░░██                  ██░░░░██
       ██░░░░██                  ██░░░░██
@@ -22,7 +21,6 @@ var noSongsBanner = `
 
 var noSongsWithHelpBanner = `
                   Hello there
-
         ████                      ████
       ██░░░░██                  ██░░░░██
       ██░░░░██                  ██░░░░██
@@ -41,7 +39,6 @@ var noSongsWithHelpBanner = `
 
 var noResultsBanner = `
                   No results!
-
         ████                      ████
       ██░░░░██                  ██░░░░██
       ██░░░░██                  ██░░░░██
