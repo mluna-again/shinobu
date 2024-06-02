@@ -84,6 +84,8 @@ func initialModel() (model, error) {
 	l.DisableQuitKeybindings()
 	l.Paginator.KeyMap = paginator.KeyMap{}
 	l.KeyMap = list.KeyMap{}
+	l.KeyMap.GoToStart = key.NewBinding(key.WithKeys("g"))
+	l.KeyMap.GoToEnd = key.NewBinding(key.WithKeys("G"))
 	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/", " "))
 	l.InfiniteScrolling = true
 
@@ -279,6 +281,13 @@ func (m model) View() string {
 	sessions := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.sessions.View())
 	s.WriteString(sessions)
 	s.WriteString("\n")
+
+	count := fmt.Sprintf("%02d/%02d", m.sessions.Index()+1, len(m.sessions.Items()))
+	s.WriteString("\n")
+	s.WriteString(lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, count))
+	s.WriteString("\n")
+	s.WriteString("\n")
+
 	if len(m.sessions.Items()) > m.sessions.Height() && !m.sessions.Paginator.OnLastPage() {
 		s.WriteString(pagination.Render(""))
 	}
