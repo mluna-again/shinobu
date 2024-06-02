@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 	"unicode/utf8"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -84,7 +85,7 @@ func (m model) addToQueue() tea.Msg {
 	if err != nil {
 		return addedToQueue{err: err}
 	}
-	client := http.Client{}
+	client := HTTPClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return addedToQueue{err: err}
@@ -114,7 +115,7 @@ func (m model) addSelectedSongToQueue() tea.Msg {
 	if err != nil {
 		return addedToQueue{err: err}
 	}
-	client := http.Client{}
+	client := HTTPClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return addedToQueue{err: err}
@@ -155,7 +156,7 @@ func (m model) fetchSongs() tea.Msg {
 		}
 	}
 
-	client := http.Client{}
+	client := HTTPClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return refetchedSongs{
@@ -307,4 +308,11 @@ func parseQuery(query string) ([]byte, error) {
 		return []byte{}, errors.New("error parsing query")
 	}
 	return payload, nil
+}
+
+func HTTPClient() http.Client {
+	c := http.Client{}
+	c.Timeout = time.Second*3
+
+	return c
 }
