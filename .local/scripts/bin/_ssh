@@ -2,15 +2,31 @@
 
 declare NOPORTS=0
 
+usage() {
+  cat - <<EOF
+Usage:
+_ssh -h      # show this message
+_ssh -x 3000 # exclude port 3000
+_ssh -X      # exlude all default ports
+_ssh -p 3001 # include port 3001
+-ssh -u leah # change user, defaults to \$USER
+EOF
+}
+
 manual_ports=()
 ports_to_remove=()
 user="$USER"
 
-options=$(getopt "p:u:x:X" "$*")
+options=$(getopt "p:u:x:X:h" "$*")
 set -- $options
 
 while true; do
   case "$1" in
+    -h)
+      usage && exit 1
+      shift
+      ;;
+
     -p|--p)
       manual_ports+=("$2")
       shift
