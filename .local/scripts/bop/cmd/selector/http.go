@@ -101,6 +101,37 @@ func (m model) addToQueue() tea.Msg {
 	return addedToQueue{}
 }
 
+func (m model) addSelectedSongToQueue() tea.Msg {
+	song := m.songs.GetSelected().ID
+	data := AddToQueuePayload{
+		IDS: []string{song},
+	}
+	payload, err := json.Marshal(&data)
+	if err != nil {
+		return addedToQueue{err: err}
+	}
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/queue", BOP), bytes.NewBuffer(payload))
+	if err != nil {
+		return addedToQueue{err: err}
+	}
+	client := http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return addedToQueue{err: err}
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return addedToQueue{err: err}
+		}
+		return addedToQueue{err: errors.New(string(body))}
+	}
+
+
+	return addedToQueue{}
+}
+
 type refetchedSongs struct {
 	songs []Song
 	err   error

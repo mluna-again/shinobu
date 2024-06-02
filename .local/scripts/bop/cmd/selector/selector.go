@@ -229,6 +229,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Batch(cmds...)
 			}
 
+			if m.screenIndex == songsScreen && !m.input.Focused() {
+				return m, m.addSelectedSongToQueue
+			}
+
 			if m.screenIndex == songsScreen {
 				return m, m.addToQueue
 			}

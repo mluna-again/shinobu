@@ -221,3 +221,7 @@ func (m *songsModel) addSelectedSong(song Song) {
 func (m *songsModel) removeSelectedSong(song Song) {
 	delete(m.selectedSongs, song.ID)
 }
+
+func (m songsModel) GetSelected() Song {
+	return m.songs[m.index]
+}
