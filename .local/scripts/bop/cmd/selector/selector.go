@@ -139,6 +139,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.notFetchedYet = false
 			m.err = nil
 		}
+		if len(msg.songs) > 0 {
+			m.input.Blur()
+			m.songs.Focus()
+		}
 
 	case addedToQueue:
 		m.exiting = false
@@ -235,7 +239,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Batch(cmds...)
 			}
 
-			if m.screenIndex == songsScreen && !m.input.Focused() {
+			if m.screenIndex == songsScreen && !m.input.Focused() && m.noSongs() {
 				m.exiting = true
 				return m, m.addSelectedSongToQueue
 			}
@@ -277,6 +281,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	cmds = append(cmds, cmd)
 
 	return m, tea.Batch(cmds...)
+}
+
+func (m model) noSongs() bool {
+	return m.songs.SongsLen() == 0 && len(m.queue.GetSongs()) == 0
 }
 
 func (m model) View() string {
