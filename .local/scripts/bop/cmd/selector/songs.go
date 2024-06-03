@@ -78,6 +78,12 @@ func (m songsModel) Update(msg tea.Msg) (songsModel, tea.Cmd) {
 				m.viewport.GotoBottom()
 			}
 
+		case "ctrl+a":
+			for i := 0; i < len(m.songs); i++ {
+				m.songs[i].Selected = true
+				m.addSelectedSong(m.songs[i])
+			}
+
 		case " ":
 			for i := 0; i < len(m.songs); i++ {
 				if i == m.index {
