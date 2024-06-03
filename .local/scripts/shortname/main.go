@@ -42,22 +42,22 @@ func main() {
 	}
 
 	if w < 100 {
-		cmps := strings.Split(p, "/")
+		cmps := strings.Split(p, string(os.PathSeparator))
 		fmt.Print(cmps[len(cmps)-1])
 		return
 	}
 
-	relativeP, _ := strings.CutPrefix(p, fmt.Sprintf("%s/", home))
+	relativeP, _ := strings.CutPrefix(p, fmt.Sprintf("%s%c", home, os.PathSeparator))
 
-	slashCount := strings.Count(relativeP, "/")
+	slashCount := strings.Count(relativeP, string(os.PathSeparator))
 
 	if slashCount < 2 {
-		fmt.Printf("~/%s", relativeP)
+		fmt.Printf("~%c%s", os.PathSeparator, relativeP)
 		return
 	}
 
-	components := strings.Split(relativeP, "/")
+	components := strings.Split(relativeP, string(os.PathSeparator))
 	lastComps := components[len(components)-2:]
-	newP := strings.Join(lastComps, "/")
+	newP := strings.Join(lastComps, string(os.PathSeparator))
 	fmt.Print(newP)
 }
