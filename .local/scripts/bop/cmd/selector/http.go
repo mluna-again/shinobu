@@ -65,8 +65,8 @@ func (m model) addToQueue() tea.Msg {
 	}
 
 	if len(songs) == 0 && m.screenIndex == songsScreen {
-		for k := range m.songs.selectedSongs {
-			songs = append(songs, k)
+		for _, s := range m.songs.GetSongs() {
+			songs = append(songs, s.ID)
 		}
 	}
 
@@ -128,7 +128,6 @@ func (m model) addSelectedSongToQueue() tea.Msg {
 		}
 		return addedToQueue{err: errors.New(string(body))}
 	}
-
 
 	return addedToQueue{}
 }
@@ -312,7 +311,7 @@ func parseQuery(query string) ([]byte, error) {
 
 func HTTPClient() http.Client {
 	c := http.Client{}
-	c.Timeout = time.Second*3
+	c.Timeout = time.Second * 3
 
 	return c
 }
