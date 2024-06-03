@@ -144,7 +144,13 @@ func (m model) fetchSongs() tea.Msg {
 		}
 	}
 
-	payload, err := parseQuery(m.input.Value())
+	q, err := parseQuery(m.input.Value())
+	if err != nil {
+		return refetchedSongs{err: err}
+	}
+
+	q.Page = m.currentPage + 1
+	payload, err := json.Marshal(q)
 	if err != nil {
 		return refetchedSongs{err: err}
 	}
@@ -207,9 +213,10 @@ type BopQuery struct {
 	From  string `json:"from"`
 	By    string `json:"by"`
 	Query string `json:"query"`
+	Page  int    `json:"page"`
 }
 
-func parseQuery(query string) ([]byte, error) {
+func parseQuery(query string) (BopQuery, error) {
 	bq := BopQuery{}
 
 	// from
@@ -250,7 +257,7 @@ func parseQuery(query string) ([]byte, error) {
 	}
 
 	if fromIndexEnd == -1 && fromIndex != -1 {
-		return []byte{}, errors.New("bad from clause")
+		return BopQuery{}, errors.New("bad from clause")
 	}
 
 	// by
@@ -294,7 +301,7 @@ func parseQuery(query string) ([]byte, error) {
 	}
 
 	if byIndexEnd == -1 && byIndex != -1 {
-		return []byte{}, errors.New("bad by clause")
+		return BopQuery{}, errors.New("bad by clause")
 	}
 
 	if byIndex != -1 && byIndexEnd != -1 {
@@ -302,11 +309,7 @@ func parseQuery(query string) ([]byte, error) {
 	}
 
 	bq.Query = query
-	payload, err := json.Marshal(bq)
-	if err != nil {
-		return []byte{}, errors.New("error parsing query")
-	}
-	return payload, nil
+	return bq, nil
 }
 
 func HTTPClient() http.Client {

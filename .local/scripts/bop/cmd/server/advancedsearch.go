@@ -12,10 +12,14 @@ import (
 	"github.com/zmb3/spotify/v2"
 )
 
+const SPOTIFY_PAGE_SIZE = 50
+
 type advancedSearchParams struct {
 	Query  string `json:"query"`
 	From   string `json:"from"`
 	By     string `json:"by"`
+	Page   int    `json:"page"`
+	Offset int
 	Liked  bool
 	Latest bool
 }
@@ -30,6 +34,10 @@ func (a *app) advancedSearch(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 	params.parseTags()
+	params.Offset = (params.Page - 1) * SPOTIFY_PAGE_SIZE
+	if params.Offset < 0 {
+		params.Offset = 0
+	}
 
 	if params.Latest {
 		a.searchAdvancedTags(w, params)
@@ -58,7 +66,7 @@ func (app *app) searchAdvancedAlbum(w http.ResponseWriter, params advancedSearch
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	albums, err := app.client.Search(ctx, params.From, spotify.SearchTypeAlbum, spotify.Limit(50))
+	albums, err := app.client.Search(ctx, params.From, spotify.SearchTypeAlbum, spotify.Limit(SPOTIFY_PAGE_SIZE), spotify.Offset(params.Offset))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return
@@ -143,7 +151,7 @@ func (app *app) searchAdvancedArtist(w http.ResponseWriter, params advancedSearc
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	tracks, err := app.client.Search(ctx, params.By, spotify.SearchTypeTrack, spotify.Limit(50))
+	tracks, err := app.client.Search(ctx, params.By, spotify.SearchTypeTrack, spotify.Limit(SPOTIFY_PAGE_SIZE), spotify.Offset(params.Offset))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return
@@ -207,7 +215,7 @@ func (app *app) searchAdvancedTracks(w http.ResponseWriter, params advancedSearc
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	tracks, err := app.client.Search(ctx, params.Query, spotify.SearchTypeTrack, spotify.Limit(50))
+	tracks, err := app.client.Search(ctx, params.Query, spotify.SearchTypeTrack, spotify.Limit(SPOTIFY_PAGE_SIZE), spotify.Offset(params.Offset))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return
@@ -257,7 +265,7 @@ func (app *app) searchAdvancedTags(w http.ResponseWriter, params advancedSearchP
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*4)
 	defer cancel()
 
-	tracks, err := app.client.CurrentUsersTracks(ctx, spotify.Limit(50))
+	tracks, err := app.client.CurrentUsersTracks(ctx, spotify.Limit(SPOTIFY_PAGE_SIZE), spotify.Offset(params.Offset))
 	if err != nil {
 		app.sendInternalServerError(w, err)
 		return

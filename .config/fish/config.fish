@@ -100,6 +100,7 @@ bind -M insert \cp history-search-backward
 bind -M insert \cn history-search-forward
 bind -M insert \cf search_dir
 bind -M insert \cd ask_confirmation_exit
+bind -M insert \cn edit_command_buffer
 bind --mode insert --sets-mode default jj backward-char repaint
 
 # ENV

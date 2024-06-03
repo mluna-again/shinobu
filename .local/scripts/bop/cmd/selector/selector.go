@@ -36,6 +36,7 @@ type model struct {
 	theme             Theme
 	songsAddedToQueue bool
 	exiting           bool
+	currentPage       int
 }
 
 func newModel(c SelectorConfig) model {
@@ -161,6 +162,28 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "l":
+			if m.input.Focused() {
+				break
+			}
+			if len(m.songs.songs) == 0 {
+				return m, nil
+			}
+			m.fetching = true
+			m.currentPage++
+			return m, m.fetchSongs
+
+		case "h":
+			if m.input.Focused() {
+				break
+			}
+			if m.currentPage <= 0 {
+				return m, nil
+			}
+			m.fetching = true
+			m.currentPage--
+			return m, m.fetchSongs
+
 		case "q":
 			if m.input.Focused() {
 				break
