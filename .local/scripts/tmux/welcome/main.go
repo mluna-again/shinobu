@@ -282,7 +282,7 @@ func (m model) View() string {
 	s.WriteString(sessions)
 	s.WriteString("\n")
 
-	count := fmt.Sprintf("%02d/%02d", m.sessions.Index()+1, len(m.sessions.Items()))
+	count := fmt.Sprintf("%02d/%02d", m.sessions.Index()+1, len(m.sessions.VisibleItems()))
 	s.WriteString("\n")
 	s.WriteString(lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, count))
 	s.WriteString("\n")
