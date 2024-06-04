@@ -13,6 +13,7 @@ import (
 )
 
 const SPOTIFY_PAGE_SIZE = 50
+const SPOTIFY_OFFSET_MAX = 1000
 
 type advancedSearchParams struct {
 	Query  string `json:"query"`
@@ -37,6 +38,10 @@ func (a *app) advancedSearch(w http.ResponseWriter, r *http.Request) {
 	params.Offset = (params.Page - 1) * SPOTIFY_PAGE_SIZE
 	if params.Offset < 0 {
 		params.Offset = 0
+	}
+	if params.Offset > SPOTIFY_PAGE_SIZE {
+		a.sendJSON(w, []byte("[]"))
+		return
 	}
 
 	if params.Latest {
