@@ -1,12 +1,12 @@
 package queueview
 
 import (
+	"bop/internal"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
-	"os/exec"
 	"sync"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -120,7 +120,7 @@ func (m model) loadThumbnails(prog *tea.Program) {
 				return
 			}
 
-			output, err := exec.Command("chafa", "-f", "symbols", "--polite", "on", "-s", "10x10", file.Name()).Output()
+			output, err := internal.GetChafaCmd(file.Name(), 10).Output()
 			if err != nil {
 				return
 			}
