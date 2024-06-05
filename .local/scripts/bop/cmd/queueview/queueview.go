@@ -22,6 +22,7 @@ type item struct {
 	IsPlaying     bool
 	CurrentSecond int
 	TotalSeconds  int
+	Liked         bool
 }
 
 func (i item) Title() string       { return i.Name }

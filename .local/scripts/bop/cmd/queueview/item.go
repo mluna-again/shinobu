@@ -11,6 +11,8 @@ import (
 	zone "github.com/lrstanley/bubblezone"
 )
 
+const COVERSIZE = 10
+
 type itemDelegate struct {
 	height int
 }
@@ -18,8 +20,6 @@ type itemDelegate struct {
 func (d itemDelegate) Height() int  { return d.height }
 func (d itemDelegate) Spacing() int { return 0 }
 func (d itemDelegate) Update(_ tea.Msg, m *list.Model) tea.Cmd {
-	itemStyle.Width(m.Width())
-	selectedItemStyle.Width(m.Width())
 	return nil
 }
 func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list.Item) {
@@ -28,9 +28,9 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 		return
 	}
 	isSelected := index == m.Index()
-	bg := iconStyle.GetBackground()
+	selectedBG := iconStyle.GetBackground()
 	if isSelected {
-		bg = selectedItemStyle.GetBackground()
+		selectedBG = selectedItemStyle.GetBackground()
 	}
 
 	fn := itemStyle.Render
@@ -47,18 +47,29 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 //////////`
 	}
 
-	details := lipgloss.JoinVertical(lipgloss.Left, fn(fmt.Sprintf(" %s", i.Name)), fn(fmt.Sprintf(" %s", i.Artist)), fn(fmt.Sprintf(" %s", i.Duration)))
+	details := lipgloss.JoinVertical(lipgloss.Left, fmt.Sprintf(" %s", i.Name), fmt.Sprintf(" %s", i.Artist), fmt.Sprintf(" %s", i.Duration))
 	if i.IsPlaying {
-		details = lipgloss.JoinVertical(lipgloss.Left, details, fn(" Playing..."))
+		details = lipgloss.JoinVertical(lipgloss.Left, details, " Playing...")
+	}
+	details = fn(details)
+
+	likedIcon := " ♥ "
+	if i.Liked {
+		likedIcon = "  "
+	}
+	liked := lipgloss.PlaceVertical(d.Height(), lipgloss.Center, zone.Mark(fmt.Sprintf("%s-liked", i.ID), likedIcon))
+	likedW := lipgloss.Width(liked)
+	if isSelected {
+		liked = fn(liked)
 	}
 
 	if isSelected {
-		details = lipgloss.Place(m.Width()-6, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(bg))
+		details = lipgloss.Place(m.Width()-COVERSIZE-likedW, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(selectedBG))
 	} else {
-		details = lipgloss.Place(m.Width()-6, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(lipgloss.NoColor{}))
+		details = lipgloss.Place(m.Width()-COVERSIZE-likedW, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(lipgloss.NoColor{}))
 	}
 
-	str := lipgloss.JoinHorizontal(lipgloss.Top, icon, details)
+	str := lipgloss.JoinHorizontal(lipgloss.Top, icon, details, liked)
 
 	fmt.Fprint(w, zone.Mark(i.ID, str))
 }

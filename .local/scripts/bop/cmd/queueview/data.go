@@ -21,6 +21,7 @@ type BopItem struct {
 	IsPlaying     bool   `json:"is_playing"`
 	CurrentSecond int    `json:"current_second"`
 	TotalSeconds  int    `json:"total_seconds"`
+	Liked         bool   `json:"liked"`
 }
 
 var BOP = "http://localhost:8888"
@@ -57,6 +58,7 @@ func (m model) loadQueue() tea.Msg {
 			IsPlaying:     s.IsPlaying,
 			CurrentSecond: s.CurrentSecond,
 			TotalSeconds:  s.TotalSeconds,
+			Liked:         s.Liked,
 		})
 	}
 
