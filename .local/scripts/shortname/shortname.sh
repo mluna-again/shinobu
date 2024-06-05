@@ -1,5 +1,10 @@
 #! /bin/bash
 
+if ! command -v shortname &>/dev/null; then
+	echo shortname not compiled
+	exit
+fi
+
 _session_path="$1"
 width="$2"
 background="$3"
@@ -12,22 +17,7 @@ if grep -vq '/' <<< "$_session_path"; then
 	exit
 fi
 
-pat="$HOME/.local/scripts/shortname"
-osx() {
-	[ ! -e "$pat/shortname_osx" ] && go build -C "$pat" -o "$pat/shortname_osx" &>/dev/null
-	~/.local/scripts/shortname/shortname_osx "$@"
-}
-
-linux() {
-	[ ! -e "$pat/shortname_linux" ] && go build -C "$pat" -o "$pat/shortname_linux" &>/dev/null
-	~/.local/scripts/shortname/shortname_linux "$@"
-}
-
-if uname | grep -i darwin &>/dev/null; then
-	output=$(osx "$@")
-else
-	output=$(linux "$@")
-fi
+output=$(shortname "$_session_path" "$width" "$background" "$session_name")
 
 output=$(sed 's|/$||' <<< "$output")
 printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"

@@ -73,6 +73,11 @@ do_install() {
 			"$HOME/.tmux/plugins/tpm/bin/install_plugins"
 			;;
 
+    shortname)
+      cd "$HOME/.local/scripts/shortname" || exit
+      go install
+      ;;
+
 		"")
 			printf "missing argument.\n" >&2
 			exit 1
@@ -113,3 +118,4 @@ install shift
 install welcome
 install bop
 install tmp
+install shortname
