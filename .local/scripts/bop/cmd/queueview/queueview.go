@@ -119,6 +119,23 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.err = nil
 		return m, nil
 
+	case tea.MouseMsg:
+		if msg.Button == tea.MouseButtonWheelUp {
+			index := m.list.Index()
+			if index <= 0 {
+				break
+			}
+			m.list.Select(index - 1)
+		}
+
+		if msg.Button == tea.MouseButtonWheelDown {
+			index := m.list.Index()
+			if index+1 >= len(m.list.Items()) {
+				break
+			}
+			m.list.Select(index + 1)
+		}
+
 	case tea.KeyMsg:
 		if msg.String() == "ctrl+c" {
 			return m, tea.Quit
@@ -173,7 +190,7 @@ func Run() {
 	m.list.Styles.PaginationStyle = paginationStyle
 	m.loadTheme()
 
-	p := tea.NewProgram(m, tea.WithAltScreen())
+	p := tea.NewProgram(m, tea.WithAltScreen(), tea.WithMouseCellMotion())
 
 	go func() {
 		if _, err := p.Run(); err != nil {
