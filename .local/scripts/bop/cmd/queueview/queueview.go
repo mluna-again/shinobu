@@ -9,6 +9,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	zone "github.com/lrstanley/bubblezone"
 )
 
 type item struct {
@@ -136,6 +137,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.list.Select(index + 1)
 		}
 
+		if msg.Button == tea.MouseButtonLeft {
+			for i, s := range m.list.Items() {
+				song, ok := s.(item)
+				if !ok {
+					continue
+				}
+				if !zone.Get(song.ID).InBounds(msg) {
+					continue
+				}
+
+				m.list.Select(i)
+				break
+			}
+		}
+
 	case tea.KeyMsg:
 		if msg.String() == "ctrl+c" {
 			return m, tea.Quit
@@ -174,10 +190,12 @@ func (m model) View() string {
 		return lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, internal.CatSaysSerious("Queue empty"))
 	}
 
-	return m.list.View()
+	return zone.Scan(m.list.View())
 }
 
 func Run() {
+	zone.NewGlobal()
+
 	items := []list.Item{}
 	reloadChan := make(chan struct{})
 
@@ -187,6 +205,7 @@ func Run() {
 	m.list.SetShowFilter(false)
 	m.list.SetShowPagination(true)
 	m.list.SetShowStatusBar(false)
+	m.list.InfiniteScrolling = true
 	m.list.Styles.PaginationStyle = paginationStyle
 	m.loadTheme()
 

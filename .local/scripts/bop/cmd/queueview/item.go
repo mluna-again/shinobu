@@ -8,6 +8,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	zone "github.com/lrstanley/bubblezone"
 )
 
 type itemDelegate struct {
@@ -53,9 +54,11 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 
 	if isSelected {
 		details = lipgloss.Place(m.Width()-6, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(bg))
+	} else {
+		details = lipgloss.Place(m.Width()-6, d.Height(), lipgloss.Top, lipgloss.Left, details, lipgloss.WithWhitespaceBackground(lipgloss.NoColor{}))
 	}
 
 	str := lipgloss.JoinHorizontal(lipgloss.Top, icon, details)
 
-	fmt.Fprint(w, str)
+	fmt.Fprint(w, zone.Mark(i.ID, str))
 }
