@@ -128,6 +128,21 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ids := []spotify.ID{}
+	for _, s := range q.Items {
+		ids = append(ids, s.ID)
+	}
+	ids = append(ids, current.Item.ID)
+	liked, err := app.client.UserHasTracks(r.Context(), ids...)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	likedMap := map[spotify.ID]bool{}
+	for i, s := range liked {
+		likedMap[ids[i]] = s
+	}
 	items := []item{}
 
 	for index, i := range q.Items {
@@ -142,6 +157,7 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			Duration:     fmt.Sprintf("%d:%02d", (i.Duration/1000)/60, (i.Duration/1000)%60),
 			Album:        i.Album.Name,
 			TotalSeconds: i.Duration / 1000,
+			Liked:        likedMap[i.ID],
 		})
 	}
 
@@ -158,6 +174,7 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			CurrentSecond: current.Progress / 1000,
 			TotalSeconds:  current.Item.Duration / 1000,
 			IsPlaying:     true,
+			Liked:         likedMap[current.Item.ID],
 		},
 		}, items...)
 	}

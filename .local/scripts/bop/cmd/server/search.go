@@ -26,6 +26,7 @@ type item struct {
 	IsPlaying     bool   `json:"is_playing"`
 	Album         string `json:"album"`
 	Duration      string `json:"duration"`
+	Liked         bool   `json:"liked"`
 }
 
 type searchParams struct {
