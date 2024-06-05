@@ -74,6 +74,12 @@ function search_dir
 end
 
 function ask_confirmation_exit
+    set -l cursor (commandline -C)
+    if test "$cursor" -ne 0
+        commandline -f repaint
+        return
+    end
+
     if test -z "$TMUX"
         exit
     end
