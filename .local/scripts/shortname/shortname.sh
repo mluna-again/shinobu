@@ -17,7 +17,7 @@ if grep -vq '/' <<< "$_session_path"; then
 	exit
 fi
 
-output=$(shortname "$_session_path" "$width" "$background" "$session_name")
+output=$(shortname -maxlen 25 "$_session_path" "$width")
 
 output=$(sed 's|/$||' <<< "$output")
 printf "#[fg=black,bg=%s] 󰉋 #[bg=terminal,fg=terminal] %s " "$background" "$output"
