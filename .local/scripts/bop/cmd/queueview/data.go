@@ -29,7 +29,9 @@ type BopItem struct {
 
 var BOP = "http://localhost:8888"
 
-type reloadQueueMsg struct{}
+type reloadQueueMsg struct {
+	timestamp string
+}
 
 type queueLoadedMsg struct {
 	queue []item
@@ -101,7 +103,7 @@ func (m model) toggleSongLike(song item) tea.Cmd {
 
 		return songLikedOrDislikedMsg{
 			songID: song.ID,
-			liked: liked,
+			liked:  liked,
 		}
 	}
 }

@@ -30,14 +30,15 @@ func (i item) Description() string { return i.Artist }
 func (i item) FilterValue() string { return i.Name }
 
 type model struct {
-	list       list.Model
-	err        error
-	loading    bool
-	termH      int
-	termW      int
-	theme      internal.Theme
-	reloadChan chan struct{}
-	likingSong bool
+	list        list.Model
+	err         error
+	loading     bool
+	termH       int
+	termW       int
+	theme       internal.Theme
+	reloadChan  chan struct{}
+	likingSong  bool
+	currentTick string
 }
 
 func (m model) Init() tea.Cmd {
@@ -120,8 +121,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		if current != nil {
 			remaining := current.TotalSeconds - current.CurrentSecond
+			m.currentTick = time.Now().String()
 			cmds = append(cmds, tea.Tick(time.Second*time.Duration(remaining), func(t time.Time) tea.Msg {
-				return reloadQueueMsg{}
+				return reloadQueueMsg{
+					timestamp: m.currentTick,
+				}
 			}))
 		}
 
@@ -146,6 +150,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.list.SetDelegate(delegate)
 
 	case reloadQueueMsg:
+		if msg.timestamp != m.currentTick {
+			return m, nil
+		}
 		m.reloadChan <- struct{}{}
 		m.loading = true
 		m.err = nil
