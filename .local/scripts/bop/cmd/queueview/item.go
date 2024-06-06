@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -47,7 +48,8 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 //////////`
 	}
 
-	details := lipgloss.JoinVertical(lipgloss.Left, fmt.Sprintf(" %s", i.Name), fmt.Sprintf(" %s", i.Artist), fmt.Sprintf(" %s", i.Duration))
+	wi := m.Width() - COVERSIZE
+	details := lipgloss.JoinVertical(lipgloss.Left, fitStr(wi, fmt.Sprintf(" %s", i.Name)), fitStr(wi, fmt.Sprintf(" %s", i.Artist)), fitStr(wi, fmt.Sprintf(" %s", i.Duration)))
 	if i.IsPlaying {
 		details = lipgloss.JoinVertical(lipgloss.Left, details, " Playing...")
 	}
@@ -72,4 +74,16 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 	str := lipgloss.JoinHorizontal(lipgloss.Top, icon, details, liked)
 
 	fmt.Fprint(w, zone.Mark(i.ID, str))
+}
+
+func fitStr(width int, str string) string {
+	if width <= 3 {
+		return str
+	}
+
+	if utf8.RuneCount([]byte(str)) >= width-3 {
+		return string([]rune(str)[0 : width-3])
+	}
+
+	return str
 }
