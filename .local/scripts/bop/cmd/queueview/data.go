@@ -2,12 +2,15 @@ package queueview
 
 import (
 	"bop/internal"
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"sync"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -63,6 +66,44 @@ func (m model) loadQueue() tea.Msg {
 	}
 
 	return queueLoadedMsg{queue: items}
+}
+
+type songLikedOrDislikedMsg struct {
+	liked  bool
+	err    error
+	songID string
+}
+
+func (m model) toggleSongLike(song item) tea.Cmd {
+	return func() tea.Msg {
+		liked := true
+		url := fmt.Sprintf("%s/addToLiked", BOP)
+		if song.Liked {
+			url = fmt.Sprintf("%s/removeFromLiked", BOP)
+			liked = false
+		}
+
+		client := HTTPClient()
+		data, err := json.Marshal(map[string]string{"ID": song.ID})
+		if err != nil {
+			return songLikedOrDislikedMsg{err: err}
+		}
+
+		body := bytes.NewBuffer(data)
+		resp, err := client.Post(url, "application/json", body)
+		if err != nil {
+			return songLikedOrDislikedMsg{err: err}
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			return songLikedOrDislikedMsg{err: errors.New("server said no")}
+		}
+
+		return songLikedOrDislikedMsg{
+			songID: song.ID,
+			liked: liked,
+		}
+	}
 }
 
 type newThumbnailMsg struct {
@@ -134,4 +175,11 @@ func (m model) loadThumbnails(prog *tea.Program) {
 
 	wg.Wait()
 	prog.Send(thumbnailsLoadedMsg{})
+}
+
+func HTTPClient() http.Client {
+	c := http.Client{}
+	c.Timeout = time.Second * 3
+
+	return c
 }

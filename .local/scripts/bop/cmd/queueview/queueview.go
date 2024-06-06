@@ -37,6 +37,7 @@ type model struct {
 	termW      int
 	theme      internal.Theme
 	reloadChan chan struct{}
+	likingSong bool
 }
 
 func (m model) Init() tea.Cmd {
@@ -48,6 +49,35 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	switch msg := msg.(type) {
+	case songLikedOrDislikedMsg:
+		m.likingSong = false
+		if msg.err != nil {
+			m.err = msg.err
+			return m, nil
+		}
+
+		var updatedSong *item
+		index := -1
+		songs := m.list.Items()
+		for i, s := range songs {
+			song, ok := s.(item)
+			if !ok {
+				continue
+			}
+
+			if song.ID != msg.songID {
+				continue
+			}
+
+			index = i
+			updatedSong = &song
+			break
+		}
+		if index != -1 {
+			updatedSong.Liked = msg.liked
+			m.list.SetItem(index, *updatedSong)
+		}
+
 	case queueLoadedMsg:
 		if msg.err == nil {
 			m.err = nil
@@ -148,6 +178,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					continue
 				}
 
+				cmd := m.checkIfLikedClicked(song, msg)
+				cmds = append(cmds, cmd)
 				m.list.Select(i)
 				break
 			}
@@ -192,6 +224,20 @@ func (m model) View() string {
 	}
 
 	return zone.Scan(m.list.View())
+}
+
+func (m *model) checkIfLikedClicked(song item, msg tea.MouseMsg) tea.Cmd {
+	if m.likingSong {
+		return nil
+	}
+
+	if !zone.Get(fmt.Sprintf("%s-liked", song.ID)).InBounds(msg) {
+		return nil
+	}
+
+	m.likingSong = true
+
+	return m.toggleSongLike(song)
 }
 
 func Run() {
