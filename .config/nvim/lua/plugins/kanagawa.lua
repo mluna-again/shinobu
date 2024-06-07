@@ -298,7 +298,7 @@ return {
 
 					ToggleTermNormal = { bg = theme.ui.bg_m2 },
 
-					TroubleNormal = { bg = theme.ui.bg_m2 },
+					TroubleNormal = { bg = theme.ui.bg },
 
 					BqfSign = { fg = theme.syn.identifier },
 					BqfPreviewBorder = { bg = theme.ui.bg, fg = theme.syn.identifier },

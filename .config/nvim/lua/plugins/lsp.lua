@@ -243,6 +243,12 @@ return {
 		wk.register({
 			l = {
 				name = "Lsp",
+				l = {
+					"<cmd>TroubleToggle<cr>",
+					"Toggle diagnostics quicklist",
+					noremap = true,
+					silent = true
+				},
 				u = {
 					function()
 						require("telescope.builtin").lsp_references()
