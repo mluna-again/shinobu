@@ -175,7 +175,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.list.Select(index + 1)
 		}
 
-		if msg.Button == tea.MouseButtonLeft {
+		if msg.Button == tea.MouseButtonLeft && msg.Action == tea.MouseActionRelease {
 			for i, s := range m.list.Items() {
 				song, ok := s.(item)
 				if !ok {
