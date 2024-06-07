@@ -14,33 +14,33 @@
 -- 	Folder = "CmpItemKindFolder",
 -- }
 
-local normalized = {
-	Property = "Property   ",
-	Constructor = "Constructor",
-	Text = "Text       ",
-	Method = "Method     ",
-	Function = "Function   ",
-	Field = "Field      ",
-	Variable = "Variable   ",
-	Class = "Class      ",
-	Struct = "Struct     ",
-	Interface = "Interface  ",
-	Value = "Value      ",
-	Keyword = "Keyword    ",
-	Snippet = "Snippet    ",
-	File = "File       ",
-	Folder = "Folder     ",
-	Module = "Module     ",
-	Enum = "Enum       ",
-	EnumMember = "Enum       ",
-	Unit = "Unit       ",
-	Color = "Color      ",
-	Reference = "Reference  ",
-	Constant = "Constant   ",
-	Event = "Event      ",
-	Operator = "Operator   ",
-	TypeParameter = "Type       ",
-}
+-- local normalized = {
+-- 	Property = "Property   ",
+-- 	Constructor = "Constructor",
+-- 	Text = "Text       ",
+-- 	Method = "Method     ",
+-- 	Function = "Function   ",
+-- 	Field = "Field      ",
+-- 	Variable = "Variable   ",
+-- 	Class = "Class      ",
+-- 	Struct = "Struct     ",
+-- 	Interface = "Interface  ",
+-- 	Value = "Value      ",
+-- 	Keyword = "Keyword    ",
+-- 	Snippet = "Snippet    ",
+-- 	File = "File       ",
+-- 	Folder = "Folder     ",
+-- 	Module = "Module     ",
+-- 	Enum = "Enum       ",
+-- 	EnumMember = "Enum       ",
+-- 	Unit = "Unit       ",
+-- 	Color = "Color      ",
+-- 	Reference = "Reference  ",
+-- 	Constant = "Constant   ",
+-- 	Event = "Event      ",
+-- 	Operator = "Operator   ",
+-- 	TypeParameter = "Type       ",
+-- }
 
 return {
 	"williamboman/mason-lspconfig.nvim",
@@ -116,6 +116,8 @@ return {
 					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 					scrollbar = false,
 					winhighlight = "FloatBorder:CmpCompletionBorder,NormalFloat:CmpCompletion",
+					col_offset = -3,
+					side_padding = 0,
 				}),
 				documentation = cmp.config.window.bordered({
 					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
@@ -176,8 +178,11 @@ return {
 				},
 			}),
 			formatting = {
+				fields = { "kind", "abbr", "menu" },
 				format = function(entry, item)
-					item.kind = string.format(" %s %s ", kind_icons[item.kind], normalized[item.kind])
+					item.menu = "   (" .. item.kind .. ")"
+					item.kind = " " .. (kind_icons[item.kind] or "") .. " "
+
 					return item
 				end,
 			},
@@ -247,7 +252,7 @@ return {
 					"<cmd>TroubleToggle<cr>",
 					"Toggle diagnostics quicklist",
 					noremap = true,
-					silent = true
+					silent = true,
 				},
 				u = {
 					function()
