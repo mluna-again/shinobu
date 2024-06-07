@@ -119,7 +119,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				current = &s
 			}
 		}
-		if current != nil {
+		if current != nil && current.IsPlaying {
 			remaining := current.TotalSeconds - current.CurrentSecond
 			m.currentTick = time.Now().String()
 			cmds = append(cmds, tea.Tick(time.Second*time.Duration(remaining), func(t time.Time) tea.Msg {

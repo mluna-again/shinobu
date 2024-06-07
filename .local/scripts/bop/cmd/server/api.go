@@ -157,6 +157,7 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			Duration:     fmt.Sprintf("%d:%02d", (i.Duration/1000)/60, (i.Duration/1000)%60),
 			Album:        i.Album.Name,
 			TotalSeconds: i.Duration / 1000,
+			IsPlaying:    false,
 			Liked:        likedMap[i.ID],
 		})
 	}
@@ -173,7 +174,7 @@ func (app *app) queue(w http.ResponseWriter, r *http.Request) {
 			Album:         track.Album.Name,
 			CurrentSecond: current.Progress / 1000,
 			TotalSeconds:  current.Item.Duration / 1000,
-			IsPlaying:     true,
+			IsPlaying:     current.Playing,
 			Liked:         likedMap[current.Item.ID],
 		},
 		}, items...)
