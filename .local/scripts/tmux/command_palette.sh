@@ -54,6 +54,7 @@ Layouts: Tiled
 Layouts: Main-Horizontal
 Layouts: Main-Vertical
 Layouts: Make grid
+Layouts: terminal bottom
 Spotify: search
 Spotify: play/pause
 Spotify: next song
@@ -584,6 +585,24 @@ case "$action" in
 
 	"Time: show")
 		tmux clock-mode
+		;;
+
+	"Layouts: terminal bottom")
+		size="25%"
+		pane_count=$(tmux display -p "#{window_panes}")
+		if (( pane_count > 2 )); then
+			error "Too many panes"
+			exit
+		fi
+
+		if (( pane_count == 1 )); then
+			tmux split-window -t . -v -l "$size"
+			exit
+		fi
+
+		tmux select-layout even-vertical
+		tmux select-pane -t 2
+		tmux resize-pane -t . -y "$size"
 		;;
 
 	"Layouts: Even-Vertical")
