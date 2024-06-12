@@ -51,6 +51,13 @@ return {
 		}),
 	}),
 
+	s("var", {
+		t({
+			"[Options]",
+			"variable: something=else"
+		})
+	}),
+
 	s("options", {
 		t({
 			"[Options]",
