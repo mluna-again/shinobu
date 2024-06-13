@@ -113,7 +113,7 @@ bind --mode insert --sets-mode default jj backward-char repaint
 set -gx CURL_HOME "$HOME/.config/curl"
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx COLORTERM truecolor
-set -gx VISUAL nvim
+set -gx VISUAL "nvim -u NONE"
 set -gx EDITOR "$VISUAL"
 set -gx FZF_DEFAULT_COMMAND 'ag -g ""'
 set -gx FZF_DEFAULT_OPTS '--ellipsis=... --layout=reverse --prompt=" " --height="100%" --header-first --no-separator --preview-window=border-none --border=none --info=inline-right --pointer="" --header="Search" --color="bg:#12120f,preview-bg:#1D1C19,gutter:#12120f,pointer:#12120f,hl:#8992a7,hl+:#8992a7,bg+:#c4b28a,fg+:#1d1c19,header:#c4b28a,prompt:#c4b28a,query:#c5c9c5" --cycle --bind="down:preview-down,up:preview-up" --no-scrollbar'
