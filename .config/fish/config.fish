@@ -54,7 +54,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.nimble/bin" \
     "$HOME/.local/bin/inklecate" \
     "$HOME/.local/share/bob/nvim-bin" \
-    "$HOME/.local/bin/odin"
+    "$HOME/.local/bin/odin" \
+    "$HOME/.local/bin/flutter/bin"
 
 function search_dir
     set -l dir (find . -maxdepth 10 | grep -v '^.$' | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)
