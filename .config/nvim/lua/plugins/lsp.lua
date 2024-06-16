@@ -218,6 +218,7 @@ return {
 			"lua_ls",
 			"ols",
 			"clangd",
+			"dartls",
 		}
 
 		local lspconfig = require("lspconfig")
