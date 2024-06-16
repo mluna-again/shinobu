@@ -99,7 +99,10 @@ return {
 				},
 				c = {
 					formatters.c.clangformat,
-				}
+				},
+				dart = {
+					formatters.dart.dartformat,
+				},
 			},
 		})
 	end,
