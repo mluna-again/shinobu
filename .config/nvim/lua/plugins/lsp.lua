@@ -249,6 +249,12 @@ return {
 		wk.register({
 			l = {
 				name = "Lsp",
+				c = {
+					vim.lsp.buf.code_action,
+					"Code actions",
+					noremap = true,
+					silent = true,
+				},
 				l = {
 					"<cmd>TroubleToggle<cr>",
 					"Toggle diagnostics quicklist",
