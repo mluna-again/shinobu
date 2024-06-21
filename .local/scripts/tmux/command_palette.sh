@@ -1189,11 +1189,11 @@ EOF
 		window_name=$(awk -F ':' '{ print $1 }' <<< "$target" | xargs)
 		mode=$(awk -F ':' '{ print $2 }' <<< "$target" | xargs)
 		case "$mode" in
-			horizontal)
+			vertical)
 				mode="-h"
 				;;
 
-			vertical)
+			horizontal)
 				mode="-v"
 				;;
 
