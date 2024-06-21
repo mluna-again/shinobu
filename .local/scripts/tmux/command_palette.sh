@@ -97,6 +97,8 @@ Tmux: floating terminal
 Tmux: block outer session
 Tmux: join panes
 Tmux: split panes
+Tmux: new window to the left
+Tmux: new window to the right
 Tmux: welcome screen
 Clipboard: push
 Clipboard: pop
@@ -885,6 +887,14 @@ EOF
 
 	"Tmux: welcome screen")
 		"$HOME/.local/scripts/tmux/welcome/welcome.sh"
+		;;
+
+	"Tmux: new window to the left")
+		tmux new-window -b -t .
+		;;
+
+	"Tmux: new window to the right")
+		tmux new-window -a -t .
 		;;
 
 	"Tmux: set current directory as default")
