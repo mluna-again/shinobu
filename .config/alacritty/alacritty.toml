@@ -11,19 +11,19 @@ TERM = "xterm-256color"
 size = 11
 
 [font.bold]
-family = "Iosevka Nerd Font"
+family = "IosevkaTerm Nerd Font"
 style = "Medium"
 
 [font.bold_italic]
-family = "Iosevka Nerd Font"
+family = "IosevkaTerm Nerd Font"
 style = "Medium"
 
 [font.italic]
-family = "Iosevka Nerd Font"
+family = "IosevkaTerm Nerd Font"
 style = "Medium"
 
 [font.normal]
-family = "Iosevka Nerd Font"
+family = "IosevkaTerm Nerd Font"
 style = "Medium"
 
 [[keyboard.bindings]]
