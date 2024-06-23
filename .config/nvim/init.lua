@@ -12,7 +12,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.zig_fmt_autosave = 0
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+	change_detection = {
+		enabled = false
+	}
+})
 require('config')
 require('core.mappings')
 require('core.indentation')
