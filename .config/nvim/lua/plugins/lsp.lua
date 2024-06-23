@@ -261,6 +261,76 @@ return {
 					noremap = true,
 					silent = true,
 				},
+				n = {
+					name = "Navigate diagnostics (forward)",
+					e = {
+						function()
+							vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, wrap = true })
+						end,
+						"Go to next error",
+						noremap = true,
+						silent = true,
+					},
+					w = {
+						function()
+							vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN, wrap = true })
+						end,
+						"Go to next warning",
+						noremap = true,
+						silent = true,
+					},
+					h = {
+						function()
+							vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.HINT, wrap = true })
+						end,
+						"Go to next hint",
+						noremap = true,
+						silent = true,
+					},
+					i = {
+						function()
+							vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.INFO, wrap = true })
+						end,
+						"Go to next tip",
+						noremap = true,
+						silent = true,
+					},
+				},
+				p = {
+					name = "Navigate diagnostics (backward)",
+					e = {
+						function()
+							vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR, wrap = true })
+						end,
+						"Go to previous error",
+						noremap = true,
+						silent = true,
+					},
+					w = {
+						function()
+							vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN, wrap = true })
+						end,
+						"Go to previous warning",
+						noremap = true,
+						silent = true,
+					},
+					h = {
+						function()
+							vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.HINT, wrap = true })
+						end,
+						"Go to previous hint",
+						noremap = true,
+						silent = true,
+					},
+					i = {
+						function()
+							vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.INFO, wrap = true })
+						end,
+						"Go to previous tip",
+						noremap = true,
+						silent = true,
+					},
+				},
 				u = {
 					function()
 						require("telescope.builtin").lsp_references()
