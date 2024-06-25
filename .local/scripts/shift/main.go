@@ -391,7 +391,7 @@ func main() {
 		}
 		defer f.Close()
 
-		_, err = f.WriteString(text)
+		_, err = f.WriteString(app.finalQuery + "\n" + app.selectedMode.params)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)

@@ -54,7 +54,8 @@ do_install() {
 
 		shift)
 			cd "$HOME/.local/scripts/shift" || exit
-			go install
+			go build -o mshift || exit
+			mv mshift "$GOPATH/bin/mshift" || exit
 			;;
 
 		welcome)

@@ -12,13 +12,9 @@ error() {
 	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Error: $1"
 }
 
-path="$HOME/.local/scripts/shift"
-
-OUTPUT_PATH="$path/.__SHIFT__"
+OUTPUT_PATH="$HOME/.cache/.__SHIFT__"
 
 [ -e "$OUTPUT_PATH" ] && rm "$OUTPUT_PATH"
-
-[ ! -x "$path/shift" ] && go build -C "$path" -o "$path/shift"
 
 _filter_running_programs() {
 	grep -v tmux | grep -v fish
@@ -160,25 +156,25 @@ handle_all() {
 
 case "$mode" in
 	sessions)
-		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
+		get_sessions | mshift -o "$OUTPUT_PATH" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
 		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_sessions
 		;;
 
 	windows)
-		get_windows | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
+		get_windows | mshift -output "$OUTPUT_PATH" -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
 		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_windows
 		;;
 
 	all)
-		get_all | "$path/shift" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "sessions" || { echo "Something went wrong..."; exit 1; }
+		get_all | mshift -output "$OUTPUT_PATH" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "sessions" || { echo "Something went wrong..."; exit 1; }
 		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_all
 		;;
 
 	*)
-		get_sessions | "$path/shift" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
+		get_sessions | mshift -output "$OUTPUT_PATH" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
 		[ ! -e "$OUTPUT_PATH" ] && exit
 		handle_sessions
 		;;
