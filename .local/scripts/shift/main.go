@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 	"unicode/utf8"
 
@@ -12,6 +11,7 @@ import (
 	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type app struct {
@@ -368,9 +368,10 @@ func main() {
 		return
 	}
 
-	p := tea.NewProgram(model)
+	lipgloss.SetColorProfile(lipgloss.ColorProfile())
+	p := tea.NewProgram(model, tea.WithAltScreen(), tea.WithOutput(os.Stderr))
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("Error! %s", err.Error())
+		fmt.Fprint(os.Stderr, err.Error())
 		os.Exit(1)
 		return
 	}
@@ -379,31 +380,25 @@ func main() {
 		return
 	}
 
-	executable, err := os.Executable()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "\n%v", err)
-		os.Exit(1)
-		return
-	}
-	filePath := filepath.Join(filepath.Dir(executable), ".__SHIFT__")
-	if outputFile != "" {
-		filePath = outputFile
-	}
-	f, err := os.Create(filePath)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-		return
-	}
-	defer f.Close()
-
 	text := fmt.Sprintf("%s %s", app.selectedMode.name, app.selectedMode.params)
 
 	if outputFile != "" {
-		_, _ = f.WriteString(app.finalQuery)
-		_, _ = f.WriteString("\n")
-		_, _ = f.WriteString(app.selectedMode.params)
-	} else {
-		_, _ = f.WriteString(text)
+		f, err := os.Create(outputFile)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+			return
+		}
+		defer f.Close()
+
+		_, err = f.WriteString(text)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+			return
+		}
+
+		return
 	}
+	fmt.Println(text)
 }
