@@ -26,7 +26,7 @@ read_result() {
 istmux || { echo this script only works inside tmux 1>&2; exit 1; }
 assert_installed cornucopia
 
-if [ ! -x mshift ]; then
+if ! command -v mshift &>/dev/null; then
 	terror "shift not installed"
 	exit
 fi
