@@ -12,10 +12,6 @@ error() {
 	tmux display-message -d 0 "#[bg=red,fill=red,fg=black]  Error: $1"
 }
 
-OUTPUT_PATH="$HOME/.cache/.__SHIFT__"
-
-[ -e "$OUTPUT_PATH" ] && rm "$OUTPUT_PATH"
-
 _filter_running_programs() {
 	grep -v tmux | grep -v fish
 }
@@ -45,8 +41,9 @@ get_windows() {
 }
 
 handle_sessions() {
-	mode="$(awk '{print $1}' "$OUTPUT_PATH")"
-	params="$(awk '{for(i=2; i<=NF;i++) printf "%s ", $i}' "$OUTPUT_PATH")"
+	local input="$1"
+	mode="$(echo "$input" | awk '{print $1}')"
+	params="$(echo "$input" | awk '{for(i=2; i<=NF;i++) printf "%s ", $i}')"
 
 	case "$mode" in
 		create)
@@ -88,7 +85,8 @@ handle_sessions() {
 }
 
 handle_windows() {
-	window_name="$(awk '{print $2}' "$OUTPUT_PATH")"
+	local input="$1"
+	window_name="$(echo "$input" | awk '{print $2}')"
 
 	tmux select-window -t "$window_name" || error "Could not switch to $window_name. Maybe there are multiple with the same name?"
 }
@@ -110,7 +108,9 @@ get_all() {
 }
 
 handle_all() {
-	output=$(xargs sh -c 'printf "%s %s %s" $1 $2 $0 $3' < "$OUTPUT_PATH")
+	local input="$1"
+
+	output=$(xargs sh -c 'printf "%s %s %s" $1 $2 $0 $3' <<< "$input")
 	session=$(awk -F':' '{ print $1 }' <<< "$output")
 	session=$(awk '{ print $1 }' <<< "$session")
 	window=$(awk -F':' '{ print $2 }' <<< "$output")
@@ -156,26 +156,22 @@ handle_all() {
 
 case "$mode" in
 	sessions)
-		get_sessions | mshift -o "$OUTPUT_PATH" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
-		[ ! -e "$OUTPUT_PATH" ] && exit
-		handle_sessions
+		response=$(get_sessions | mshift -width "$w" -height "$h") || { echo "Something went wrong..."; exit 1; }
+		handle_sessions "$response"
 		;;
 
 	windows)
-		get_windows | mshift -output "$OUTPUT_PATH" -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode" || { echo "Something went wrong..."; exit 1; }
-		[ ! -e "$OUTPUT_PATH" ] && exit
-		handle_windows
+		response=$(get_windows | mshift -icon "  " -width "$w" -height "$h" -title " Switch window " "$mode") || { echo "Something went wrong..."; exit 1; }
+		handle_windows "$response"
 		;;
 
 	all)
-		get_all | mshift -output "$OUTPUT_PATH" -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "sessions" || { echo "Something went wrong..."; exit 1; }
-		[ ! -e "$OUTPUT_PATH" ] && exit
-		handle_all
+		response=$(get_all | mshift -icon "  " -width "$w" -height "$h" -title " Which way do I go? " "sessions") || { echo "Something went wrong..."; exit 1; }
+		handle_all "$response"
 		;;
 
 	*)
-		get_sessions | mshift -output "$OUTPUT_PATH" -width "$w" -height "$h" || { echo "Something went wrong..."; exit 1; }
-		[ ! -e "$OUTPUT_PATH" ] && exit
-		handle_sessions
+		response=$(get_sessions | mshift -width "$w" -height "$h") || { echo "Something went wrong..."; exit 1; }
+		handle_sessions "$response"
 		;;
 esac

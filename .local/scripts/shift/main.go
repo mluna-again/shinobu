@@ -12,6 +12,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/muesli/termenv"
 )
 
 type app struct {
@@ -368,7 +369,7 @@ func main() {
 		return
 	}
 
-	lipgloss.SetColorProfile(lipgloss.ColorProfile())
+	lipgloss.SetColorProfile(termenv.TrueColor)
 	p := tea.NewProgram(model, tea.WithAltScreen(), tea.WithOutput(os.Stderr))
 	if _, err := p.Run(); err != nil {
 		fmt.Fprint(os.Stderr, err.Error())
