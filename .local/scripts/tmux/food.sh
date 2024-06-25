@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 
-declare SHIFT_PATH="$HOME/.local/scripts/shift/shift" \
-	OUTFILE="$HOME/.cache/.cornucopia"
+declare OUTFILE="$HOME/.cache/.cornucopia"
 
 clear_response() {
 	: >"$OUTFILE"
@@ -27,7 +26,7 @@ read_result() {
 istmux || { echo this script only works inside tmux 1>&2; exit 1; }
 assert_installed cornucopia
 
-if [ ! -x "$SHIFT_PATH" ]; then
+if [ ! -x mshift ]; then
 	terror "shift not installed"
 	exit
 fi
@@ -38,7 +37,7 @@ add)
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "\n" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Search by name " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -59,7 +58,7 @@ EOF
 	tmux display-popup -w 95 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "$options" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Select by name " \
 		-icon " 󰉜 " \
 		-width 95 \
@@ -81,7 +80,7 @@ EOF
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "$options" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Time of the day " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -103,7 +102,7 @@ EOF
 		tmux display-popup -w 65 -h 11 -y 15 -E "$(
 			cat - <<EOF
 		echo "\n" |
-			"$SHIFT_PATH" \
+			mshift \
 			-title " Grams/Milliliters " \
 			-icon " 󰉜 " \
 			-width 65 \
@@ -141,7 +140,7 @@ custom)
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "\n" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Calories per 100gr/ml " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -160,7 +159,7 @@ EOF
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "\n" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Food name " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -176,7 +175,7 @@ EOF
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "\n" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Brand name " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -203,7 +202,7 @@ delete)
 	tmux display-popup -w 95 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "$options" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Daily entries " \
 		-icon " 󰉜 " \
 		-width 95 \
@@ -221,7 +220,7 @@ EOF
 		tmux display-popup -w 95 -h 11 -y 15 -E "$(
 			cat - <<EOF
 		echo "\n" |
-			"$SHIFT_PATH" \
+			mshift \
 			-title " Duplicated entry, delete all? [N/y] " \
 			-icon " 󰉜 " \
 			-width 95 \
@@ -249,7 +248,7 @@ recipe)
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "\n" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Recipe's name " \
 		-icon " 󰉜 " \
 		-width 65 \
@@ -265,7 +264,7 @@ EOF
 	tmux display-popup -w 65 -h 11 -y 15 -E "$(
 		cat - <<EOF
 	echo "\n" |
-		"$SHIFT_PATH" \
+		mshift \
 		-title " Recipe's description " \
 		-icon " 󰉜 " \
 		-width 65 \

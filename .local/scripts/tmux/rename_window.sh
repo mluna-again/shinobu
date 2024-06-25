@@ -16,7 +16,7 @@ input() {
 	current_name="$(tmux display -p '#{window_name}')"
 	is_default_name "$current_name" && current_name="$(basename "$(tmux display -p '#{pane_current_path}')" | tr '[:upper:]' '[:lower:]')"
 
-	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; $HOME/.local/scripts/shift/shift -icon \"$icon\" -title \"$title\" -input '\n' -output \"$RESULTS_FILE\" -width 65 -height 9 -mode rename -initial=\"$current_name\""
+	tmux display-popup -w 65 -h 11 -y 15 -E "[ -e \"$RESULTS_FILE\" ] && rm \"$RESULTS_FILE\" ; mshift -icon \"$icon\" -title \"$title\" -input '\n' -output \"$RESULTS_FILE\" -width 65 -height 9 -mode rename -initial=\"$current_name\""
 }
 
 input " Rename window " " 󰑕 " "hello"

@@ -25,8 +25,7 @@ if uname | grep -iq darwin; then
 	assert_installed pbcopy
 fi
 
-declare SHIFT_PATH="$HOME/.local/scripts/shift/shift" \
-	OUTFILE="$HOME/.cache/.cornucopia" \
+declare OUTFILE="$HOME/.cache/.cornucopia" \
 	DB="$HOME/.cache/.clipboard"
 
 read_result() {
@@ -38,7 +37,7 @@ case "$1" in
 		tmux display-popup -w 65 -h 11 -y 15 -E "$(
 			cat - <<EOF
 		echo "\n" |
-			"$SHIFT_PATH" \
+			mshift \
 			-title " Save snippet " \
 			-icon " 󰉜 " \
 			-width 65 \
