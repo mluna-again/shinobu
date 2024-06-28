@@ -2,6 +2,8 @@
 
 declare NOPORTS=0
 
+common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173 8001 6111 6112)
+
 usage() {
   cat - <<EOF
 Usage:
@@ -10,6 +12,8 @@ _ssh -x 3000 # exclude port 3000
 _ssh -X      # exlude all default ports
 _ssh -p 3001 # include port 3001
 -ssh -u leah # change user, defaults to \$USER
+
+Default ports: ${common_ports[@]}
 EOF
 }
 
@@ -59,7 +63,6 @@ done
 
 workspace=$(awk "{printf \"%s@%s\n\", \"$user\", \$1; }" < "$HOME/.ssh/known_hosts" | sort | uniq | fzf --header="Select workspace")
 
-common_ports=(3000 8080 8888 4000 9000 4008 4009 4010 4011 5173 8001 6111 6112)
 common_ports=("${common_ports[@]}" "${manual_ports[@]}")
 filtered_common_ports=()
 
