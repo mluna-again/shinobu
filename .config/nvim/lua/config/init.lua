@@ -1,5 +1,7 @@
 vim.o.encoding = "UTF-8"
 -- vim.o.clipboard = "unnamedplus"
+vim.opt.conceallevel = 2
+vim.opt.concealcursor = 'nc'
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.ignorecase = true
