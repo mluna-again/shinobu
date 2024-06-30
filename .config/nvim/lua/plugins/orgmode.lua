@@ -13,7 +13,7 @@ return {
           org_toggle_checkbox = "<leader>oo",
           org_timestamp_up = "<leader>o>",
           org_timestamp_down = "<leader>o<",
-          org_open_at_point = "<leader>o<cr>",
+          org_open_at_point = "<leader><cr>",
         }
       }
     })
