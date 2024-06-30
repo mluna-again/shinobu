@@ -26,7 +26,8 @@ return {
 				"rust",
 				"zig",
 				"odin",
-				"dart"
+				"dart",
+				"org"
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
