@@ -10,9 +10,10 @@ return {
       org_startup_folded = "showeverything",
       mappings = {
         org = {
-          org_toggle_checkbox = "<leader>o<leader>",
+          org_toggle_checkbox = "<leader>oo",
           org_timestamp_up = "<leader>o>",
           org_timestamp_down = "<leader>o<",
+          org_open_at_point = "<leader>o<cr>",
         }
       }
     })
