@@ -22,6 +22,7 @@ var termHeight int
 var termWidth int
 var resultsFile string
 var quote string
+var animated bool
 
 func loadsessions() ([]list.Item, error) {
 	sessions, err := io.ReadAll(os.Stdin)
@@ -147,7 +148,9 @@ func (m *model) shouldIgnoreInput() bool {
 func (m model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 	cmds = append(cmds, textinput.Blink)
-	cmds = append(cmds, bannerTick)
+	if animated {
+		cmds = append(cmds, bannerTick)
+	}
 
 	m.resize()
 	return tea.Batch(cmds...)
@@ -364,6 +367,7 @@ func main() {
 	flag.IntVar(&termHeight, "height", 40, "terminal height")
 	flag.StringVar(&resultsFile, "result", "", "results file")
 	flag.StringVar(&quote, "quote", "howdy", "quote")
+	flag.BoolVar(&animated, "animate", false, "samurai animation")
 	flag.Parse()
 
 	m, err := initialModel()

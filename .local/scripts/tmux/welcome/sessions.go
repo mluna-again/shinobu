@@ -51,7 +51,7 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 	fn := sessionItem.Render
 	if index == m.Index() {
 		fn = func(s ...string) string {
-			return selectedItemStyle.Foreground(banner.GetForeground()).Render(strings.Join(s, " "))
+			return selectedItemStyle.Foreground(accent).Render(strings.Join(s, " "))
 		}
 	}
 

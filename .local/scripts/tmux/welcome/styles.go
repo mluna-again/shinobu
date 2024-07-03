@@ -5,6 +5,7 @@ import (
 )
 
 var bg = lipgloss.NoColor{}
+var accent = lipgloss.Color("#bb0a00")
 
 var banner = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#FAFAFA")).
