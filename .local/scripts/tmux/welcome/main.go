@@ -292,7 +292,7 @@ func (m model) View() string {
 	s := strings.Builder{}
 
 	header := banner.Render(m.banner)
-	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
+	if m.termH > lipgloss.Height(header)+m.sessions.Height() {
 		s.WriteString(header)
 		s.WriteString("\n")
 	} else {
