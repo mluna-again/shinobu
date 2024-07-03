@@ -133,7 +133,6 @@ func (m *model) resizeWithHeight(h int) {
 
 func (m *model) resizeWithWidth(w int) {
 	m.termW = w
-	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner) / 2))
 	pagination.Width(w)
 	sessionItem.Width(w / 4)
 	title.Width(w)
@@ -294,8 +293,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := strings.Builder{}
 
-	header := banner.Render(m.banner)
-	if m.termH > lipgloss.Height(header)+m.sessions.Height() {
+	s.WriteString("\n")
+	header := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.banner)
+	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
 		s.WriteString(header)
 		s.WriteString("\n")
 	} else {
@@ -320,7 +320,7 @@ func (m model) View() string {
 	}
 
 	if m.sessions.FilterValue() != "" {
-		s.WriteString(banner.Render(fmt.Sprintf(" %s", m.sessions.FilterValue())))
+		s.WriteString(lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, fmt.Sprintf(" %s", m.sessions.FilterValue())))
 		s.WriteString("\n")
 	}
 
