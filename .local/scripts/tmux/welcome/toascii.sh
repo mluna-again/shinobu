@@ -15,5 +15,5 @@ for image in ./images/*; do
   convert "$image" -crop "$offset" "$image"
 
   ascii_file="$(sed -e 's|./images/||' -e 's|.png|.ascii|' <<< "$image")"
-  chafa "$image" --size 60x60 --symbols ascii+half+digit > "./ascii/${ascii_file}"
+  chafa "$image" --polite on --size 60x60 --symbols ascii+half+digit > "./ascii/${ascii_file}"
 done

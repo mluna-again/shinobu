@@ -11,7 +11,7 @@ import (
 //go:embed ascii/*.ascii
 var samuraiFrames embed.FS
 
-const FRAME_TICK_DURATION = time.Second / 10
+const FRAME_TICK_DURATION = time.Second / 15
 
 type frameTickMsg struct{}
 
