@@ -102,7 +102,7 @@ main() {
 			;;
 
 		*)
-			tmux switch-client -t "$id"
+			tmux switch-client -t "$id" \; select-window -t 1
 			;;
 	esac
 }
