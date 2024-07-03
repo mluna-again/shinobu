@@ -598,7 +598,7 @@ case "$action" in
 		fi
 
 		if (( pane_count == 1 )); then
-			tmux split-window -t . -v -l "$size"
+			tmux split-window -t . -v -l "$size" -c "#{pane_current_path}"
 			exit
 		fi
 
