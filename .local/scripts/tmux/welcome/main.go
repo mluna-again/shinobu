@@ -306,7 +306,7 @@ func (m model) View() string {
 
 	s.WriteString("\n")
 	header := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.banner)
-	if m.termH > lipgloss.Height(header)+m.sessions.Height()+10 {
+	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
 		s.WriteString(header)
 		s.WriteString("\n")
 	} else {
