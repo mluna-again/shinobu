@@ -54,7 +54,7 @@ main() {
 	done
 
 	tmux list-sessions -f "#{!=:#{session_name},$WELCOME_SESSION}" -F "#{session_name} #{session_windows} #{session_id}" | \
-		welcome -width "$w" -height "$h" -result "$RESPATH" -quote "$quote" || exit 1
+		welcome -width "$w" -height "$h" -result "$RESPATH" -quote "$quote" -animate || exit 1
 
 	id="$(cat "$RESPATH")"
 	if [ -z "$id" ]; then
