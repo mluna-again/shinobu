@@ -93,7 +93,7 @@ func initialModel() (model, error) {
 	l.KeyMap.GoToEnd = key.NewBinding(key.WithKeys("G"))
 	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/", " "))
 	l.InfiniteScrolling = true
-	l.SetHeight(5)
+	l.SetHeight(10)
 
 	ssh := os.Getenv("SSH_CONNECTION")
 
@@ -171,7 +171,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		})
 
 	case tea.WindowSizeMsg:
-		m.sessions.SetHeight(msg.Height / 4)
+		m.sessions.SetHeight(10)
 		m.sessions.SetWidth(msg.Width)
 		m.resizeWithWidth(msg.Width)
 		m.resizeWithHeight(msg.Height)
