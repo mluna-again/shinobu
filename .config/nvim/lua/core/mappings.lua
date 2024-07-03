@@ -103,14 +103,6 @@ wk.register({
 			silent = true,
 			noremap = true,
 		},
-		d = {
-			function()
-				require("telescope").extensions.zoxide.list()
-			end,
-			"Search directories",
-			silent = true,
-			noremap = true,
-		},
 		n = {
 			function()
 				-- if not MiniFiles.close() then
