@@ -68,6 +68,7 @@ type model struct {
 	shutting      bool
 	creatingNew   bool
 	killingServer bool
+	paused        bool
 	input         textinput.Model
 }
 
@@ -92,6 +93,7 @@ func initialModel() (model, error) {
 	l.KeyMap.GoToEnd = key.NewBinding(key.WithKeys("G"))
 	l.KeyMap.Filter = key.NewBinding(key.WithKeys("/", " "))
 	l.InfiniteScrolling = true
+	l.SetHeight(5)
 
 	ssh := os.Getenv("SSH_CONNECTION")
 
@@ -120,6 +122,7 @@ func initialModel() (model, error) {
 		quote:        quote,
 		isSSH:        ssh != "",
 		input:        ti,
+		paused:       true,
 	}, nil
 }
 
@@ -160,7 +163,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch msg := msg.(type) {
 	case frameTickMsg:
-		m.banner, m.bannerFrame = nextFrame(m.bannerFrames, m.bannerFrame)
+		if !m.paused {
+			m.banner, m.bannerFrame = nextFrame(m.bannerFrames, m.bannerFrame)
+		}
 		return m, tea.Tick(FRAME_TICK_DURATION, func(t time.Time) tea.Msg {
 			return bannerTick()
 		})
@@ -261,6 +266,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Quit
 			}
 
+		case "p":
+			if !m.shouldIgnoreInput() {
+				m.paused = !m.paused
+				return m, nil
+			}
+
 		case "enter":
 			if m.creatingNew {
 				saveResults(fmt.Sprintf("@create %s", m.input.Value()))
@@ -295,7 +306,7 @@ func (m model) View() string {
 
 	s.WriteString("\n")
 	header := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.banner)
-	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
+	if m.termH > lipgloss.Height(header)+m.sessions.Height()+10 {
 		s.WriteString(header)
 		s.WriteString("\n")
 	} else {
