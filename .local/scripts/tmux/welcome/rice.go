@@ -1,98 +1,48 @@
 package main
 
 import (
-	"math/rand"
+	"embed"
+	"path/filepath"
 	"time"
+
+	tea "github.com/charmbracelet/bubbletea"
 )
 
-var aard = `
-            ▂▂
-           ▟██▙
-         ▗▟████▙▖
-        ▗███▘▝███▖
-       ▗███▘  ▝███▖
-       ▀▀▀▘    ▝███▄
-                 ▜██▙
-    ▟████████     ▜██▙
-   ▟██▛▀▀▀▀▀▀      ▜██▙▖
- ▗███▀              ▝███▖
-▗████▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇████▖
- ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ `
+//go:embed ascii/*.ascii
+var samuraiFrames embed.FS
 
-var quen = `
-▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▖
-▜██▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀███
- ▜██▖                 ▟██▘
-  ▜██▖        ▁▁▁▁▁▁▁▟██▘
-   ▝██▙      ▕████████▛
-    ▝██▙      ▔▔▔▔▔▔▔▔
-     ▝▜█▙▖       ▃▃▃
-       ▜██▖     ▟██▘
-        ▜██▖   ▟██▘
-         ▀██▙▗██▛▘
-          ▝████▛
-           ▝▜█▀ `
+const FRAME_TICK_DURATION = time.Second / 15
 
-var axii = `
-▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▄
-▜███▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
- ▜██▖
-  ▜██▙                ▅▆▆
-   ▝██▙             ▗███▘
-    ▝██▙           ▗██▛
-     ▝███▖        ▗██▛
-       ▜██▖      ▟██▀
-        ▜██▖    ▟██▘
-         ▀██▙ ▗▟██▘
-          ▝██▙██▛▘
-           ▝███▛
-            ▝▀▀ `
+type frameTickMsg struct{}
 
-var yrden = `
-▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-███▛▀▀▀▀▀▀▀▀▀▀▀▀███▌
- ▜██▄         ▗▇█▛▘
-  ▝▜█▇▖     ▁▟██▀
-    ▀██▙▁  ╺██▛▔
-      ▜██▄   ▘
-       ▝▜█▇▖
-         ▀██▙▁
-    ▗▟█▖   ▜██▄
-   ▟██▀     ▝▜█▇▖
- ▃██▛▔        ▀██▙▁
-▟██▙▄▄▄▄▄▄▄▄▄▄▄▄███▖
-▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘`
-
-var igni = `
-          ▟██▌
-        ▗▟██▘
-       ▗███▘  ▗█▖
-      ▗███▘   ▜██▙
-     ▗███▘     ▜██▙
-    ▄██▛        ▜██▙
-   ▟██▛          ▜██▙
-  ▟██▛            ▝███▖
- ▟██▛▁▁▁▁▁▁▁▁▁▁▁▁▁▁▝███▖
-████████████████████████▎
-▔▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▔`
-
-type sign struct {
-	content string
-	color   string
+func bannerTick() tea.Msg {
+	return frameTickMsg{}
 }
 
-var banners = []sign{
-	{aard, "#8ba4b0"},
-	{quen, "#c4b28a"},
-	{axii, "#87a987"},
-	{yrden, "#8992a7"},
-	{igni, "#c4746e"},
+func ascii() ([]string, error) {
+	frames := []string{}
+	dir, err := samuraiFrames.ReadDir("ascii")
+	if err != nil {
+		return []string{}, err
+	}
+
+	for _, f := range dir {
+		frame, err := samuraiFrames.ReadFile(filepath.Join("ascii", f.Name()))
+		if err != nil {
+			return []string{}, err
+		}
+
+		frames = append(frames, string(frame))
+	}
+
+	return frames, nil
 }
 
-func ascii() sign {
-	s := rand.NewSource(time.Now().Unix())
-	r := rand.New(s)
-	ind := r.Intn(len(banners))
+func nextFrame(frames []string, actual int) (string, int) {
+	index := actual + 1
+	if index >= len(frames) {
+		index = 0
+	}
 
-	return banners[ind]
+	return frames[index], index
 }

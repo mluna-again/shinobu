@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
@@ -57,7 +58,9 @@ type model struct {
 	termH         int
 	termW         int
 	selected      string
-	banner        sign
+	banner        string
+	bannerFrames  []string
+	bannerFrame   int
 	quote         string
 	isSSH         bool
 	rebooting     bool
@@ -97,14 +100,25 @@ func initialModel() (model, error) {
 	ti.Width = 35
 	ti.Prompt = "  "
 
+	banner := ""
+	frames, err := ascii()
+	if err != nil {
+		return model{}, err
+	}
+	if len(frames) > 0 {
+		banner = frames[0]
+	}
+
 	return model{
-		sessions: l,
-		termH:    termHeight,
-		termW:    termWidth,
-		banner:   ascii(),
-		quote:    quote,
-		isSSH:    ssh != "",
-		input:    ti,
+		sessions:     l,
+		termH:        termHeight,
+		termW:        termWidth,
+		banner:       banner,
+		bannerFrames: frames,
+		bannerFrame:  0,
+		quote:        quote,
+		isSSH:        ssh != "",
+		input:        ti,
 	}, nil
 }
 
@@ -118,7 +132,7 @@ func (m *model) resizeWithHeight(h int) {
 
 func (m *model) resizeWithWidth(w int) {
 	m.termW = w
-	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner.content) / 2))
+	banner.PaddingLeft((w / 2) - (lipgloss.Width(m.banner) / 2))
 	pagination.Width(w)
 	sessionItem.Width(w / 4)
 	title.Width(w)
@@ -131,16 +145,26 @@ func (m *model) shouldIgnoreInput() bool {
 }
 
 func (m model) Init() tea.Cmd {
+	var cmds []tea.Cmd
+	cmds = append(cmds, textinput.Blink)
+	cmds = append(cmds, bannerTick)
+
 	m.resize()
-	return textinput.Blink
+	return tea.Batch(cmds...)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
+	case frameTickMsg:
+		m.banner, m.bannerFrame = nextFrame(m.bannerFrames, m.bannerFrame)
+		return m, tea.Tick(FRAME_TICK_DURATION, func(t time.Time) tea.Msg {
+			return bannerTick()
+		})
+
 	case tea.WindowSizeMsg:
-		m.sessions.SetHeight(msg.Height / 3)
+		m.sessions.SetHeight(msg.Height / 4)
 		m.sessions.SetWidth(msg.Width)
 		m.resizeWithWidth(msg.Width)
 		m.resizeWithHeight(msg.Height)
@@ -267,7 +291,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := strings.Builder{}
 
-	header := banner.Foreground(lipgloss.Color(m.banner.color)).Render(m.banner.content)
+	header := banner.Render(m.banner)
 	if m.termH > lipgloss.Height(header)+m.sessions.Height()+5 {
 		s.WriteString(header)
 		s.WriteString("\n")
