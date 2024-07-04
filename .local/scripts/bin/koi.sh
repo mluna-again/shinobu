@@ -49,4 +49,6 @@ if [ -z "$file" ]; then
 fi
 
 output=$(hurl --color --error-format=long "$file") || exit
-jnv <<< "$output"
+if ! jnv <<< "$output"; then
+	echo "$output"
+fi
