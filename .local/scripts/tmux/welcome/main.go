@@ -122,7 +122,7 @@ func initialModel() (model, error) {
 		quote:        quote,
 		isSSH:        ssh != "",
 		input:        ti,
-		paused:       true,
+		paused:       !animated,
 	}, nil
 }
 
@@ -150,9 +150,7 @@ func (m *model) shouldIgnoreInput() bool {
 func (m model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 	cmds = append(cmds, textinput.Blink)
-	if animated {
-		cmds = append(cmds, bannerTick)
-	}
+	cmds = append(cmds, bannerTick)
 
 	m.resize()
 	return tea.Batch(cmds...)
