@@ -14,6 +14,21 @@ isdarwin() {
 	uname | grep -i darwin
 }
 
+usage() {
+	cat - <<-"EOF"
+	Usage:
+	koi.sh -f <file> [-x <hurl arg>]
+
+	# Examples
+	koi.sh -h                                 # show this message
+	koi.sh -f create.hurl                     # run file (default hurl flags: --color --error-format=long)
+	koi.sh -f create.hurl -x --ignore-asserts # final hurl args: --color --error-format=long --ignore-asserts
+	koi.sh -f create.hurl -x -x               # final hurl args: --color --error-format=long -x
+	koi.sh <file>                             # same as `koi.sh -f <file>`
+	EOF
+	exit 1
+}
+
 date="date"
 if isdarwin; then
 	date=gdate
@@ -24,6 +39,7 @@ if ! command -v "$date" &>/dev/null; then
 	exit 1
 fi
 
+[ $# -eq 0 ] && usage
 [ $# -eq 1 ] && FILE="$1"
 HURL_ARGS=(--color --error-format=long)
 while true; do
@@ -31,18 +47,7 @@ while true; do
 
 	case "$1" in
 		-h|--help)
-			cat - <<-"EOF"
-			Usage:
-			koi.sh -f <file> [-x <hurl arg>]
-
-			# Examples
-			koi.sh -h                                 # show this message
-			koi.sh -f create.hurl                     # run file (default hurl flags: --color --error-format=long)
-			koi.sh -f create.hurl -x --ignore-asserts # final hurl args: --color --error-format=long --ignore-asserts
-			koi.sh -f create.hurl -x -x               # final hurl args: --color --error-format=long -x
-			koi.sh <file>                             # same as `koi.sh -f <file>`
-			EOF
-			exit 1
+			usage
 			;;
 
 		-f)
