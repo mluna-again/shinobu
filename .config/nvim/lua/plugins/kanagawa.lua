@@ -10,7 +10,7 @@ return {
 			vertleft = "┫",
 			vertright = "┣",
 			verthoriz = "╋",
-			eob = " "
+			eob = " ",
 		}
 		-- vim.opt.fillchars = {
 		-- 	horiz = " ",
@@ -35,10 +35,10 @@ return {
 			theme = {
 				all = {
 					ui = {
-						bg = "none"
-					}
-				}
-			}
+						bg = "none",
+					},
+				},
+			},
 		}
 
 		if vim.g.neovide then
@@ -361,6 +361,20 @@ return {
 
 					-- -_- ofc it does random shit after updating
 					["@markup.link"] = { underline = false },
+
+					-- orgmode
+					OrgHeadline = { bg = theme.ui.bg },
+					OrgDash = { bg = theme.ui.bg_p1, fg = theme.ui.bg_p1 },
+					OrgCodeBlock = { bg = theme.ui.bg_m1 },
+					["@org.hyperlink"] = { fg = theme.syn.identifier, underline = true },
+					["@org.headline.level1"] = { fg = theme.syn.operator },
+					["@org.headline.level2"] = { fg = theme.syn.constant },
+					["@org.headline.level3"] = { fg = theme.syn.identifier },
+					["@org.headline.level4"] = { fg = theme.syn.fun },
+					["@org.headline.level5"] = { fg = theme.syn.operator },
+					["@org.headline.level6"] = { fg = theme.syn.constant },
+					["@org.headline.level7"] = { fg = theme.syn.identifier },
+					["@org.headline.level8"] = { fg = theme.syn.fun },
 				}
 			end,
 		})
