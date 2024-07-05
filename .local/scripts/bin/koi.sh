@@ -24,6 +24,45 @@ if ! command -v "$date" &>/dev/null; then
 	exit 1
 fi
 
+[ $# -eq 1 ] && FILE="$1"
+HURL_ARGS=(--color --error-format=long)
+while true; do
+	[ -z "$1" ] && break
+
+	case "$1" in
+		-h|--help)
+			cat - <<-"EOF"
+			Usage:
+			koi.sh -f <file> [-x <hurl arg>]
+
+			# Examples
+			koi.sh -h                                 # show this message
+			koi.sh -f create.hurl                     # run file (default hurl flags: --color --error-format=long)
+			koi.sh -f create.hurl -x --ignore-asserts # final hurl args: --color --error-format=long --ignore-asserts
+			koi.sh -f create.hurl -x -x               # final hurl args: --color --error-format=long -x
+			koi.sh <file>                             # same as `koi.sh -f <file>`
+			EOF
+			exit 1
+			;;
+
+		-f)
+			shift
+			FILE="$1"
+			;;
+
+		-x)
+			shift
+			HURL_ARGS+=("$1")
+	esac
+
+	shift
+done
+
+if [ -z "$FILE" ]; then
+	echo "Missing file." >&2
+	exit 1
+fi
+
 DATE_FMT="+%Y-%m-%dT%H:%M:%S%z"
 NOW=$("$date" -u "$DATE_FMT")
 
@@ -42,13 +81,7 @@ export HURL_KOI_UUID
 export HURL_KOI_RANDOM
 export HURL_KOI_LOREM
 
-file="$1"
-if [ -z "$file" ]; then
-	echo "Missing file." >&2
-	exit 1
-fi
-
-output=$(hurl --color --error-format=long "$file") || exit
+output=$(hurl "${HURL_ARGS[@]}" "$FILE") || exit
 if ! jnv <<< "$output"; then
 	echo "$output"
 fi
