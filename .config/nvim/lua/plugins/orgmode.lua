@@ -5,6 +5,13 @@ return {
 	cmd = "Org",
 	ft = { "org" },
 	config = function()
+		vim.api.nvim_create_autocmd("BufEnter", {
+			pattern = {"*.org"},
+			callback = function()
+				vim.opt_local.spell = true
+			end
+		})
+
 		require("orgmode").setup({
 			-- org_agenda_files = '~/orgfiles/**/*',
 			-- org_default_notes_file = '~/orgfiles/refile.org',
