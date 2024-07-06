@@ -20,6 +20,8 @@ return {
 					org_todo_next = "<S-RIGHT>",
 					org_forward_heading_same_level = "<C-c><C-n>",
 					org_backward_heading_same_level = "<C-c><C-p>",
+					org_next_visible_heading = false,
+					org_previous_visible_heading = false,
 					org_do_promote = "<M-LEFT>",
 					org_do_demote = "<M-RIGHT>",
 					org_meta_return = "<M-CR>",
