@@ -75,3 +75,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 (setq-default evil-escape-key-sequence "jj")
+
+(setq org-modern-label-border nil)
+(global-org-modern-mode)
