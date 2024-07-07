@@ -9,6 +9,9 @@ return {
 			pattern = {"*.org"},
 			callback = function()
 				vim.opt_local.spell = true
+				vim.opt_local.textwidth = 120
+				vim.opt_local.linebreak = true
+				vim.opt_local.wrap = true
 			end
 		})
 
