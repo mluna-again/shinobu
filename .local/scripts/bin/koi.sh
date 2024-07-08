@@ -19,7 +19,13 @@ usage() {
 	Usage:
 	koi.sh -f <file> [-x <hurl arg>]
 
-	# Examples
+	Flags:
+	-h             help
+	-f <file>      hurl file to execute
+	-x <flag>      hurl flag to append
+	-J             skip JSON parsing (no jvn)
+
+	Examples:
 	koi.sh -h                                 # show this message
 	koi.sh -f create.hurl                     # run file (default hurl flags: --color --error-format=long)
 	koi.sh -f create.hurl -x --ignore-asserts # final hurl args: --color --error-format=long --ignore-asserts
@@ -41,6 +47,7 @@ fi
 
 [ $# -eq 0 ] && usage
 [ $# -eq 1 ] && FILE="$1"
+NO_PARSE_JSON=0
 HURL_ARGS=(--color --error-format=long)
 while true; do
 	[ -z "$1" ] && break
@@ -48,6 +55,10 @@ while true; do
 	case "$1" in
 		-h|--help)
 			usage
+			;;
+
+		-J)
+			NO_PARSE_JSON=1
 			;;
 
 		-f)
@@ -87,6 +98,11 @@ export HURL_KOI_RANDOM
 export HURL_KOI_LOREM
 
 output=$(hurl "${HURL_ARGS[@]}" "$FILE") || exit
-if ! jnv <<< "$output"; then
-	echo "$output"
+
+if [ "$NO_PARSE_JSON" -eq 0 ]; then
+	if ! jnv <<< "$output"; then
+		echo "$output"
+	fi
+else
+	echo "$output" | jq
 fi
