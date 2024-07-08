@@ -366,7 +366,7 @@ return {
 					OrgHeadline = { bg = theme.ui.bg },
 					OrgDash = { bg = theme.ui.bg_p1, fg = theme.ui.bg_p1 },
 					OrgCodeBlock = { bg = theme.ui.bg_m1 },
-					["@org.hyperlink"] = { fg = theme.syn.identifier, underline = true },
+					["@org.hyperlink"] = { underline = true },
 					["@org.headline.level1"] = { fg = theme.syn.number },
 					["@org.headline.level2"] = { fg = theme.syn.constant },
 					["@org.headline.level3"] = { fg = theme.syn.identifier },
