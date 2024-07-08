@@ -23,7 +23,10 @@ usage() {
 	-h             help
 	-f <file>      hurl file to execute
 	-x <flag>      hurl flag to append
-	-J             skip JSON parsing (no jvn)
+	-J             skip JSON parsing (no jvn but still jq to format)
+	-JJ            skip JSON parsing and formatting (no jvn and no jq)
+	-X             no postprocessing, just run the request and return the bare response
+	               (this also enables the -i hurl flag)
 
 	Examples:
 	koi.sh -h                                 # show this message
@@ -48,6 +51,8 @@ fi
 [ $# -eq 0 ] && usage
 [ $# -eq 1 ] && FILE="$1"
 NO_PARSE_JSON=0
+NO_FORMAT_JSON=0
+NO_POSTPROCESSING=0
 HURL_ARGS=(--color --error-format=long)
 while true; do
 	[ -z "$1" ] && break
@@ -59,6 +64,16 @@ while true; do
 
 		-J)
 			NO_PARSE_JSON=1
+			;;
+
+		-JJ)
+			NO_PARSE_JSON=1
+			NO_FORMAT_JSON=1
+			;;
+
+		-X)
+			NO_POSTPROCESSING=1
+			HURL_ARGS+=("-i")
 			;;
 
 		-f)
@@ -99,10 +114,19 @@ export HURL_KOI_LOREM
 
 output=$(hurl "${HURL_ARGS[@]}" "$FILE") || exit
 
+if [ "$NO_POSTPROCESSING" -eq 1 ]; then
+	echo "$output"
+	exit
+fi
+
 if [ "$NO_PARSE_JSON" -eq 0 ]; then
 	if ! jnv <<< "$output"; then
 		echo "$output"
 	fi
 else
-	echo "$output" | jq
+	if [ "$NO_FORMAT_JSON" -eq 0 ]; then
+		echo "$output" | jq
+	else
+		echo "$output"
+	fi
 fi
