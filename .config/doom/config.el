@@ -78,3 +78,4 @@
 
 (setq org-modern-label-border nil)
 (global-org-modern-mode)
+(setq org-startup-with-inline-images t)
