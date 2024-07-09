@@ -18,6 +18,8 @@
 ;; - `doom-symbol-font' -- for symbols
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 ;;
+
+ (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
@@ -76,6 +78,7 @@
 ;; they are implemented.
 (setq-default evil-escape-key-sequence "jj")
 
-(setq org-modern-label-border nil)
-(global-org-modern-mode)
 (setq org-startup-with-inline-images t)
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+(setq org-superstar-headline-bullets-list
+      '("󰴈" "" "󰫢" ""))

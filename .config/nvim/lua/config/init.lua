@@ -1,6 +1,6 @@
 vim.o.encoding = "UTF-8"
 -- vim.o.clipboard = "unnamedplus"
-vim.cmd([[language en_US.utf8]])
+vim.cmd([[language en_US.utf-8]])
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = 'nc'
 vim.wo.number = true
