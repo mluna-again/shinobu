@@ -890,11 +890,11 @@ EOF
 		;;
 
 	"Tmux: new window to the left")
-		tmux new-window -b -t . -c "#{pane_current_path}"
+		tmux new-window -b -t .
 		;;
 
 	"Tmux: new window to the right")
-		tmux new-window -a -t . -c "#{pane_current_path}"
+		tmux new-window -a -t .
 		;;
 
 	"Tmux: set current directory as default")
