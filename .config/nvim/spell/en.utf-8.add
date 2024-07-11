@@ -5,3 +5,9 @@ subnetworks
 DHCP
 CIDR
 VLSM
+Anycast
+anycast
+IANA
+WLAN
+loopback
+multihoming

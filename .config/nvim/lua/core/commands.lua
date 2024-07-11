@@ -1,10 +1,9 @@
 local function yankFullBufferPath()
-	vim.cmd("let @+ = expand(\"%:p\")")
+	local path = vim.fn.expand("%:p")
+	local short_path = path:gsub(os.getenv("HOME"), "~")
+	local cmd = string.format("let @+ = \"%s\"", short_path)
+
+	vim.cmd(cmd)
 end
 
-local function yankBufferPath()
-	vim.cmd("let @+ = expand(\"%\")")
-end
-
-vim.api.nvim_create_user_command("YankFull", yankFullBufferPath, {})
-vim.api.nvim_create_user_command("Yank", yankBufferPath, {})
+vim.api.nvim_create_user_command("YankBufferPath", yankFullBufferPath, {})
