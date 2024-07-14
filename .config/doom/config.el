@@ -102,3 +102,4 @@
       (lambda()
         (message-box "   Go away   ")))
 (setq org-clock-sound (file-truename "~/.config/doom/bell.wav"))
+(setq org-timer-default-timer "00:15:00")
