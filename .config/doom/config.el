@@ -34,7 +34,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-ayu-dark)
+(setq doom-theme 'doom-monokai-classic)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -80,6 +80,9 @@
 
 (setq org-startup-with-inline-images t)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+(add-hook 'org-mode-hook (lambda ()
+                           (setq fill-column 120)
+                           (turn-on-auto-fill)))
 (setq org-superstar-headline-bullets-list
       '("󰴈" "" "󰫢" ""))
 
