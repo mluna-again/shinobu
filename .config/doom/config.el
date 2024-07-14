@@ -97,3 +97,8 @@
 (map! :leader :n "n c" #'org-roam-capture)
 (map! :leader :n "n j" #'org-roam-dailies-capture-today)
 (map! :leader :n "f b" #'switch-to-buffer)
+
+(setq org-timer-done-hook
+      (lambda()
+        (message-box "   Go away   ")))
+(setq org-clock-sound (file-truename "~/.config/doom/bell.wav"))
