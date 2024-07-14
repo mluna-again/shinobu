@@ -76,14 +76,17 @@ function search_dir
 end
 
 function ask_confirmation_exit
+    # fucking emacs man where the fuck does it get its env????
+    # $TMUX it's always non empty inside an emacs term even though i didnt
+    # start emacs from a running tmux session
+    if test -z "$TMUX" || test -n "$INSIDE_EMACS"
+        exit
+    end
+
     set -l cursor (commandline -C)
     if test "$cursor" -ne 0
         commandline -f repaint
         return
-    end
-
-    if test -z "$TMUX"
-        exit
     end
 
     set -l panes (tmux list-panes | wc -l)
@@ -191,7 +194,11 @@ if status is-interactive
     command -vq zoxide; and zoxide init fish | source
     command -vq starship; and starship init fish | source
 
-    if uname | grep -iq linux && test -z "$TMUX" && test -z "$NVIM" && command -vq tmux
+    if uname | grep -iq linux && \
+        test -z "$TMUX" && \
+        test -z "$NVIM" && \
+        command -vq tmux && \
+        test -z "$INSIDE_EMACS"
         t
     end
 end
