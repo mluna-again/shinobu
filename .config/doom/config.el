@@ -103,3 +103,4 @@
         (message-box "   Go away   ")))
 (setq org-clock-sound (file-truename "~/.config/doom/bell.wav"))
 (setq org-timer-default-timer "00:15:00")
+(setq org-html-table-caption-above nil)
