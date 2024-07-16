@@ -97,6 +97,10 @@
 (map! "C-c n c" #'org-roam-capture)
 (map! "C-c n j" #'org-roam-dailies-capture-today)
 (map! :leader :n "f b" #'switch-to-buffer)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "RET") nil)
+  (define-key company-active-map (kbd "C-k") #'company-complete-selection))
 
 (setq org-timer-done-hook
       (lambda()
