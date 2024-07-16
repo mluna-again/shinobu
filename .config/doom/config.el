@@ -105,3 +105,6 @@
 (setq org-timer-default-timer "00:15:00")
 (setq org-html-table-caption-above nil)
 (mouse-avoidance-mode 'cat-and-mouse)
+
+(setq treemacs-width 50)
+(setq treemacs-position 'right)
