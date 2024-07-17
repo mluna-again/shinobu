@@ -800,53 +800,37 @@ EOF
 			"Custom timer")
 				free_input " Time " "  "
 				time=$(read_input)
-				output=$(pomo start "$time")
-				if [ "$?" -ne 0 ]; then
-					error "$output"
-					exit
-				fi
+				nohup pomo start "$time" &>/dev/null &
+				disown
 				;;
 
 			"15 minutes")
-				output=$(pomo start 15m)
-				if [ "$?" -ne 0 ]; then
-					error "$output"
-					exit
-				fi
+				nohup pomo start "15m" &>/dev/null &
+				disown
 				;;
 
 			"25 minutes")
-				output=$(pomo start 25m)
-				if [ "$?" -ne 0 ]; then
-					error "$output"
-					exit
-				fi
+				nohup pomo start "25m" &>/dev/null &
+				disown
 				;;
 
 			"1 hour")
-				output=$(pomo start 60m)
-				if [ "$?" -ne 0 ]; then
-					error "$output"
-					exit
-				fi
+				nohup pomo start "60m" &>/dev/null &
+				disown
 				;;
 		esac
 
-		tmux set -g status-interval 1
-		tmux refresh-client -S
 		true
 		;;
 
 	"Pomodoro: stop")
-		nohup pomo stop &
+		nohup pomo stop &>/dev/null &
 		disown
-		tmux set -g status-interval 5
-		tmux refresh-client -S
 		;;
 
 	"Pomodoro: pause")
-		pomo pause &>/dev/null
-		tmux refresh-client -S
+		nohup pomo pause &>/dev/null &
+		disown
 		;;
 
 	"Reload: configuration")
