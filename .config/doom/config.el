@@ -118,3 +118,6 @@
   (setq ispell-dictionary "en_US,es_ES")
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,es_ES"))
+
+(use-package! evil-terminal-cursor-changer
+  :hook (tty-setup . evil-terminal-cursor-changer-activate))

@@ -34,6 +34,26 @@ pomo pause
 EOF
 }
 
+play() {
+  local file="$1"
+
+  if uname | grep -iq linux; then
+    command -v aplay &>/dev/null || return 1
+
+    aplay "$file"
+    return
+  fi
+
+  if uname | grep -iq darwin; then
+    command -v afplay &>/dev/null || return 1
+
+    afplay "$file"
+    return
+  fi
+
+  return 1
+}
+
 _date() {
   if uname | grep -iq darwin; then
     gdate "$@"
@@ -128,6 +148,12 @@ tick() {
   [ ! -s "$LAST_RUN_FILE" ] && diff=0
   time=$(( time * quantity ))
   time=$(( time - diff ))
+
+  # play the sound *only* after pomo has changed to DONE, otherwise
+  # it will lag at 1 second
+  if [ "$time" -lt 0 ]; then
+    play "$HOME/.config/doom/bell.wav" || true
+  fi
 
   if [ "$time" -le 0 ]; then
     bg="red"
