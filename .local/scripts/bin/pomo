@@ -10,6 +10,19 @@ yellow="${background:-yellow}"
 red="$(tmux display -p "#{@color_error}")"
 red="${background:-red}"
 
+ringbell() {
+  player=aplay
+  if uname | grep -iq darwin; then
+    player=afplay
+  fi
+
+  if ! command -v "$player" &>/dev/null; then
+    return
+  fi
+
+  "$player" "$HOME/.config/doom/bell.wav"
+}
+
 format_message() {
   local seconds="$1"
   time="$(tominutes "$seconds")"
@@ -93,14 +106,20 @@ start() {
     exit 1
   fi
 
+  finished=0
   while true; do
+    if (( finished == 1 )); then
+      ringbell
+      continue
+    fi
+
     format_message "$seconds"
     sleep 1
     seconds=$((seconds - 1))
 
     if (( seconds <= 0 )); then
       format_message "$seconds"
-      break
+      finished=1
     fi
   done
 }
