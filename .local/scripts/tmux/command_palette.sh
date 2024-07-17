@@ -781,6 +781,11 @@ case "$action" in
 		;;
 
 	"Pomodoro: new")
+		if ! command -v flock &>/dev/null; then
+			error "flock not installed"
+			exit
+		fi
+
 	lines=$(cat - <<EOF
 15 minutes
 25 minutes
@@ -827,18 +832,21 @@ EOF
 				;;
 		esac
 
+		tmux refresh-client -S
 		tmux set -g status-interval 1
 		true
 		;;
 
 	"Pomodoro: stop")
-		pomo stop &>/dev/null
-		( sleep 2; tmux set -g status-interval 5 ) &>/dev/null &
+		nohup pomo stop &
+		disown
+		tmux set -g status-interval 5
+		tmux refresh-client -S
 		;;
 
 	"Pomodoro: pause")
-		tmux set -g status-interval 1
 		pomo pause &>/dev/null
+		tmux refresh-client -S
 		;;
 
 	"Reload: configuration")
