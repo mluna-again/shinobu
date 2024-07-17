@@ -34,32 +34,6 @@ pomo pause
 EOF
 }
 
-tellem() {
-  local msg="$1"
-  local display=""
-  display="$(tmux show-env | grep -i display | head -1)"
-  display="${display//DISPLAY=/}"
-  export DISPLAY="$display"
-
-  if uname | grep -iq linux; then
-    # its important to close stdout and stderr because if not it will hang until
-    # dialog is dismissed
-    nohup notify-send "$msg" &>/dev/null &
-    disown
-
-    return 0
-  fi
-
-  if uname | grep -iq darwin; then
-    nohup osxalert.sh Alacritty "$msg" "Ok" &>/dev/null &
-    disown
-
-    return 0
-  fi
-
-  return 1
-}
-
 play() {
   local file="$1"
 
@@ -179,10 +153,6 @@ tick() {
   # it will lag at 1 second
   if [ "$time" -lt 0 ]; then
     play "$HOME/.config/doom/bell.wav" || true
-  fi
-
-  if [ "$time" -eq 0 ]; then
-    tellem "Go away"
   fi
 
   if [ "$time" -le 0 ]; then
