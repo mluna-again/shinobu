@@ -11,4 +11,6 @@ tmux new-session -d -c "$HOME/Notes" -s notes -n index "nvim index.org" \; set s
 tmux kill-session -t scratch &>/dev/null || true
 tmux new-session -d -c "$HOME" -s scratch -n playground
 
+tmux kill-session -t emacs &>/dev/null || true
+
 "$HOME/.local/scripts/tmux/welcome/welcome.sh"
