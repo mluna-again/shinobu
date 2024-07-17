@@ -832,8 +832,8 @@ EOF
 				;;
 		esac
 
-		tmux refresh-client -S
 		tmux set -g status-interval 1
+		tmux refresh-client -S
 		true
 		;;
 
