@@ -121,3 +121,6 @@
 
 (use-package! evil-terminal-cursor-changer
   :hook (tty-setup . evil-terminal-cursor-changer-activate))
+
+(setq browse-url-browser-function #'browse-url-firefox)
+(setenv "BROWSER" "firefox")
