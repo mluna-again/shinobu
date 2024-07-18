@@ -159,6 +159,7 @@ func Serve() {
 	router.Post("/removeFromLiked", app.checkTokenMiddleware(app.loggingMiddleware(app.removeFromLiked)))
 	router.Get("/devices", app.checkTokenMiddleware(app.loggingMiddleware(app.listDevices)))
 	router.Post("/setDevice", app.checkTokenMiddleware(app.loggingMiddleware(app.setDevice)))
+	router.Post("/repeat", app.checkTokenMiddleware(app.loggingMiddleware(app.repeatSongs)))
 	router.HandleFunc("/*", func(w http.ResponseWriter, r *http.Request) {
 		app.sendNotFound(w, r)
 	})

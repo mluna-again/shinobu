@@ -383,3 +383,37 @@ func (app *app) setDevice(w http.ResponseWriter, r *http.Request) {
 
 	app.sendOk(w)
 }
+
+func (app *app) repeatSongs(w http.ResponseWriter, r *http.Request) {
+	s, err := app.client.PlayerState(r.Context())
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	var newstate string
+	switch s.RepeatState {
+	case "off":
+		newstate = "track"
+
+	case "track":
+		newstate = "context"
+
+	default:
+		newstate = "off"
+	}
+
+	err = app.client.Repeat(r.Context(), newstate)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+
+	data := map[string]string{"new_state": newstate}
+	payload, err := json.Marshal(data)
+	if err != nil {
+		app.sendInternalServerError(w, err)
+		return
+	}
+	app.sendJSON(w, payload)
+}

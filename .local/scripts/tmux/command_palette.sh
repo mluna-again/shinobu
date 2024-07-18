@@ -66,6 +66,7 @@ Spotify: bop queue
 Spotify: save song
 Spotify: delete song
 Spotify: set device
+Spotify: toggle repeat
 Panes: Close all but focused one
 Destroy: server
 Detach: client
@@ -1012,6 +1013,16 @@ EOF
 
 			true
 		fi
+		;;
+
+	"Spotify: toggle repeat")
+		try_to_wake_bop || exit 0
+		output=$(curl -X POST -sSf "http://localhost:8888/repeat") || {
+			error "Could not update repeat state."
+			exit 0
+		}
+		new_state=$(jq .new_state <<< "$output")
+		success "New repeat state to $new_state"
 		;;
 
 	"Spotify: queue")
