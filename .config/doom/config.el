@@ -114,10 +114,13 @@
 (setq treemacs-position 'right)
 
 (with-eval-after-load 'ispell
-  (setq ispell-program-name "hunspell")
-  (setq ispell-dictionary "en_US,es_ES")
-  (ispell-set-spellchecker-params)
-  (ispell-hunspell-add-multi-dic "en_US,es_ES"))
+  (condition-case nil
+      (progn
+        (setq ispell-program-name "hunspell")
+        (setq ispell-dictionary "en_US,es_ES")
+        (ispell-set-spellchecker-params)
+        (ispell-hunspell-add-multi-dic "en_US,es_ES"))
+    (error "Could not load hunspell")))
 
 (use-package! evil-terminal-cursor-changer
   :hook (tty-setup . evil-terminal-cursor-changer-activate))
