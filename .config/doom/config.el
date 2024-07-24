@@ -124,3 +124,14 @@
 
 (setq browse-url-browser-function #'browse-url-firefox)
 (setenv "BROWSER" "firefox")
+
+(defun recalculate-tables ()
+  "Recalculates all tables in the current Org buffer."
+  (interactive)
+  (if (string= major-mode "org-mode")
+      (progn
+        ;; (org-table-recalculate-buffer-tables)
+        (org-table-iterate-buffer-tables)
+        (message
+         (format-time-string "Last updated: %d/%m/%Y at %H:%M %p")))
+    (message "Not an Org file")))
