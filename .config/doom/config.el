@@ -96,7 +96,9 @@
 (map! "C-c n i" #'org-roam-node-insert)
 (map! "C-c n c" #'org-roam-capture)
 (map! "C-c n j" #'org-roam-dailies-capture-today)
+(map! "C-c ¿" #'org-table-edit-field)
 (map! :leader :n "f b" #'switch-to-buffer)
+(map! :mode 'org-mode "C-c TAB" #'org-table-toggle-column-width)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "<return>") nil)
   (define-key company-active-map (kbd "RET") nil)
@@ -138,3 +140,10 @@
         (message
          (format-time-string "Last updated: %d/%m/%Y at %H:%M %p")))
     (message "Not an Org file")))
+
+
+(unless (display-graphic-p)
+  ;; activate mouse-based scrolling
+  (xterm-mouse-mode 1)
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
