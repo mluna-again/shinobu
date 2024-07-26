@@ -101,6 +101,7 @@
 (map! :mode 'org-mode "C-c TAB" #'org-table-toggle-column-width)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "<tab>") nil)
   (define-key company-active-map (kbd "RET") nil)
   (define-key company-active-map (kbd "C-k") #'company-complete-selection))
 

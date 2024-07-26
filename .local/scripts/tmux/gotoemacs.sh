@@ -5,5 +5,5 @@ if [ "$(tmux display -p '#{session_name}')" = emacs ]; then
 	exit
 fi
 
-tmux new-session -d -s emacs -c "$HOME" emacsclient -a '' -c --tty &>/dev/null || true
+tmux new-session -d -s emacs -c "$HOME" "emacsclient -a '' -c --tty" &>/dev/null || true
 tmux switch-client -t emacs \; rename-window -t . editor || true
