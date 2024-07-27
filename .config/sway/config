@@ -1,0 +1,208 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $super Mod4
+set $alt Mod1
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+
+include /etc/sway/config-vars.d/*
+
+### Output configuration
+#
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+
+    # Drag floating windows by holding down $super and left mouse button.
+    # Resize them with right mouse button + $super.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $super normal
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $super+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+#
+#
+# Layout stuff:
+#
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $super+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $super+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $super+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $super+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $super+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $super+r mode "resize"
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+include /etc/sway/config.d/*
+
+# CUSTOM CONFIG
+input type:keyboard {
+  xkb_layout latam
+
+  repeat_delay 250
+  repeat_rate 50
+}
+
+output * bg ~/.local/walls/pink.jpg fill
+
+set $term alacritty --config-file ~/.config/alacritty/alacritty_linux.toml
+
+set $menu LD_LIBRARY_PATH=/usr/local/lib BEMENU_RENDERERS=/usr/local/lib/bemenu bemenu-run
+
+bindsym $alt+Return exec $term
+bindsym $alt+d exec $menu
+bindsym $alt+Shift+q kill
+bindsym $alt+Shift+c reload
+
+bindsym $alt+$left focus left
+bindsym $alt+$down focus down
+bindsym $alt+$up focus up
+bindsym $alt+$right focus right
+bindsym $alt+Left focus left
+bindsym $alt+Down focus down
+bindsym $alt+Up focus up
+bindsym $alt+Right focus right
+bindsym $alt+Tab focus right
+bindsym $alt+Shift+Tab focus left
+
+bindsym $alt+Shift+$left move left
+bindsym $alt+Shift+$down move down
+bindsym $alt+Shift+$up move up
+bindsym $alt+Shift+$right move right
+bindsym $alt+Shift+Left move left
+bindsym $alt+Shift+Down move down
+bindsym $alt+Shift+Up move up
+bindsym $alt+Shift+Right move right
+
+bindsym $alt+1 workspace number 1
+bindsym $alt+2 workspace number 2
+bindsym $alt+3 workspace number 3
+bindsym $alt+4 workspace number 4
+bindsym $alt+5 workspace number 5
+bindsym $alt+6 workspace number 6
+bindsym $alt+7 workspace number 7
+bindsym $alt+8 workspace number 8
+bindsym $alt+9 workspace number 9
+bindsym $alt+0 workspace number 10
+
+bindsym $alt+Shift+1 move container to workspace number 1, workspace 1
+bindsym $alt+Shift+2 move container to workspace number 2, workspace 2
+bindsym $alt+Shift+3 move container to workspace number 3, workspace 3
+bindsym $alt+Shift+4 move container to workspace number 4, workspace 4
+bindsym $alt+Shift+5 move container to workspace number 5, workspace 5
+bindsym $alt+Shift+6 move container to workspace number 6, workspace 6
+bindsym $alt+Shift+7 move container to workspace number 7, workspace 7
+bindsym $alt+Shift+8 move container to workspace number 8, workspace 8
+bindsym $alt+Shift+9 move container to workspace number 9, workspace 9
+bindsym $alt+Shift+0 move container to workspace number 10, workspace 10
+bindsym $alt+v splith
+bindsym $alt+s splitv
+bindsym $alt+w layout tabbed
+bindsym $alt+e layout toggle split
+
+bindsym $alt+f fullscreen

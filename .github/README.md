@@ -45,6 +45,16 @@ https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-8
 25. the_silver_searcher
 26. glow
 
+# Linux (sway)
+1. sway
+2. bemenu
+3. swaybg
+4. grim
+5. wl-clipboard (grim dep)
+6. slurp (grim dep)
+7. jq (grim dep)
+8. notify-send (grim dep, you probably already have this)
+
 ## Problems I've encountered that I don't want to forget
 
 * You open a file and no status line and/or highlight on:
