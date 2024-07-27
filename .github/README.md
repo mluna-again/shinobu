@@ -56,6 +56,8 @@ https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-8
 8. notify-send (grim dep, you probably already have this)
 9. swayidle
 10. swaylock
+11. greetd
+12. tuigreet
 
 ## Problems I've encountered that I don't want to forget
 
@@ -91,4 +93,10 @@ $ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 * Enable bat kanagawa theme:
 ```sh
 $ bat cache --build
+```
+## Post-installation (linux sway only)
+
+* Copy greetd config files
+```sh
+$ cp .config/greetd/config.toml /etc/greetd/config.toml # probably needs sudo
 ```
