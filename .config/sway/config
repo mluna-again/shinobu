@@ -2,7 +2,7 @@ include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 
 set $term alacritty --config-file ~/.config/alacritty/alacritty_linux.toml
-set $menu LD_LIBRARY_PATH=/usr/local/lib BEMENU_RENDERERS=/usr/local/lib/bemenu bemenu-run
+set $menu LD_LIBRARY_PATH=/usr/local/lib BEMENU_RENDERERS=/usr/local/lib/bemenu bemenu-run --list 50
 set $lock_cmd LC_ALL=en_US.UTF-8 swaylock -f --clock --ignore-empty-password --indicator-caps-lock --indicator --indicator-idle-visible --fade-in 0.3 --effect-vignette 0.5:0.5
 set $left h
 set $down j
@@ -27,7 +27,7 @@ exec swayidle -w \
 
 floating_modifier $super normal
 
-bindsym $super+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $alt+Shift+e exec ~/.local/scripts/swayutils/powermenu.sh
 
 # Toggle the current focus between tiling and floating mode
 # bindsym $super+Shift+space floating toggle
@@ -104,10 +104,6 @@ bindsym $alt+e layout toggle split
 bindsym $alt+f fullscreen
 
 bindsym $super+l exec "$lock_cmd"
-bindsym $super+Shift+l exec swayidle -w \
-                          timeout 1 "$lock_cmd" \
-                          timeout 5 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-                          before-sleep "$lock_cmd"
 
 mode "resize" {
     # left will shrink the containers width
