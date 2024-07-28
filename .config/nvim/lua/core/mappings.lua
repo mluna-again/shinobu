@@ -13,6 +13,7 @@ wk.register({
 		v = { "<C-w>v", "Open horizontal window", noremap = true, silent = true },
 		d = { "<C-w>q", "Close window", noremap = true, silent = true },
 		q = { "<C-w>q", "Also close window", noremap = true, silent = true },
+		D = { ":only<CR>", "Close all but current window", noremap = true, silent = true }
 	},
 	g = {
 		name = "Git",
