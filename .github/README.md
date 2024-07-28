@@ -95,7 +95,7 @@ $ bat cache --build
 ```
 ## Post-installation (linux sway only)
 
-* Copy ty config files
+* Copy ly config files
 ```sh
-$ cp .config/ty/config.ini /etc/ly/config.ini # probably needs sudo
+$ cp .config/ly/config.ini /etc/ly/config.ini # probably needs sudo
 ```
