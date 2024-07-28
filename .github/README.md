@@ -56,8 +56,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-8
 8. notify-send (grim dep, you probably already have this)
 9. swayidle
 10. swaylock-effects
-11. greetd
-12. tuigreet
+11. ly
 
 ## Problems I've encountered that I don't want to forget
 
@@ -96,7 +95,7 @@ $ bat cache --build
 ```
 ## Post-installation (linux sway only)
 
-* Copy greetd config files
+* Copy ty config files
 ```sh
-$ cp .config/greetd/config.toml /etc/greetd/config.toml # probably needs sudo
+$ cp .config/ty/config.ini /etc/ly/config.ini # probably needs sudo
 ```
