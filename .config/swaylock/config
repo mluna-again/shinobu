@@ -1,0 +1,50 @@
+image=~/.local/walls/pink.jpg
+# font=FantasqueSansM Nerd Font Propo
+font-size=30
+effect-blur=7x5
+scaling=fill
+indicator-x-position=150
+indicator-y-position=150
+indicator-radius=100
+indicator-thickness=10
+
+# caps lock
+caps-lock-bs-hl-color=181816
+caps-lock-key-hl-color=181816
+inside-caps-lock-color=181816
+line-caps-lock-color=181816
+ring-caps-lock-color=181816
+text-caps-lock-color=c5c9c5
+
+# cleared
+text-clear-color=b6927b
+ring-clear-color=b6927b
+line-clear-color=b6927b
+inside-clear-color=181816
+
+# idle
+layout-text-color=c5c9c5
+text-color=c5c9c5
+line-color=181816
+ring-color=181816
+inside-color=181816
+bs-hl-color=181816
+bs-hl-color=181816
+separator-color=181816
+key-hl-color=c4b28a
+layout-bg-color=181816
+layout-border-color=181816
+
+# correct
+
+# wrong
+ring-wrong-color=c4746e
+text-wrong-color=c4746e
+inside-wrong-color=181816
+line-wrong-color=c4746e
+
+# verifying
+ring-ver-color=c4b28a
+text-ver-color=c4b28a
+line-ver-color=c4b28a
+inside-ver-color=181816

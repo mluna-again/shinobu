@@ -55,7 +55,7 @@ https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-8
 7. jq (grim dep)
 8. notify-send (grim dep, you probably already have this)
 9. swayidle
-10. swaylock
+10. swaylock-effects
 11. greetd
 12. tuigreet
 
