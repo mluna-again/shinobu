@@ -20,7 +20,7 @@ input type:keyboard {
   repeat_rate 50
 }
 
-output * bg ~/.local/walls/pink.jpg fill
+output * bg ~/.local/walls/kanagawa.jpg stretch
 
 exec swayidle -w \
          timeout 300 "$lock_cmd" \
