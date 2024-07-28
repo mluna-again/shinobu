@@ -127,16 +127,21 @@ mode "resize" {
 }
 bindsym $super+r mode "resize"
 
+default_border pixel 2
+default_floating_border normal 2
+
+# client.<class> border background text indicator
+client.focused #a6a69c #a6a69c #181816 #c4b28a
+client.focused_inactive #a6a69c #a6a69c #181816 #c4b28a
+client.unfocused #181816 #181816 #c5c9c5 #c4b28a
+
 bar {
-    position top
+  position top
+  status_command while LC_ALL=en_US.UTF-8 date +"%b %d, %Y  %I:%M %p"; do sleep 1; done
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+  colors {
+    statusline #ffffff
+    background #323232
+    inactive_workspace #32323200 #32323200 #5c5c5c
+  }
 }
