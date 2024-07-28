@@ -99,6 +99,8 @@
 (map! "C-c ¿" #'org-table-edit-field)
 (map! :leader :n "f b" #'switch-to-buffer)
 (map! :mode 'org-mode "C-c TAB" #'org-table-toggle-column-width)
+(map! :ni "C-w o" #'delete-other-windows
+      :ni "C-w o" #'delete-other-windows)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "<return>") nil)
   (define-key company-active-map (kbd "<tab>") nil)
