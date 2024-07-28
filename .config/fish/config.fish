@@ -161,7 +161,7 @@ abbr --add hcurl curl -s -o /dev/null -w "%{http_code}"
 abbr --add clip fish_clipboard_copy
 abbr --add --set-cursor b bash -c \"%
 abbr --add dateiso date +"%Y-%m-%dT%H:%M:%S%z"
-abbr --add emacs emacsclient -a '' -c --tty
+abbr --add emacsc "emacsclient -a '' -c --tty"
 
 command -v z &>/dev/null; and function cd
     z $argv
