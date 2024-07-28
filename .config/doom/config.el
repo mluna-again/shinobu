@@ -150,3 +150,26 @@
   (xterm-mouse-mode 1)
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
+
+(defun open-ledger-journal ()
+  (interactive)
+  (find-file "~/Ledger/journal.ledger"))
+
+(defun open-config-file ()
+  (interactive)
+  (find-file "~/.config/doom/config.el"))
+
+(map! :leader :n "o c" #'open-config-file)
+(map! :leader :n "o l" #'open-ledger-journal)
+
+(add-to-list '+doom-dashboard-menu-sections
+             '("Open Ledger Journal"
+               :key "SPC o l"
+               :icon (nerd-icons-faicon "nf-fa-book" :face 'doom-dashboard-menu-title)
+               :action open-ledger-journal))
+
+(add-to-list '+doom-dashboard-menu-sections
+             '("Open config file"
+               :key "SPC o c"
+               :icon (nerd-icons-sucicon "nf-seti-config" :face 'doom-dashboard-menu-title)
+               :action open-config-file))
