@@ -58,6 +58,10 @@ https://github.com/mluna-again/shinobu/assets/53100040/e04eb9fa-41aa-4320-ab12-8
 10. swaylock-effects
 11. ly
 12. dunst
+13. pipewire (and pipewire-pulse)
+14. wireplumber
+15. xdg-desktop-portal
+15. xdg-desktop-portal-wlr (see https://wiki.archlinux.org/title/XDG_Desktop_Portal#Troubleshooting -_-)
 
 ## Problems I've encountered that I don't want to forget
 
