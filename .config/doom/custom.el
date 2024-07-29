@@ -15,8 +15,8 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#171F24" "#579C4C"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#171F24" "#777778"))
  '(ledger-reports
-   '(("balance overview" "ledger [[ledger-mode-flags]] -f /home/mluna/Ledger/playground.ledger bal assets liabilities")
-     ("bal" "ledger [[ledger-mode-flags]] -f /home/mluna/Ledger/playground.ledger bal assets liabilities")
+   '(("balance overview" "ledger [[ledger-mode-flags]] -f %(ledger-file) bal assets liabilities")
+     ("bal" "ledger [[ledger-mode-flags]] -f %(ledger-file) bal assets liabilities")
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
