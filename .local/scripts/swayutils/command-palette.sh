@@ -7,7 +7,7 @@ exit_with_error() {
   exit 1
 }
 
-option=$(cat - <<EOF | bemenu -i --list 50
+option=$(cat - <<EOF | bemenu
 Open book
 Toggle statusbar
 EOF
@@ -15,7 +15,7 @@ EOF
 
 case "$option" in
   "Open book")
-    book=$(find "$HOME/Books" -type f -iname "*.pdf" | sed "s|$HOME/Books/||" | bemenu -i --list 50) || exit
+    book=$(find "$HOME/Books" -type f -iname "*.pdf" | sed "s|$HOME/Books/||" | bemenu) || exit
     [ -z "$book" ] && exit
     xdg-open "$HOME/Books/$book"
     ;;
