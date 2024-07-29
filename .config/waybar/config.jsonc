@@ -1,0 +1,55 @@
+{
+  "layer": "top",
+  "mode": "hide",
+  "ipc": true,
+  "name": "bar-0",
+  "start_hidden": true,
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "battery",
+    "clock"
+  ],
+  "sway/window": {
+    "max-length": 50
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "clock": {
+    "format": "{:%a, %d %B  %I:%M %p}",
+    "locale": "en_US.UTF-8"
+  },
+  "network": {
+    "format": "{ipaddr}/{cidr}",
+    "max-length": 100,
+    "interval": 60
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

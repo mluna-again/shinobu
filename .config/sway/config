@@ -139,17 +139,9 @@ client.focused_inactive #a6a69c #a6a69c #181816 #c4b28a
 client.unfocused #181816 #181816 #c5c9c5 #c4b28a
 
 bar {
+  swaybar_command waybar
   mode hide
-  modifier Mod1
   hidden_state hide
-  position top
-  status_command while LC_ALL=en_US.UTF-8 date +"%b %d, %Y  %I:%M %p"; do sleep 1; done
-
-  colors {
-    statusline #ffffff
-    background #181816
-    inactive_workspace #323232 #323232 #5c5c5c
-  }
 }
 
 smart_borders on
