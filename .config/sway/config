@@ -58,6 +58,8 @@ bindsym $alt+Control+Space exec "$HOME/.local/scripts/swayutils/command-palette.
 bindsym $alt+Shift+q kill
 bindsym $alt+Shift+c reload
 
+bindsym $alt+d exec "$HOME/.local/scripts/swayutils/next_empty_workspace.sh"
+
 bindsym $alt+$left focus left
 bindsym $alt+$down focus down
 bindsym $alt+$up focus up
