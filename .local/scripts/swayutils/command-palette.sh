@@ -1,13 +1,10 @@
 #! /usr/bin/env bash
 
-exit_with_error() {
-  local msg="$1"
-
-   notify-send -t 5000 -u critical "$msg"
-  exit 1
-}
+# shellcheck disable=SC1091
+source "$HOME/.local/scripts/swayutils/_util.sh"
 
 option=$(cat - <<EOF | bemenu
+Screenshot
 Open book
 Toggle statusbar
 EOF
@@ -20,8 +17,12 @@ case "$option" in
     xdg-open "$HOME/Books/$book"
     ;;
 
+  "Screenshot")
+    "$HOME/.local/scripts/swayutils/grimshot.sh" copy area || exit_with_error "Failed to take screenshot"
+    ;;
+
   "Toggle statusbar")
-    swaymsg bar mode toggle || exit_with_message "Failed to toggle statusbar"
+    swaymsg bar mode toggle || exit_with_error "Failed to toggle statusbar"
     ;;
 
   *)
