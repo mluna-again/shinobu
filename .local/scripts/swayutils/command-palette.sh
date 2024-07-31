@@ -18,7 +18,11 @@ case "$option" in
     ;;
 
   "Screenshot")
-    "$HOME/.local/scripts/swayutils/grimshot.sh" copy area || exit_with_error "Failed to take screenshot"
+    if ! "$HOME/.local/scripts/swayutils/grimshot.sh" copy area; then
+      exit_with_error "Failed to take screenshot"
+    else
+      exit_with_success "Screenshot copied to clipboard"
+    fi
     ;;
 
   "Toggle statusbar")
