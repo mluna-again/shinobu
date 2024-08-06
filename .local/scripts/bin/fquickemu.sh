@@ -16,12 +16,18 @@ fi
 
 if [[ ! "$port" =~ [0-9]+ ]]; then
 	2>&1 echo "port found is in invalid format: $port!"
-	exit
+	exit 1
 fi
 
 quickemu --vm "$vm" --display none || exit
 
-if ! ssh -p "$port" "$CREDS"; then
-	2>&1 echo "failed to ssh with args: $CREDS"
-	2>&1 echo "you can pass different args with: fquickemu.sh user@localhost"
+if ! ssh -o "UserKnownHostsFile=/dev/null" -p "$port" "$CREDS"; then
+	2>&1 echo "ssh failed. retrying..."
+	sleep 3
+
+	if ! ssh -o "UserKnownHostsFile=/dev/null" -p "$port" "$CREDS"; then
+		2>&1 echo "failed to ssh with args: $CREDS"
+		2>&1 echo "you can pass different args with: fquickemu.sh user@localhost"
+		exit 1
+	fi
 fi
