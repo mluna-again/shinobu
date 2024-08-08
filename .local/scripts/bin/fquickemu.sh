@@ -46,16 +46,7 @@ run() {
 	quickemu --vm "$vm" --display "$DISPLAY_MODE" || exit
 
 	if [ "$DISPLAY_MODE" = none ]; then
-		if ! ssh -o "UserKnownHostsFile=/dev/null" -p "$port" "$CREDS"; then
-			2>&1 echo "ssh failed. retrying..."
-			sleep 3
-
-			if ! ssh -o "UserKnownHostsFile=/dev/null" -p "$port" "$CREDS"; then
-				2>&1 echo "failed to ssh with args: $CREDS"
-				2>&1 echo "you can pass different args with: fquickemu.sh user@localhost"
-				exit 1
-			fi
-		fi
+		ssh -o "UserKnownHostsFile=/dev/null" -p "$port" "$CREDS"
 	fi
 }
 
