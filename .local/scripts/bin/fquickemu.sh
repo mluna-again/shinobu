@@ -31,7 +31,11 @@ run() {
 	[ -z "$vm" ] && exit
 
 	conf_dir=$(sed 's|.conf$||' <<< "$vm") || exit
-	port=$(awk -F, '/ssh/ {print $2}' < "$conf_dir/${conf_dir}.ports") || exit
+	conf_dir_clean=$(sed 's|^./||' <<< "$conf_dir") || exit
+	port=$(awk -F, '/ssh/ {print $2}' < "$conf_dir/${conf_dir_clean}.ports") || {
+		2>&1 echo "ports file not found! is the vm installed yet? (you also need to enable ssh first inside the vm)"
+		exit 1
+	}
 
 	if [ -z "$port" ]; then
 		2>&1 echo "could not find SSH port!"
