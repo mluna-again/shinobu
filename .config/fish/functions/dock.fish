@@ -63,7 +63,7 @@ function dock
                 return 1
             end
 
-            docker container exec -it "$id" "$shell"
+            docker container exec --detach-keys="ctrl-@" -it "$id" "$shell"
 
         case ports
             docker container ls --format "table {{.Names}}\t{{.Ports}}"
