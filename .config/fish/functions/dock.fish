@@ -38,6 +38,7 @@ function dock
         printf "\tstatus\n"
         printf "\tstop\n"
         printf "\tports\n"
+        printf "\texec\n"
         printf "Usage:\n"
         printf "\tdock <cmd>\n"
         printf "\tdock <cmd> [<initial_query>] # automatically selects first match\n"
@@ -45,8 +46,27 @@ function dock
     end
 
     switch "$cmd"
+        case exec
+            set -l shell "$query"
+            if test -z "$shell"
+                set shell sh
+                echo "no shell provided. defaulting to sh" 2>&1
+            end
+
+            set -l id (
+                docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" | awk 'NR > 1' | \
+                    fzf --header="Choose container to exec into" | \
+                    awk '{print $1}'
+            )
+
+            if test -z "$id"
+                return 1
+            end
+
+            docker container exec -it "$id" "$shell"
+
         case ports
-          docker container ls --format "table {{.Names}}\t{{.Ports}}"
+            docker container ls --format "table {{.Names}}\t{{.Ports}}"
 
         case status
             if test -z "$query"
