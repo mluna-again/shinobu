@@ -37,6 +37,7 @@ function dock
         printf "\trestart\n"
         printf "\tstatus\n"
         printf "\tstop\n"
+        printf "\tports\n"
         printf "Usage:\n"
         printf "\tdock <cmd>\n"
         printf "\tdock <cmd> [<initial_query>] # automatically selects first match\n"
@@ -44,10 +45,13 @@ function dock
     end
 
     switch "$cmd"
+        case ports
+          docker container ls --format "table {{.Names}}\t{{.Ports}}"
+
         case status
             if test -z "$query"
                 echo no argument 2>&1
-                exit 1
+                return 1
             end
 
             docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" | awk 'NR > 1' | grep -i "$query" | awk '{ printf "%s: %s\n", $2, $3 }'
