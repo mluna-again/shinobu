@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 3.1
+
 Layout/LineLength:
   Max: 80
 
@@ -6,3 +9,6 @@ Style/Documentation:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

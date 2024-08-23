@@ -56,7 +56,8 @@ set -U fish_user_paths /usr/local/bin \
     "$HOME/.local/share/bob/nvim-bin" \
     "$HOME/.local/bin/odin" \
     "$HOME/.local/bin/flutter/bin" \
-    "$HOME/.config/emacs/bin"
+    "$HOME/.config/emacs/bin" \
+    "$HOME/.local/gem/bin"
 
 function search_dir
     set -l dir (find . -maxdepth 10 | grep -v '^.$' | sed 's|^./||' | fzf --scheme=path --tiebreak=begin)
@@ -126,6 +127,7 @@ set -gx ELIXIR_ERL_OPTIONS "-kernel shell_history enabled"
 set -gx ERL_AFLAGS "-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 set -gx GOPATH "$HOME/.local/go"
 set -gx SHELLCHECK_OPTS "-e SC2001"
+set -gx GEM_HOME "$HOME/.local/gem"
 
 # ALIASES
 abbr --add pg pgcli -h 127.0.0.1 -u postgres
