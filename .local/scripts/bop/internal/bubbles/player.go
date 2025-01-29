@@ -56,6 +56,7 @@ func (m Player) nextSong() tea.Msg {
 		return songFetchedMsg{err: err}
 	}
 
+	time.Sleep(time.Millisecond * 500)
 	return m.fetchSong()
 }
 
@@ -65,6 +66,7 @@ func (m Player) prevSong() tea.Msg {
 		return songFetchedMsg{err: err}
 	}
 
+	time.Sleep(time.Millisecond * 500)
 	return m.fetchSong()
 }
 
@@ -74,6 +76,7 @@ func (m Player) pauseSong() tea.Msg {
 		return songFetchedMsg{err: err}
 	}
 
+	time.Sleep(time.Millisecond * 500)
 	return m.fetchSong()
 }
 
@@ -93,18 +96,19 @@ func doTick() tea.Cmd {
 }
 
 type Player struct {
-	CurrentSecond int
-	TotalSeconds  int
-	song          Song
-	bar           progress.Model
-	err           error
-	termW         int
-	termH         int
-	cover         string
-	loading       bool
-	mounted       bool
-	cachedImage   *os.File
-	client        http.Client
+	CurrentSecond         int
+	TotalSeconds          int
+	secondsSinceLastFetch int
+	song                  Song
+	bar                   progress.Model
+	err                   error
+	termW                 int
+	termH                 int
+	cover                 string
+	loading               bool
+	mounted               bool
+	cachedImage           *os.File
+	client                http.Client
 }
 
 // i should check if this component is run on its own or not with a focused field or something
@@ -148,7 +152,14 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, doTick()
 
 	case tickMsg:
+		if m.secondsSinceLastFetch > 5 {
+			m.secondsSinceLastFetch = 0
+			return m, tea.Batch(m.fetchSong, doTick())
+		}
+		m.secondsSinceLastFetch++
+
 		if m.CurrentSecond >= m.TotalSeconds {
+			m.secondsSinceLastFetch = 0
 			return m, tea.Batch(m.fetchSong, doTick())
 		}
 		m.CurrentSecond++
