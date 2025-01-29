@@ -212,7 +212,7 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.err = nil
 			return m, m.fetchSong
 
-		case "ctrl+c":
+		case "ctrl+c", "q":
 			_ = m.Cleanup()
 			return m, tea.Quit
 		}
