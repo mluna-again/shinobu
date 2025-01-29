@@ -27,7 +27,7 @@ type BopItem struct {
 	Liked         bool   `json:"liked"`
 }
 
-var BOP = "http://localhost:8888"
+var BOP = fmt.Sprintf("http://%s:%s", os.Getenv("BOP_HOST"), os.Getenv("PORT"))
 
 type reloadQueueMsg struct {
 	timestamp string

@@ -1,15 +1,16 @@
 # How to run this server
 
-1. Install go.
-2. Build the project with `go build`
-3. Export your spotify API credentials with the following format:
-    a) SPOTIFY_ID=<your client ID>
-    b) SPOTIFY_SECRET=<you spotify secret>
-4. Run the server with: `./bop`
-5. Follow the printed instructions to authenticated.
-6. Start making requests :)
+1. Make the approtiate changes to your .env file and then:
 
-> NOTE: If you are using start_bop you can also place your credentials (in the same order) in ~/.cache/bop
+## Start server
+```sh
+$ docker compose up -d
+```
+
+## Start TUI player
+```sh
+$ docker compose run --rm tui
+```
 
 # Available endpoints:
 

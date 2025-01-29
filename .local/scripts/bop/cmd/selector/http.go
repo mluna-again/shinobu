@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -14,7 +15,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-var BOP = "http://localhost:8888"
+var BOP = fmt.Sprintf("http://%s:%s", os.Getenv("BOP_HOST"), os.Getenv("PORT"))
 
 type currentQueueMsg struct {
 	err         error

@@ -24,7 +24,7 @@ type Song struct {
 	Ascii         string
 }
 
-var BOP = "http://localhost:8888"
+var BOP = fmt.Sprintf("http://%s:%s", os.Getenv("BOP_HOST"), os.Getenv("PORT"))
 
 func BopCoverTempFile() (*os.File, error) {
 	return os.CreateTemp("", "bop-cover-*")
