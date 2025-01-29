@@ -76,8 +76,7 @@ func (m Player) pauseSong() tea.Msg {
 		return songFetchedMsg{err: err}
 	}
 
-	time.Sleep(time.Millisecond * 500)
-	return m.fetchSong()
+	return nil
 }
 
 func (m Player) redrawCover() tea.Msg {
@@ -99,6 +98,7 @@ type Player struct {
 	CurrentSecond         int
 	TotalSeconds          int
 	secondsSinceLastFetch int
+	paused                bool
 	song                  Song
 	bar                   progress.Model
 	err                   error
@@ -140,11 +140,13 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.err = msg.err
 			return m, nil
 		}
+		m.err = nil
 		m.cachedImage = msg.cacheFile
 		m.CurrentSecond = msg.song.CurrentSecond
 		m.TotalSeconds = msg.song.TotalSeconds
 		m.cover = msg.song.Ascii
 		m.song = msg.song
+		m.paused = !msg.song.IsPlaying
 		if m.mounted {
 			return m, nil
 		}
@@ -157,6 +159,9 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Batch(m.fetchSong, doTick())
 		}
 		m.secondsSinceLastFetch++
+		if m.paused {
+			return m, doTick()
+		}
 
 		if m.CurrentSecond >= m.TotalSeconds {
 			m.secondsSinceLastFetch = 0
@@ -192,7 +197,13 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, m.prevSong
 
 		case " ":
-			m.loading = true
+			if m.paused {
+				m.paused = false
+				m.err = nil
+				return m, m.pauseSong
+			}
+
+			m.paused = true
 			m.err = nil
 			return m, m.pauseSong
 

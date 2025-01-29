@@ -39,7 +39,7 @@ func BasicClient() http.Client {
 }
 
 func (m *Player) PauseSong() error {
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s:/play", BOP), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s:/pause", BOP), nil)
 	if err != nil {
 		return err
 	}
