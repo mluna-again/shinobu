@@ -14,7 +14,7 @@ func GetChafaCmd(f string, size int) *exec.Cmd {
 		return exec.Command("chafa", "-f", "symbols", "-s", fmt.Sprintf("%dx%d", size, size), f)
 	}
 
-	return exec.Command("chafa", "-f", "symbols", "--polite", "on", "-s", fmt.Sprintf("%dx%d", size, size), f)
+	return exec.Command("chafa", "-f", "symbols", "-c", "full", "--polite", "on", "-s", fmt.Sprintf("%dx%d", size, size), f)
 }
 
 // returns major and minor version of chafa
