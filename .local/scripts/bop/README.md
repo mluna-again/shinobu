@@ -12,6 +12,11 @@ $ docker compose up -d
 $ docker compose run --rm tui
 ```
 
+## Use the bop CLI
+```sh
+$ docker compose run --rm tui bop help
+```
+
 # Available endpoints:
 
 1. POST /search
