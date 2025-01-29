@@ -11,7 +11,7 @@ import (
 func GetChafaCmd(f string, size int) *exec.Cmd {
 	major, minor, err := GetChafaVersion()
 	if err == nil && major == 1 && minor < 14 {
-		return exec.Command("chafa", "-f", "symbols", "-s", fmt.Sprintf("%dx%d", size, size), f)
+		return exec.Command("chafa", "-f", "symbols", "-c", "full", "-s", fmt.Sprintf("%dx%d", size, size), f)
 	}
 
 	return exec.Command("chafa", "-f", "symbols", "-c", "full", "--polite", "on", "-s", fmt.Sprintf("%dx%d", size, size), f)
