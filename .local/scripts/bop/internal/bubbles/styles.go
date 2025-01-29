@@ -14,3 +14,8 @@ var timeStyle = lipgloss.NewStyle().
 var artistStyle = lipgloss.NewStyle().
 	Foreground(internal.KanagawaDragon.FGLight).
 	MarginBottom(1)
+
+var helpStyle = lipgloss.NewStyle().
+	Foreground(internal.KanagawaDragon.BGLight).
+	PaddingLeft(1).
+	PaddingRight(1)

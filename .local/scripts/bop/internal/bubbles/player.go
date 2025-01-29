@@ -3,6 +3,7 @@ package bubbles
 import (
 	"bop/internal"
 	"fmt"
+	"net/http"
 	"os"
 	"path"
 	"strings"
@@ -49,6 +50,33 @@ func (m Player) fetchSong() tea.Msg {
 	return songFetchedMsg{song: song, cacheFile: f}
 }
 
+func (m Player) nextSong() tea.Msg {
+	err := m.NextSong()
+	if err != nil {
+		return songFetchedMsg{err: err}
+	}
+
+	return m.fetchSong()
+}
+
+func (m Player) prevSong() tea.Msg {
+	err := m.PrevSong()
+	if err != nil {
+		return songFetchedMsg{err: err}
+	}
+
+	return m.fetchSong()
+}
+
+func (m Player) pauseSong() tea.Msg {
+	err := m.PauseSong()
+	if err != nil {
+		return songFetchedMsg{err: err}
+	}
+
+	return m.fetchSong()
+}
+
 func (m Player) redrawCover() tea.Msg {
 	f, err := m.AttachAsciiToSong(&m.song, m.coverWidth())
 	if err != nil {
@@ -76,8 +104,13 @@ type Player struct {
 	loading       bool
 	mounted       bool
 	cachedImage   *os.File
+	client        http.Client
 }
 
+// i should check if this component is run on its own or not with a focused field or something
+// right now it will change spotify status if any key is received, so it only works fine
+// when its the only component
+// but right now im not using it along any other components so not my problem rn
 func NewPlayer(current, total int) Player {
 	color1 := string(internal.KanagawaDragon.Primary)
 	b := progress.New(progress.WithSolidFill(color1), progress.WithoutPercentage())
@@ -87,6 +120,7 @@ func NewPlayer(current, total int) Player {
 		TotalSeconds:  total,
 		bar:           b,
 		loading:       true,
+		client:        BasicClient(),
 	}
 }
 
@@ -136,6 +170,21 @@ func (m Player) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "n":
+			m.loading = true
+			m.err = nil
+			return m, m.nextSong
+
+		case "p":
+			m.loading = true
+			m.err = nil
+			return m, m.prevSong
+
+		case " ":
+			m.loading = true
+			m.err = nil
+			return m, m.pauseSong
+
 		case "r":
 			m.loading = true
 			m.err = nil
@@ -178,7 +227,9 @@ func (m Player) View() string {
 	bar := m.bar.ViewAs(m.calculateNextSecondTick())
 	details := lipgloss.JoinHorizontal(lipgloss.Left, timeStyle.Render(toDuration(m.CurrentSecond)), bar, timeStyle.Render(toDuration(m.TotalSeconds-m.CurrentSecond)))
 
-	return lipgloss.Place(m.termW-10, m.termH, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Center, title, artist, banner, details))
+	help := helpStyle.Render("\nn - next song, p - prev song, Space - play/pause\n")
+
+	return lipgloss.Place(m.termW-10, m.termH, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Center, title, artist, banner, details, help))
 }
 
 func (m Player) calculateNextSecondTick() float64 {

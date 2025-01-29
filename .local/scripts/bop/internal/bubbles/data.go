@@ -25,6 +25,7 @@ type Song struct {
 }
 
 var BOP = fmt.Sprintf("http://%s:%s", os.Getenv("BOP_HOST"), os.Getenv("PORT"))
+var bopErr = errors.New("server said no")
 
 func BopCoverTempFile() (*os.File, error) {
 	return os.CreateTemp("", "bop-cover-*")
@@ -35,6 +36,60 @@ func BasicClient() http.Client {
 	client.Timeout = time.Second * 5
 
 	return client
+}
+
+func (m *Player) PauseSong() error {
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s:/play", BOP), nil)
+	if err != nil {
+		return err
+	}
+
+	resp, err := m.client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return bopErr
+	}
+
+	return nil
+}
+
+func (m *Player) NextSong() error {
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s:/next", BOP), nil)
+	if err != nil {
+		return err
+	}
+
+	resp, err := m.client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return bopErr
+	}
+
+	return nil
+}
+
+func (m *Player) PrevSong() error {
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s:/prev", BOP), nil)
+	if err != nil {
+		return err
+	}
+
+	resp, err := m.client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return bopErr
+	}
+
+	return nil
 }
 
 func (m *Player) GetCurrentSong(coversize int) (Song, *os.File, error) {
