@@ -4,8 +4,8 @@ services:
     profiles:
       - donotstart
     environment:
-      SPOTIFY_ID:
-      SPOTIFY_SECRET:
+      SPOTIFY_ID: ${SPOTIFY_ID}
+      SPOTIFY_SECRET: ${SPOTIFY_SECRET}
       PORT:
       BOP_HOST: server
     command: bop tui player
@@ -14,10 +14,10 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      SPOTIFY_ID:
-      SPOTIFY_SECRET:
-      DATABASE_URL:
-      PORT:
+      SPOTIFY_ID: ${SPOTIFY_ID}
+      SPOTIFY_SECRET: ${SPOTIFY_SECRET}
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: ${PORT}
       BOP_HOST: server
     depends_on:
       database:
@@ -28,9 +28,9 @@ services:
   database:
     image: postgres:17.2-alpine
     environment:
-      POSTGRES_PASSWORD:
-      POSTGRES_USER:
-      POSTGRES_DB:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
       PGDB: ${POSTGRES_DB}
       PGUSER: ${POSTGRES_USER}
       PGPASSWORD: ${POSTGRES_PASSWORD}
