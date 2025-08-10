@@ -1,7 +1,7 @@
 # How to run this server
 
 0. Copy the .env file example with `cp .env.example .env`.
-1. Make the approtiate changes to your .env file.
+1. Make the appropriate changes to your .env file.
 2. Start the server (see below).
 3. Use `docker compose logs server` to get the authentication link and copy-paste it into your browser. Log in.
 4. Done, probably.

@@ -6,7 +6,7 @@ services:
     environment:
       SPOTIFY_ID: ${SPOTIFY_ID}
       SPOTIFY_SECRET: ${SPOTIFY_SECRET}
-      PORT:
+      PORT: ${PORT}
       BOP_HOST: server
     command: bop tui player
 
